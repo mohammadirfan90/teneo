@@ -94,3 +94,14 @@ export type RefreshToken = Prisma.RefreshTokenModel
  * see this sheet for matching.
  */
 export type PreferencesTenant = Prisma.PreferencesTenantModel
+/**
+ * Model OutboxEvent
+ * Transactional outbox queue. Writers insert an event row in the same
+ * transaction as the domain mutation (e.g. KYC approval); a separate
+ * relay worker reads pending rows and dispatches them to the
+ * notification + event-bus consumers.
+ * 
+ * v1 only writes here from KYC decision flows. Phase 13+ adds the
+ * relay worker that actually drains the queue.
+ */
+export type OutboxEvent = Prisma.OutboxEventModel

@@ -198,6 +198,9 @@ model KycSubmission {
   decidedAt          DateTime?           @map("decided_at") @db.Timestamptz(6)
   expiresAt          DateTime?           @map("expires_at") @db.Timestamptz(6)
   docHash            String?             @map("doc_hash")
+  /// Cross-user docHash collision flag — set when another user already
+  /// submitted with the same hash. Surfaces to admins in the queue.
+  flaggedForReview   Boolean             @default(false) @map("flagged_for_review")
   tenantId           String              @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
   createdAt          DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt          DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
@@ -205,6 +208,7 @@ model KycSubmission {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, role, status], name: "kyc_submissions_lookup_idx")
+  @@index([docHash], name: "kyc_submissions_doc_hash_idx")
   // Partial unique index added in migration SQL:
   //   CREATE UNIQUE INDEX kyc_submissions_active_uniq
   //   ON kyc_submissions (user_id, role)
@@ -291,4 +295,37 @@ model PreferencesTenant {
   // GIN(lifestyle) + GIN(preferred_cities) live in the migration SQL
   // because Prisma doesn't yet express GIN indexes natively.
   @@map("preferences_tenant")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Outbox (Phase 9, 13 §13.2.8)
+// ──────────────────────────────────────────────────────────────────────
+
+/// Transactional outbox queue. Writers insert an event row in the same
+/// transaction as the domain mutation (e.g. KYC approval); a separate
+/// relay worker reads pending rows and dispatches them to the
+/// notification + event-bus consumers.
+///
+/// v1 only writes here from KYC decision flows. Phase 13+ adds the
+/// relay worker that actually drains the queue.
+model OutboxEvent {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// Event name, e.g. "kyc.approved", "kyc.rejected", "kyc.request_info".
+  eventType       String    @map("event_type")
+  /// Free-form payload — JSON shape is per eventType; consumers validate.
+  payload         Json
+  /// Soft-delete flag for the relay worker: false=pending, true=dispatched.
+  dispatched      Boolean   @default(false)
+  dispatchedAt    DateTime? @map("dispatched_at") @db.Timestamptz(6)
+  /// Optimistic-lock counter for the relay worker's CAS updates.
+  attempts        Int       @default(0)
+  /// Last dispatch error message (truncated). Cleared on next success.
+  lastError       String?   @map("last_error")
+  tenantId        String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([dispatched, createdAt], name: "outbox_events_dispatch_idx")
+  @@index([eventType, createdAt], name: "outbox_events_type_idx")
+  @@map("outbox_events")
 }

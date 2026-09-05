@@ -58,7 +58,8 @@ export const ModelName = {
   KycSubmission: 'KycSubmission',
   AuditLog: 'AuditLog',
   RefreshToken: 'RefreshToken',
-  PreferencesTenant: 'PreferencesTenant'
+  PreferencesTenant: 'PreferencesTenant',
+  OutboxEvent: 'OutboxEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -155,6 +156,7 @@ export const KycSubmissionScalarFieldEnum = {
   decidedAt: 'decidedAt',
   expiresAt: 'expiresAt',
   docHash: 'docHash',
+  flaggedForReview: 'flaggedForReview',
   tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -214,6 +216,22 @@ export const PreferencesTenantScalarFieldEnum = {
 export type PreferencesTenantScalarFieldEnum = (typeof PreferencesTenantScalarFieldEnum)[keyof typeof PreferencesTenantScalarFieldEnum]
 
 
+export const OutboxEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  payload: 'payload',
+  dispatched: 'dispatched',
+  dispatchedAt: 'dispatchedAt',
+  attempts: 'attempts',
+  lastError: 'lastError',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OutboxEventScalarFieldEnum = (typeof OutboxEventScalarFieldEnum)[keyof typeof OutboxEventScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -228,6 +246,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

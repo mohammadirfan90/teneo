@@ -18,6 +18,7 @@ import { notFoundHandler } from '@/middleware/not-found';
 import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
 import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
+import { kycRouter } from '@/modules/kyc/kyc.routes';
 import { preferencesRouter } from '@/modules/users/preferences.routes';
 import { profilesRouter } from '@/modules/users/profiles.routes';
 import { usersRouter } from '@/modules/users/users.routes';
@@ -166,6 +167,10 @@ export function createApp(): express.Express {
   app.use('/api/v1/users', anonymousRateLimiter, usersRouter());
   app.use('/api/v1/profiles', authenticatedRateLimiter, profilesRouter());
   app.use('/api/v1/preferences', authenticatedRateLimiter, preferencesRouter());
+
+  // ── Phase 9: KYC submissions + admin review queue ────────────────
+  // All KYC routes require auth (rate limit per role).
+  app.use('/api/v1/kyc', authenticatedRateLimiter, kycRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);
