@@ -1,0 +1,22 @@
+// prisma/schema.prisma
+// Phase 2: generator + datasource only. Domain models land in phase 3+.
+//
+// Prisma 7 specifics (per https://www.prisma.io/blog/announcing-prisma-orm-7-0-0):
+//   - generator provider must be "prisma-client" (not "prisma-client-js")
+//   - `output` is REQUIRED — clients no longer land in node_modules
+//   - `previewFeatures = ["driverAdapters"]` is required to use
+//     `@prisma/adapter-pg` (or any non-Rust driver)
+//   - The datasource `url` field is NO LONGER supported in schema.prisma.
+//     Connection URLs are read from prisma.config.ts (datasource.url)
+//     and the PrismaClient constructor receives an `adapter` (which
+//     @prisma/adapter-pg is, backed by the `pg` driver).
+
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}

@@ -1,0 +1,59 @@
+# docker-compose.yml — local infrastructure for development
+# Brings up Postgres 16 + Redis 7 with persistent volumes and healthchecks.
+# Run:  docker compose up -d
+# Stop: docker compose down        (keeps volumes)
+# Wipe: docker compose down -v     (drops volumes too)
+
+name: housing-platform
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: housing-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: housing
+      POSTGRES_PASSWORD: housing_dev_pw_2026
+      POSTGRES_DB: housing
+      # Local dev: trust over TCP (only reachable from the Docker host).
+      # Our scripts/pg-hba.conf reinforces this for the catch-all host rule.
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      # Host-side port 55432 (local Windows already has Postgres on 5432).
+      - "55432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      # First-start overlay: swap in our dev pg_hba (trust over TCP). The
+      # shell script in scripts/pg-init runs after initdb, copies the
+      # conf from this same mount into the data dir, and fixes ownership.
+      - ./scripts/pg-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U housing -d housing"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  redis:
+    image: redis:7-alpine
+    container_name: housing-redis
+    restart: unless-stopped
+    # appendonly=yes keeps a tiny durability surface for the access-token
+    # cache; we don't need it for production-style performance tuning.
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  postgres-data:
+    name: housing-postgres-data
+  redis-data:
+    name: housing-redis-data
