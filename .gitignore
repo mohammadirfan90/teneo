@@ -1,0 +1,55 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+app/dist/
+app/build/
+app/coverage/
+
+# Env files (never commit)
+.env
+.env.*
+!.env.example
+
+# Puku CLI / tooling
+.puku-cli/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test artifacts
+.jest-cache/
+
+# Prisma generated (regenerated on install)
+app/prisma/migrations/dev.db*
+app/prisma/migrations/migration_lock.toml.tmp
+
+# Local Postgres data
+app/pgdata/
+
+# ── Assignment meta files (not part of the project) ──────────────────────
+# Spec lives in housing-platform/ which IS tracked. The loose assignment
+# docs at the repo root are scaffolding for the work, not deliverables.
+AGENTS.md
+idea-hub.md
+project_requirements.md
+raff.txt
+
+# Phases workflow (phases.json is the contract; phases/ folder is tooling)
+phases/
+phases.json
+phases.schema.json
