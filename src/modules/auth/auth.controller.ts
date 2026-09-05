@@ -1,0 +1,93 @@
+// src/modules/auth/auth.controller.ts
+//
+// Thin HTTP wrapper. Each method:
+//   1. Reads req.body (already validated by zodValidate middleware).
+//   2. Reads request meta (IP, user-agent) for audit/throttle context.
+//   3. Calls auth.service.<x>.
+//   4. Returns the standard envelope via ok().
+//   5. Domain errors propagate via `throw` to the global error-handler.
+
+import type { Request, RequestHandler } from 'express';
+
+import { ok } from '@/lib/envelope';
+import type {
+  LoginInput,
+  PasswordResetConfirmInput,
+  PasswordResetRequestInput,
+  RefreshInput,
+  SignupInput,
+  VerifyEmailResendInput,
+} from './auth.schemas';
+import * as svc from './auth.service';
+
+function readMeta(req: Request): { userAgent?: string; ip?: string } {
+  return {
+    userAgent: req.get('user-agent') ?? undefined,
+    // Express sets `req.ip` from the configured `trust proxy` setting.
+    ip: req.ip,
+  };
+}
+
+function readBearer(req: Request): string | undefined {
+  const header = req.get('authorization');
+  if (!header) return undefined;
+  const [scheme, token] = header.split(/\s+/, 2);
+  if (scheme?.toLowerCase() !== 'bearer' || !token) return undefined;
+  return token;
+}
+
+export const signup: RequestHandler = async (req, res) => {
+  const body = req.body as SignupInput;
+  const data = await svc.signupUser(body, readMeta(req));
+  res.status(201).json(ok(data, 'Account created'));
+};
+
+export const login: RequestHandler = async (req, res) => {
+  const body = req.body as LoginInput;
+  const data = await svc.loginUser(body, readMeta(req));
+  res.status(200).json(ok(data, 'Signed in'));
+};
+
+export const refresh: RequestHandler = async (req, res) => {
+  const body = req.body as RefreshInput;
+  const data = await svc.refreshSession(body, readMeta(req));
+  res.status(200).json(ok(data, 'Session refreshed'));
+};
+
+export const logout: RequestHandler = async (req, res) => {
+  // requireAuth middleware guarantees req.user is set.
+  const userId = req.user!.id;
+  const accessRaw = readBearer(req);
+  await svc.logoutCurrentSession(userId, accessRaw);
+  res.status(200).json(ok(null, 'Signed out'));
+};
+
+export const logoutAll: RequestHandler = async (req, res) => {
+  const userId = req.user!.id;
+  const revoked = await svc.logoutAll(userId);
+  res.status(200).json(ok({ revoked }, 'Signed out from all sessions'));
+};
+
+export const requestPasswordReset: RequestHandler = async (req, res) => {
+  const body = req.body as PasswordResetRequestInput;
+  await svc.requestPasswordReset(body);
+  res.status(200).json(ok(null, 'If the email is registered, a reset link has been sent'));
+};
+
+export const confirmPasswordReset: RequestHandler = async (req, res) => {
+  const body = req.body as PasswordResetConfirmInput;
+  await svc.confirmPasswordReset(body);
+  res.status(200).json(ok(null, 'Password has been reset'));
+};
+
+export const resendVerification: RequestHandler = async (req, res) => {
+  const body = req.body as VerifyEmailResendInput;
+  await svc.resendVerification(body);
+  res.status(200).json(ok(null, 'If the email is registered, a verification link has been sent'));
+};
+
+export const verifyEmail: RequestHandler = async (req, res) => {
+  const token = typeof req.query.token === 'string' ? req.query.token : undefined;
+  await svc.verifyEmail(token);
+  res.status(200).json(ok(null, 'Verification processed'));
+};

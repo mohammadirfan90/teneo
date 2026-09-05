@@ -17,6 +17,7 @@ import { errorHandler } from '@/middleware/error-handler';
 import { notFoundHandler } from '@/middleware/not-found';
 import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
 import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
+import { authRouter } from '@/modules/auth/auth.routes';
 import { z } from 'zod';
 
 export function createApp(): express.Express {
@@ -149,6 +150,12 @@ export function createApp(): express.Express {
   // live inside the router. Order is: per-role limit → requireAuth →
   // requireRole → handler.
   app.use('/api/v1/_demo/protected', authenticatedRateLimiter, protectedDemoRouter());
+
+  // ── Phase 6: auth router (signup/login/refresh/logout/…) ───────────
+  // Public routes (signup, login, refresh, verify-email) get the
+  // anonymous rate limiter treatment for the /auth prefix. The /logout
+  // route itself requires requireAuth inside the router.
+  app.use('/api/v1/auth', anonymousRateLimiter, authRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

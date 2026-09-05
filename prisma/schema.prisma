@@ -243,11 +243,11 @@ model AuditLog {
 // Refresh tokens (06 §6.4)
 // ──────────────────────────────────────────────────────────────────────
 
-/// Hashed refresh tokens. The token row id is `sha256(raw_token)` so we
-/// never store the secret in cleartext, and we can look up by id without a
-/// secondary index.
+/// Hashed refresh tokens. The token row id is `sha256(raw_token)` (hex, 64
+/// chars) so we never store the secret in cleartext and can look up by id
+/// without a secondary index.
 model RefreshToken {
-  id        String    @id @db.Uuid
+  id        String    @id
   userId    String    @map("user_id") @db.Uuid
   familyId  String    @map("family_id") @db.Uuid
   issuedAt  DateTime  @default(now()) @map("issued_at") @db.Timestamptz(6)

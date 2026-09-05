@@ -60,8 +60,8 @@ export type KycSubmission = Prisma.KycSubmissionModel
 export type AuditLog = Prisma.AuditLogModel
 /**
  * Model RefreshToken
- * Hashed refresh tokens. The token row id is `sha256(raw_token)` so we
- * never store the secret in cleartext, and we can look up by id without a
- * secondary index.
+ * Hashed refresh tokens. The token row id is `sha256(raw_token)` (hex, 64
+ * chars) so we never store the secret in cleartext and can look up by id
+ * without a secondary index.
  */
 export type RefreshToken = Prisma.RefreshTokenModel

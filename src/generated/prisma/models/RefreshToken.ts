@@ -14,9 +14,9 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model RefreshToken
- * Hashed refresh tokens. The token row id is `sha256(raw_token)` so we
- * never store the secret in cleartext, and we can look up by id without a
- * secondary index.
+ * Hashed refresh tokens. The token row id is `sha256(raw_token)` (hex, 64
+ * chars) so we never store the secret in cleartext and can look up by id
+ * without a secondary index.
  */
 export type RefreshTokenModel = runtime.Types.Result.DefaultSelection<Prisma.$RefreshTokenPayload>
 
@@ -207,7 +207,7 @@ export type RefreshTokenWhereInput = {
   AND?: Prisma.RefreshTokenWhereInput | Prisma.RefreshTokenWhereInput[]
   OR?: Prisma.RefreshTokenWhereInput[]
   NOT?: Prisma.RefreshTokenWhereInput | Prisma.RefreshTokenWhereInput[]
-  id?: Prisma.UuidFilter<"RefreshToken"> | string
+  id?: Prisma.StringFilter<"RefreshToken"> | string
   userId?: Prisma.UuidFilter<"RefreshToken"> | string
   familyId?: Prisma.UuidFilter<"RefreshToken"> | string
   issuedAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
@@ -267,7 +267,7 @@ export type RefreshTokenScalarWhereWithAggregatesInput = {
   AND?: Prisma.RefreshTokenScalarWhereWithAggregatesInput | Prisma.RefreshTokenScalarWhereWithAggregatesInput[]
   OR?: Prisma.RefreshTokenScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RefreshTokenScalarWhereWithAggregatesInput | Prisma.RefreshTokenScalarWhereWithAggregatesInput[]
-  id?: Prisma.UuidWithAggregatesFilter<"RefreshToken"> | string
+  id?: Prisma.StringWithAggregatesFilter<"RefreshToken"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"RefreshToken"> | string
   familyId?: Prisma.UuidWithAggregatesFilter<"RefreshToken"> | string
   issuedAt?: Prisma.DateTimeWithAggregatesFilter<"RefreshToken"> | Date | string
@@ -501,7 +501,7 @@ export type RefreshTokenScalarWhereInput = {
   AND?: Prisma.RefreshTokenScalarWhereInput | Prisma.RefreshTokenScalarWhereInput[]
   OR?: Prisma.RefreshTokenScalarWhereInput[]
   NOT?: Prisma.RefreshTokenScalarWhereInput | Prisma.RefreshTokenScalarWhereInput[]
-  id?: Prisma.UuidFilter<"RefreshToken"> | string
+  id?: Prisma.StringFilter<"RefreshToken"> | string
   userId?: Prisma.UuidFilter<"RefreshToken"> | string
   familyId?: Prisma.UuidFilter<"RefreshToken"> | string
   issuedAt?: Prisma.DateTimeFilter<"RefreshToken"> | Date | string
