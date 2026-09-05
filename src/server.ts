@@ -15,6 +15,8 @@ import { zodValidate } from '@/lib/validate';
 import { correlationIdMiddleware } from '@/middleware/correlation-id';
 import { errorHandler } from '@/middleware/error-handler';
 import { notFoundHandler } from '@/middleware/not-found';
+import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
+import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
 import { z } from 'zod';
 
 export function createApp(): express.Express {
@@ -41,7 +43,18 @@ export function createApp(): express.Express {
   );
 
   // Body parsing with a tight limit to deflect payload-overflow DoS.
-  app.use(express.json({ limit: '1mb' }));
+  // The `verify` callback stashes the raw bytes on req.rawBody so the
+  // idempotency middleware (07 §7.3) can hash the canonical request body
+  // regardless of how Express has parsed it.
+  app.use(
+    express.json({
+      limit: '1mb',
+      verify: (req, _res, buf) => {
+        const r = req as express.Request & { rawBody?: string };
+        r.rawBody = buf.toString('utf8');
+      },
+    })
+  );
   app.use(express.urlencoded({ extended: false, limit: '1mb' }));
 
   // Correlation ID on every request + response.
@@ -99,6 +112,12 @@ export function createApp(): express.Express {
     res.status(200).json(ok({ version: '1.0.0', status: 'phase-4-scaffold' }));
   });
 
+  // ── Phase 5: anonymous rate limiter (must be BEFORE the demo routes) ─
+  // Mounted before the demo route handlers so it actually intercepts
+  // their requests. express-rate-limit increments a counter on each
+  // matched request and returns 429 once the per-1s burst (20) is hit.
+  app.use('/api/v1/_demo', anonymousRateLimiter);
+
   // ── Phase 4 demo: envelope + zodValidate wiring ─────────────────────
   // GET /api/v1/_demo/ping — smoke test for the standard success envelope.
   app.get('/api/v1/_demo/ping', (_req, res) => {
@@ -124,6 +143,12 @@ export function createApp(): express.Express {
       ])
     );
   });
+
+  // ── Phase 5: protected demo routes (auth-gated) ────────────────────
+  // Per-role limiter on the protected prefix; requireAuth + requireRole
+  // live inside the router. Order is: per-role limit → requireAuth →
+  // requireRole → handler.
+  app.use('/api/v1/_demo/protected', authenticatedRateLimiter, protectedDemoRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);
