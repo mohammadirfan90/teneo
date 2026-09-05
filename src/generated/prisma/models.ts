@@ -8,4 +8,11 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/User'
+export type * from './models/UserRole'
+export type * from './models/OwnerProfile'
+export type * from './models/TenantProfile'
+export type * from './models/KycSubmission'
+export type * from './models/AuditLog'
+export type * from './models/RefreshToken'
 export type * from './commonInputTypes'

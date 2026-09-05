@@ -39,4 +39,51 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
-
+/**
+ * Model User
+ * Auth identity + profile root. One row per human (and per SYSTEM service
+ * account). Tenant ID scaffolding (04 §4.1.8) lives on every table for v2
+ * multi-tenancy; v1 writes a single constant.
+ */
+export type User = Prisma.UserModel
+/**
+ * Model UserRole
+ * User → role binding. A user can hold multiple roles (e.g. both TENANT
+ * and OWNER). ADMIN is provisioned out-of-band per 02 §2.2.
+ */
+export type UserRole = Prisma.UserRoleModel
+/**
+ * Model OwnerProfile
+ * 1:1 with User — owner role-profile (04 §4.3.1).
+ */
+export type OwnerProfile = Prisma.OwnerProfileModel
+/**
+ * Model TenantProfile
+ * 1:1 with User — tenant role-profile (04 §4.3.1).
+ * Roommate preferences (budget, lifestyle, visibility) live in a separate
+ * `preferences_tenant` table per §4.3.3 — to be added in phase 20.
+ */
+export type TenantProfile = Prisma.TenantProfileModel
+/**
+ * Model KycSubmission
+ * A single KYC submission attempt for a (user, role) tuple. Partial unique
+ * index (user_id, role) WHERE status IN ('PENDING','APPROVED') enforces
+ * "at most one active submission per (user, role)" — added via the
+ * custom migration SQL because Prisma doesn't yet express partial
+ * indexes natively.
+ */
+export type KycSubmission = Prisma.KycSubmissionModel
+/**
+ * Model AuditLog
+ * Append-only audit trail for every privileged action. The immutability
+ * trigger that blocks UPDATE/DELETE outside the retention job is added
+ * via the custom migration SQL.
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model RefreshToken
+ * Hashed refresh tokens. The token row id is `sha256(raw_token)` so we
+ * never store the secret in cleartext, and we can look up by id without a
+ * secondary index.
+ */
+export type RefreshToken = Prisma.RefreshTokenModel

@@ -1,15 +1,17 @@
 // prisma/schema.prisma
-// Phase 2: generator + datasource only. Domain models land in phase 3+.
+// Phase 3: identity + KYC + audit entities.
+// Authoritative source: housing-platform/04-database-design.md §4.3.1, §4.3.7, §4.3.8
+//                     + housing-platform/02-users-and-roles.md §2.2.
 //
-// Prisma 7 specifics (per https://www.prisma.io/blog/announcing-prisma-orm-7-0-0):
-//   - generator provider must be "prisma-client" (not "prisma-client-js")
+// Prisma 7 specifics (see phase 2):
+//   - generator provider is "prisma-client" (not "prisma-client-js")
 //   - `output` is REQUIRED — clients no longer land in node_modules
 //   - `previewFeatures = ["driverAdapters"]` is required to use
-//     `@prisma/adapter-pg` (or any non-Rust driver)
+//     @prisma/adapter-pg (or any non-Rust driver)
 //   - The datasource `url` field is NO LONGER supported in schema.prisma.
-//     Connection URLs are read from prisma.config.ts (datasource.url)
-//     and the PrismaClient constructor receives an `adapter` (which
-//     @prisma/adapter-pg is, backed by the `pg` driver).
+//     Connection URL is read from prisma.config.ts (datasource.url) and the
+//     PrismaClient constructor receives an `adapter` (which @prisma/adapter-pg
+//     is, backed by the `pg` driver).
 
 generator client {
   provider        = "prisma-client"
@@ -19,4 +21,245 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Extensions (Phase 3 migration adds them).
+//
+//   citext — case-insensitive text, used for users.email so we don't need
+//            LOWER() in every lookup and so the unique constraint is
+//            naturally case-insensitive.
+//   pgcrypto — gen_random_uuid() so we can default-id PKs without a round
+//              trip through the app.
+// ──────────────────────────────────────────────────────────────────────
+// (Extensions are created via a custom SQL migration; see
+//  prisma/migrations/<ts>_init_identity/migration.sql.)
+
+// ──────────────────────────────────────────────────────────────────────
+// Enums (per spec)
+// ──────────────────────────────────────────────────────────────────────
+
+/// User account status (04 §4.3.1).
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DEACTIVATED
+}
+
+/// Roles a user can hold (02 §2.2).
+/// Primary roles gate application access; supporting roles (USER, GUEST,
+/// SYSTEM) are never persisted in user_roles — they are derived from the
+/// authenticated session (USER, GUEST) or issued via service credentials
+/// (SYSTEM). ADMIN is provisioned out-of-band and lives here.
+enum Role {
+  TENANT
+  OWNER
+  ADMIN
+}
+
+/// Self-declared gender used by roommate matching (02 §2.2 last paragraph,
+/// 04 §4.3.1). Optional — UNDISCLOSED is implicit when null.
+enum Gender {
+  FEMALE
+  MALE
+  NONBINARY
+  UNDISCLOSED
+}
+
+/// KYC lifecycle per role (04 §4.3.1).
+enum KycStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+/// KYC submission lifecycle (04 §4.3.8).
+enum KycSubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Identity & Profiles (04 §4.3.1)
+// ──────────────────────────────────────────────────────────────────────
+
+/// Auth identity + profile root. One row per human (and per SYSTEM service
+/// account). Tenant ID scaffolding (04 §4.1.8) lives on every table for v2
+/// multi-tenancy; v1 writes a single constant.
+model User {
+  id              String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email           String     @db.Citext
+  emailVerifiedAt DateTime?  @map("email_verified_at") @db.Timestamptz(6)
+  phone           String?
+  phoneVerifiedAt DateTime?  @map("phone_verified_at") @db.Timestamptz(6)
+  passwordHash    String?    @map("password_hash")
+  oauthProvider   String?    @map("oauth_provider")
+  oauthSubject    String?    @map("oauth_subject")
+  status          UserStatus @default(ACTIVE)
+  mfaEnabled      Boolean    @default(false) @map("mfa_enabled")
+  mfaSecret       String?    @map("mfa_secret")
+  gender          Gender?
+  tenantId        String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt       DateTime?  @map("deleted_at") @db.Timestamptz(6)
+
+  roles          UserRole[]
+  ownerProfile   OwnerProfile?
+  tenantProfile  TenantProfile?
+  kycSubmissions KycSubmission[]
+  refreshTokens  RefreshToken[]
+
+  // Partial unique indexes live in the migration SQL:
+  //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
+  //   users(oauth_provider, oauth_subject) WHERE oauth_provider IS NOT NULL
+  //                                                  → users_oauth_uniq
+  @@index([status, deletedAt], name: "users_status_idx")
+  @@map("users")
+}
+
+/// User → role binding. A user can hold multiple roles (e.g. both TENANT
+/// and OWNER). ADMIN is provisioned out-of-band per 02 §2.2.
+model UserRole {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  role        Role
+  activatedAt DateTime @default(now()) @map("activated_at") @db.Timestamptz(6)
+  tenantId    String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, role], name: "user_roles_user_role_uniq")
+  @@index([role], name: "user_roles_role_idx")
+  @@map("user_roles")
+}
+
+/// 1:1 with User — owner role-profile (04 §4.3.1).
+model OwnerProfile {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String    @unique @map("user_id") @db.Uuid
+  displayName       String    @map("display_name")
+  bio               String?
+  avatarObjectKey   String?   @map("avatar_object_key")
+  kycStatus         KycStatus @default(NONE) @map("kyc_status")
+  kycBadgeGrantedAt DateTime? @map("kyc_badge_granted_at") @db.Timestamptz(6)
+  reputationScore   Decimal?  @map("reputation_score") @db.Decimal(4, 2)
+  tenantId          String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("owner_profiles")
+}
+
+/// 1:1 with User — tenant role-profile (04 §4.3.1).
+/// Roommate preferences (budget, lifestyle, visibility) live in a separate
+/// `preferences_tenant` table per §4.3.3 — to be added in phase 20.
+model TenantProfile {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String    @unique @map("user_id") @db.Uuid
+  displayName       String    @map("display_name")
+  bio               String?
+  avatarObjectKey   String?   @map("avatar_object_key")
+  kycStatus         KycStatus @default(NONE) @map("kyc_status")
+  kycBadgeGrantedAt DateTime? @map("kyc_badge_granted_at") @db.Timestamptz(6)
+  reputationScore   Decimal?  @map("reputation_score") @db.Decimal(4, 2)
+  tenantId          String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tenant_profiles")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// KYC (04 §4.3.8)
+// ──────────────────────────────────────────────────────────────────────
+
+/// A single KYC submission attempt for a (user, role) tuple. Partial unique
+/// index (user_id, role) WHERE status IN ('PENDING','APPROVED') enforces
+/// "at most one active submission per (user, role)" — added via the
+/// custom migration SQL because Prisma doesn't yet express partial
+/// indexes natively.
+model KycSubmission {
+  id                 String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String              @map("user_id") @db.Uuid
+  role               Role
+  status             KycSubmissionStatus @default(PENDING)
+  documentObjectKeys String[]            @map("document_object_keys")
+  reviewNotes        String?             @map("review_notes")
+  reviewerUserId     String?             @map("reviewer_user_id") @db.Uuid
+  decidedAt          DateTime?           @map("decided_at") @db.Timestamptz(6)
+  expiresAt          DateTime?           @map("expires_at") @db.Timestamptz(6)
+  docHash            String?             @map("doc_hash")
+  tenantId           String              @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt          DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, role, status], name: "kyc_submissions_lookup_idx")
+  // Partial unique index added in migration SQL:
+  //   CREATE UNIQUE INDEX kyc_submissions_active_uniq
+  //   ON kyc_submissions (user_id, role)
+  //   WHERE status IN ('PENDING','APPROVED');
+  @@map("kyc_submissions")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Audit (04 §4.3.7)
+// ──────────────────────────────────────────────────────────────────────
+
+/// Append-only audit trail for every privileged action. The immutability
+/// trigger that blocks UPDATE/DELETE outside the retention job is added
+/// via the custom migration SQL.
+model AuditLog {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorUserId      String?  @map("actor_user_id") @db.Uuid
+  actorRole        String?  @map("actor_role")
+  action           String
+  targetEntityType String?  @map("target_entity_type")
+  targetEntityId   String?  @map("target_entity_id") @db.Uuid
+  before           Json?
+  after            Json?
+  ipAddress        String?  @map("ip_address") @db.Inet
+  userAgent        String?  @map("user_agent")
+  occurredAt       DateTime @default(now()) @map("occurred_at") @db.Timestamptz(6)
+  tenantId         String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+
+  @@index([actorUserId, occurredAt(sort: Desc)], name: "audit_logs_actor_idx")
+  @@index([targetEntityType, targetEntityId], name: "audit_logs_target_idx")
+  @@index([action, occurredAt], name: "audit_logs_action_idx")
+  // Monthly partitioning by occurred_at — added in migration SQL.
+  @@map("audit_logs")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Refresh tokens (06 §6.4)
+// ──────────────────────────────────────────────────────────────────────
+
+/// Hashed refresh tokens. The token row id is `sha256(raw_token)` so we
+/// never store the secret in cleartext, and we can look up by id without a
+/// secondary index.
+model RefreshToken {
+  id        String    @id @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  familyId  String    @map("family_id") @db.Uuid
+  issuedAt  DateTime  @default(now()) @map("issued_at") @db.Timestamptz(6)
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(6)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
+  userAgent String?   @map("user_agent")
+  ip        String?   @db.Inet
+  tenantId  String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "refresh_tokens_user_idx")
+  @@index([familyId], name: "refresh_tokens_family_idx")
+  @@map("refresh_tokens")
 }

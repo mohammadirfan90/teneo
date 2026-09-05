@@ -8,13 +8,12 @@ The implementation ledger — every endpoint, entity, rule, and state-machine we
 ## Quick Start
 
 ```bash
-# 1. Start infrastructure
-docker compose -f app/docker-compose.yml up -d
+# 1. Start infrastructure (Postgres on host port 55432 + Redis on 6379)
+docker compose up -d
 
 # 2. Install deps + run migrations + seed demo data
-cd app
 npm install
-cp .env.example .env       # then edit secrets
+cp .env.example .env       # then edit secrets if needed
 npm run prisma:migrate
 npm run prisma:seed
 
@@ -48,29 +47,25 @@ npm run dev
 
 - [`housing-platform/`](./housing-platform/) — full design specification
 - [`housing-platform/SPEC_REQUIREMENTS.md`](./housing-platform/SPEC_REQUIREMENTS.md) — implementation ledger (this is what we build from)
-- [`app/README.md`](./app/README.md) — backend setup, scripts, environment
-- [`app/postman/`](./app/postman/) — Postman collection for testing
-- [`app/docs/SMOKE_TEST.md`](./app/docs/SMOKE_TEST.md) — end-to-end demo walkthrough
+- `phases/phase-*.md` — per-phase progress notes (gitignored, workflow state)
+- `scripts/verify-*.ts` — live acceptance scripts (Phase 2)
 
 ## Project Layout
 
 ```
 B7A6/
 ├── housing-platform/        # spec (read-only source of truth)
-├── app/                     # Node.js backend
-│   ├── src/
-│   │   ├── modules/         # feature modules (auth, properties, payments, ...)
-│   │   ├── lib/             # cross-cutting helpers (db, redis, logger, envelope)
-│   │   ├── middleware/      # rbac, validation, helmet, cors, rate-limit
-│   │   └── server.ts
-│   ├── prisma/
-│   │   ├── schema.prisma
-│   │   ├── migrations/
-│   │   └── seed.ts
-│   ├── postman/
-│   ├── docs/
-│   ├── docker-compose.yml
-│   ├── Dockerfile
-│   └── render.yaml
+├── src/                     # TypeScript source
+│   ├── modules/             # feature modules (auth, properties, payments, ...) — added phase 5+
+│   ├── lib/                 # cross-cutting helpers (db, redis, logger, envelope)
+│   ├── middleware/          # rbac, validation, helmet, cors, rate-limit
+│   ├── generated/prisma/    # generated Prisma client (committed)
+│   └── server.ts
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/          # added phase 3+
+├── scripts/                 # verify scripts + DB-shape unit tests
+├── docker-compose.yml       # Postgres 16 + Redis 7 (local dev)
+├── prisma.config.ts
 └── README.md                # (this file)
 ```
