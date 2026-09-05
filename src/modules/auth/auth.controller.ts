@@ -11,6 +11,7 @@ import type { Request, RequestHandler } from 'express';
 
 import { ok } from '@/lib/envelope';
 import type {
+  GoogleOAuthCallbackInput,
   LoginInput,
   PasswordResetConfirmInput,
   PasswordResetRequestInput,
@@ -90,4 +91,10 @@ export const verifyEmail: RequestHandler = async (req, res) => {
   const token = typeof req.query.token === 'string' ? req.query.token : undefined;
   await svc.verifyEmail(token);
   res.status(200).json(ok(null, 'Verification processed'));
+};
+
+export const googleOAuthCallback: RequestHandler = async (req, res) => {
+  const body = req.body as GoogleOAuthCallbackInput;
+  const data = await svc.loginOrLinkGoogle(body, readMeta(req));
+  res.status(200).json(ok(data, 'Signed in with Google'));
 };

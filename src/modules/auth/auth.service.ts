@@ -17,11 +17,12 @@
 //   - 429 RATE_LIMITED for login throttle (locked out)
 
 import { prisma } from '@/lib/db';
-import { ConflictError, UnauthorizedError, ValidationError } from '@/lib/errors';
+import { ConflictError, ForbiddenError, UnauthorizedError, ValidationError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
 import type { AppRole } from '@/middleware/auth';
 
 import type {
+  GoogleOAuthCallbackInput,
   LoginInput,
   PasswordResetConfirmInput,
   PasswordResetRequestInput,
@@ -29,6 +30,7 @@ import type {
   SignupInput,
   VerifyEmailResendInput,
 } from './auth.schemas';
+import { verifyGoogleIdToken } from './google-oauth.service';
 import { validatePasswordPolicy } from './password.service';
 import {
   incrementLoginFails,
@@ -342,6 +344,171 @@ export async function verifyEmail(token: string | undefined): Promise<void> {
     { tokenPrefix: token ? token.slice(0, 8) : null, kind: 'verify_email' },
     'verify-email link visited (stub — token not actually consumed)'
   );
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// google oauth (Phase 7)
+// ──────────────────────────────────────────────────────────────────────
+
+/**
+ * Verify a Google idToken and either:
+ *   - log the user into an existing Google-linked account, OR
+ *   - link the Google identity to an existing password account (when
+ *     the email matches AND the Google email is verified), OR
+ *   - create a brand-new OAuth-only account.
+ *
+ * Privacy guard (§6.3): we never auto-link to a password account when
+ * the Google email is unverified — that would let an attacker claim
+ * any unverified email by registering it at Google first. We 401
+ * instead, and the user can verify with Google (or sign in with their
+ * password).
+ */
+export async function loginOrLinkGoogle(
+  input: GoogleOAuthCallbackInput,
+  meta: RequestMeta = {}
+): Promise<AuthResponse> {
+  // 1. Verify the idToken. Throws 503 (env unset) or 401 (bad token).
+  const profile = await verifyGoogleIdToken(input.idToken);
+
+  // 2. Look up an existing user by the canonical OAuth identity first.
+  //
+  //    Note: findFirst, not findUnique, because (oauth_provider,
+  //    oauth_subject) is a *partial* unique index (WHERE oauth_provider
+  //    IS NOT NULL) and Prisma doesn't type partial uniques.
+  let user = await prisma.user.findFirst({
+    where: {
+      oauthProvider: 'google',
+      oauthSubject: profile.providerUserId,
+    },
+    select: {
+      id: true,
+      email: true,
+      status: true,
+      deletedAt: true,
+      oauthProvider: true,
+      oauthSubject: true,
+      roles: { select: { role: true } },
+    },
+  });
+
+  // 3. Identity not found — try linking to an existing password account.
+  if (!user) {
+    if (!profile.emailVerified) {
+      // We will NOT auto-link to a password account on an unverified
+      // Google email. Throw before the email-lookup so we don't even
+      // leak whether the password account exists.
+      throw new UnauthorizedError('Google email is not verified; please verify with Google first');
+    }
+
+    const passwordAccount = await prisma.user.findFirst({
+      where: { email: profile.email },
+      select: {
+        id: true,
+        email: true,
+        status: true,
+        deletedAt: true,
+        oauthProvider: true,
+        oauthSubject: true,
+        roles: { select: { role: true } },
+      },
+    });
+
+    if (passwordAccount) {
+      if (passwordAccount.oauthProvider === 'google') {
+        // Two different Google subs racing for the same email. The
+        // partial unique index would have prevented creating a second
+        // row; the only way to land here is if data was hand-edited.
+        // Treat as a hard conflict so the operator notices.
+        throw new ConflictError('CONFLICT', 'Google account already linked to a different subject');
+      }
+
+      // Link the password account to the Google identity. We stamp
+      // emailVerifiedAt too — Google's JWT confirms mailbox ownership,
+      // which is strictly stronger evidence than our outbound verification
+      // emails (§11.7).
+      try {
+        user = await prisma.user.update({
+          where: { id: passwordAccount.id },
+          data: {
+            oauthProvider: 'google',
+            oauthSubject: profile.providerUserId,
+            emailVerifiedAt: new Date(),
+          },
+          select: {
+            id: true,
+            email: true,
+            status: true,
+            deletedAt: true,
+            oauthProvider: true,
+            oauthSubject: true,
+            roles: { select: { role: true } },
+          },
+        });
+        logger.info(
+          { userId: user.id, googleSub: profile.providerUserId },
+          'google_oauth_account_linked'
+        );
+      } catch (err) {
+        if (isPrismaUniqueViolation(err)) {
+          // Race: a parallel OAuth login linked the same `sub` first.
+          throw new ConflictError('CONFLICT', 'Google account already linked');
+        }
+        throw err;
+      }
+    } else {
+      // Brand-new OAuth-only user. No password hash, no role rows.
+      // §6.2 still applies — new users are USER-only.
+      try {
+        user = await prisma.user.create({
+          data: {
+            email: profile.email,
+            passwordHash: null,
+            oauthProvider: 'google',
+            oauthSubject: profile.providerUserId,
+            emailVerifiedAt: new Date(),
+            roles: { create: [] },
+          },
+          select: {
+            id: true,
+            email: true,
+            status: true,
+            deletedAt: true,
+            oauthProvider: true,
+            oauthSubject: true,
+            roles: { select: { role: true } },
+          },
+        });
+        logger.info({ userId: user.id }, 'google_oauth_user_created');
+      } catch (err) {
+        if (isPrismaUniqueViolation(err)) {
+          // Race: a parallel password signup used the same email first.
+          throw new ConflictError('CONFLICT', 'Email already registered');
+        }
+        throw err;
+      }
+    }
+  }
+
+  // 4. Defensive status check — loginUser already does this for the
+  //    password path; we mirror it for OAuth so the same envelope
+  //    surfaces for suspended/deactivated accounts.
+  if (user.deletedAt !== null || user.status !== 'ACTIVE') {
+    throw new ForbiddenError('FORBIDDEN', 'Account is not available');
+  }
+
+  // 5. Mint tokens. Same shape as password login.
+  const access = await mintAccessToken(user.id);
+  const refresh = await mintRefreshToken(user.id, {
+    userAgent: meta.userAgent,
+    ip: meta.ip,
+  });
+
+  return {
+    accessToken: access.token,
+    refreshToken: refresh.token,
+    expiresIn: access.expiresIn,
+    user: toAuthUserView(user),
+  };
 }
 
 // ──────────────────────────────────────────────────────────────────────

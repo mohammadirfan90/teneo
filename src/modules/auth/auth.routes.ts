@@ -19,6 +19,7 @@ import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import {
   confirmPasswordReset,
+  googleOAuthCallback,
   login,
   logout,
   logoutAll,
@@ -29,6 +30,7 @@ import {
   verifyEmail,
 } from './auth.controller';
 import {
+  googleOAuthCallbackSchema,
   loginSchema,
   passwordResetConfirmSchema,
   passwordResetRequestSchema,
@@ -80,6 +82,14 @@ export function authRouter(): Router {
   );
 
   r.get('/verify-email', asyncHandler(verifyEmail));
+
+  // Phase 7: Google OAuth (JS-SDK flow). No requireAuth — the idToken
+  // IS the auth. Endpoint returns 503 if GOOGLE_CLIENT_ID is unset.
+  r.post(
+    '/oauth/google/callback',
+    zodValidate({ body: googleOAuthCallbackSchema }),
+    asyncHandler(googleOAuthCallback)
+  );
 
   return r;
 }

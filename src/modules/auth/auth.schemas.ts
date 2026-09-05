@@ -50,3 +50,14 @@ export const verifyEmailResendSchema = z.object({
 });
 
 export type VerifyEmailResendInput = z.infer<typeof verifyEmailResendSchema>;
+
+/**
+ * Google OAuth callback (Phase 7). The client posts a Google Identity
+ * Services idToken (a signed JWT, typically 800–1200 chars). 4 KiB
+ * headroom covers any future claim bloat.
+ */
+export const googleOAuthCallbackSchema = z.object({
+  idToken: z.string().min(20).max(4096),
+});
+
+export type GoogleOAuthCallbackInput = z.infer<typeof googleOAuthCallbackSchema>;
