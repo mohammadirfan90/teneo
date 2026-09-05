@@ -8,10 +8,14 @@ import express, { type RequestHandler } from 'express';
 import helmet from 'helmet';
 
 import { corsOrigins, env } from '@/lib/env';
+import { ok } from '@/lib/envelope';
+import { ValidationError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
+import { zodValidate } from '@/lib/validate';
 import { correlationIdMiddleware } from '@/middleware/correlation-id';
 import { errorHandler } from '@/middleware/error-handler';
 import { notFoundHandler } from '@/middleware/not-found';
+import { z } from 'zod';
 
 export function createApp(): express.Express {
   const app = express();
@@ -33,7 +37,7 @@ export function createApp(): express.Express {
       },
       credentials: false, // Bearer tokens — no cookies
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    }),
+    })
   );
 
   // Body parsing with a tight limit to deflect payload-overflow DoS.
@@ -55,7 +59,7 @@ export function createApp(): express.Express {
           status: res.statusCode,
           durationMs: Date.now() - start,
         },
-        'request',
+        'request'
       );
     });
     next();
@@ -92,11 +96,33 @@ export function createApp(): express.Express {
   // ── API v1 root ──────────────────────────────────────────────────────
   // Phase 1 placeholder; feature routers mount here in later phases.
   app.get('/api/v1', (_req, res) => {
-    res.status(200).json({
-      success: true,
-      message: 'Housing Platform API v1',
-      data: { version: '1.0.0', status: 'phase-1-scaffold' },
-    });
+    res.status(200).json(ok({ version: '1.0.0', status: 'phase-4-scaffold' }));
+  });
+
+  // ── Phase 4 demo: envelope + zodValidate wiring ─────────────────────
+  // GET /api/v1/_demo/ping — smoke test for the standard success envelope.
+  app.get('/api/v1/_demo/ping', (_req, res) => {
+    res.status(200).json(ok({ pong: true }));
+  });
+
+  // POST /api/v1/_demo/echo — exercises zodValidate on the body.
+  // Valid request: { "message": "hello" } → 200 with { pong: true, echoed: "hello" }.
+  // Invalid request: anything missing "message" or with empty string → 400 with errors[].
+  const echoSchema = z.object({
+    message: z.string().min(1, 'must not be empty'),
+  });
+  app.post('/api/v1/_demo/echo', zodValidate({ body: echoSchema }), (req, res) => {
+    const { message } = req.body as z.infer<typeof echoSchema>;
+    res.status(200).json(ok({ pong: true, echoed: message }));
+  });
+
+  // POST /api/v1/_demo/throw-validation — demonstrates ValidationError → envelope.
+  app.post('/api/v1/_demo/throw-validation', (_req, _res, next) => {
+    next(
+      new ValidationError('Validation failed (demo)', [
+        { field: 'demoField', code: 'INVALID', message: 'this is a demo field error' },
+      ])
+    );
   });
 
   // ── Error handling (must be last) ───────────────────────────────────

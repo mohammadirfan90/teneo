@@ -1,18 +1,26 @@
 // src/middleware/not-found.ts
-// Catch-all 404 handler. Must be mounted AFTER all routes.
+//
+// Catch-all 404 handler. Must be mounted AFTER all routes so unmatched
+// requests fall through to this middleware.
+//
+// Emits the standard error envelope per spec §13.1.
 
 import type { RequestHandler } from 'express';
 
-export const notFoundHandler: RequestHandler = (req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found',
-    errors: [
-      {
-        field: 'path',
-        code: 'NOT_FOUND',
-        message: `No route matches ${req.method} ${req.originalUrl}`,
-      },
-    ],
-  });
+import { fail } from '@/lib/envelope';
+import { NotFoundError } from '@/lib/errors';
+
+export const notFoundHandler: RequestHandler = (req, _res, next) => {
+  next(new NotFoundError(`No route matches ${req.method} ${req.originalUrl}`));
 };
+
+// Exposed for cases where the handler is invoked outside the middleware chain.
+export function buildNotFoundEnvelope(req: { method: string; originalUrl: string }) {
+  return fail(`No route matches ${req.method} ${req.originalUrl}`, [
+    {
+      field: 'path',
+      code: 'NOT_FOUND',
+      message: `No route matches ${req.method} ${req.originalUrl}`,
+    },
+  ]);
+}
