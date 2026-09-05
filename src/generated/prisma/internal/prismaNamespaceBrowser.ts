@@ -57,7 +57,8 @@ export const ModelName = {
   TenantProfile: 'TenantProfile',
   KycSubmission: 'KycSubmission',
   AuditLog: 'AuditLog',
-  RefreshToken: 'RefreshToken'
+  RefreshToken: 'RefreshToken',
+  PreferencesTenant: 'PreferencesTenant'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -193,6 +194,24 @@ export const RefreshTokenScalarFieldEnum = {
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const PreferencesTenantScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  budgetMinMinor: 'budgetMinMinor',
+  budgetMaxMinor: 'budgetMaxMinor',
+  preferredCities: 'preferredCities',
+  moveInFrom: 'moveInFrom',
+  moveInTo: 'moveInTo',
+  lifestyle: 'lifestyle',
+  interests: 'interests',
+  visibility: 'visibility',
+  tenantId: 'tenantId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PreferencesTenantScalarFieldEnum = (typeof PreferencesTenantScalarFieldEnum)[keyof typeof PreferencesTenantScalarFieldEnum]
 
 
 export const SortOrder = {

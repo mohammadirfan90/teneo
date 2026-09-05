@@ -87,3 +87,10 @@ export type AuditLog = Prisma.AuditLogModel
  * without a secondary index.
  */
 export type RefreshToken = Prisma.RefreshTokenModel
+/**
+ * Model PreferencesTenant
+ * What a tenant is *looking for*, distinct from their identity
+ * profile. Visibility controls whether other tenants / owners can
+ * see this sheet for matching.
+ */
+export type PreferencesTenant = Prisma.PreferencesTenantModel

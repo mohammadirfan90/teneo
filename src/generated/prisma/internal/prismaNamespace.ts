@@ -403,7 +403,8 @@ export const ModelName = {
   TenantProfile: 'TenantProfile',
   KycSubmission: 'KycSubmission',
   AuditLog: 'AuditLog',
-  RefreshToken: 'RefreshToken'
+  RefreshToken: 'RefreshToken',
+  PreferencesTenant: 'PreferencesTenant'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -941,6 +942,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PreferencesTenant: {
+      payload: Prisma.$PreferencesTenantPayload<ExtArgs>
+      fields: Prisma.PreferencesTenantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PreferencesTenantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PreferencesTenantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>
+        }
+        findFirst: {
+          args: Prisma.PreferencesTenantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PreferencesTenantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>
+        }
+        findMany: {
+          args: Prisma.PreferencesTenantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>[]
+        }
+        create: {
+          args: Prisma.PreferencesTenantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>
+        }
+        createMany: {
+          args: Prisma.PreferencesTenantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PreferencesTenantCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>[]
+        }
+        delete: {
+          args: Prisma.PreferencesTenantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>
+        }
+        update: {
+          args: Prisma.PreferencesTenantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>
+        }
+        deleteMany: {
+          args: Prisma.PreferencesTenantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PreferencesTenantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PreferencesTenantUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>[]
+        }
+        upsert: {
+          args: Prisma.PreferencesTenantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PreferencesTenantPayload>
+        }
+        aggregate: {
+          args: Prisma.PreferencesTenantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePreferencesTenant>
+        }
+        groupBy: {
+          args: Prisma.PreferencesTenantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PreferencesTenantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PreferencesTenantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PreferencesTenantCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1097,6 +1172,24 @@ export const RefreshTokenScalarFieldEnum = {
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const PreferencesTenantScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  budgetMinMinor: 'budgetMinMinor',
+  budgetMaxMinor: 'budgetMaxMinor',
+  preferredCities: 'preferredCities',
+  moveInFrom: 'moveInFrom',
+  moveInTo: 'moveInTo',
+  lifestyle: 'lifestyle',
+  interests: 'interests',
+  visibility: 'visibility',
+  tenantId: 'tenantId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PreferencesTenantScalarFieldEnum = (typeof PreferencesTenantScalarFieldEnum)[keyof typeof PreferencesTenantScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1280,6 +1373,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'BigInt'
+ */
+export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt[]'
+ */
+export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1290,6 +1397,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1450,6 +1571,7 @@ export type GlobalOmitConfig = {
   kycSubmission?: Prisma.KycSubmissionOmit
   auditLog?: Prisma.AuditLogOmit
   refreshToken?: Prisma.RefreshTokenOmit
+  preferencesTenant?: Prisma.PreferencesTenantOmit
 }
 
 /* Types for Logging */

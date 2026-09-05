@@ -18,6 +18,9 @@ import { notFoundHandler } from '@/middleware/not-found';
 import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
 import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
+import { preferencesRouter } from '@/modules/users/preferences.routes';
+import { profilesRouter } from '@/modules/users/profiles.routes';
+import { usersRouter } from '@/modules/users/users.routes';
 import { z } from 'zod';
 
 export function createApp(): express.Express {
@@ -156,6 +159,13 @@ export function createApp(): express.Express {
   // anonymous rate limiter treatment for the /auth prefix. The /logout
   // route itself requires requireAuth inside the router.
   app.use('/api/v1/auth', anonymousRateLimiter, authRouter());
+
+  // ── Phase 8: users + profiles + preferences routers ────────────────
+  // Anon limiter on /users (mostly self-service, hot path).
+  // Per-role limiter on /profiles + /preferences (always require auth).
+  app.use('/api/v1/users', anonymousRateLimiter, usersRouter());
+  app.use('/api/v1/profiles', authenticatedRateLimiter, profilesRouter());
+  app.use('/api/v1/preferences', authenticatedRateLimiter, preferencesRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

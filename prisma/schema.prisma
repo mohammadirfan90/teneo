@@ -110,6 +110,7 @@ model User {
   roles          UserRole[]
   ownerProfile   OwnerProfile?
   tenantProfile  TenantProfile?
+  tenantPreferences PreferencesTenant?
   kycSubmissions KycSubmission[]
   refreshTokens  RefreshToken[]
 
@@ -262,4 +263,32 @@ model RefreshToken {
   @@index([userId], name: "refresh_tokens_user_idx")
   @@index([familyId], name: "refresh_tokens_family_idx")
   @@map("refresh_tokens")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Tenant preferences (Phase 8, 04 §4.3.3)
+// ──────────────────────────────────────────────────────────────────────
+
+/// What a tenant is *looking for*, distinct from their identity
+/// profile. Visibility controls whether other tenants / owners can
+/// see this sheet for matching.
+model PreferencesTenant {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String    @unique @map("user_id") @db.Uuid
+  budgetMinMinor  BigInt?   @map("budget_min_minor")
+  budgetMaxMinor  BigInt?   @map("budget_max_minor")
+  preferredCities String[]  @map("preferred_cities")
+  moveInFrom      DateTime? @map("move_in_from") @db.Date
+  moveInTo        DateTime? @map("move_in_to") @db.Date
+  lifestyle       Json?
+  interests       String[]
+  visibility      String    @default("PRIVATE")
+  tenantId        String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // GIN(lifestyle) + GIN(preferred_cities) live in the migration SQL
+  // because Prisma doesn't yet express GIN indexes natively.
+  @@map("preferences_tenant")
 }
