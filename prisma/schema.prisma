@@ -164,6 +164,7 @@ model User {
   kycSubmissions KycSubmission[]
   refreshTokens  RefreshToken[]
   properties     Property[]
+  savedSearches  SavedSearch[]
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -519,4 +520,28 @@ model Room {
   @@index([status, deletedAt], name: "rooms_status_idx")
   @@index([currency], name: "rooms_currency_idx")
   @@map("rooms")
+}
+
+/// User-saved search query (13 §13.2.4). Persists a named filter set so
+/// tenants can return to a previous filter state without re-entering it.
+/// Refresh-on-new-match is deferred to Phase 18 (notifications); Phase
+/// 11 only persists the search.
+model SavedSearch {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  /// User-chosen label. Uniqueness enforced per active user via the
+  /// partial unique index in the migration SQL.
+  name      String
+  /// Full filter shape — same shape as `searchRoomsQuerySchema`'s parsed
+  /// output. Storing as JSONB lets us round-trip it without re-encoding.
+  query     Json
+  tenantId  String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "saved_searches_user_idx")
+  @@map("saved_searches")
 }

@@ -23,6 +23,7 @@ import { buildingsRouter } from '@/modules/properties/buildings.routes';
 import { flatsRouter } from '@/modules/properties/flats.routes';
 import { propertiesRouter } from '@/modules/properties/properties.routes';
 import { roomsRouter } from '@/modules/properties/rooms.routes';
+import { searchPublicRouter, searchSavedRouter } from '@/modules/search/search.routes';
 import { preferencesRouter } from '@/modules/users/preferences.routes';
 import { profilesRouter } from '@/modules/users/profiles.routes';
 import { usersRouter } from '@/modules/users/users.routes';
@@ -183,6 +184,14 @@ export function createApp(): express.Express {
   app.use('/api/v1/buildings', authenticatedRateLimiter, buildingsRouter());
   app.use('/api/v1/flats', authenticatedRateLimiter, flatsRouter());
   app.use('/api/v1/rooms', authenticatedRateLimiter, roomsRouter());
+
+  // ── Phase 11: room search (PG fallback) + saved searches ─────────
+  // Public read surface (anonymous-OK) goes under the anon limiter.
+  // Saved-search endpoints go under the auth limiter; requireAuth lives
+  // inside the saved router. Order: anon limiter first (cheapest to
+  // reject), then auth limiter so saved-search is always per-user.
+  app.use('/api/v1/search', anonymousRateLimiter, searchPublicRouter());
+  app.use('/api/v1/search', authenticatedRateLimiter, searchSavedRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

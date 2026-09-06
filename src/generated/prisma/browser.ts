@@ -114,3 +114,11 @@ export type Flat = Prisma.FlatModel
  * or live without one (standalone villa).
  */
 export type Room = Prisma.RoomModel
+/**
+ * Model SavedSearch
+ * User-saved search query (13 §13.2.4). Persists a named filter set so
+ * tenants can return to a previous filter state without re-entering it.
+ * Refresh-on-new-match is deferred to Phase 18 (notifications); Phase
+ * 11 only persists the search.
+ */
+export type SavedSearch = Prisma.SavedSearchModel

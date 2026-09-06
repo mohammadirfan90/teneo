@@ -409,7 +409,8 @@ export const ModelName = {
   Property: 'Property',
   Building: 'Building',
   Flat: 'Flat',
-  Room: 'Room'
+  Room: 'Room',
+  SavedSearch: 'SavedSearch'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -425,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1391,6 +1392,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SavedSearch: {
+      payload: Prisma.$SavedSearchPayload<ExtArgs>
+      fields: Prisma.SavedSearchFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SavedSearchFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SavedSearchFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+        }
+        findFirst: {
+          args: Prisma.SavedSearchFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SavedSearchFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+        }
+        findMany: {
+          args: Prisma.SavedSearchFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>[]
+        }
+        create: {
+          args: Prisma.SavedSearchCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+        }
+        createMany: {
+          args: Prisma.SavedSearchCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SavedSearchCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>[]
+        }
+        delete: {
+          args: Prisma.SavedSearchDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+        }
+        update: {
+          args: Prisma.SavedSearchUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+        }
+        deleteMany: {
+          args: Prisma.SavedSearchDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SavedSearchUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SavedSearchUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>[]
+        }
+        upsert: {
+          args: Prisma.SavedSearchUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SavedSearchPayload>
+        }
+        aggregate: {
+          args: Prisma.SavedSearchAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSavedSearch>
+        }
+        groupBy: {
+          args: Prisma.SavedSearchGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavedSearchGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SavedSearchCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SavedSearchCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1666,6 +1741,20 @@ export const RoomScalarFieldEnum = {
 } as const
 
 export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
+
+
+export const SavedSearchScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  query: 'query',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type SavedSearchScalarFieldEnum = (typeof SavedSearchScalarFieldEnum)[keyof typeof SavedSearchScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2144,6 +2233,7 @@ export type GlobalOmitConfig = {
   building?: Prisma.BuildingOmit
   flat?: Prisma.FlatOmit
   room?: Prisma.RoomOmit
+  savedSearch?: Prisma.SavedSearchOmit
 }
 
 /* Types for Logging */
