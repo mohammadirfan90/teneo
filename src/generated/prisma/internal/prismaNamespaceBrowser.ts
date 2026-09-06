@@ -68,7 +68,10 @@ export const ModelName = {
   Application: 'Application',
   ViewingRequest: 'ViewingRequest',
   ApplicationNote: 'ApplicationNote',
-  Lease: 'Lease'
+  Lease: 'Lease',
+  LeaseTenant: 'LeaseTenant',
+  LeaseSignature: 'LeaseSignature',
+  LeaseAmendment: 'LeaseAmendment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,6 +413,43 @@ export const LeaseScalarFieldEnum = {
 } as const
 
 export type LeaseScalarFieldEnum = (typeof LeaseScalarFieldEnum)[keyof typeof LeaseScalarFieldEnum]
+
+
+export const LeaseTenantScalarFieldEnum = {
+  leaseId: 'leaseId',
+  tenantUserId: 'tenantUserId',
+  isPrimary: 'isPrimary',
+  liabilityShare: 'liabilityShare',
+  createdAt: 'createdAt'
+} as const
+
+export type LeaseTenantScalarFieldEnum = (typeof LeaseTenantScalarFieldEnum)[keyof typeof LeaseTenantScalarFieldEnum]
+
+
+export const LeaseSignatureScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  signerUserId: 'signerUserId',
+  signerRole: 'signerRole',
+  signedAt: 'signedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
+} as const
+
+export type LeaseSignatureScalarFieldEnum = (typeof LeaseSignatureScalarFieldEnum)[keyof typeof LeaseSignatureScalarFieldEnum]
+
+
+export const LeaseAmendmentScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  proposedByUserId: 'proposedByUserId',
+  status: 'status',
+  payload: 'payload',
+  createdAt: 'createdAt',
+  signedAt: 'signedAt'
+} as const
+
+export type LeaseAmendmentScalarFieldEnum = (typeof LeaseAmendmentScalarFieldEnum)[keyof typeof LeaseAmendmentScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -694,6 +694,67 @@ export type EnumLeaseStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel>
 }
 
+export type DecimalFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalWithAggregatesFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _avg?: Prisma.NestedDecimalFilter<$PrismaModel>
+  _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
+  _min?: Prisma.NestedDecimalFilter<$PrismaModel>
+  _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type EnumLeasePartyRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeasePartyRole | Prisma.EnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeasePartyRoleFilter<$PrismaModel> | $Enums.LeasePartyRole
+}
+
+export type EnumLeasePartyRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeasePartyRole | Prisma.EnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeasePartyRoleWithAggregatesFilter<$PrismaModel> | $Enums.LeasePartyRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeasePartyRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeasePartyRoleFilter<$PrismaModel>
+}
+
+export type EnumLeaseAmendmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseAmendmentStatus | Prisma.EnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseAmendmentStatusFilter<$PrismaModel> | $Enums.LeaseAmendmentStatus
+}
+
+export type EnumLeaseAmendmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseAmendmentStatus | Prisma.EnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseAmendmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeaseAmendmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeaseAmendmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeaseAmendmentStatusFilter<$PrismaModel>
+}
+
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1327,6 +1388,67 @@ export type NestedEnumLeaseStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel>
+}
+
+export type NestedDecimalFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalWithAggregatesFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _avg?: Prisma.NestedDecimalFilter<$PrismaModel>
+  _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
+  _min?: Prisma.NestedDecimalFilter<$PrismaModel>
+  _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type NestedEnumLeasePartyRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeasePartyRole | Prisma.EnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeasePartyRoleFilter<$PrismaModel> | $Enums.LeasePartyRole
+}
+
+export type NestedEnumLeasePartyRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeasePartyRole | Prisma.EnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeasePartyRole[] | Prisma.ListEnumLeasePartyRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeasePartyRoleWithAggregatesFilter<$PrismaModel> | $Enums.LeasePartyRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeasePartyRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeasePartyRoleFilter<$PrismaModel>
+}
+
+export type NestedEnumLeaseAmendmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseAmendmentStatus | Prisma.EnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseAmendmentStatusFilter<$PrismaModel> | $Enums.LeaseAmendmentStatus
+}
+
+export type NestedEnumLeaseAmendmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseAmendmentStatus | Prisma.EnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseAmendmentStatus[] | Prisma.ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseAmendmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeaseAmendmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeaseAmendmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeaseAmendmentStatusFilter<$PrismaModel>
 }
 
 

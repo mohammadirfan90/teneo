@@ -156,3 +156,20 @@ export const UtilitySplitMode = {
 } as const
 
 export type UtilitySplitMode = (typeof UtilitySplitMode)[keyof typeof UtilitySplitMode]
+
+
+export const LeasePartyRole = {
+  OWNER: 'OWNER',
+  TENANT: 'TENANT'
+} as const
+
+export type LeasePartyRole = (typeof LeasePartyRole)[keyof typeof LeasePartyRole]
+
+
+export const LeaseAmendmentStatus = {
+  PROPOSED: 'PROPOSED',
+  SIGNED: 'SIGNED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type LeaseAmendmentStatus = (typeof LeaseAmendmentStatus)[keyof typeof LeaseAmendmentStatus]

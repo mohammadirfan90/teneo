@@ -414,7 +414,10 @@ export const ModelName = {
   Application: 'Application',
   ViewingRequest: 'ViewingRequest',
   ApplicationNote: 'ApplicationNote',
-  Lease: 'Lease'
+  Lease: 'Lease',
+  LeaseTenant: 'LeaseTenant',
+  LeaseSignature: 'LeaseSignature',
+  LeaseAmendment: 'LeaseAmendment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1766,6 +1769,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LeaseTenant: {
+      payload: Prisma.$LeaseTenantPayload<ExtArgs>
+      fields: Prisma.LeaseTenantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeaseTenantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeaseTenantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>
+        }
+        findFirst: {
+          args: Prisma.LeaseTenantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeaseTenantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>
+        }
+        findMany: {
+          args: Prisma.LeaseTenantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>[]
+        }
+        create: {
+          args: Prisma.LeaseTenantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>
+        }
+        createMany: {
+          args: Prisma.LeaseTenantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LeaseTenantCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>[]
+        }
+        delete: {
+          args: Prisma.LeaseTenantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>
+        }
+        update: {
+          args: Prisma.LeaseTenantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>
+        }
+        deleteMany: {
+          args: Prisma.LeaseTenantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeaseTenantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LeaseTenantUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>[]
+        }
+        upsert: {
+          args: Prisma.LeaseTenantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseTenantPayload>
+        }
+        aggregate: {
+          args: Prisma.LeaseTenantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeaseTenant>
+        }
+        groupBy: {
+          args: Prisma.LeaseTenantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaseTenantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeaseTenantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaseTenantCountAggregateOutputType> | number
+        }
+      }
+    }
+    LeaseSignature: {
+      payload: Prisma.$LeaseSignaturePayload<ExtArgs>
+      fields: Prisma.LeaseSignatureFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeaseSignatureFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeaseSignatureFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>
+        }
+        findFirst: {
+          args: Prisma.LeaseSignatureFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeaseSignatureFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>
+        }
+        findMany: {
+          args: Prisma.LeaseSignatureFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>[]
+        }
+        create: {
+          args: Prisma.LeaseSignatureCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>
+        }
+        createMany: {
+          args: Prisma.LeaseSignatureCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LeaseSignatureCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>[]
+        }
+        delete: {
+          args: Prisma.LeaseSignatureDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>
+        }
+        update: {
+          args: Prisma.LeaseSignatureUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>
+        }
+        deleteMany: {
+          args: Prisma.LeaseSignatureDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeaseSignatureUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LeaseSignatureUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>[]
+        }
+        upsert: {
+          args: Prisma.LeaseSignatureUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseSignaturePayload>
+        }
+        aggregate: {
+          args: Prisma.LeaseSignatureAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeaseSignature>
+        }
+        groupBy: {
+          args: Prisma.LeaseSignatureGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaseSignatureGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeaseSignatureCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaseSignatureCountAggregateOutputType> | number
+        }
+      }
+    }
+    LeaseAmendment: {
+      payload: Prisma.$LeaseAmendmentPayload<ExtArgs>
+      fields: Prisma.LeaseAmendmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeaseAmendmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeaseAmendmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>
+        }
+        findFirst: {
+          args: Prisma.LeaseAmendmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeaseAmendmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>
+        }
+        findMany: {
+          args: Prisma.LeaseAmendmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>[]
+        }
+        create: {
+          args: Prisma.LeaseAmendmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>
+        }
+        createMany: {
+          args: Prisma.LeaseAmendmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LeaseAmendmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>[]
+        }
+        delete: {
+          args: Prisma.LeaseAmendmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>
+        }
+        update: {
+          args: Prisma.LeaseAmendmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.LeaseAmendmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeaseAmendmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LeaseAmendmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.LeaseAmendmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaseAmendmentPayload>
+        }
+        aggregate: {
+          args: Prisma.LeaseAmendmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeaseAmendment>
+        }
+        groupBy: {
+          args: Prisma.LeaseAmendmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaseAmendmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeaseAmendmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaseAmendmentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2130,6 +2355,43 @@ export const LeaseScalarFieldEnum = {
 export type LeaseScalarFieldEnum = (typeof LeaseScalarFieldEnum)[keyof typeof LeaseScalarFieldEnum]
 
 
+export const LeaseTenantScalarFieldEnum = {
+  leaseId: 'leaseId',
+  tenantUserId: 'tenantUserId',
+  isPrimary: 'isPrimary',
+  liabilityShare: 'liabilityShare',
+  createdAt: 'createdAt'
+} as const
+
+export type LeaseTenantScalarFieldEnum = (typeof LeaseTenantScalarFieldEnum)[keyof typeof LeaseTenantScalarFieldEnum]
+
+
+export const LeaseSignatureScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  signerUserId: 'signerUserId',
+  signerRole: 'signerRole',
+  signedAt: 'signedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
+} as const
+
+export type LeaseSignatureScalarFieldEnum = (typeof LeaseSignatureScalarFieldEnum)[keyof typeof LeaseSignatureScalarFieldEnum]
+
+
+export const LeaseAmendmentScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  proposedByUserId: 'proposedByUserId',
+  status: 'status',
+  payload: 'payload',
+  createdAt: 'createdAt',
+  signedAt: 'signedAt'
+} as const
+
+export type LeaseAmendmentScalarFieldEnum = (typeof LeaseAmendmentScalarFieldEnum)[keyof typeof LeaseAmendmentScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2486,6 +2748,34 @@ export type ListEnumLeaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'LeasePartyRole'
+ */
+export type EnumLeasePartyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeasePartyRole'>
+    
+
+
+/**
+ * Reference to a field of type 'LeasePartyRole[]'
+ */
+export type ListEnumLeasePartyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeasePartyRole[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LeaseAmendmentStatus'
+ */
+export type EnumLeaseAmendmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeaseAmendmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LeaseAmendmentStatus[]'
+ */
+export type ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeaseAmendmentStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2667,6 +2957,9 @@ export type GlobalOmitConfig = {
   viewingRequest?: Prisma.ViewingRequestOmit
   applicationNote?: Prisma.ApplicationNoteOmit
   lease?: Prisma.LeaseOmit
+  leaseTenant?: Prisma.LeaseTenantOmit
+  leaseSignature?: Prisma.LeaseSignatureOmit
+  leaseAmendment?: Prisma.LeaseAmendmentOmit
 }
 
 /* Types for Logging */

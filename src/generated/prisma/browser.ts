@@ -147,8 +147,38 @@ export type ApplicationNote = Prisma.ApplicationNoteModel
 /**
  * Model Lease
  * Lease contract between a tenant and an owner for a specific room.
- * Phase 12 ships the schema stub only — no row is inserted by the
- * APPROVED application transition (that's Phase 13's job). The
- * indexes are added in the migration SQL.
+ * Phase 12 shipped the schema stub; Phase 13 inserts the DRAFT row
+ * inside the APPROVED application's `$transaction` and exposes the
+ * full multi-party signing / activation / termination lifecycle.
+ * 
+ * `tenantId` is Phase-12 dead weight (a single-tenant placeholder
+ * default). The relational truth for tenancy now lives in the
+ * `LeaseTenant` rows; co-tenants live there too. Phase 14 will drop
+ * this column in a destructive migration.
+ * TODO(phase14): drop tenantId.
  */
 export type Lease = Prisma.LeaseModel
+/**
+ * Model LeaseTenant
+ * One tenant's stake in a lease. Composite PK matches the spec exactly.
+ * `is_primary` uniqueness is enforced as a PARTIAL UNIQUE index in the
+ * migration SQL (Prisma can't model partial uniques natively).
+ */
+export type LeaseTenant = Prisma.LeaseTenantModel
+/**
+ * Model LeaseSignature
+ * One row per (lease, signer). `UNIQUE(lease_id, signer_user_id)`
+ * gives free idempotency — the second `POST /sign` from the same
+ * party no-ops (caught at the service layer via the unique lookup).
+ * `signer_role` is denormalized at sign-time so audit-log readers
+ * don't need to join to `lease_tenants` to know who signed as
+ * TENANT vs OWNER.
+ */
+export type LeaseSignature = Prisma.LeaseSignatureModel
+/**
+ * Model LeaseAmendment
+ * A proposed amendment to a lease (rent change, end-date change,
+ * terms). Phase 13 only stores a JSON `payload` — Phase 14+ defines
+ * the real shape per spec.
+ */
+export type LeaseAmendment = Prisma.LeaseAmendmentModel

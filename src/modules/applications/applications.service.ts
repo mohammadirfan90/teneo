@@ -462,7 +462,11 @@ export async function transitionApplication(
  *   2. Re-validate the application with the version guard.
  *   3. Bulk-reject siblings in the active set.
  *   4. Flip the room to RESERVED.
- *   5. Audit + outbox in the same tx.
+ *   5. **Phase 13 retrofit**: insert a lease draft row + primary
+ *      lease_tenants row (nested create) inside the same tx so lease
+ *      creation is atomic with the application approval per spec
+ *      §7.5.1.
+ *   6. Audit + outbox (now including lease.draft_created) in the same tx.
  *
  * If the room is already RESERVED (another application won the race),
  * we surface 409 STATE_MACHINE.
@@ -533,13 +537,60 @@ async function transitionToApproved(
       },
     });
 
-    // Audit + outbox.
-    const ownerId = await tx.room
-      .findUnique({
-        where: { id: existing.roomId },
-        select: { property: { select: { ownerUserId: true } } },
-      })
-      .then((r) => r?.property.ownerUserId ?? null);
+    // Phase 13 — snapshot the room for the lease draft + insert
+    // lease + primary lease_tenants row in one nested create. The
+    // partial UNIQUE `leases_room_active_uniq` from Phase 12 prevents
+    // race collisions; the partial UNIQUE
+    // `lease_tenants_one_primary_per_lease` ensures only one primary
+    // per lease. The ownerId lookup at the bottom of this function
+    // is reused from this row read — no second query needed.
+    const roomForLease = await tx.room.findUnique({
+      where: { id: existing.roomId },
+      select: {
+        baseRentMinor: true,
+        depositMinor: true,
+        currency: true,
+        minLeaseMonths: true,
+        property: { select: { ownerUserId: true } },
+      },
+    });
+    if (!roomForLease) {
+      throw new NotFoundError('Room vanished mid-transaction');
+    }
+
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const leaseEnd = new Date(today);
+    leaseEnd.setUTCMonth(leaseEnd.getUTCMonth() + (roomForLease.minLeaseMonths ?? 12));
+
+    const lease = await tx.lease.create({
+      data: {
+        roomId: existing.roomId,
+        ownerUserId: roomForLease.property.ownerUserId,
+        primaryTenantUserId: existing.tenantUserId,
+        startDate: today,
+        endDate: leaseEnd,
+        rentMinor: roomForLease.baseRentMinor,
+        depositMinor: roomForLease.depositMinor,
+        currency: roomForLease.currency,
+        status: 'DRAFT',
+        tenants: {
+          create: [
+            {
+              tenantUserId: existing.tenantUserId,
+              isPrimary: true,
+              liabilityShare: '100.00',
+            },
+          ],
+        },
+      },
+      select: { id: true },
+    });
+
+    // Audit + outbox. We now have ownerId from roomForLease (no extra
+    // query needed).
+    const ownerId = roomForLease.property.ownerUserId;
+    const leaseId = lease.id;
 
     await tx.auditLog.create({
       data: {
@@ -552,10 +603,38 @@ async function transitionToApproved(
         after: { status: 'APPROVED' },
       },
     });
+    await tx.auditLog.create({
+      data: {
+        actorUserId: callerUserId,
+        actorRole: 'OWNER',
+        action: 'lease.draft_created',
+        targetEntityType: 'lease',
+        targetEntityId: leaseId,
+        before: Prisma.JsonNull,
+        after: {
+          applicationId,
+          roomId: existing.roomId,
+          tenantUserId: existing.tenantUserId,
+        },
+      },
+    });
     await tx.outboxEvent.create({
       data: {
         eventType: 'application.approved',
         payload: {
+          applicationId,
+          roomId: existing.roomId,
+          tenantUserId: existing.tenantUserId,
+          ownerUserId: ownerId,
+          leaseId,
+        } as Prisma.InputJsonValue,
+      },
+    });
+    await tx.outboxEvent.create({
+      data: {
+        eventType: 'lease.draft_created',
+        payload: {
+          leaseId,
           applicationId,
           roomId: existing.roomId,
           tenantUserId: existing.tenantUserId,

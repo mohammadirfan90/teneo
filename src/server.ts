@@ -20,6 +20,7 @@ import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
 import { applicationsRouter } from '@/modules/applications/applications.routes';
 import { viewingsRouter } from '@/modules/applications/viewings.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
+import { leasesRouter } from '@/modules/leases/leases.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
 import { flatsRouter } from '@/modules/properties/flats.routes';
@@ -200,6 +201,11 @@ export function createApp(): express.Express {
   // rate limiter applies uniformly. Order matters only for readability.
   app.use('/api/v1/applications', authenticatedRateLimiter, applicationsRouter());
   app.use('/api/v1/viewings', authenticatedRateLimiter, viewingsRouter());
+
+  // ── Phase 13: leases + counterparty signing + document + amendments ─
+  // Multi-party resource: all transition routes layer requireLeaseParty
+  // on top of role gates. /me uses requireAuth only.
+  app.use('/api/v1/leases', authenticatedRateLimiter, leasesRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

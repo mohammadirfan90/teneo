@@ -167,6 +167,9 @@ model User {
   savedSearches  SavedSearch[]
   applications   Application[]
   viewingRequests ViewingRequest[]
+  leaseTenancies    LeaseTenant[]
+  leaseSignatures   LeaseSignature[]
+  leaseAmendments   LeaseAmendment[]
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -597,6 +600,19 @@ enum UtilitySplitMode {
   CUSTOM
 }
 
+/// Role a signer played when signing a lease (Phase 13).
+enum LeasePartyRole {
+  OWNER
+  TENANT
+}
+
+/// Lifecycle of a lease amendment proposal (Phase 13 stub).
+enum LeaseAmendmentStatus {
+  PROPOSED
+  SIGNED
+  REJECTED
+}
+
 // ──────────────────────────────────────────────────────────────────────
 // Phase 12: Application model (04 §4.3.4, 05 §5.5)
 // ──────────────────────────────────────────────────────────────────────
@@ -692,9 +708,15 @@ model ApplicationNote {
 // ──────────────────────────────────────────────────────────────────────
 
 /// Lease contract between a tenant and an owner for a specific room.
-/// Phase 12 ships the schema stub only — no row is inserted by the
-/// APPROVED application transition (that's Phase 13's job). The
-/// indexes are added in the migration SQL.
+/// Phase 12 shipped the schema stub; Phase 13 inserts the DRAFT row
+/// inside the APPROVED application's `$transaction` and exposes the
+/// full multi-party signing / activation / termination lifecycle.
+///
+/// `tenantId` is Phase-12 dead weight (a single-tenant placeholder
+/// default). The relational truth for tenancy now lives in the
+/// `LeaseTenant` rows; co-tenants live there too. Phase 14 will drop
+/// this column in a destructive migration.
+/// TODO(phase14): drop tenantId.
 model Lease {
   id                   String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   roomId               String         @map("room_id") @db.Uuid
@@ -716,7 +738,84 @@ model Lease {
   createdAt            DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt            DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
 
+  tenants    LeaseTenant[]
+  signatures LeaseSignature[]
+  amendments LeaseAmendment[]
+
   @@index([roomId, status], name: "leases_room_status_idx")
   @@index([ownerUserId, status], name: "leases_owner_status_idx")
   @@map("leases")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 13: LeaseTenant (co-tenants per spec 04 §4.3.4)
+// ──────────────────────────────────────────────────────────────────────
+
+/// One tenant's stake in a lease. Composite PK matches the spec exactly.
+/// `is_primary` uniqueness is enforced as a PARTIAL UNIQUE index in the
+/// migration SQL (Prisma can't model partial uniques natively).
+model LeaseTenant {
+  leaseId        String   @map("lease_id") @db.Uuid
+  tenantUserId   String   @map("tenant_user_id") @db.Uuid
+  isPrimary      Boolean  @default(false) @map("is_primary")
+  liabilityShare Decimal  @map("liability_share") @db.Decimal(5, 2)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  lease  Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
+  tenant User  @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+
+  @@id([leaseId, tenantUserId])
+  @@unique([leaseId, isPrimary], name: "lease_tenants_one_primary_per_lease")
+  @@index([tenantUserId], name: "lease_tenants_tenant_idx")
+  @@map("lease_tenants")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 13: LeaseSignature (multi-party signing tracker)
+// ──────────────────────────────────────────────────────────────────────
+
+/// One row per (lease, signer). `UNIQUE(lease_id, signer_user_id)`
+/// gives free idempotency — the second `POST /sign` from the same
+/// party no-ops (caught at the service layer via the unique lookup).
+/// `signer_role` is denormalized at sign-time so audit-log readers
+/// don't need to join to `lease_tenants` to know who signed as
+/// TENANT vs OWNER.
+model LeaseSignature {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  leaseId      String         @map("lease_id") @db.Uuid
+  signerUserId String         @map("signer_user_id") @db.Uuid
+  signerRole   LeasePartyRole @map("signer_role")
+  signedAt     DateTime       @default(now()) @map("signed_at") @db.Timestamptz(6)
+  ipAddress    String?        @map("ip_address")
+  userAgent    String?        @map("user_agent")
+
+  lease  Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
+  signer User  @relation(fields: [signerUserId], references: [id], onDelete: Cascade)
+
+  @@unique([leaseId, signerUserId], name: "lease_signatures_lease_signer_uq")
+  @@index([leaseId], name: "lease_signatures_lease_idx")
+  @@map("lease_signatures")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 13: LeaseAmendment (stub for /amend + /amendments/:aid/sign)
+// ──────────────────────────────────────────────────────────────────────
+
+/// A proposed amendment to a lease (rent change, end-date change,
+/// terms). Phase 13 only stores a JSON `payload` — Phase 14+ defines
+/// the real shape per spec.
+model LeaseAmendment {
+  id               String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  leaseId          String               @map("lease_id") @db.Uuid
+  proposedByUserId String               @map("proposed_by_user_id") @db.Uuid
+  status           LeaseAmendmentStatus @default(PROPOSED)
+  payload          Json                 @map("payload")
+  createdAt        DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  signedAt         DateTime?            @map("signed_at") @db.Timestamptz(6)
+
+  lease     Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
+  proposedBy User @relation(fields: [proposedByUserId], references: [id], onDelete: Cascade)
+
+  @@index([leaseId], name: "lease_amendments_lease_idx")
+  @@map("lease_amendments")
 }
