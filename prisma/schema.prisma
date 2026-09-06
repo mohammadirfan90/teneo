@@ -165,6 +165,8 @@ model User {
   refreshTokens  RefreshToken[]
   properties     Property[]
   savedSearches  SavedSearch[]
+  applications   Application[]
+  viewingRequests ViewingRequest[]
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -511,6 +513,8 @@ model Room {
 
   property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   flat     Flat?    @relation(fields: [flatId], references: [id], onDelete: SetNull)
+  applications    Application[]
+  viewingRequests ViewingRequest[]
 
   // Full index set (incl. status/available_from, GIN(amenities)) lives in
   // the migration SQL since Prisma can't express composite/partial/GIN
@@ -544,4 +548,175 @@ model SavedSearch {
 
   @@index([userId], name: "saved_searches_user_idx")
   @@map("saved_searches")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 10: property hierarchy relations update (rooms/applications/viewings)
+// ──────────────────────────────────────────────────────────────────────
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 12: Applications + ViewingRequests + ApplicationNotes enums (13
+// §13.2.5, 04 §4.3.4, 05 §5.5)
+// ──────────────────────────────────────────────────────────────────────
+
+/// Application lifecycle (05 §5.5).
+enum ApplicationStatus {
+  SUBMITTED
+  SCREENING
+  VIEWING_SCHEDULED
+  SHORTLISTED
+  APPROVED
+  REJECTED
+  WITHDRAWN
+  CANCELLED
+}
+
+/// Viewing request lifecycle.
+enum ViewingStatus {
+  REQUESTED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+/// Lease lifecycle (Phase 13 will own the API surface; Phase 12 ships the
+/// schema stub only — the APPROVED transition does NOT create a row in
+/// Phase 12).
+enum LeaseStatus {
+  DRAFT
+  SIGNED
+  ACTIVE
+  ENDED
+  TERMINATED
+}
+
+/// How rent + utilities are split across co-tenants (04 §4.3.4).
+enum UtilitySplitMode {
+  EQUAL
+  PROPORTIONAL
+  CUSTOM
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 12: Application model (04 §4.3.4, 05 §5.5)
+// ──────────────────────────────────────────────────────────────────────
+
+/// A tenant's application for a room. Lifecycle is governed by
+/// `applications.state-machine.ts` (Phase 12). The partial unique
+/// index `(room_id, tenant_user_id) WHERE status IN (...)` enforces
+/// "at most one active application per (room, tenant)" — see migration
+/// SQL.
+model Application {
+  id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roomId          String            @map("room_id") @db.Uuid
+  tenantUserId    String            @map("tenant_user_id") @db.Uuid
+  message         String?
+  status          ApplicationStatus @default(SUBMITTED)
+  submittedAt     DateTime          @default(now()) @map("submitted_at") @db.Timestamptz(6)
+  decidedAt       DateTime?         @map("decided_at") @db.Timestamptz(6)
+  decidedByUserId String?           @map("decided_by_user_id") @db.Uuid
+  /// Optimistic-concurrency version (05 §5.6). Every transition
+  /// increments this; UPDATE WHERE version=? guards against lost
+  /// updates from concurrent owner clicks.
+  version         Int               @default(0)
+  tenantId        String            @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt       DateTime?         @map("deleted_at") @db.Timestamptz(6)
+
+  room        Room               @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  tenant      User               @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+  viewings    ViewingRequest[]
+  notes       ApplicationNote[]
+
+  // Prisma-tracked indexes; the critical partial UNIQUE on active
+  // applications lives in the migration SQL.
+  @@index([roomId, status], name: "applications_room_status_idx")
+  @@index([tenantUserId, status], name: "applications_tenant_status_idx")
+  @@index([decidedByUserId], name: "applications_decided_by_idx")
+  @@map("applications")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 12: ViewingRequest model (04 §4.3.4)
+// ──────────────────────────────────────────────────────────────────────
+
+/// A viewing proposed by the room owner. The owner creates the row
+/// with one or more `proposedSlots[]`; tenant (or owner) later picks
+/// one to set `confirmedSlot`. Cancel by either party.
+model ViewingRequest {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  applicationId  String?       @map("application_id") @db.Uuid
+  roomId         String        @map("room_id") @db.Uuid
+  tenantUserId   String        @map("tenant_user_id") @db.Uuid
+  proposedSlots  DateTime[]    @map("proposed_slots") @db.Timestamptz(6)
+  confirmedSlot  DateTime?     @map("confirmed_slot") @db.Timestamptz(6)
+  status         ViewingStatus @default(REQUESTED)
+  /// Optional human-readable reason (cancellation, etc.).
+  reason         String?
+  tenantId       String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  application Application? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  room        Room         @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  tenant      User         @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+
+  @@index([roomId, status], name: "viewing_requests_room_status_idx")
+  @@index([tenantUserId, status], name: "viewing_requests_tenant_status_idx")
+  @@map("viewing_requests")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 12: ApplicationNote (owner-only private notes on an application)
+// ──────────────────────────────────────────────────────────────────────
+
+/// Free-text notes the owner attaches to an application for screening
+/// memory. Owners can only see their own; tenants can never read these.
+model ApplicationNote {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  applicationId String   @map("application_id") @db.Uuid
+  authorUserId  String   @map("author_user_id") @db.Uuid
+  note          String
+  tenantId      String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([applicationId, createdAt(sort: Desc)], name: "application_notes_app_idx")
+  @@map("application_notes")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 12: Lease stub (Phase 13 owns the API surface; schema only here)
+// ──────────────────────────────────────────────────────────────────────
+
+/// Lease contract between a tenant and an owner for a specific room.
+/// Phase 12 ships the schema stub only — no row is inserted by the
+/// APPROVED application transition (that's Phase 13's job). The
+/// indexes are added in the migration SQL.
+model Lease {
+  id                   String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roomId               String         @map("room_id") @db.Uuid
+  ownerUserId          String         @map("owner_user_id") @db.Uuid
+  primaryTenantUserId  String         @map("primary_tenant_user_id") @db.Uuid
+  startDate            DateTime       @map("start_date") @db.Date
+  endDate              DateTime       @map("end_date") @db.Date
+  rentMinor            BigInt         @map("rent_minor")
+  depositMinor         BigInt         @map("deposit_minor")
+  currency             String         @db.Char(3)
+  lateFeePolicy        Json?          @map("late_fee_policy")
+  utilitySplitMode     UtilitySplitMode @default(EQUAL) @map("utility_split_mode")
+  status               LeaseStatus    @default(DRAFT)
+  signedAt             DateTime?      @map("signed_at") @db.Timestamptz(6)
+  activatedAt          DateTime?      @map("activated_at") @db.Timestamptz(6)
+  endedAt              DateTime?      @map("ended_at") @db.Timestamptz(6)
+  contractObjectKey    String?        @map("contract_object_key")
+  tenantId             String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt            DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([roomId, status], name: "leases_room_status_idx")
+  @@index([ownerUserId, status], name: "leases_owner_status_idx")
+  @@map("leases")
 }

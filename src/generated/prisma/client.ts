@@ -144,3 +144,33 @@ export type Room = Prisma.RoomModel
  * 11 only persists the search.
  */
 export type SavedSearch = Prisma.SavedSearchModel
+/**
+ * Model Application
+ * A tenant's application for a room. Lifecycle is governed by
+ * `applications.state-machine.ts` (Phase 12). The partial unique
+ * index `(room_id, tenant_user_id) WHERE status IN (...)` enforces
+ * "at most one active application per (room, tenant)" — see migration
+ * SQL.
+ */
+export type Application = Prisma.ApplicationModel
+/**
+ * Model ViewingRequest
+ * A viewing proposed by the room owner. The owner creates the row
+ * with one or more `proposedSlots[]`; tenant (or owner) later picks
+ * one to set `confirmedSlot`. Cancel by either party.
+ */
+export type ViewingRequest = Prisma.ViewingRequestModel
+/**
+ * Model ApplicationNote
+ * Free-text notes the owner attaches to an application for screening
+ * memory. Owners can only see their own; tenants can never read these.
+ */
+export type ApplicationNote = Prisma.ApplicationNoteModel
+/**
+ * Model Lease
+ * Lease contract between a tenant and an owner for a specific room.
+ * Phase 12 ships the schema stub only — no row is inserted by the
+ * APPROVED application transition (that's Phase 13's job). The
+ * indexes are added in the migration SQL.
+ */
+export type Lease = Prisma.LeaseModel

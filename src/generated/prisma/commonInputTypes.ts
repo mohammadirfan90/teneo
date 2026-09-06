@@ -626,6 +626,74 @@ export type EnumRoomStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumRoomStatusFilter<$PrismaModel>
 }
 
+export type EnumApplicationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationStatus | Prisma.EnumApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
+}
+
+export type EnumApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationStatus | Prisma.EnumApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApplicationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumApplicationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumApplicationStatusFilter<$PrismaModel>
+}
+
+export type EnumViewingStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ViewingStatus | Prisma.EnumViewingStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumViewingStatusFilter<$PrismaModel> | $Enums.ViewingStatus
+}
+
+export type EnumViewingStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ViewingStatus | Prisma.EnumViewingStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumViewingStatusWithAggregatesFilter<$PrismaModel> | $Enums.ViewingStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumViewingStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumViewingStatusFilter<$PrismaModel>
+}
+
+export type EnumUtilitySplitModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilitySplitMode | Prisma.EnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilitySplitModeFilter<$PrismaModel> | $Enums.UtilitySplitMode
+}
+
+export type EnumLeaseStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseStatus | Prisma.EnumLeaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel> | $Enums.LeaseStatus
+}
+
+export type EnumUtilitySplitModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilitySplitMode | Prisma.EnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilitySplitModeWithAggregatesFilter<$PrismaModel> | $Enums.UtilitySplitMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUtilitySplitModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUtilitySplitModeFilter<$PrismaModel>
+}
+
+export type EnumLeaseStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseStatus | Prisma.EnumLeaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeaseStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel>
+}
+
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1191,6 +1259,74 @@ export type NestedEnumRoomStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRoomStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRoomStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumApplicationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationStatus | Prisma.EnumApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
+}
+
+export type NestedEnumApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ApplicationStatus | Prisma.EnumApplicationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ApplicationStatus[] | Prisma.ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApplicationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumApplicationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumApplicationStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumViewingStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ViewingStatus | Prisma.EnumViewingStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumViewingStatusFilter<$PrismaModel> | $Enums.ViewingStatus
+}
+
+export type NestedEnumViewingStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ViewingStatus | Prisma.EnumViewingStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ViewingStatus[] | Prisma.ListEnumViewingStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumViewingStatusWithAggregatesFilter<$PrismaModel> | $Enums.ViewingStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumViewingStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumViewingStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumUtilitySplitModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilitySplitMode | Prisma.EnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilitySplitModeFilter<$PrismaModel> | $Enums.UtilitySplitMode
+}
+
+export type NestedEnumLeaseStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseStatus | Prisma.EnumLeaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel> | $Enums.LeaseStatus
+}
+
+export type NestedEnumUtilitySplitModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilitySplitMode | Prisma.EnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilitySplitMode[] | Prisma.ListEnumUtilitySplitModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilitySplitModeWithAggregatesFilter<$PrismaModel> | $Enums.UtilitySplitMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUtilitySplitModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUtilitySplitModeFilter<$PrismaModel>
+}
+
+export type NestedEnumLeaseStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaseStatus | Prisma.EnumLeaseStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaseStatus[] | Prisma.ListEnumLeaseStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaseStatusWithAggregatesFilter<$PrismaModel> | $Enums.LeaseStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeaseStatusFilter<$PrismaModel>
 }
 
 

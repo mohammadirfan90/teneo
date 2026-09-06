@@ -17,6 +17,8 @@ import { errorHandler } from '@/middleware/error-handler';
 import { notFoundHandler } from '@/middleware/not-found';
 import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
 import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
+import { applicationsRouter } from '@/modules/applications/applications.routes';
+import { viewingsRouter } from '@/modules/applications/viewings.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
@@ -192,6 +194,12 @@ export function createApp(): express.Express {
   // reject), then auth limiter so saved-search is always per-user.
   app.use('/api/v1/search', anonymousRateLimiter, searchPublicRouter());
   app.use('/api/v1/search', authenticatedRateLimiter, searchSavedRouter());
+
+  // ── Phase 12: applications + viewings + transitions ───────────────
+  // Both routers require auth (requireAuth lives inside). Per-role
+  // rate limiter applies uniformly. Order matters only for readability.
+  app.use('/api/v1/applications', authenticatedRateLimiter, applicationsRouter());
+  app.use('/api/v1/viewings', authenticatedRateLimiter, viewingsRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

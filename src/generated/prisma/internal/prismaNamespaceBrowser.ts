@@ -64,7 +64,11 @@ export const ModelName = {
   Building: 'Building',
   Flat: 'Flat',
   Room: 'Room',
-  SavedSearch: 'SavedSearch'
+  SavedSearch: 'SavedSearch',
+  Application: 'Application',
+  ViewingRequest: 'ViewingRequest',
+  ApplicationNote: 'ApplicationNote',
+  Lease: 'Lease'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -333,6 +337,79 @@ export const SavedSearchScalarFieldEnum = {
 } as const
 
 export type SavedSearchScalarFieldEnum = (typeof SavedSearchScalarFieldEnum)[keyof typeof SavedSearchScalarFieldEnum]
+
+
+export const ApplicationScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  tenantUserId: 'tenantUserId',
+  message: 'message',
+  status: 'status',
+  submittedAt: 'submittedAt',
+  decidedAt: 'decidedAt',
+  decidedByUserId: 'decidedByUserId',
+  version: 'version',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const ViewingRequestScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  roomId: 'roomId',
+  tenantUserId: 'tenantUserId',
+  proposedSlots: 'proposedSlots',
+  confirmedSlot: 'confirmedSlot',
+  status: 'status',
+  reason: 'reason',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ViewingRequestScalarFieldEnum = (typeof ViewingRequestScalarFieldEnum)[keyof typeof ViewingRequestScalarFieldEnum]
+
+
+export const ApplicationNoteScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  authorUserId: 'authorUserId',
+  note: 'note',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type ApplicationNoteScalarFieldEnum = (typeof ApplicationNoteScalarFieldEnum)[keyof typeof ApplicationNoteScalarFieldEnum]
+
+
+export const LeaseScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  ownerUserId: 'ownerUserId',
+  primaryTenantUserId: 'primaryTenantUserId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  rentMinor: 'rentMinor',
+  depositMinor: 'depositMinor',
+  currency: 'currency',
+  lateFeePolicy: 'lateFeePolicy',
+  utilitySplitMode: 'utilitySplitMode',
+  status: 'status',
+  signedAt: 'signedAt',
+  activatedAt: 'activatedAt',
+  endedAt: 'endedAt',
+  contractObjectKey: 'contractObjectKey',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LeaseScalarFieldEnum = (typeof LeaseScalarFieldEnum)[keyof typeof LeaseScalarFieldEnum]
 
 
 export const SortOrder = {

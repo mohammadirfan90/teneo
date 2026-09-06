@@ -379,6 +379,8 @@ export type RoomWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   flat?: Prisma.XOR<Prisma.FlatNullableScalarRelationFilter, Prisma.FlatWhereInput> | null
+  applications?: Prisma.ApplicationListRelationFilter
+  viewingRequests?: Prisma.ViewingRequestListRelationFilter
 }
 
 export type RoomOrderByWithRelationInput = {
@@ -406,6 +408,8 @@ export type RoomOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   property?: Prisma.PropertyOrderByWithRelationInput
   flat?: Prisma.FlatOrderByWithRelationInput
+  applications?: Prisma.ApplicationOrderByRelationAggregateInput
+  viewingRequests?: Prisma.ViewingRequestOrderByRelationAggregateInput
 }
 
 export type RoomWhereUniqueInput = Prisma.AtLeast<{
@@ -436,6 +440,8 @@ export type RoomWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   flat?: Prisma.XOR<Prisma.FlatNullableScalarRelationFilter, Prisma.FlatWhereInput> | null
+  applications?: Prisma.ApplicationListRelationFilter
+  viewingRequests?: Prisma.ViewingRequestListRelationFilter
 }, "id">
 
 export type RoomOrderByWithAggregationInput = {
@@ -519,6 +525,8 @@ export type RoomCreateInput = {
   deletedAt?: Date | string | null
   property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
   flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateInput = {
@@ -544,6 +552,8 @@ export type RoomUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUpdateInput = {
@@ -569,6 +579,8 @@ export type RoomUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
   flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateInput = {
@@ -594,6 +606,8 @@ export type RoomUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomCreateManyInput = {
@@ -772,6 +786,11 @@ export type RoomSumOrderByAggregateInput = {
   version?: Prisma.SortOrder
 }
 
+export type RoomScalarRelationFilter = {
+  is?: Prisma.RoomWhereInput
+  isNot?: Prisma.RoomWhereInput
+}
+
 export type RoomCreateNestedManyWithoutPropertyInput = {
   create?: Prisma.XOR<Prisma.RoomCreateWithoutPropertyInput, Prisma.RoomUncheckedCreateWithoutPropertyInput> | Prisma.RoomCreateWithoutPropertyInput[] | Prisma.RoomUncheckedCreateWithoutPropertyInput[]
   connectOrCreate?: Prisma.RoomCreateOrConnectWithoutPropertyInput | Prisma.RoomCreateOrConnectWithoutPropertyInput[]
@@ -881,6 +900,34 @@ export type EnumRoomStatusFieldUpdateOperationsInput = {
   set?: $Enums.RoomStatus
 }
 
+export type RoomCreateNestedOneWithoutApplicationsInput = {
+  create?: Prisma.XOR<Prisma.RoomCreateWithoutApplicationsInput, Prisma.RoomUncheckedCreateWithoutApplicationsInput>
+  connectOrCreate?: Prisma.RoomCreateOrConnectWithoutApplicationsInput
+  connect?: Prisma.RoomWhereUniqueInput
+}
+
+export type RoomUpdateOneRequiredWithoutApplicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.RoomCreateWithoutApplicationsInput, Prisma.RoomUncheckedCreateWithoutApplicationsInput>
+  connectOrCreate?: Prisma.RoomCreateOrConnectWithoutApplicationsInput
+  upsert?: Prisma.RoomUpsertWithoutApplicationsInput
+  connect?: Prisma.RoomWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RoomUpdateToOneWithWhereWithoutApplicationsInput, Prisma.RoomUpdateWithoutApplicationsInput>, Prisma.RoomUncheckedUpdateWithoutApplicationsInput>
+}
+
+export type RoomCreateNestedOneWithoutViewingRequestsInput = {
+  create?: Prisma.XOR<Prisma.RoomCreateWithoutViewingRequestsInput, Prisma.RoomUncheckedCreateWithoutViewingRequestsInput>
+  connectOrCreate?: Prisma.RoomCreateOrConnectWithoutViewingRequestsInput
+  connect?: Prisma.RoomWhereUniqueInput
+}
+
+export type RoomUpdateOneRequiredWithoutViewingRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.RoomCreateWithoutViewingRequestsInput, Prisma.RoomUncheckedCreateWithoutViewingRequestsInput>
+  connectOrCreate?: Prisma.RoomCreateOrConnectWithoutViewingRequestsInput
+  upsert?: Prisma.RoomUpsertWithoutViewingRequestsInput
+  connect?: Prisma.RoomWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RoomUpdateToOneWithWhereWithoutViewingRequestsInput, Prisma.RoomUpdateWithoutViewingRequestsInput>, Prisma.RoomUncheckedUpdateWithoutViewingRequestsInput>
+}
+
 export type RoomCreateWithoutPropertyInput = {
   id?: string
   label: string
@@ -903,6 +950,8 @@ export type RoomCreateWithoutPropertyInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateWithoutPropertyInput = {
@@ -927,6 +976,8 @@ export type RoomUncheckedCreateWithoutPropertyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomCreateOrConnectWithoutPropertyInput = {
@@ -1005,6 +1056,8 @@ export type RoomCreateWithoutFlatInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateWithoutFlatInput = {
@@ -1029,6 +1082,8 @@ export type RoomUncheckedCreateWithoutFlatInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomCreateOrConnectWithoutFlatInput = {
@@ -1055,6 +1110,246 @@ export type RoomUpdateWithWhereUniqueWithoutFlatInput = {
 export type RoomUpdateManyWithWhereWithoutFlatInput = {
   where: Prisma.RoomScalarWhereInput
   data: Prisma.XOR<Prisma.RoomUpdateManyMutationInput, Prisma.RoomUncheckedUpdateManyWithoutFlatInput>
+}
+
+export type RoomCreateWithoutApplicationsInput = {
+  id?: string
+  label: string
+  roomType: $Enums.RoomType
+  sizeSqft?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: number
+  baseRentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  billsIncluded?: boolean
+  amenities?: Prisma.RoomCreateamenitiesInput | string[]
+  status?: $Enums.RoomStatus
+  availableFrom?: Date | string | null
+  minLeaseMonths?: number | null
+  maxLeaseMonths?: number | null
+  rules?: string | null
+  version?: number
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
+  flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
+}
+
+export type RoomUncheckedCreateWithoutApplicationsInput = {
+  id?: string
+  propertyId: string
+  flatId?: string | null
+  label: string
+  roomType: $Enums.RoomType
+  sizeSqft?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: number
+  baseRentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  billsIncluded?: boolean
+  amenities?: Prisma.RoomCreateamenitiesInput | string[]
+  status?: $Enums.RoomStatus
+  availableFrom?: Date | string | null
+  minLeaseMonths?: number | null
+  maxLeaseMonths?: number | null
+  rules?: string | null
+  version?: number
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
+}
+
+export type RoomCreateOrConnectWithoutApplicationsInput = {
+  where: Prisma.RoomWhereUniqueInput
+  create: Prisma.XOR<Prisma.RoomCreateWithoutApplicationsInput, Prisma.RoomUncheckedCreateWithoutApplicationsInput>
+}
+
+export type RoomUpsertWithoutApplicationsInput = {
+  update: Prisma.XOR<Prisma.RoomUpdateWithoutApplicationsInput, Prisma.RoomUncheckedUpdateWithoutApplicationsInput>
+  create: Prisma.XOR<Prisma.RoomCreateWithoutApplicationsInput, Prisma.RoomUncheckedCreateWithoutApplicationsInput>
+  where?: Prisma.RoomWhereInput
+}
+
+export type RoomUpdateToOneWithWhereWithoutApplicationsInput = {
+  where?: Prisma.RoomWhereInput
+  data: Prisma.XOR<Prisma.RoomUpdateWithoutApplicationsInput, Prisma.RoomUncheckedUpdateWithoutApplicationsInput>
+}
+
+export type RoomUpdateWithoutApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  roomType?: Prisma.EnumRoomTypeFieldUpdateOperationsInput | $Enums.RoomType
+  sizeSqft?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: Prisma.IntFieldUpdateOperationsInput | number
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  billsIncluded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amenities?: Prisma.RoomUpdateamenitiesInput | string[]
+  status?: Prisma.EnumRoomStatusFieldUpdateOperationsInput | $Enums.RoomStatus
+  availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
+  flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
+}
+
+export type RoomUncheckedUpdateWithoutApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  flatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  roomType?: Prisma.EnumRoomTypeFieldUpdateOperationsInput | $Enums.RoomType
+  sizeSqft?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: Prisma.IntFieldUpdateOperationsInput | number
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  billsIncluded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amenities?: Prisma.RoomUpdateamenitiesInput | string[]
+  status?: Prisma.EnumRoomStatusFieldUpdateOperationsInput | $Enums.RoomStatus
+  availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
+}
+
+export type RoomCreateWithoutViewingRequestsInput = {
+  id?: string
+  label: string
+  roomType: $Enums.RoomType
+  sizeSqft?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: number
+  baseRentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  billsIncluded?: boolean
+  amenities?: Prisma.RoomCreateamenitiesInput | string[]
+  status?: $Enums.RoomStatus
+  availableFrom?: Date | string | null
+  minLeaseMonths?: number | null
+  maxLeaseMonths?: number | null
+  rules?: string | null
+  version?: number
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
+  flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
+}
+
+export type RoomUncheckedCreateWithoutViewingRequestsInput = {
+  id?: string
+  propertyId: string
+  flatId?: string | null
+  label: string
+  roomType: $Enums.RoomType
+  sizeSqft?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: number
+  baseRentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  billsIncluded?: boolean
+  amenities?: Prisma.RoomCreateamenitiesInput | string[]
+  status?: $Enums.RoomStatus
+  availableFrom?: Date | string | null
+  minLeaseMonths?: number | null
+  maxLeaseMonths?: number | null
+  rules?: string | null
+  version?: number
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
+}
+
+export type RoomCreateOrConnectWithoutViewingRequestsInput = {
+  where: Prisma.RoomWhereUniqueInput
+  create: Prisma.XOR<Prisma.RoomCreateWithoutViewingRequestsInput, Prisma.RoomUncheckedCreateWithoutViewingRequestsInput>
+}
+
+export type RoomUpsertWithoutViewingRequestsInput = {
+  update: Prisma.XOR<Prisma.RoomUpdateWithoutViewingRequestsInput, Prisma.RoomUncheckedUpdateWithoutViewingRequestsInput>
+  create: Prisma.XOR<Prisma.RoomCreateWithoutViewingRequestsInput, Prisma.RoomUncheckedCreateWithoutViewingRequestsInput>
+  where?: Prisma.RoomWhereInput
+}
+
+export type RoomUpdateToOneWithWhereWithoutViewingRequestsInput = {
+  where?: Prisma.RoomWhereInput
+  data: Prisma.XOR<Prisma.RoomUpdateWithoutViewingRequestsInput, Prisma.RoomUncheckedUpdateWithoutViewingRequestsInput>
+}
+
+export type RoomUpdateWithoutViewingRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  roomType?: Prisma.EnumRoomTypeFieldUpdateOperationsInput | $Enums.RoomType
+  sizeSqft?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: Prisma.IntFieldUpdateOperationsInput | number
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  billsIncluded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amenities?: Prisma.RoomUpdateamenitiesInput | string[]
+  status?: Prisma.EnumRoomStatusFieldUpdateOperationsInput | $Enums.RoomStatus
+  availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
+  flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
+}
+
+export type RoomUncheckedUpdateWithoutViewingRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  flatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  roomType?: Prisma.EnumRoomTypeFieldUpdateOperationsInput | $Enums.RoomType
+  sizeSqft?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: Prisma.IntFieldUpdateOperationsInput | number
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  billsIncluded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amenities?: Prisma.RoomUpdateamenitiesInput | string[]
+  status?: Prisma.EnumRoomStatusFieldUpdateOperationsInput | $Enums.RoomStatus
+  availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomCreateManyPropertyInput = {
@@ -1103,6 +1398,8 @@ export type RoomUpdateWithoutPropertyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateWithoutPropertyInput = {
@@ -1127,6 +1424,8 @@ export type RoomUncheckedUpdateWithoutPropertyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateManyWithoutPropertyInput = {
@@ -1199,6 +1498,8 @@ export type RoomUpdateWithoutFlatInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateWithoutFlatInput = {
@@ -1223,6 +1524,8 @@ export type RoomUncheckedUpdateWithoutFlatInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateManyWithoutFlatInput = {
@@ -1250,6 +1553,44 @@ export type RoomUncheckedUpdateManyWithoutFlatInput = {
 }
 
 
+/**
+ * Count Type RoomCountOutputType
+ */
+
+export type RoomCountOutputType = {
+  applications: number
+  viewingRequests: number
+}
+
+export type RoomCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  applications?: boolean | RoomCountOutputTypeCountApplicationsArgs
+  viewingRequests?: boolean | RoomCountOutputTypeCountViewingRequestsArgs
+}
+
+/**
+ * RoomCountOutputType without action
+ */
+export type RoomCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RoomCountOutputType
+   */
+  select?: Prisma.RoomCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * RoomCountOutputType without action
+ */
+export type RoomCountOutputTypeCountApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ApplicationWhereInput
+}
+
+/**
+ * RoomCountOutputType without action
+ */
+export type RoomCountOutputTypeCountViewingRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ViewingRequestWhereInput
+}
+
 
 export type RoomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1276,6 +1617,9 @@ export type RoomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   deletedAt?: boolean
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   flat?: boolean | Prisma.Room$flatArgs<ExtArgs>
+  applications?: boolean | Prisma.Room$applicationsArgs<ExtArgs>
+  viewingRequests?: boolean | Prisma.Room$viewingRequestsArgs<ExtArgs>
+  _count?: boolean | Prisma.RoomCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["room"]>
 
 export type RoomSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1361,6 +1705,9 @@ export type RoomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type RoomInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   flat?: boolean | Prisma.Room$flatArgs<ExtArgs>
+  applications?: boolean | Prisma.Room$applicationsArgs<ExtArgs>
+  viewingRequests?: boolean | Prisma.Room$viewingRequestsArgs<ExtArgs>
+  _count?: boolean | Prisma.RoomCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RoomIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
@@ -1376,6 +1723,8 @@ export type $RoomPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     property: Prisma.$PropertyPayload<ExtArgs>
     flat: Prisma.$FlatPayload<ExtArgs> | null
+    applications: Prisma.$ApplicationPayload<ExtArgs>[]
+    viewingRequests: Prisma.$ViewingRequestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1817,6 +2166,8 @@ export interface Prisma__RoomClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   flat<T extends Prisma.Room$flatArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Room$flatArgs<ExtArgs>>): Prisma.Prisma__FlatClient<runtime.Types.Result.GetResult<Prisma.$FlatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  applications<T extends Prisma.Room$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Room$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  viewingRequests<T extends Prisma.Room$viewingRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Room$viewingRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ViewingRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2285,6 +2636,54 @@ export type Room$flatArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    */
   include?: Prisma.FlatInclude<ExtArgs> | null
   where?: Prisma.FlatWhereInput
+}
+
+/**
+ * Room.applications
+ */
+export type Room$applicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Application
+   */
+  select?: Prisma.ApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Application
+   */
+  omit?: Prisma.ApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApplicationInclude<ExtArgs> | null
+  where?: Prisma.ApplicationWhereInput
+  orderBy?: Prisma.ApplicationOrderByWithRelationInput | Prisma.ApplicationOrderByWithRelationInput[]
+  cursor?: Prisma.ApplicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+}
+
+/**
+ * Room.viewingRequests
+ */
+export type Room$viewingRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ViewingRequest
+   */
+  select?: Prisma.ViewingRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ViewingRequest
+   */
+  omit?: Prisma.ViewingRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ViewingRequestInclude<ExtArgs> | null
+  where?: Prisma.ViewingRequestWhereInput
+  orderBy?: Prisma.ViewingRequestOrderByWithRelationInput | Prisma.ViewingRequestOrderByWithRelationInput[]
+  cursor?: Prisma.ViewingRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ViewingRequestScalarFieldEnum | Prisma.ViewingRequestScalarFieldEnum[]
 }
 
 /**

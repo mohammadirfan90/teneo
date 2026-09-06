@@ -112,3 +112,47 @@ export const RoomStatus = {
 } as const
 
 export type RoomStatus = (typeof RoomStatus)[keyof typeof RoomStatus]
+
+
+export const ApplicationStatus = {
+  SUBMITTED: 'SUBMITTED',
+  SCREENING: 'SCREENING',
+  VIEWING_SCHEDULED: 'VIEWING_SCHEDULED',
+  SHORTLISTED: 'SHORTLISTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  WITHDRAWN: 'WITHDRAWN',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
+
+
+export const ViewingStatus = {
+  REQUESTED: 'REQUESTED',
+  CONFIRMED: 'CONFIRMED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ViewingStatus = (typeof ViewingStatus)[keyof typeof ViewingStatus]
+
+
+export const LeaseStatus = {
+  DRAFT: 'DRAFT',
+  SIGNED: 'SIGNED',
+  ACTIVE: 'ACTIVE',
+  ENDED: 'ENDED',
+  TERMINATED: 'TERMINATED'
+} as const
+
+export type LeaseStatus = (typeof LeaseStatus)[keyof typeof LeaseStatus]
+
+
+export const UtilitySplitMode = {
+  EQUAL: 'EQUAL',
+  PROPORTIONAL: 'PROPORTIONAL',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type UtilitySplitMode = (typeof UtilitySplitMode)[keyof typeof UtilitySplitMode]
