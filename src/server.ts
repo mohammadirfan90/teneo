@@ -19,6 +19,10 @@ import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rat
 import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
+import { buildingsRouter } from '@/modules/properties/buildings.routes';
+import { flatsRouter } from '@/modules/properties/flats.routes';
+import { propertiesRouter } from '@/modules/properties/properties.routes';
+import { roomsRouter } from '@/modules/properties/rooms.routes';
 import { preferencesRouter } from '@/modules/users/preferences.routes';
 import { profilesRouter } from '@/modules/users/profiles.routes';
 import { usersRouter } from '@/modules/users/users.routes';
@@ -171,6 +175,14 @@ export function createApp(): express.Express {
   // ── Phase 9: KYC submissions + admin review queue ────────────────
   // All KYC routes require auth (rate limit per role).
   app.use('/api/v1/kyc', authenticatedRateLimiter, kycRouter());
+
+  // ── Phase 10: properties + buildings + flats + rooms ──────────────
+  // All routes require auth; per-role limiter (publish + admin paths
+  // live behind `requireRole` in each router).
+  app.use('/api/v1/properties', authenticatedRateLimiter, propertiesRouter());
+  app.use('/api/v1/buildings', authenticatedRateLimiter, buildingsRouter());
+  app.use('/api/v1/flats', authenticatedRateLimiter, flatsRouter());
+  app.use('/api/v1/rooms', authenticatedRateLimiter, roomsRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

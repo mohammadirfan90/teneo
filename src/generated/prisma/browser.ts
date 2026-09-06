@@ -83,3 +83,34 @@ export type PreferencesTenant = Prisma.PreferencesTenantModel
  * relay worker that actually drains the queue.
  */
 export type OutboxEvent = Prisma.OutboxEventModel
+/**
+ * Model Property
+ * A property is the top of the owner-published hierarchy. It is the
+ * unit of address / geo and the unit of publication (POST /publish
+ * cascades to all draft rooms). Soft-deleted with `deletedAt` so the
+ * audit trail and history are preserved.
+ */
+export type Property = Prisma.PropertyModel
+/**
+ * Model Building
+ * Optional intermediate node between Property and Flat — used for
+ * BUILDING and VILLA property types. Cascade from property.
+ */
+export type Building = Prisma.BuildingModel
+/**
+ * Model Flat
+ * A flat within a building (or a standalone flat for STANDALONE_FLAT
+ * property type — in that case `building` is null and `propertyId` is
+ * reached through Room.propertyId). Cascade from building.
+ */
+export type Flat = Prisma.FlatModel
+/**
+ * Model Room
+ * The most-queried entity in the hierarchy. Carries the publish state
+ * machine (05 §5.4). `propertyId` is denormalized from flat → building
+ * → property to keep the spec's `INDEX(property_id)` query path fast
+ * (and to allow `STANDALONE_FLAT` rooms that have no Flat).
+ * `flatId` is nullable: rooms can outlive their flat (ON DELETE SET NULL)
+ * or live without one (standalone villa).
+ */
+export type Room = Prisma.RoomModel

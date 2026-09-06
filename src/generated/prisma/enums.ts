@@ -55,3 +55,60 @@ export const KycSubmissionStatus = {
 } as const
 
 export type KycSubmissionStatus = (typeof KycSubmissionStatus)[keyof typeof KycSubmissionStatus]
+
+
+export const PropertyStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  TAKEN_DOWN: 'TAKEN_DOWN'
+} as const
+
+export type PropertyStatus = (typeof PropertyStatus)[keyof typeof PropertyStatus]
+
+
+export const PropertyType = {
+  BUILDING: 'BUILDING',
+  VILLA: 'VILLA',
+  STANDALONE_FLAT: 'STANDALONE_FLAT'
+} as const
+
+export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
+
+
+export const BuildingStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type BuildingStatus = (typeof BuildingStatus)[keyof typeof BuildingStatus]
+
+
+export const FlatStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type FlatStatus = (typeof FlatStatus)[keyof typeof FlatStatus]
+
+
+export const RoomType = {
+  PRIVATE: 'PRIVATE',
+  SHARED: 'SHARED',
+  STUDIO: 'STUDIO',
+  ENTIRE_FLAT: 'ENTIRE_FLAT'
+} as const
+
+export type RoomType = (typeof RoomType)[keyof typeof RoomType]
+
+
+export const RoomStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  RESERVED: 'RESERVED',
+  OCCUPIED: 'OCCUPIED',
+  MAINTENANCE_CHECK: 'MAINTENANCE_CHECK',
+  MAINTENANCE: 'MAINTENANCE',
+  TAKEN_DOWN: 'TAKEN_DOWN'
+} as const
+
+export type RoomStatus = (typeof RoomStatus)[keyof typeof RoomStatus]

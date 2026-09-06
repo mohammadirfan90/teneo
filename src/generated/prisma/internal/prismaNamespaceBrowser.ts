@@ -59,7 +59,11 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   RefreshToken: 'RefreshToken',
   PreferencesTenant: 'PreferencesTenant',
-  OutboxEvent: 'OutboxEvent'
+  OutboxEvent: 'OutboxEvent',
+  Property: 'Property',
+  Building: 'Building',
+  Flat: 'Flat',
+  Room: 'Room'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -230,6 +234,90 @@ export const OutboxEventScalarFieldEnum = {
 } as const
 
 export type OutboxEventScalarFieldEnum = (typeof OutboxEventScalarFieldEnum)[keyof typeof OutboxEventScalarFieldEnum]
+
+
+export const PropertyScalarFieldEnum = {
+  id: 'id',
+  ownerUserId: 'ownerUserId',
+  title: 'title',
+  description: 'description',
+  addressLine1: 'addressLine1',
+  addressLine2: 'addressLine2',
+  city: 'city',
+  area: 'area',
+  postalCode: 'postalCode',
+  countryCode: 'countryCode',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  propertyType: 'propertyType',
+  status: 'status',
+  publishedAt: 'publishedAt',
+  version: 'version',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
+
+
+export const BuildingScalarFieldEnum = {
+  id: 'id',
+  propertyId: 'propertyId',
+  name: 'name',
+  floors: 'floors',
+  status: 'status',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type BuildingScalarFieldEnum = (typeof BuildingScalarFieldEnum)[keyof typeof BuildingScalarFieldEnum]
+
+
+export const FlatScalarFieldEnum = {
+  id: 'id',
+  buildingId: 'buildingId',
+  floor: 'floor',
+  doorNumber: 'doorNumber',
+  status: 'status',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type FlatScalarFieldEnum = (typeof FlatScalarFieldEnum)[keyof typeof FlatScalarFieldEnum]
+
+
+export const RoomScalarFieldEnum = {
+  id: 'id',
+  propertyId: 'propertyId',
+  flatId: 'flatId',
+  label: 'label',
+  roomType: 'roomType',
+  sizeSqft: 'sizeSqft',
+  maxOccupants: 'maxOccupants',
+  baseRentMinor: 'baseRentMinor',
+  depositMinor: 'depositMinor',
+  currency: 'currency',
+  billsIncluded: 'billsIncluded',
+  amenities: 'amenities',
+  status: 'status',
+  availableFrom: 'availableFrom',
+  minLeaseMonths: 'minLeaseMonths',
+  maxLeaseMonths: 'maxLeaseMonths',
+  rules: 'rules',
+  version: 'version',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
 
 
 export const SortOrder = {

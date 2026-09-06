@@ -83,6 +83,56 @@ enum KycSubmissionStatus {
 }
 
 // ──────────────────────────────────────────────────────────────────────
+// Phase 10: property hierarchy + publish state machine enums
+// ──────────────────────────────────────────────────────────────────────
+
+/// Lifecycle of a Property (04 §4.3.2).
+enum PropertyStatus {
+  DRAFT
+  PUBLISHED
+  TAKEN_DOWN
+}
+
+/// What shape the property has (04 §4.3.2).
+enum PropertyType {
+  BUILDING
+  VILLA
+  STANDALONE_FLAT
+}
+
+/// Lifecycle of a Building node in the property hierarchy. v1 only
+/// uses ACTIVE / ARCHIVED — soft-delete lives on the parent property.
+enum BuildingStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+/// Lifecycle of a Flat node. Same shape as Building.
+enum FlatStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+/// Room type per spec §4.3.2.
+enum RoomType {
+  PRIVATE
+  SHARED
+  STUDIO
+  ENTIRE_FLAT
+}
+
+/// Room state machine per spec §5.4.
+enum RoomStatus {
+  DRAFT
+  PUBLISHED
+  RESERVED
+  OCCUPIED
+  MAINTENANCE_CHECK
+  MAINTENANCE
+  TAKEN_DOWN
+}
+
+// ──────────────────────────────────────────────────────────────────────
 // Identity & Profiles (04 §4.3.1)
 // ──────────────────────────────────────────────────────────────────────
 
@@ -113,6 +163,7 @@ model User {
   tenantPreferences PreferencesTenant?
   kycSubmissions KycSubmission[]
   refreshTokens  RefreshToken[]
+  properties     Property[]
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -328,4 +379,144 @@ model OutboxEvent {
   @@index([dispatched, createdAt], name: "outbox_events_dispatch_idx")
   @@index([eventType, createdAt], name: "outbox_events_type_idx")
   @@map("outbox_events")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 10: property hierarchy + publish state machine (04 §4.3.2,
+// 05 §5.4, 13 §13.2.3)
+// ──────────────────────────────────────────────────────────────────────
+
+/// A property is the top of the owner-published hierarchy. It is the
+/// unit of address / geo and the unit of publication (POST /publish
+/// cascades to all draft rooms). Soft-deleted with `deletedAt` so the
+/// audit trail and history are preserved.
+model Property {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ownerUserId  String        @map("owner_user_id") @db.Uuid
+  title        String
+  description  String?
+  addressLine1 String        @map("address_line1")
+  addressLine2 String?       @map("address_line2")
+  city         String
+  area         String?
+  postalCode   String?       @map("postal_code")
+  /// ISO 3166-1 alpha-2 (e.g. "US", "GB", "BD").
+  countryCode  String        @map("country_code") @db.Char(2)
+  latitude     Decimal?      @db.Decimal(9, 6)
+  longitude    Decimal?      @db.Decimal(9, 6)
+  propertyType PropertyType  @map("property_type")
+  status       PropertyStatus @default(DRAFT)
+  publishedAt  DateTime?     @map("published_at") @db.Timestamptz(6)
+  /// Optimistic concurrency for property-level state changes (per §5.6).
+  version      Int           @default(0)
+  tenantId     String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  /// Soft-delete; cascades to buildings → flats → rooms by convention
+  /// (we never hard-delete these in v1).
+  deletedAt    DateTime?     @map("deleted_at") @db.Timestamptz(6)
+
+  owner     User       @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  buildings Building[]
+  rooms     Room[]
+
+  // Indexes per §4.3.2 — full SQL (incl. composite city/status/published_at
+  // and geo index) lives in the migration since Prisma can't express them
+  // exactly as the spec wants.
+  @@index([ownerUserId], name: "properties_owner_idx")
+  @@index([status, deletedAt], name: "properties_status_idx")
+  @@map("properties")
+}
+
+/// Optional intermediate node between Property and Flat — used for
+/// BUILDING and VILLA property types. Cascade from property.
+model Building {
+  id         String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  propertyId String         @map("property_id") @db.Uuid
+  name       String
+  floors     Int?
+  status     BuildingStatus @default(ACTIVE)
+  tenantId   String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt  DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt  DateTime?      @map("deleted_at") @db.Timestamptz(6)
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  flats    Flat[]
+
+  @@index([propertyId], name: "buildings_property_idx")
+  @@map("buildings")
+}
+
+/// A flat within a building (or a standalone flat for STANDALONE_FLAT
+/// property type — in that case `building` is null and `propertyId` is
+/// reached through Room.propertyId). Cascade from building.
+model Flat {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  buildingId String     @map("building_id") @db.Uuid
+  floor      Int?
+  doorNumber String?    @map("door_number")
+  status     FlatStatus @default(ACTIVE)
+  tenantId   String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt  DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt  DateTime?  @map("deleted_at") @db.Timestamptz(6)
+
+  building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  rooms    Room[]
+
+  @@index([buildingId], name: "flats_building_idx")
+  @@map("flats")
+}
+
+/// The most-queried entity in the hierarchy. Carries the publish state
+/// machine (05 §5.4). `propertyId` is denormalized from flat → building
+/// → property to keep the spec's `INDEX(property_id)` query path fast
+/// (and to allow `STANDALONE_FLAT` rooms that have no Flat).
+/// `flatId` is nullable: rooms can outlive their flat (ON DELETE SET NULL)
+/// or live without one (standalone villa).
+model Room {
+  id              String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  propertyId      String     @map("property_id") @db.Uuid
+  flatId          String?    @map("flat_id") @db.Uuid
+  label           String
+  roomType        RoomType   @map("room_type")
+  sizeSqft        Decimal?   @map("size_sqft") @db.Decimal(8, 2)
+  maxOccupants    Int        @default(1) @map("max_occupants")
+  /// Monthly base rent, minor units (cents). BigInt to avoid float drift.
+  baseRentMinor   BigInt     @map("base_rent_minor")
+  /// Refundable deposit at lease signing, minor units (cents).
+  depositMinor    BigInt     @map("deposit_minor")
+  /// ISO 4217 currency code (e.g. "USD", "EUR", "BDT"). Stored as CHAR(3).
+  currency        String     @db.Char(3)
+  billsIncluded   Boolean    @default(false) @map("bills_included")
+  amenities       String[]
+  /// Room state machine (05 §5.4).
+  status          RoomStatus @default(DRAFT)
+  availableFrom   DateTime?  @map("available_from") @db.Date
+  minLeaseMonths  Int?       @map("min_lease_months")
+  maxLeaseMonths  Int?       @map("max_lease_months")
+  /// Free-text house rules. The structured `room_rules` table is
+  /// deferred to Phase 20 (matching).
+  rules           String?
+  /// Optimistic-concurrency version (05 §6 — every state transition
+  /// increments this; UPDATE WHERE version=? guards against lost
+  /// updates).
+  version         Int        @default(0)
+  tenantId        String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt       DateTime?  @map("deleted_at") @db.Timestamptz(6)
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  flat     Flat?    @relation(fields: [flatId], references: [id], onDelete: SetNull)
+
+  // Full index set (incl. status/available_from, GIN(amenities)) lives in
+  // the migration SQL since Prisma can't express composite/partial/GIN
+  // indexes natively.
+  @@index([propertyId], name: "rooms_property_idx")
+  @@index([flatId], name: "rooms_flat_idx")
+  @@index([status, deletedAt], name: "rooms_status_idx")
+  @@index([currency], name: "rooms_currency_idx")
+  @@map("rooms")
 }
