@@ -30,6 +30,7 @@ import { invoicesRouter } from '@/modules/invoices/invoices.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
 import { leasesRouter } from '@/modules/leases/leases.routes';
 import { ticketsRoomRouter, ticketsRouter } from '@/modules/maintenance/tickets.routes';
+import { matchRouter } from '@/modules/match/match.routes';
 import { notificationsRouter } from '@/modules/notifications/notifications.routes';
 import { stripeWebhookHandler } from '@/modules/payments/payments.controller';
 import { paymentsRouter } from '@/modules/payments/payments.routes';
@@ -238,16 +239,8 @@ export function createApp(): express.Express {
   // The metersRouter is mounted under /properties so the path
   // /:propertyId/meters resolves correctly with mergeParams.
   // The readingsRouter is mounted under /meters for the same reason.
-  app.use(
-    '/api/v1/properties',
-    authenticatedRateLimiter,
-    metersRouter()
-  );
-  app.use(
-    '/api/v1/meters',
-    authenticatedRateLimiter,
-    readingsRouter()
-  );
+  app.use('/api/v1/properties', authenticatedRateLimiter, metersRouter());
+  app.use('/api/v1/meters', authenticatedRateLimiter, readingsRouter());
 
   // ── Phase 15: Stripe payments + webhook ──────────────────────────────
   // CRITICAL: webhook MUST mount BEFORE the authenticated rate limiter
@@ -281,11 +274,12 @@ export function createApp(): express.Express {
   //   featureFlagsRouter   — /feature-flags/* (mounted under /admin)
   // Both require ADMIN role; non-admin → 403 (must_pass).
   app.use('/api/v1/admin', authenticatedRateLimiter, adminRouter());
-  app.use(
-    '/api/v1/admin/feature-flags',
-    authenticatedRateLimiter,
-    featureFlagsRouter()
-  );
+  app.use('/api/v1/admin/feature-flags', authenticatedRateLimiter, featureFlagsRouter());
+
+  // ── Phase 20: roommate matching (lite) ─────────────────────────────
+  // /match/* — TENANT-only (every endpoint is caller-scoped). Match
+  // runs + intro lifecycle calls are state-changing → withIdempotency.
+  app.use('/api/v1/match', authenticatedRateLimiter, matchRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

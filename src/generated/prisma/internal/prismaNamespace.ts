@@ -429,7 +429,9 @@ export const ModelName = {
   Notification: 'Notification',
   NotificationPreference: 'NotificationPreference',
   Document: 'Document',
-  FeatureFlag: 'FeatureFlag'
+  FeatureFlag: 'FeatureFlag',
+  MatchResult: 'MatchResult',
+  IntroRequest: 'IntroRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -445,7 +447,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "notification" | "notificationPreference" | "document" | "featureFlag"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "notification" | "notificationPreference" | "document" | "featureFlag" | "matchResult" | "introRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2891,6 +2893,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MatchResult: {
+      payload: Prisma.$MatchResultPayload<ExtArgs>
+      fields: Prisma.MatchResultFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MatchResultFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MatchResultFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>
+        }
+        findFirst: {
+          args: Prisma.MatchResultFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MatchResultFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>
+        }
+        findMany: {
+          args: Prisma.MatchResultFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>[]
+        }
+        create: {
+          args: Prisma.MatchResultCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>
+        }
+        createMany: {
+          args: Prisma.MatchResultCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MatchResultCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>[]
+        }
+        delete: {
+          args: Prisma.MatchResultDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>
+        }
+        update: {
+          args: Prisma.MatchResultUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>
+        }
+        deleteMany: {
+          args: Prisma.MatchResultDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MatchResultUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MatchResultUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>[]
+        }
+        upsert: {
+          args: Prisma.MatchResultUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MatchResultPayload>
+        }
+        aggregate: {
+          args: Prisma.MatchResultAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMatchResult>
+        }
+        groupBy: {
+          args: Prisma.MatchResultGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchResultGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MatchResultCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MatchResultCountAggregateOutputType> | number
+        }
+      }
+    }
+    IntroRequest: {
+      payload: Prisma.$IntroRequestPayload<ExtArgs>
+      fields: Prisma.IntroRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IntroRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IntroRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.IntroRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IntroRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>
+        }
+        findMany: {
+          args: Prisma.IntroRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>[]
+        }
+        create: {
+          args: Prisma.IntroRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>
+        }
+        createMany: {
+          args: Prisma.IntroRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IntroRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.IntroRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>
+        }
+        update: {
+          args: Prisma.IntroRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.IntroRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IntroRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IntroRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.IntroRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IntroRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.IntroRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIntroRequest>
+        }
+        groupBy: {
+          args: Prisma.IntroRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IntroRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IntroRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IntroRequestCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3507,6 +3657,38 @@ export const FeatureFlagScalarFieldEnum = {
 } as const
 
 export type FeatureFlagScalarFieldEnum = (typeof FeatureFlagScalarFieldEnum)[keyof typeof FeatureFlagScalarFieldEnum]
+
+
+export const MatchResultScalarFieldEnum = {
+  id: 'id',
+  callerUserId: 'callerUserId',
+  candidateUserId: 'candidateUserId',
+  score: 'score',
+  breakdown: 'breakdown',
+  explain: 'explain',
+  rank: 'rank',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type MatchResultScalarFieldEnum = (typeof MatchResultScalarFieldEnum)[keyof typeof MatchResultScalarFieldEnum]
+
+
+export const IntroRequestScalarFieldEnum = {
+  id: 'id',
+  matchResultId: 'matchResultId',
+  callerUserId: 'callerUserId',
+  candidateUserId: 'candidateUserId',
+  callerAcceptedAt: 'callerAcceptedAt',
+  candidateAcceptedAt: 'candidateAcceptedAt',
+  revealedAt: 'revealedAt',
+  declinedAt: 'declinedAt',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IntroRequestScalarFieldEnum = (typeof IntroRequestScalarFieldEnum)[keyof typeof IntroRequestScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -4215,6 +4397,8 @@ export type GlobalOmitConfig = {
   notificationPreference?: Prisma.NotificationPreferenceOmit
   document?: Prisma.DocumentOmit
   featureFlag?: Prisma.FeatureFlagOmit
+  matchResult?: Prisma.MatchResultOmit
+  introRequest?: Prisma.IntroRequestOmit
 }
 
 /* Types for Logging */

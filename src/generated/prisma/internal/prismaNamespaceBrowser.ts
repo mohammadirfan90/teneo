@@ -83,7 +83,9 @@ export const ModelName = {
   Notification: 'Notification',
   NotificationPreference: 'NotificationPreference',
   Document: 'Document',
-  FeatureFlag: 'FeatureFlag'
+  FeatureFlag: 'FeatureFlag',
+  MatchResult: 'MatchResult',
+  IntroRequest: 'IntroRequest'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -679,6 +681,38 @@ export const FeatureFlagScalarFieldEnum = {
 } as const
 
 export type FeatureFlagScalarFieldEnum = (typeof FeatureFlagScalarFieldEnum)[keyof typeof FeatureFlagScalarFieldEnum]
+
+
+export const MatchResultScalarFieldEnum = {
+  id: 'id',
+  callerUserId: 'callerUserId',
+  candidateUserId: 'candidateUserId',
+  score: 'score',
+  breakdown: 'breakdown',
+  explain: 'explain',
+  rank: 'rank',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type MatchResultScalarFieldEnum = (typeof MatchResultScalarFieldEnum)[keyof typeof MatchResultScalarFieldEnum]
+
+
+export const IntroRequestScalarFieldEnum = {
+  id: 'id',
+  matchResultId: 'matchResultId',
+  callerUserId: 'callerUserId',
+  candidateUserId: 'candidateUserId',
+  callerAcceptedAt: 'callerAcceptedAt',
+  candidateAcceptedAt: 'candidateAcceptedAt',
+  revealedAt: 'revealedAt',
+  declinedAt: 'declinedAt',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IntroRequestScalarFieldEnum = (typeof IntroRequestScalarFieldEnum)[keyof typeof IntroRequestScalarFieldEnum]
 
 
 export const SortOrder = {

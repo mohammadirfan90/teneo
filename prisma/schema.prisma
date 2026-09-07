@@ -182,6 +182,10 @@ model User {
   notifications        Notification[]
   notificationPreference NotificationPreference?
   documents            Document[]
+  matchResultsCaller      MatchResult[] @relation("MatchCaller")
+  matchResultsCandidate   MatchResult[] @relation("MatchCandidate")
+  introsAsCaller          IntroRequest[] @relation("IntroCaller")
+  introsAsCandidate       IntroRequest[] @relation("IntroCandidate")
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -1528,4 +1532,70 @@ model FeatureFlag {
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   @@map("feature_flags")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 20: Roommate matching (13 §13.2.4, 05 §5.1)
+// ──────────────────────────────────────────────────────────────────────
+
+/// One row per (caller, candidate) pair produced by `POST /match/run`.
+/// Re-running match for the same caller deletes prior rows and inserts
+/// fresh ones in a single transaction; the latest results are what
+/// `GET /match/results` returns.
+model MatchResult {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// The tenant who ran the match.
+  callerUserId    String   @map("caller_user_id") @db.Uuid
+  /// The candidate tenant that was ranked.
+  candidateUserId String   @map("candidate_user_id") @db.Uuid
+  /// Composite score in [0, 100]. Pre-penalty base (from breakDown)
+  /// can theoretically exceed 100 — clamps happen in scoring.ts.
+  score           Int
+  /// Per-dimension points so the caller can see why a candidate
+  /// scored what they did.
+  breakdown       Json
+  /// Human-readable explanation of the score and any hard penalties
+  /// applied (e.g., "Hard penalty: gender mismatch"). Multi-line.
+  explain         String
+  rank            Int      @map("rank")
+  tenantId        String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  caller    User @relation("MatchCaller",    fields: [callerUserId],    references: [id], onDelete: Cascade)
+  candidate User @relation("MatchCandidate", fields: [candidateUserId], references: [id], onDelete: Cascade)
+  intro     IntroRequest?
+
+  @@unique([callerUserId, candidateUserId], name: "match_results_caller_candidate_uq")
+  @@index([callerUserId, rank(sort: Asc)], name: "match_results_caller_rank_idx")
+  @@map("match_results")
+}
+
+/// Mutual-introduction request lifecycle. Caller opens an intro for
+/// one of their MatchResult rows; the candidate accepts; on the
+/// SECOND accept (mutual) the contact info is revealed (Phase 20
+/// ships the row model; reveal is a separate field populated when
+/// both sides have accepted).
+model IntroRequest {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  matchResultId    String    @map("match_result_id") @db.Uuid
+  callerUserId     String    @map("caller_user_id") @db.Uuid
+  candidateUserId  String    @map("candidate_user_id") @db.Uuid
+  callerAcceptedAt DateTime? @map("caller_accepted_at") @db.Timestamptz(6)
+  candidateAcceptedAt DateTime? @map("candidate_accepted_at") @db.Timestamptz(6)
+  /// Set to now() when both sides have accepted. Until then the row
+  /// is in 'PENDING' and contact info is hidden from both parties.
+  revealedAt       DateTime? @map("revealed_at") @db.Timestamptz(6)
+  declinedAt       DateTime? @map("declined_at") @db.Timestamptz(6)
+  tenantId         String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @updatedAt      @map("updated_at") @db.Timestamptz(6)
+
+  matchResult MatchResult @relation(fields: [matchResultId], references: [id], onDelete: Cascade)
+  caller      User        @relation("IntroCaller",    fields: [callerUserId],    references: [id], onDelete: Cascade)
+  candidate   User        @relation("IntroCandidate", fields: [candidateUserId], references: [id], onDelete: Cascade)
+
+  @@unique([matchResultId], name: "intro_requests_match_uq")
+  @@index([callerUserId, createdAt(sort: Desc)], name: "intro_requests_caller_idx")
+  @@index([candidateUserId, createdAt(sort: Desc)], name: "intro_requests_candidate_idx")
+  @@map("intro_requests")
 }

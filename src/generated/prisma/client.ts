@@ -314,3 +314,20 @@ export type Document = Prisma.DocumentModel
  * the PK to (tenantId, key).
  */
 export type FeatureFlag = Prisma.FeatureFlagModel
+/**
+ * Model MatchResult
+ * One row per (caller, candidate) pair produced by `POST /match/run`.
+ * Re-running match for the same caller deletes prior rows and inserts
+ * fresh ones in a single transaction; the latest results are what
+ * `GET /match/results` returns.
+ */
+export type MatchResult = Prisma.MatchResultModel
+/**
+ * Model IntroRequest
+ * Mutual-introduction request lifecycle. Caller opens an intro for
+ * one of their MatchResult rows; the candidate accepts; on the
+ * SECOND accept (mutual) the contact info is revealed (Phase 20
+ * ships the row model; reveal is a separate field populated when
+ * both sides have accepted).
+ */
+export type IntroRequest = Prisma.IntroRequestModel
