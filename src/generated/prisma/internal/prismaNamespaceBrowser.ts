@@ -72,7 +72,8 @@ export const ModelName = {
   LeaseTenant: 'LeaseTenant',
   LeaseSignature: 'LeaseSignature',
   LeaseAmendment: 'LeaseAmendment',
-  RentInvoice: 'RentInvoice'
+  RentInvoice: 'RentInvoice',
+  Payment: 'Payment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -479,6 +480,34 @@ export const RentInvoiceScalarFieldEnum = {
 } as const
 
 export type RentInvoiceScalarFieldEnum = (typeof RentInvoiceScalarFieldEnum)[keyof typeof RentInvoiceScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  leaseId: 'leaseId',
+  tenantUserId: 'tenantUserId',
+  gateway: 'gateway',
+  gatewayPaymentIntentId: 'gatewayPaymentIntentId',
+  gatewayChargeId: 'gatewayChargeId',
+  gatewayRefundId: 'gatewayRefundId',
+  amountMinor: 'amountMinor',
+  refundedAmountMinor: 'refundedAmountMinor',
+  currency: 'currency',
+  status: 'status',
+  idempotencyKey: 'idempotencyKey',
+  failureCode: 'failureCode',
+  failureReason: 'failureReason',
+  paidAt: 'paidAt',
+  failedAt: 'failedAt',
+  refundedAt: 'refundedAt',
+  version: 'version',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

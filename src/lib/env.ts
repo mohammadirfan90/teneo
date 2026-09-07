@@ -24,6 +24,9 @@ const Env = z.object({
   STRIPE_SECRET_KEY: z.string().optional().default(''),
   STRIPE_WEBHOOK_SECRET: z.string().optional().default(''),
   STRIPE_PUBLISHABLE_KEY: z.string().optional().default(''),
+  /// Pinned Stripe API version. Defaults to SDK 17.5.0's baked-in version
+  /// when empty. Set explicitly in production to lock behavior.
+  STRIPE_API_VERSION: z.string().optional().default(''),
 
   GOOGLE_CLIENT_ID: z.string().optional().default(''),
   GOOGLE_CLIENT_SECRET: z.string().optional().default(''),

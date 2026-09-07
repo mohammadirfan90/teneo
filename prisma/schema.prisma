@@ -157,21 +157,22 @@ model User {
   updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt       DateTime?  @map("deleted_at") @db.Timestamptz(6)
 
-  roles          UserRole[]
-  ownerProfile   OwnerProfile?
-  tenantProfile  TenantProfile?
-  tenantPreferences PreferencesTenant?
-  kycSubmissions KycSubmission[]
-  refreshTokens  RefreshToken[]
-  properties     Property[]
-  savedSearches  SavedSearch[]
-  applications   Application[]
-  viewingRequests ViewingRequest[]
-  leaseTenancies    LeaseTenant[]
-  leaseSignatures   LeaseSignature[]
-  leaseAmendments   LeaseAmendment[]
-  rentInvoicesDisputed RentInvoice[] @relation("RentInvoiceDisputedBy")
-  rentInvoicesWaived   RentInvoice[] @relation("RentInvoiceWaivedBy")
+  roles                UserRole[]
+  ownerProfile         OwnerProfile?
+  tenantProfile        TenantProfile?
+  tenantPreferences    PreferencesTenant?
+  kycSubmissions       KycSubmission[]
+  refreshTokens        RefreshToken[]
+  properties           Property[]
+  savedSearches        SavedSearch[]
+  applications         Application[]
+  viewingRequests      ViewingRequest[]
+  leaseTenancies       LeaseTenant[]
+  leaseSignatures      LeaseSignature[]
+  leaseAmendments      LeaseAmendment[]
+  rentInvoicesDisputed RentInvoice[]      @relation("RentInvoiceDisputedBy")
+  rentInvoicesWaived   RentInvoice[]      @relation("RentInvoiceWaivedBy")
+  paymentsMade         Payment[]          @relation("PaymentTenant")
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -368,21 +369,21 @@ model PreferencesTenant {
 /// v1 only writes here from KYC decision flows. Phase 13+ adds the
 /// relay worker that actually drains the queue.
 model OutboxEvent {
-  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   /// Event name, e.g. "kyc.approved", "kyc.rejected", "kyc.request_info".
-  eventType       String    @map("event_type")
+  eventType    String    @map("event_type")
   /// Free-form payload — JSON shape is per eventType; consumers validate.
-  payload         Json
+  payload      Json
   /// Soft-delete flag for the relay worker: false=pending, true=dispatched.
-  dispatched      Boolean   @default(false)
-  dispatchedAt    DateTime? @map("dispatched_at") @db.Timestamptz(6)
+  dispatched   Boolean   @default(false)
+  dispatchedAt DateTime? @map("dispatched_at") @db.Timestamptz(6)
   /// Optimistic-lock counter for the relay worker's CAS updates.
-  attempts        Int       @default(0)
+  attempts     Int       @default(0)
   /// Last dispatch error message (truncated). Cleared on next success.
-  lastError       String?   @map("last_error")
-  tenantId        String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  lastError    String?   @map("last_error")
+  tenantId     String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@index([dispatched, createdAt], name: "outbox_events_dispatch_idx")
   @@index([eventType, createdAt], name: "outbox_events_type_idx")
@@ -399,30 +400,30 @@ model OutboxEvent {
 /// cascades to all draft rooms). Soft-deleted with `deletedAt` so the
 /// audit trail and history are preserved.
 model Property {
-  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  ownerUserId  String        @map("owner_user_id") @db.Uuid
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ownerUserId  String         @map("owner_user_id") @db.Uuid
   title        String
   description  String?
-  addressLine1 String        @map("address_line1")
-  addressLine2 String?       @map("address_line2")
+  addressLine1 String         @map("address_line1")
+  addressLine2 String?        @map("address_line2")
   city         String
   area         String?
-  postalCode   String?       @map("postal_code")
+  postalCode   String?        @map("postal_code")
   /// ISO 3166-1 alpha-2 (e.g. "US", "GB", "BD").
-  countryCode  String        @map("country_code") @db.Char(2)
-  latitude     Decimal?      @db.Decimal(9, 6)
-  longitude    Decimal?      @db.Decimal(9, 6)
-  propertyType PropertyType  @map("property_type")
+  countryCode  String         @map("country_code") @db.Char(2)
+  latitude     Decimal?       @db.Decimal(9, 6)
+  longitude    Decimal?       @db.Decimal(9, 6)
+  propertyType PropertyType   @map("property_type")
   status       PropertyStatus @default(DRAFT)
-  publishedAt  DateTime?     @map("published_at") @db.Timestamptz(6)
+  publishedAt  DateTime?      @map("published_at") @db.Timestamptz(6)
   /// Optimistic concurrency for property-level state changes (per §5.6).
-  version      Int           @default(0)
-  tenantId     String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  version      Int            @default(0)
+  tenantId     String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
   /// Soft-delete; cascades to buildings → flats → rooms by convention
   /// (we never hard-delete these in v1).
-  deletedAt    DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  deletedAt    DateTime?      @map("deleted_at") @db.Timestamptz(6)
 
   owner     User       @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
   buildings Building[]
@@ -484,40 +485,40 @@ model Flat {
 /// `flatId` is nullable: rooms can outlive their flat (ON DELETE SET NULL)
 /// or live without one (standalone villa).
 model Room {
-  id              String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  propertyId      String     @map("property_id") @db.Uuid
-  flatId          String?    @map("flat_id") @db.Uuid
-  label           String
-  roomType        RoomType   @map("room_type")
-  sizeSqft        Decimal?   @map("size_sqft") @db.Decimal(8, 2)
-  maxOccupants    Int        @default(1) @map("max_occupants")
+  id             String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  propertyId     String     @map("property_id") @db.Uuid
+  flatId         String?    @map("flat_id") @db.Uuid
+  label          String
+  roomType       RoomType   @map("room_type")
+  sizeSqft       Decimal?   @map("size_sqft") @db.Decimal(8, 2)
+  maxOccupants   Int        @default(1) @map("max_occupants")
   /// Monthly base rent, minor units (cents). BigInt to avoid float drift.
-  baseRentMinor   BigInt     @map("base_rent_minor")
+  baseRentMinor  BigInt     @map("base_rent_minor")
   /// Refundable deposit at lease signing, minor units (cents).
-  depositMinor    BigInt     @map("deposit_minor")
+  depositMinor   BigInt     @map("deposit_minor")
   /// ISO 4217 currency code (e.g. "USD", "EUR", "BDT"). Stored as CHAR(3).
-  currency        String     @db.Char(3)
-  billsIncluded   Boolean    @default(false) @map("bills_included")
-  amenities       String[]
+  currency       String     @db.Char(3)
+  billsIncluded  Boolean    @default(false) @map("bills_included")
+  amenities      String[]
   /// Room state machine (05 §5.4).
-  status          RoomStatus @default(DRAFT)
-  availableFrom   DateTime?  @map("available_from") @db.Date
-  minLeaseMonths  Int?       @map("min_lease_months")
-  maxLeaseMonths  Int?       @map("max_lease_months")
+  status         RoomStatus @default(DRAFT)
+  availableFrom  DateTime?  @map("available_from") @db.Date
+  minLeaseMonths Int?       @map("min_lease_months")
+  maxLeaseMonths Int?       @map("max_lease_months")
   /// Free-text house rules. The structured `room_rules` table is
   /// deferred to Phase 20 (matching).
-  rules           String?
+  rules          String?
   /// Optimistic-concurrency version (05 §6 — every state transition
   /// increments this; UPDATE WHERE version=? guards against lost
   /// updates).
-  version         Int        @default(0)
-  tenantId        String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
-  deletedAt       DateTime?  @map("deleted_at") @db.Timestamptz(6)
+  version        Int        @default(0)
+  tenantId       String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt      DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt      DateTime?  @map("deleted_at") @db.Timestamptz(6)
 
-  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  flat     Flat?    @relation(fields: [flatId], references: [id], onDelete: SetNull)
+  property        Property         @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  flat            Flat?            @relation(fields: [flatId], references: [id], onDelete: SetNull)
   applications    Application[]
   viewingRequests ViewingRequest[]
 
@@ -536,17 +537,17 @@ model Room {
 /// Refresh-on-new-match is deferred to Phase 18 (notifications); Phase
 /// 11 only persists the search.
 model SavedSearch {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String   @map("user_id") @db.Uuid
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
   /// User-chosen label. Uniqueness enforced per active user via the
   /// partial unique index in the migration SQL.
   name      String
   /// Full filter shape — same shape as `searchRoomsQuerySchema`'s parsed
   /// output. Storing as JSONB lets us round-trip it without re-encoding.
   query     Json
-  tenantId  String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  tenantId  String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -659,10 +660,10 @@ model Application {
   updatedAt       DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt       DateTime?         @map("deleted_at") @db.Timestamptz(6)
 
-  room        Room               @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  tenant      User               @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
-  viewings    ViewingRequest[]
-  notes       ApplicationNote[]
+  room     Room              @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  tenant   User              @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+  viewings ViewingRequest[]
+  notes    ApplicationNote[]
 
   // Prisma-tracked indexes; the critical partial UNIQUE on active
   // applications lives in the migration SQL.
@@ -680,18 +681,18 @@ model Application {
 /// with one or more `proposedSlots[]`; tenant (or owner) later picks
 /// one to set `confirmedSlot`. Cancel by either party.
 model ViewingRequest {
-  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  applicationId  String?       @map("application_id") @db.Uuid
-  roomId         String        @map("room_id") @db.Uuid
-  tenantUserId   String        @map("tenant_user_id") @db.Uuid
-  proposedSlots  DateTime[]    @map("proposed_slots") @db.Timestamptz(6)
-  confirmedSlot  DateTime?     @map("confirmed_slot") @db.Timestamptz(6)
-  status         ViewingStatus @default(REQUESTED)
+  id            String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  applicationId String?       @map("application_id") @db.Uuid
+  roomId        String        @map("room_id") @db.Uuid
+  tenantUserId  String        @map("tenant_user_id") @db.Uuid
+  proposedSlots DateTime[]    @map("proposed_slots") @db.Timestamptz(6)
+  confirmedSlot DateTime?     @map("confirmed_slot") @db.Timestamptz(6)
+  status        ViewingStatus @default(REQUESTED)
   /// Optional human-readable reason (cancellation, etc.).
-  reason         String?
-  tenantId       String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  reason        String?
+  tenantId      String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   application Application? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
   room        Room         @relation(fields: [roomId], references: [id], onDelete: Cascade)
@@ -738,29 +739,30 @@ model ApplicationNote {
 /// Rent invoices (`rent_invoices`) hang off a lease; `utilityShareMinor`
 /// is populated by Phase 16's meter + bill-split pipeline.
 model Lease {
-  id                   String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  roomId               String         @map("room_id") @db.Uuid
-  ownerUserId          String         @map("owner_user_id") @db.Uuid
-  primaryTenantUserId  String         @map("primary_tenant_user_id") @db.Uuid
-  startDate            DateTime       @map("start_date") @db.Date
-  endDate              DateTime       @map("end_date") @db.Date
-  rentMinor            BigInt         @map("rent_minor")
-  depositMinor         BigInt         @map("deposit_minor")
-  currency             String         @db.Char(3)
-  lateFeePolicy        Json?          @map("late_fee_policy")
-  utilitySplitMode     UtilitySplitMode @default(EQUAL) @map("utility_split_mode")
-  status               LeaseStatus    @default(DRAFT)
-  signedAt             DateTime?      @map("signed_at") @db.Timestamptz(6)
-  activatedAt          DateTime?      @map("activated_at") @db.Timestamptz(6)
-  endedAt              DateTime?      @map("ended_at") @db.Timestamptz(6)
-  contractObjectKey    String?        @map("contract_object_key")
-  createdAt            DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt            DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id                  String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roomId              String           @map("room_id") @db.Uuid
+  ownerUserId         String           @map("owner_user_id") @db.Uuid
+  primaryTenantUserId String           @map("primary_tenant_user_id") @db.Uuid
+  startDate           DateTime         @map("start_date") @db.Date
+  endDate             DateTime         @map("end_date") @db.Date
+  rentMinor           BigInt           @map("rent_minor")
+  depositMinor        BigInt           @map("deposit_minor")
+  currency            String           @db.Char(3)
+  lateFeePolicy       Json?            @map("late_fee_policy")
+  utilitySplitMode    UtilitySplitMode @default(EQUAL) @map("utility_split_mode")
+  status              LeaseStatus      @default(DRAFT)
+  signedAt            DateTime?        @map("signed_at") @db.Timestamptz(6)
+  activatedAt         DateTime?        @map("activated_at") @db.Timestamptz(6)
+  endedAt             DateTime?        @map("ended_at") @db.Timestamptz(6)
+  contractObjectKey   String?          @map("contract_object_key")
+  createdAt           DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  tenants       LeaseTenant[]
-  signatures    LeaseSignature[]
-  amendments    LeaseAmendment[]
-  rentInvoices  RentInvoice[]
+  tenants      LeaseTenant[]
+  signatures   LeaseSignature[]
+  amendments   LeaseAmendment[]
+  rentInvoices RentInvoice[]
+  payments     Payment[]
 
   @@index([roomId, status], name: "leases_room_status_idx")
   @@index([ownerUserId, status], name: "leases_owner_status_idx")
@@ -833,8 +835,8 @@ model LeaseAmendment {
   createdAt        DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
   signedAt         DateTime?            @map("signed_at") @db.Timestamptz(6)
 
-  lease     Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
-  proposedBy User @relation(fields: [proposedByUserId], references: [id], onDelete: Cascade)
+  lease      Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
+  proposedBy User  @relation(fields: [proposedByUserId], references: [id], onDelete: Cascade)
 
   @@index([leaseId], name: "lease_amendments_lease_idx")
   @@map("lease_amendments")
@@ -890,9 +892,10 @@ model RentInvoice {
   createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  lease          Lease @relation(fields: [leaseId], references: [id], onDelete: Restrict)
-  disputedByUser User? @relation("RentInvoiceDisputedBy", fields: [disputedByUserId], references: [id], onDelete: SetNull)
-  waivedByUser   User? @relation("RentInvoiceWaivedBy",   fields: [waivedByUserId],   references: [id], onDelete: SetNull)
+  lease          Lease     @relation(fields: [leaseId], references: [id], onDelete: Restrict)
+  disputedByUser User?     @relation("RentInvoiceDisputedBy", fields: [disputedByUserId], references: [id], onDelete: SetNull)
+  waivedByUser   User?     @relation("RentInvoiceWaivedBy", fields: [waivedByUserId], references: [id], onDelete: SetNull)
+  payments       Payment[]
 
   // The UNIQUE(lease_id, period_start) constraint is added via the
   // custom migration SQL (Prisma could express it via @@unique, but
@@ -902,4 +905,120 @@ model RentInvoice {
   @@index([status, dueDate], name: "rent_invoices_status_due_idx")
   @@index([status, generatedAt], name: "rent_invoices_status_generated_idx")
   @@map("rent_invoices")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 15: Payment + PaymentGateway/PaymentStatus enums (07 §7.4,
+// 13 §13.2.7, 04 §4.3.6)
+//
+// One row per Stripe PaymentIntent attempt. Lifecycle:
+//   PROCESSING — intent created, awaiting webhook
+//   SUCCEEDED  — webhook confirmed capture; invoice.amount_paid += amount
+//   FAILED     — webhook reported failure
+//   REFUNDED   — ADMIN called POST /refund, charge.refunded webhook arrived
+//
+// Full refund only in v1; PARTIALLY_REFUNDED is deferred to Phase 18+.
+//
+// Idempotency layers:
+//   1. idempotency_key (TRUE UNIQUE) — caller-driven, the response is
+//      cached for 24h via withIdempotency middleware AND the DB enforces
+//      uniqueness on retry.
+//   2. (gateway, gateway_payment_intent_id) PARTIAL UNIQUE WHERE NOT NULL
+//      — DB-level race protection for webhook duplicates of Stripe.
+//   3. Redis SET NX EX 86400 stripe:webhook:seen:{event.id} — webhook-
+//      level dedup.
+//
+// lease_id is denormalized from rent_invoices.lease_id so the hot path
+// in /payments/me can index-scan payments by tenant without joining
+// rent_invoices. ON DELETE RESTRICT on all FKs preserves the audit trail.
+// ──────────────────────────────────────────────────────────────────────
+
+/// Gateway that processed the payment. v1 has STRIPE only; the enum
+/// keeps the door open for Phase 18+ (Razorpay, Adyen, etc.).
+enum PaymentGateway {
+  STRIPE
+}
+
+/// Payment row lifecycle.
+enum PaymentStatus {
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+model Payment {
+  id                     String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  invoiceId              String         @map("invoice_id") @db.Uuid
+  /// Denormalized from rent_invoices.lease_id for hot-path lookups on
+  /// /payments/me without joining rent_invoices.
+  leaseId                String         @map("lease_id") @db.Uuid
+  /// Tenant who initiated the payment. Required (every payment has a
+  /// human payer — service-account payments are not in scope).
+  tenantUserId           String         @map("tenant_user_id") @db.Uuid
+  gateway                PaymentGateway @default(STRIPE)
+  /// `pi_xxx` from Stripe. Nullable because the row is INSERTed with
+  /// a placeholder, then UPDATEd after the Stripe API call returns the
+  /// real PaymentIntent id (rare race; mostly pre-populated via
+  /// `prisma.payment.create` with the id returned by the SDK).
+  gatewayPaymentIntentId String?        @map("gateway_payment_intent_id")
+  /// `ch_xxx` from `payment_intent.succeeded.latest_charge`. Nullable:
+  /// only set after a successful capture.
+  gatewayChargeId        String?        @map("gateway_charge_id")
+  /// `re_xxx` from `charge.refunded.data.object.refunds.data[*].id`.
+  /// Nullable: only set after a refund event.
+  gatewayRefundId        String?        @map("gateway_refund_id")
+  /// Authorized/captured amount in cents. For v1, must equal the
+  /// invoice's total_minor — partial payments via Stripe are deferred.
+  amountMinor            BigInt         @map("amount_minor")
+  /// Cumulative refunded amount in cents. For FULL refund, equals
+  /// amountMinor. Rolled up by the webhook handler.
+  refundedAmountMinor    BigInt         @default(0) @map("refunded_amount_minor")
+  /// ISO 4217 currency code (e.g. "USD", "EUR", "BDT"). Denormalized
+  /// from rent_invoices.currency so we can serve /payments/me without
+  /// joining.
+  currency               String         @db.Char(3)
+  status                 PaymentStatus  @default(PROCESSING)
+  /// Caller-supplied. UNIQUE — the response is cached for 24h via
+  /// withIdempotency AND the DB enforces uniqueness on retry. Both
+  /// layers are belt-and-braces: withIdempotency saves the Stripe API
+  /// call, the UNIQUE saves the DB write.
+  idempotencyKey         String         @map("idempotency_key")
+  /// From `payment_intent.payment_failed.last_payment_error.code`
+  /// (e.g. "card_declined"). Nullable.
+  failureCode            String?        @map("failure_code")
+  /// From `payment_intent.payment_failed.last_payment_error.message`.
+  /// Truncated to 500 chars in the webhook handler.
+  failureReason          String?        @map("failure_reason")
+  paidAt                 DateTime?      @map("paid_at") @db.Timestamptz(6)
+  failedAt               DateTime?      @map("failed_at") @db.Timestamptz(6)
+  refundedAt             DateTime?      @map("refunded_at") @db.Timestamptz(6)
+  /// Optimistic-concurrency version. Incremented on every UPDATE so
+  /// concurrent webhook deliveries + intent races don't clobber.
+  version                Int            @default(0)
+  /// Forward-compat v2 multi-tenancy scaffold (always
+  /// '00000000-0000-0000-0000-000000000000' in v1).
+  tenantId               String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt              DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt              DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  invoice RentInvoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+  lease   Lease       @relation(fields: [leaseId], references: [id], onDelete: Restrict)
+  tenant  User        @relation("PaymentTenant", fields: [tenantUserId], references: [id], onDelete: Restrict)
+
+  // UNIQUE constraints (hand-edited in the migration SQL because Prisma
+  // doesn't model partial uniques):
+  //   payments_idempotency_key_uq             — TRUE UNIQUE(idempotency_key)
+  //   payments_gateway_intent_uq              — PARTIAL UNIQUE(gateway,
+  //                                            gateway_payment_intent_id)
+  //                                            WHERE gateway_payment_intent_id
+  //                                            IS NOT NULL
+  //   payments_gateway_charge_idx             — partial non-unique index on
+  //                                            gateway_charge_id WHERE NOT NULL
+  //                                            (charge.refunded looks up by
+  //                                            charge_id first)
+  @@index([invoiceId, status], name: "payments_invoice_status_idx")
+  @@index([tenantUserId, createdAt(sort: Desc)], name: "payments_tenant_idx")
+  @@index([status, createdAt], name: "payments_status_idx")
+  @@map("payments")
 }

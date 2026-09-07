@@ -185,3 +185,20 @@ export const InvoiceStatus = {
 } as const
 
 export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]
+
+
+export const PaymentGateway = {
+  STRIPE: 'STRIPE'
+} as const
+
+export type PaymentGateway = (typeof PaymentGateway)[keyof typeof PaymentGateway]
+
+
+export const PaymentStatus = {
+  PROCESSING: 'PROCESSING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

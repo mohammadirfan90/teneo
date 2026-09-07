@@ -203,3 +203,8 @@ export type LeaseAmendment = Prisma.LeaseAmendmentModel
  * state machine holds at most one open dispute per invoice.
  */
 export type RentInvoice = Prisma.RentInvoiceModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel

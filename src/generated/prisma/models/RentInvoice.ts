@@ -398,6 +398,7 @@ export type RentInvoiceWhereInput = {
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
   disputedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   waivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type RentInvoiceOrderByWithRelationInput = {
@@ -427,6 +428,7 @@ export type RentInvoiceOrderByWithRelationInput = {
   lease?: Prisma.LeaseOrderByWithRelationInput
   disputedByUser?: Prisma.UserOrderByWithRelationInput
   waivedByUser?: Prisma.UserOrderByWithRelationInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type RentInvoiceWhereUniqueInput = Prisma.AtLeast<{
@@ -459,6 +461,7 @@ export type RentInvoiceWhereUniqueInput = Prisma.AtLeast<{
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
   disputedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   waivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  payments?: Prisma.PaymentListRelationFilter
 }, "id">
 
 export type RentInvoiceOrderByWithAggregationInput = {
@@ -545,6 +548,7 @@ export type RentInvoiceCreateInput = {
   lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
   disputedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesDisputedInput
   waivedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesWaivedInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceUncheckedCreateInput = {
@@ -571,6 +575,7 @@ export type RentInvoiceUncheckedCreateInput = {
   tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceUpdateInput = {
@@ -597,6 +602,7 @@ export type RentInvoiceUpdateInput = {
   lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
   disputedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesDisputedNestedInput
   waivedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesWaivedNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceUncheckedUpdateInput = {
@@ -623,6 +629,7 @@ export type RentInvoiceUncheckedUpdateInput = {
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceCreateManyInput = {
@@ -806,6 +813,11 @@ export type RentInvoiceSumOrderByAggregateInput = {
   version?: Prisma.SortOrder
 }
 
+export type RentInvoiceScalarRelationFilter = {
+  is?: Prisma.RentInvoiceWhereInput
+  isNot?: Prisma.RentInvoiceWhereInput
+}
+
 export type RentInvoiceCreateNestedManyWithoutDisputedByUserInput = {
   create?: Prisma.XOR<Prisma.RentInvoiceCreateWithoutDisputedByUserInput, Prisma.RentInvoiceUncheckedCreateWithoutDisputedByUserInput> | Prisma.RentInvoiceCreateWithoutDisputedByUserInput[] | Prisma.RentInvoiceUncheckedCreateWithoutDisputedByUserInput[]
   connectOrCreate?: Prisma.RentInvoiceCreateOrConnectWithoutDisputedByUserInput | Prisma.RentInvoiceCreateOrConnectWithoutDisputedByUserInput[]
@@ -936,6 +948,20 @@ export type EnumInvoiceStatusFieldUpdateOperationsInput = {
   set?: $Enums.InvoiceStatus
 }
 
+export type RentInvoiceCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.RentInvoiceCreateWithoutPaymentsInput, Prisma.RentInvoiceUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.RentInvoiceCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.RentInvoiceWhereUniqueInput
+}
+
+export type RentInvoiceUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.RentInvoiceCreateWithoutPaymentsInput, Prisma.RentInvoiceUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.RentInvoiceCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.RentInvoiceUpsertWithoutPaymentsInput
+  connect?: Prisma.RentInvoiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RentInvoiceUpdateToOneWithWhereWithoutPaymentsInput, Prisma.RentInvoiceUpdateWithoutPaymentsInput>, Prisma.RentInvoiceUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type RentInvoiceCreateWithoutDisputedByUserInput = {
   id?: string
   periodStart: Date | string
@@ -959,6 +985,7 @@ export type RentInvoiceCreateWithoutDisputedByUserInput = {
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
   waivedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesWaivedInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceUncheckedCreateWithoutDisputedByUserInput = {
@@ -984,6 +1011,7 @@ export type RentInvoiceUncheckedCreateWithoutDisputedByUserInput = {
   tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceCreateOrConnectWithoutDisputedByUserInput = {
@@ -1019,6 +1047,7 @@ export type RentInvoiceCreateWithoutWaivedByUserInput = {
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
   disputedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesDisputedInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceUncheckedCreateWithoutWaivedByUserInput = {
@@ -1044,6 +1073,7 @@ export type RentInvoiceUncheckedCreateWithoutWaivedByUserInput = {
   tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceCreateOrConnectWithoutWaivedByUserInput = {
@@ -1140,6 +1170,7 @@ export type RentInvoiceCreateWithoutLeaseInput = {
   updatedAt?: Date | string
   disputedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesDisputedInput
   waivedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesWaivedInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceUncheckedCreateWithoutLeaseInput = {
@@ -1165,6 +1196,7 @@ export type RentInvoiceUncheckedCreateWithoutLeaseInput = {
   tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type RentInvoiceCreateOrConnectWithoutLeaseInput = {
@@ -1191,6 +1223,126 @@ export type RentInvoiceUpdateWithWhereUniqueWithoutLeaseInput = {
 export type RentInvoiceUpdateManyWithWhereWithoutLeaseInput = {
   where: Prisma.RentInvoiceScalarWhereInput
   data: Prisma.XOR<Prisma.RentInvoiceUpdateManyMutationInput, Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseInput>
+}
+
+export type RentInvoiceCreateWithoutPaymentsInput = {
+  id?: string
+  periodStart: Date | string
+  periodEnd: Date | string
+  baseRentMinor: bigint | number
+  utilityShareMinor?: bigint | number
+  lateFeeMinor?: bigint | number
+  totalMinor: bigint | number
+  amountPaidMinor?: bigint | number
+  currency: string
+  status?: $Enums.InvoiceStatus
+  dueDate: Date | string
+  version?: number
+  generatedAt?: Date | string
+  disputedAt?: Date | string | null
+  disputeReason?: string | null
+  waivedAt?: Date | string | null
+  waiveReason?: string | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
+  disputedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesDisputedInput
+  waivedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesWaivedInput
+}
+
+export type RentInvoiceUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  leaseId: string
+  periodStart: Date | string
+  periodEnd: Date | string
+  baseRentMinor: bigint | number
+  utilityShareMinor?: bigint | number
+  lateFeeMinor?: bigint | number
+  totalMinor: bigint | number
+  amountPaidMinor?: bigint | number
+  currency: string
+  status?: $Enums.InvoiceStatus
+  dueDate: Date | string
+  version?: number
+  generatedAt?: Date | string
+  disputedAt?: Date | string | null
+  disputedByUserId?: string | null
+  disputeReason?: string | null
+  waivedAt?: Date | string | null
+  waivedByUserId?: string | null
+  waiveReason?: string | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type RentInvoiceCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.RentInvoiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.RentInvoiceCreateWithoutPaymentsInput, Prisma.RentInvoiceUncheckedCreateWithoutPaymentsInput>
+}
+
+export type RentInvoiceUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.RentInvoiceUpdateWithoutPaymentsInput, Prisma.RentInvoiceUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.RentInvoiceCreateWithoutPaymentsInput, Prisma.RentInvoiceUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.RentInvoiceWhereInput
+}
+
+export type RentInvoiceUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.RentInvoiceWhereInput
+  data: Prisma.XOR<Prisma.RentInvoiceUpdateWithoutPaymentsInput, Prisma.RentInvoiceUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type RentInvoiceUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  utilityShareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  lateFeeMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amountPaidMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
+  disputedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesDisputedNestedInput
+  waivedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesWaivedNestedInput
+}
+
+export type RentInvoiceUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  leaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  periodStart?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  periodEnd?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  utilityShareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  lateFeeMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  amountPaidMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  disputedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RentInvoiceCreateManyDisputedByUserInput = {
@@ -1266,6 +1418,7 @@ export type RentInvoiceUpdateWithoutDisputedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
   waivedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesWaivedNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceUncheckedUpdateWithoutDisputedByUserInput = {
@@ -1291,6 +1444,7 @@ export type RentInvoiceUncheckedUpdateWithoutDisputedByUserInput = {
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceUncheckedUpdateManyWithoutDisputedByUserInput = {
@@ -1341,6 +1495,7 @@ export type RentInvoiceUpdateWithoutWaivedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
   disputedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesDisputedNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceUncheckedUpdateWithoutWaivedByUserInput = {
@@ -1366,6 +1521,7 @@ export type RentInvoiceUncheckedUpdateWithoutWaivedByUserInput = {
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceUncheckedUpdateManyWithoutWaivedByUserInput = {
@@ -1441,6 +1597,7 @@ export type RentInvoiceUpdateWithoutLeaseInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesDisputedNestedInput
   waivedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesWaivedNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceUncheckedUpdateWithoutLeaseInput = {
@@ -1466,6 +1623,7 @@ export type RentInvoiceUncheckedUpdateWithoutLeaseInput = {
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type RentInvoiceUncheckedUpdateManyWithoutLeaseInput = {
@@ -1493,6 +1651,35 @@ export type RentInvoiceUncheckedUpdateManyWithoutLeaseInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type RentInvoiceCountOutputType
+ */
+
+export type RentInvoiceCountOutputType = {
+  payments: number
+}
+
+export type RentInvoiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  payments?: boolean | RentInvoiceCountOutputTypeCountPaymentsArgs
+}
+
+/**
+ * RentInvoiceCountOutputType without action
+ */
+export type RentInvoiceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RentInvoiceCountOutputType
+   */
+  select?: Prisma.RentInvoiceCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * RentInvoiceCountOutputType without action
+ */
+export type RentInvoiceCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
 
 
 export type RentInvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1522,6 +1709,8 @@ export type RentInvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
   disputedByUser?: boolean | Prisma.RentInvoice$disputedByUserArgs<ExtArgs>
   waivedByUser?: boolean | Prisma.RentInvoice$waivedByUserArgs<ExtArgs>
+  payments?: boolean | Prisma.RentInvoice$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.RentInvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rentInvoice"]>
 
 export type RentInvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1613,6 +1802,8 @@ export type RentInvoiceInclude<ExtArgs extends runtime.Types.Extensions.Internal
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
   disputedByUser?: boolean | Prisma.RentInvoice$disputedByUserArgs<ExtArgs>
   waivedByUser?: boolean | Prisma.RentInvoice$waivedByUserArgs<ExtArgs>
+  payments?: boolean | Prisma.RentInvoice$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.RentInvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RentInvoiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
@@ -1631,6 +1822,7 @@ export type $RentInvoicePayload<ExtArgs extends runtime.Types.Extensions.Interna
     lease: Prisma.$LeasePayload<ExtArgs>
     disputedByUser: Prisma.$UserPayload<ExtArgs> | null
     waivedByUser: Prisma.$UserPayload<ExtArgs> | null
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2063,6 +2255,7 @@ export interface Prisma__RentInvoiceClient<T, Null = never, ExtArgs extends runt
   lease<T extends Prisma.LeaseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeaseDefaultArgs<ExtArgs>>): Prisma.Prisma__LeaseClient<runtime.Types.Result.GetResult<Prisma.$LeasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   disputedByUser<T extends Prisma.RentInvoice$disputedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RentInvoice$disputedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   waivedByUser<T extends Prisma.RentInvoice$waivedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RentInvoice$waivedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  payments<T extends Prisma.RentInvoice$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RentInvoice$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2551,6 +2744,30 @@ export type RentInvoice$waivedByUserArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * RentInvoice.payments
+ */
+export type RentInvoice$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

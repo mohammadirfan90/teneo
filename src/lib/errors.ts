@@ -159,3 +159,17 @@ export class ServerError extends ApiError {
     super(500, 'SERVER', message, { cause });
   }
 }
+
+/** Feature-disabled sentinel. Thrown when a configured integration
+ *  (e.g. Stripe) is not provisioned on this environment. Surfaces as
+ *  503 to the client with a clear, non-leaky message.
+ *
+ *  Distinct from the generic ServerError (500) so callers can branch on
+ *  `error.code === 'STRIPE_DISABLED'` to show a useful inline UI hint.
+ */
+export class StripeDisabledError extends ApiError {
+  constructor(message = 'Stripe is not configured on this environment') {
+    super(503, 'STRIPE_DISABLED', message);
+    this.name = 'StripeDisabledError';
+  }
+}

@@ -24,6 +24,8 @@ import { billsRouter } from '@/modules/bills/bills.routes';
 import { invoicesRouter } from '@/modules/invoices/invoices.routes';
 import { leasesRouter } from '@/modules/leases/leases.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
+import { stripeWebhookHandler } from '@/modules/payments/payments.controller';
+import { paymentsRouter } from '@/modules/payments/payments.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
 import { flatsRouter } from '@/modules/properties/flats.routes';
 import { propertiesRouter } from '@/modules/properties/properties.routes';
@@ -214,6 +216,20 @@ export function createApp(): express.Express {
   // /bills/generate is OWNER-only. Both use per-role rate limiting.
   app.use('/api/v1/invoices', authenticatedRateLimiter, invoicesRouter());
   app.use('/api/v1/bills', authenticatedRateLimiter, billsRouter());
+
+  // ── Phase 15: Stripe payments + webhook ──────────────────────────────
+  // CRITICAL: webhook MUST mount BEFORE the authenticated rate limiter
+  // and signature-gated only (no Bearer). Mounted directly on the app
+  // so it bypasses the per-role limiter — Stripe's retries would
+  // otherwise blow through the per-user limit.
+  //
+  // The body is already captured by the global express.json({ verify })
+  // hook in `req.rawBody` (utf-8 string). The handler reads that
+  // directly; no per-route express.raw() needed.
+  app.post('/api/v1/payments/stripe/webhook', stripeWebhookHandler);
+
+  // The normal auth-gated payments router (intent / me / :id / refund).
+  app.use('/api/v1/payments', authenticatedRateLimiter, paymentsRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

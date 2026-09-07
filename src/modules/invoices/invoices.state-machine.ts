@@ -14,6 +14,9 @@
 //   DUE             → WAIVED           ADMIN
 //   DUE             → DISPUTED         TENANT or OWNER party
 //   PARTIALLY_PAID  → PAID             Phase 15 (Stripe webhook)
+//   PARTIALLY_PAID  → DUE              Phase 15 (refund webhook — full
+//                                    refund leaves amount_paid=0, so we
+//                                    drop back to DUE)
 //   PARTIALLY_PAID  → OVERDUE          Phase 17 cron
 //   PARTIALLY_PAID  → WAIVED           ADMIN
 //   PARTIALLY_PAID  → DISPUTED         TENANT or OWNER party
@@ -21,13 +24,18 @@
 //   OVERDUE         → PAID             Phase 15 (Stripe webhook)
 //   OVERDUE         → WAIVED           ADMIN
 //   OVERDUE         → DISPUTED         TENANT or OWNER party
+//   PAID            → DUE              Phase 15 (refund webhook — full
+//                                    refund leaves amount_paid=0)
+//   PAID            → PARTIALLY_PAID   Phase 15 (partial refund — see note
+//                                    in payments.service.ts:handleChargeRefunded)
 //   DISPUTED        → DUE              ADMIN resolves (rejects dispute)
 //   DISPUTED        → PARTIALLY_PAID   Phase 15 (Stripe webhook) — partial
 //                                    payment during a dispute is allowed
 //   DISPUTED        → PAID             Phase 15 (Stripe webhook)
 //   DISPUTED        → WAIVED           ADMIN resolves (forgives balance)
 //
-// Terminal: PAID, WAIVED.
+// Terminal: WAIVED only. (PAID is reachable from DUE/PARTIALLY_PAID via
+// webhook and revertible back to DUE/PARTIALLY_PAID via refund.)
 
 import type { InvoiceStatus } from '@/generated/prisma/enums';
 
@@ -42,11 +50,15 @@ const VALID_TRANSITIONS: Record<InvoiceStatus, ReadonlySet<InvoiceStatus>> = {
   ]),
   PARTIALLY_PAID: new Set<InvoiceStatus>([
     'PAID',
+    'DUE',
     'OVERDUE',
     'WAIVED',
     'DISPUTED',
   ]),
-  PAID: new Set<InvoiceStatus>([]),
+  PAID: new Set<InvoiceStatus>([
+    'DUE',
+    'PARTIALLY_PAID',
+  ]),
   OVERDUE: new Set<InvoiceStatus>([
     'PARTIALLY_PAID',
     'PAID',
@@ -77,6 +89,7 @@ export function nextInvoiceStates(from: InvoiceStatus): readonly InvoiceStatus[]
 
 /** Terminal invoice statuses (no further transitions possible). */
 export const TERMINAL_INVOICE_STATUSES: ReadonlySet<InvoiceStatus> = new Set<InvoiceStatus>([
-  'PAID',
+  // PAID was removed in Phase 15 because refund webhooks can revert it
+  // back to DUE or PARTIALLY_PAID. Only WAIVED is truly terminal.
   'WAIVED',
 ]);
