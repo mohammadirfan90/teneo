@@ -77,7 +77,9 @@ export const ModelName = {
   PropertyMeter: 'PropertyMeter',
   MeterReading: 'MeterReading',
   UtilityBill: 'UtilityBill',
-  BillShare: 'BillShare'
+  BillShare: 'BillShare',
+  MaintenanceTicket: 'MaintenanceTicket',
+  MaintenanceUpdate: 'MaintenanceUpdate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -578,6 +580,46 @@ export const BillShareScalarFieldEnum = {
 } as const
 
 export type BillShareScalarFieldEnum = (typeof BillShareScalarFieldEnum)[keyof typeof BillShareScalarFieldEnum]
+
+
+export const MaintenanceTicketScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  leaseId: 'leaseId',
+  raisedByUserId: 'raisedByUserId',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  priority: 'priority',
+  status: 'status',
+  slaTargetAt: 'slaTargetAt',
+  slaBreachedAt: 'slaBreachedAt',
+  resolvedAt: 'resolvedAt',
+  resolvedByUserId: 'resolvedByUserId',
+  closedAt: 'closedAt',
+  closedByUserId: 'closedByUserId',
+  rating: 'rating',
+  ratingComment: 'ratingComment',
+  ratingSubmittedAt: 'ratingSubmittedAt',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MaintenanceTicketScalarFieldEnum = (typeof MaintenanceTicketScalarFieldEnum)[keyof typeof MaintenanceTicketScalarFieldEnum]
+
+
+export const MaintenanceUpdateScalarFieldEnum = {
+  id: 'id',
+  ticketId: 'ticketId',
+  authorUserId: 'authorUserId',
+  body: 'body',
+  statusAfter: 'statusAfter',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type MaintenanceUpdateScalarFieldEnum = (typeof MaintenanceUpdateScalarFieldEnum)[keyof typeof MaintenanceUpdateScalarFieldEnum]
 
 
 export const SortOrder = {

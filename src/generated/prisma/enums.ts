@@ -212,3 +212,39 @@ export const UtilityType = {
 } as const
 
 export type UtilityType = (typeof UtilityType)[keyof typeof UtilityType]
+
+
+export const MaintenanceCategory = {
+  PLUMBING: 'PLUMBING',
+  ELECTRICAL: 'ELECTRICAL',
+  APPLIANCE: 'APPLIANCE',
+  HVAC: 'HVAC',
+  STRUCTURAL: 'STRUCTURAL',
+  PEST: 'PEST',
+  OTHER: 'OTHER'
+} as const
+
+export type MaintenanceCategory = (typeof MaintenanceCategory)[keyof typeof MaintenanceCategory]
+
+
+export const MaintenancePriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type MaintenancePriority = (typeof MaintenancePriority)[keyof typeof MaintenancePriority]
+
+
+export const MaintenanceStatus = {
+  OPEN: 'OPEN',
+  ACKNOWLEDGED: 'ACKNOWLEDGED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED'
+} as const
+
+export type MaintenanceStatus = (typeof MaintenanceStatus)[keyof typeof MaintenanceStatus]

@@ -290,6 +290,10 @@ export type UserWhereInput = {
   paymentsMade?: Prisma.PaymentListRelationFilter
   meterReadings?: Prisma.MeterReadingListRelationFilter
   billShares?: Prisma.BillShareListRelationFilter
+  ticketsRaised?: Prisma.MaintenanceTicketListRelationFilter
+  ticketsResolved?: Prisma.MaintenanceTicketListRelationFilter
+  ticketsClosed?: Prisma.MaintenanceTicketListRelationFilter
+  ticketUpdates?: Prisma.MaintenanceUpdateListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -327,6 +331,10 @@ export type UserOrderByWithRelationInput = {
   paymentsMade?: Prisma.PaymentOrderByRelationAggregateInput
   meterReadings?: Prisma.MeterReadingOrderByRelationAggregateInput
   billShares?: Prisma.BillShareOrderByRelationAggregateInput
+  ticketsRaised?: Prisma.MaintenanceTicketOrderByRelationAggregateInput
+  ticketsResolved?: Prisma.MaintenanceTicketOrderByRelationAggregateInput
+  ticketsClosed?: Prisma.MaintenanceTicketOrderByRelationAggregateInput
+  ticketUpdates?: Prisma.MaintenanceUpdateOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -367,6 +375,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   paymentsMade?: Prisma.PaymentListRelationFilter
   meterReadings?: Prisma.MeterReadingListRelationFilter
   billShares?: Prisma.BillShareListRelationFilter
+  ticketsRaised?: Prisma.MaintenanceTicketListRelationFilter
+  ticketsResolved?: Prisma.MaintenanceTicketListRelationFilter
+  ticketsClosed?: Prisma.MaintenanceTicketListRelationFilter
+  ticketUpdates?: Prisma.MaintenanceUpdateListRelationFilter
 }, "id">
 
 export type UserOrderByWithAggregationInput = {
@@ -448,6 +460,10 @@ export type UserCreateInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -485,6 +501,10 @@ export type UserUncheckedCreateInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUpdateInput = {
@@ -522,6 +542,10 @@ export type UserUpdateInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -559,6 +583,10 @@ export type UserUncheckedUpdateInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -969,6 +997,66 @@ export type UserUpdateOneRequiredWithoutBillSharesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBillSharesInput, Prisma.UserUpdateWithoutBillSharesInput>, Prisma.UserUncheckedUpdateWithoutBillSharesInput>
 }
 
+export type UserCreateNestedOneWithoutTicketsRaisedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketsRaisedInput, Prisma.UserUncheckedCreateWithoutTicketsRaisedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketsRaisedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutTicketsResolvedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketsResolvedInput, Prisma.UserUncheckedCreateWithoutTicketsResolvedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketsResolvedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutTicketsClosedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketsClosedInput, Prisma.UserUncheckedCreateWithoutTicketsClosedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketsClosedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTicketsRaisedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketsRaisedInput, Prisma.UserUncheckedCreateWithoutTicketsRaisedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketsRaisedInput
+  upsert?: Prisma.UserUpsertWithoutTicketsRaisedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTicketsRaisedInput, Prisma.UserUpdateWithoutTicketsRaisedInput>, Prisma.UserUncheckedUpdateWithoutTicketsRaisedInput>
+}
+
+export type UserUpdateOneWithoutTicketsResolvedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketsResolvedInput, Prisma.UserUncheckedCreateWithoutTicketsResolvedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketsResolvedInput
+  upsert?: Prisma.UserUpsertWithoutTicketsResolvedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTicketsResolvedInput, Prisma.UserUpdateWithoutTicketsResolvedInput>, Prisma.UserUncheckedUpdateWithoutTicketsResolvedInput>
+}
+
+export type UserUpdateOneWithoutTicketsClosedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketsClosedInput, Prisma.UserUncheckedCreateWithoutTicketsClosedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketsClosedInput
+  upsert?: Prisma.UserUpsertWithoutTicketsClosedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTicketsClosedInput, Prisma.UserUpdateWithoutTicketsClosedInput>, Prisma.UserUncheckedUpdateWithoutTicketsClosedInput>
+}
+
+export type UserCreateNestedOneWithoutTicketUpdatesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketUpdatesInput, Prisma.UserUncheckedCreateWithoutTicketUpdatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketUpdatesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTicketUpdatesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTicketUpdatesInput, Prisma.UserUncheckedCreateWithoutTicketUpdatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTicketUpdatesInput
+  upsert?: Prisma.UserUpsertWithoutTicketUpdatesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTicketUpdatesInput, Prisma.UserUpdateWithoutTicketUpdatesInput>, Prisma.UserUncheckedUpdateWithoutTicketUpdatesInput>
+}
+
 export type UserCreateWithoutRolesInput = {
   id?: string
   email: string
@@ -1003,6 +1091,10 @@ export type UserCreateWithoutRolesInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutRolesInput = {
@@ -1039,6 +1131,10 @@ export type UserUncheckedCreateWithoutRolesInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutRolesInput = {
@@ -1091,6 +1187,10 @@ export type UserUpdateWithoutRolesInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRolesInput = {
@@ -1127,6 +1227,10 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutOwnerProfileInput = {
@@ -1163,6 +1267,10 @@ export type UserCreateWithoutOwnerProfileInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutOwnerProfileInput = {
@@ -1199,6 +1307,10 @@ export type UserUncheckedCreateWithoutOwnerProfileInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutOwnerProfileInput = {
@@ -1251,6 +1363,10 @@ export type UserUpdateWithoutOwnerProfileInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnerProfileInput = {
@@ -1287,6 +1403,10 @@ export type UserUncheckedUpdateWithoutOwnerProfileInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutTenantProfileInput = {
@@ -1323,6 +1443,10 @@ export type UserCreateWithoutTenantProfileInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutTenantProfileInput = {
@@ -1359,6 +1483,10 @@ export type UserUncheckedCreateWithoutTenantProfileInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutTenantProfileInput = {
@@ -1411,6 +1539,10 @@ export type UserUpdateWithoutTenantProfileInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTenantProfileInput = {
@@ -1447,6 +1579,10 @@ export type UserUncheckedUpdateWithoutTenantProfileInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutKycSubmissionsInput = {
@@ -1483,6 +1619,10 @@ export type UserCreateWithoutKycSubmissionsInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutKycSubmissionsInput = {
@@ -1519,6 +1659,10 @@ export type UserUncheckedCreateWithoutKycSubmissionsInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutKycSubmissionsInput = {
@@ -1571,6 +1715,10 @@ export type UserUpdateWithoutKycSubmissionsInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutKycSubmissionsInput = {
@@ -1607,6 +1755,10 @@ export type UserUncheckedUpdateWithoutKycSubmissionsInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -1643,6 +1795,10 @@ export type UserCreateWithoutRefreshTokensInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -1679,6 +1835,10 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -1731,6 +1891,10 @@ export type UserUpdateWithoutRefreshTokensInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -1767,6 +1931,10 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutTenantPreferencesInput = {
@@ -1803,6 +1971,10 @@ export type UserCreateWithoutTenantPreferencesInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutTenantPreferencesInput = {
@@ -1839,6 +2011,10 @@ export type UserUncheckedCreateWithoutTenantPreferencesInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutTenantPreferencesInput = {
@@ -1891,6 +2067,10 @@ export type UserUpdateWithoutTenantPreferencesInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTenantPreferencesInput = {
@@ -1927,6 +2107,10 @@ export type UserUncheckedUpdateWithoutTenantPreferencesInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutPropertiesInput = {
@@ -1963,6 +2147,10 @@ export type UserCreateWithoutPropertiesInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutPropertiesInput = {
@@ -1999,6 +2187,10 @@ export type UserUncheckedCreateWithoutPropertiesInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutPropertiesInput = {
@@ -2051,6 +2243,10 @@ export type UserUpdateWithoutPropertiesInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPropertiesInput = {
@@ -2087,6 +2283,10 @@ export type UserUncheckedUpdateWithoutPropertiesInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutSavedSearchesInput = {
@@ -2123,6 +2323,10 @@ export type UserCreateWithoutSavedSearchesInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutSavedSearchesInput = {
@@ -2159,6 +2363,10 @@ export type UserUncheckedCreateWithoutSavedSearchesInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutSavedSearchesInput = {
@@ -2211,6 +2419,10 @@ export type UserUpdateWithoutSavedSearchesInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSavedSearchesInput = {
@@ -2247,6 +2459,10 @@ export type UserUncheckedUpdateWithoutSavedSearchesInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {
@@ -2283,6 +2499,10 @@ export type UserCreateWithoutApplicationsInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -2319,6 +2539,10 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -2371,6 +2595,10 @@ export type UserUpdateWithoutApplicationsInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -2407,6 +2635,10 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutViewingRequestsInput = {
@@ -2443,6 +2675,10 @@ export type UserCreateWithoutViewingRequestsInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutViewingRequestsInput = {
@@ -2479,6 +2715,10 @@ export type UserUncheckedCreateWithoutViewingRequestsInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutViewingRequestsInput = {
@@ -2531,6 +2771,10 @@ export type UserUpdateWithoutViewingRequestsInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutViewingRequestsInput = {
@@ -2567,6 +2811,10 @@ export type UserUncheckedUpdateWithoutViewingRequestsInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutLeaseTenanciesInput = {
@@ -2603,6 +2851,10 @@ export type UserCreateWithoutLeaseTenanciesInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutLeaseTenanciesInput = {
@@ -2639,6 +2891,10 @@ export type UserUncheckedCreateWithoutLeaseTenanciesInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutLeaseTenanciesInput = {
@@ -2691,6 +2947,10 @@ export type UserUpdateWithoutLeaseTenanciesInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaseTenanciesInput = {
@@ -2727,6 +2987,10 @@ export type UserUncheckedUpdateWithoutLeaseTenanciesInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutLeaseSignaturesInput = {
@@ -2763,6 +3027,10 @@ export type UserCreateWithoutLeaseSignaturesInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutLeaseSignaturesInput = {
@@ -2799,6 +3067,10 @@ export type UserUncheckedCreateWithoutLeaseSignaturesInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutLeaseSignaturesInput = {
@@ -2851,6 +3123,10 @@ export type UserUpdateWithoutLeaseSignaturesInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaseSignaturesInput = {
@@ -2887,6 +3163,10 @@ export type UserUncheckedUpdateWithoutLeaseSignaturesInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutLeaseAmendmentsInput = {
@@ -2923,6 +3203,10 @@ export type UserCreateWithoutLeaseAmendmentsInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutLeaseAmendmentsInput = {
@@ -2959,6 +3243,10 @@ export type UserUncheckedCreateWithoutLeaseAmendmentsInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutLeaseAmendmentsInput = {
@@ -3011,6 +3299,10 @@ export type UserUpdateWithoutLeaseAmendmentsInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaseAmendmentsInput = {
@@ -3047,6 +3339,10 @@ export type UserUncheckedUpdateWithoutLeaseAmendmentsInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutRentInvoicesDisputedInput = {
@@ -3083,6 +3379,10 @@ export type UserCreateWithoutRentInvoicesDisputedInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutRentInvoicesDisputedInput = {
@@ -3119,6 +3419,10 @@ export type UserUncheckedCreateWithoutRentInvoicesDisputedInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutRentInvoicesDisputedInput = {
@@ -3160,6 +3464,10 @@ export type UserCreateWithoutRentInvoicesWaivedInput = {
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutRentInvoicesWaivedInput = {
@@ -3196,6 +3504,10 @@ export type UserUncheckedCreateWithoutRentInvoicesWaivedInput = {
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutRentInvoicesWaivedInput = {
@@ -3248,6 +3560,10 @@ export type UserUpdateWithoutRentInvoicesDisputedInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRentInvoicesDisputedInput = {
@@ -3284,6 +3600,10 @@ export type UserUncheckedUpdateWithoutRentInvoicesDisputedInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUpsertWithoutRentInvoicesWaivedInput = {
@@ -3331,6 +3651,10 @@ export type UserUpdateWithoutRentInvoicesWaivedInput = {
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRentInvoicesWaivedInput = {
@@ -3367,6 +3691,10 @@ export type UserUncheckedUpdateWithoutRentInvoicesWaivedInput = {
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutPaymentsMadeInput = {
@@ -3403,6 +3731,10 @@ export type UserCreateWithoutPaymentsMadeInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsMadeInput = {
@@ -3439,6 +3771,10 @@ export type UserUncheckedCreateWithoutPaymentsMadeInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsMadeInput = {
@@ -3491,6 +3827,10 @@ export type UserUpdateWithoutPaymentsMadeInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsMadeInput = {
@@ -3527,6 +3867,10 @@ export type UserUncheckedUpdateWithoutPaymentsMadeInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutMeterReadingsInput = {
@@ -3563,6 +3907,10 @@ export type UserCreateWithoutMeterReadingsInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutMeterReadingsInput = {
@@ -3599,6 +3947,10 @@ export type UserUncheckedCreateWithoutMeterReadingsInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutMeterReadingsInput = {
@@ -3651,6 +4003,10 @@ export type UserUpdateWithoutMeterReadingsInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMeterReadingsInput = {
@@ -3687,6 +4043,10 @@ export type UserUncheckedUpdateWithoutMeterReadingsInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserCreateWithoutBillSharesInput = {
@@ -3723,6 +4083,10 @@ export type UserCreateWithoutBillSharesInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
   paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
 }
 
 export type UserUncheckedCreateWithoutBillSharesInput = {
@@ -3759,6 +4123,10 @@ export type UserUncheckedCreateWithoutBillSharesInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
   paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
   meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
 }
 
 export type UserCreateOrConnectWithoutBillSharesInput = {
@@ -3811,6 +4179,10 @@ export type UserUpdateWithoutBillSharesInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
   paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBillSharesInput = {
@@ -3847,6 +4219,714 @@ export type UserUncheckedUpdateWithoutBillSharesInput = {
   rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
   paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
   meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserCreateWithoutTicketsRaisedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
+}
+
+export type UserUncheckedCreateWithoutTicketsRaisedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
+}
+
+export type UserCreateOrConnectWithoutTicketsRaisedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketsRaisedInput, Prisma.UserUncheckedCreateWithoutTicketsRaisedInput>
+}
+
+export type UserCreateWithoutTicketsResolvedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
+}
+
+export type UserUncheckedCreateWithoutTicketsResolvedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
+}
+
+export type UserCreateOrConnectWithoutTicketsResolvedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketsResolvedInput, Prisma.UserUncheckedCreateWithoutTicketsResolvedInput>
+}
+
+export type UserCreateWithoutTicketsClosedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
+}
+
+export type UserUncheckedCreateWithoutTicketsClosedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
+}
+
+export type UserCreateOrConnectWithoutTicketsClosedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketsClosedInput, Prisma.UserUncheckedCreateWithoutTicketsClosedInput>
+}
+
+export type UserUpsertWithoutTicketsRaisedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTicketsRaisedInput, Prisma.UserUncheckedUpdateWithoutTicketsRaisedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketsRaisedInput, Prisma.UserUncheckedCreateWithoutTicketsRaisedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTicketsRaisedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTicketsRaisedInput, Prisma.UserUncheckedUpdateWithoutTicketsRaisedInput>
+}
+
+export type UserUpdateWithoutTicketsRaisedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTicketsRaisedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserUpsertWithoutTicketsResolvedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTicketsResolvedInput, Prisma.UserUncheckedUpdateWithoutTicketsResolvedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketsResolvedInput, Prisma.UserUncheckedCreateWithoutTicketsResolvedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTicketsResolvedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTicketsResolvedInput, Prisma.UserUncheckedUpdateWithoutTicketsResolvedInput>
+}
+
+export type UserUpdateWithoutTicketsResolvedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTicketsResolvedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserUpsertWithoutTicketsClosedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTicketsClosedInput, Prisma.UserUncheckedUpdateWithoutTicketsClosedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketsClosedInput, Prisma.UserUncheckedCreateWithoutTicketsClosedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTicketsClosedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTicketsClosedInput, Prisma.UserUncheckedUpdateWithoutTicketsClosedInput>
+}
+
+export type UserUpdateWithoutTicketsClosedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTicketsClosedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserCreateWithoutTicketUpdatesInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+}
+
+export type UserUncheckedCreateWithoutTicketUpdatesInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+}
+
+export type UserCreateOrConnectWithoutTicketUpdatesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketUpdatesInput, Prisma.UserUncheckedCreateWithoutTicketUpdatesInput>
+}
+
+export type UserUpsertWithoutTicketUpdatesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTicketUpdatesInput, Prisma.UserUncheckedUpdateWithoutTicketUpdatesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTicketUpdatesInput, Prisma.UserUncheckedCreateWithoutTicketUpdatesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTicketUpdatesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTicketUpdatesInput, Prisma.UserUncheckedUpdateWithoutTicketUpdatesInput>
+}
+
+export type UserUpdateWithoutTicketUpdatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTicketUpdatesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
 }
 
 
@@ -3870,6 +4950,10 @@ export type UserCountOutputType = {
   paymentsMade: number
   meterReadings: number
   billShares: number
+  ticketsRaised: number
+  ticketsResolved: number
+  ticketsClosed: number
+  ticketUpdates: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3888,6 +4972,10 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   paymentsMade?: boolean | UserCountOutputTypeCountPaymentsMadeArgs
   meterReadings?: boolean | UserCountOutputTypeCountMeterReadingsArgs
   billShares?: boolean | UserCountOutputTypeCountBillSharesArgs
+  ticketsRaised?: boolean | UserCountOutputTypeCountTicketsRaisedArgs
+  ticketsResolved?: boolean | UserCountOutputTypeCountTicketsResolvedArgs
+  ticketsClosed?: boolean | UserCountOutputTypeCountTicketsClosedArgs
+  ticketUpdates?: boolean | UserCountOutputTypeCountTicketUpdatesArgs
 }
 
 /**
@@ -4005,6 +5093,34 @@ export type UserCountOutputTypeCountBillSharesArgs<ExtArgs extends runtime.Types
   where?: Prisma.BillShareWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTicketsRaisedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaintenanceTicketWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTicketsResolvedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaintenanceTicketWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTicketsClosedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaintenanceTicketWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTicketUpdatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaintenanceUpdateWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -4041,6 +5157,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   paymentsMade?: boolean | Prisma.User$paymentsMadeArgs<ExtArgs>
   meterReadings?: boolean | Prisma.User$meterReadingsArgs<ExtArgs>
   billShares?: boolean | Prisma.User$billSharesArgs<ExtArgs>
+  ticketsRaised?: boolean | Prisma.User$ticketsRaisedArgs<ExtArgs>
+  ticketsResolved?: boolean | Prisma.User$ticketsResolvedArgs<ExtArgs>
+  ticketsClosed?: boolean | Prisma.User$ticketsClosedArgs<ExtArgs>
+  ticketUpdates?: boolean | Prisma.User$ticketUpdatesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -4121,6 +5241,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   paymentsMade?: boolean | Prisma.User$paymentsMadeArgs<ExtArgs>
   meterReadings?: boolean | Prisma.User$meterReadingsArgs<ExtArgs>
   billShares?: boolean | Prisma.User$billSharesArgs<ExtArgs>
+  ticketsRaised?: boolean | Prisma.User$ticketsRaisedArgs<ExtArgs>
+  ticketsResolved?: boolean | Prisma.User$ticketsResolvedArgs<ExtArgs>
+  ticketsClosed?: boolean | Prisma.User$ticketsClosedArgs<ExtArgs>
+  ticketUpdates?: boolean | Prisma.User$ticketUpdatesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -4147,6 +5271,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     paymentsMade: Prisma.$PaymentPayload<ExtArgs>[]
     meterReadings: Prisma.$MeterReadingPayload<ExtArgs>[]
     billShares: Prisma.$BillSharePayload<ExtArgs>[]
+    ticketsRaised: Prisma.$MaintenanceTicketPayload<ExtArgs>[]
+    ticketsResolved: Prisma.$MaintenanceTicketPayload<ExtArgs>[]
+    ticketsClosed: Prisma.$MaintenanceTicketPayload<ExtArgs>[]
+    ticketUpdates: Prisma.$MaintenanceUpdatePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -4577,6 +5705,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   paymentsMade<T extends Prisma.User$paymentsMadeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsMadeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   meterReadings<T extends Prisma.User$meterReadingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$meterReadingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MeterReadingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   billShares<T extends Prisma.User$billSharesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$billSharesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BillSharePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ticketsRaised<T extends Prisma.User$ticketsRaisedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ticketsRaisedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenanceTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ticketsResolved<T extends Prisma.User$ticketsResolvedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ticketsResolvedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenanceTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ticketsClosed<T extends Prisma.User$ticketsClosedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ticketsClosedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenanceTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ticketUpdates<T extends Prisma.User$ticketUpdatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ticketUpdatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenanceUpdatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5429,6 +6561,102 @@ export type User$billSharesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.BillShareScalarFieldEnum | Prisma.BillShareScalarFieldEnum[]
+}
+
+/**
+ * User.ticketsRaised
+ */
+export type User$ticketsRaisedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaintenanceTicket
+   */
+  select?: Prisma.MaintenanceTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaintenanceTicket
+   */
+  omit?: Prisma.MaintenanceTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaintenanceTicketInclude<ExtArgs> | null
+  where?: Prisma.MaintenanceTicketWhereInput
+  orderBy?: Prisma.MaintenanceTicketOrderByWithRelationInput | Prisma.MaintenanceTicketOrderByWithRelationInput[]
+  cursor?: Prisma.MaintenanceTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaintenanceTicketScalarFieldEnum | Prisma.MaintenanceTicketScalarFieldEnum[]
+}
+
+/**
+ * User.ticketsResolved
+ */
+export type User$ticketsResolvedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaintenanceTicket
+   */
+  select?: Prisma.MaintenanceTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaintenanceTicket
+   */
+  omit?: Prisma.MaintenanceTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaintenanceTicketInclude<ExtArgs> | null
+  where?: Prisma.MaintenanceTicketWhereInput
+  orderBy?: Prisma.MaintenanceTicketOrderByWithRelationInput | Prisma.MaintenanceTicketOrderByWithRelationInput[]
+  cursor?: Prisma.MaintenanceTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaintenanceTicketScalarFieldEnum | Prisma.MaintenanceTicketScalarFieldEnum[]
+}
+
+/**
+ * User.ticketsClosed
+ */
+export type User$ticketsClosedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaintenanceTicket
+   */
+  select?: Prisma.MaintenanceTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaintenanceTicket
+   */
+  omit?: Prisma.MaintenanceTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaintenanceTicketInclude<ExtArgs> | null
+  where?: Prisma.MaintenanceTicketWhereInput
+  orderBy?: Prisma.MaintenanceTicketOrderByWithRelationInput | Prisma.MaintenanceTicketOrderByWithRelationInput[]
+  cursor?: Prisma.MaintenanceTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaintenanceTicketScalarFieldEnum | Prisma.MaintenanceTicketScalarFieldEnum[]
+}
+
+/**
+ * User.ticketUpdates
+ */
+export type User$ticketUpdatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaintenanceUpdate
+   */
+  select?: Prisma.MaintenanceUpdateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaintenanceUpdate
+   */
+  omit?: Prisma.MaintenanceUpdateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaintenanceUpdateInclude<ExtArgs> | null
+  where?: Prisma.MaintenanceUpdateWhereInput
+  orderBy?: Prisma.MaintenanceUpdateOrderByWithRelationInput | Prisma.MaintenanceUpdateOrderByWithRelationInput[]
+  cursor?: Prisma.MaintenanceUpdateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaintenanceUpdateScalarFieldEnum | Prisma.MaintenanceUpdateScalarFieldEnum[]
 }
 
 /**

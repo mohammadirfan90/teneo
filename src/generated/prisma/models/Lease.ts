@@ -340,6 +340,7 @@ export type LeaseWhereInput = {
   rentInvoices?: Prisma.RentInvoiceListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   utilityBills?: Prisma.UtilityBillListRelationFilter
+  tickets?: Prisma.MaintenanceTicketListRelationFilter
 }
 
 export type LeaseOrderByWithRelationInput = {
@@ -368,6 +369,7 @@ export type LeaseOrderByWithRelationInput = {
   rentInvoices?: Prisma.RentInvoiceOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   utilityBills?: Prisma.UtilityBillOrderByRelationAggregateInput
+  tickets?: Prisma.MaintenanceTicketOrderByRelationAggregateInput
 }
 
 export type LeaseWhereUniqueInput = Prisma.AtLeast<{
@@ -399,6 +401,7 @@ export type LeaseWhereUniqueInput = Prisma.AtLeast<{
   rentInvoices?: Prisma.RentInvoiceListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   utilityBills?: Prisma.UtilityBillListRelationFilter
+  tickets?: Prisma.MaintenanceTicketListRelationFilter
 }, "id">
 
 export type LeaseOrderByWithAggregationInput = {
@@ -479,6 +482,7 @@ export type LeaseCreateInput = {
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateInput = {
@@ -507,6 +511,7 @@ export type LeaseUncheckedCreateInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUpdateInput = {
@@ -535,6 +540,7 @@ export type LeaseUpdateInput = {
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateInput = {
@@ -563,6 +569,7 @@ export type LeaseUncheckedUpdateInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateManyInput = {
@@ -800,6 +807,20 @@ export type LeaseUpdateOneRequiredWithoutUtilityBillsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LeaseUpdateToOneWithWhereWithoutUtilityBillsInput, Prisma.LeaseUpdateWithoutUtilityBillsInput>, Prisma.LeaseUncheckedUpdateWithoutUtilityBillsInput>
 }
 
+export type LeaseCreateNestedOneWithoutTicketsInput = {
+  create?: Prisma.XOR<Prisma.LeaseCreateWithoutTicketsInput, Prisma.LeaseUncheckedCreateWithoutTicketsInput>
+  connectOrCreate?: Prisma.LeaseCreateOrConnectWithoutTicketsInput
+  connect?: Prisma.LeaseWhereUniqueInput
+}
+
+export type LeaseUpdateOneRequiredWithoutTicketsNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaseCreateWithoutTicketsInput, Prisma.LeaseUncheckedCreateWithoutTicketsInput>
+  connectOrCreate?: Prisma.LeaseCreateOrConnectWithoutTicketsInput
+  upsert?: Prisma.LeaseUpsertWithoutTicketsInput
+  connect?: Prisma.LeaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LeaseUpdateToOneWithWhereWithoutTicketsInput, Prisma.LeaseUpdateWithoutTicketsInput>, Prisma.LeaseUncheckedUpdateWithoutTicketsInput>
+}
+
 export type LeaseCreateWithoutTenantsInput = {
   id?: string
   roomId: string
@@ -825,6 +846,7 @@ export type LeaseCreateWithoutTenantsInput = {
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutTenantsInput = {
@@ -852,6 +874,7 @@ export type LeaseUncheckedCreateWithoutTenantsInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutTenantsInput = {
@@ -895,6 +918,7 @@ export type LeaseUpdateWithoutTenantsInput = {
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutTenantsInput = {
@@ -922,6 +946,7 @@ export type LeaseUncheckedUpdateWithoutTenantsInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutSignaturesInput = {
@@ -949,6 +974,7 @@ export type LeaseCreateWithoutSignaturesInput = {
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutSignaturesInput = {
@@ -976,6 +1002,7 @@ export type LeaseUncheckedCreateWithoutSignaturesInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutSignaturesInput = {
@@ -1019,6 +1046,7 @@ export type LeaseUpdateWithoutSignaturesInput = {
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutSignaturesInput = {
@@ -1046,6 +1074,7 @@ export type LeaseUncheckedUpdateWithoutSignaturesInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutAmendmentsInput = {
@@ -1073,6 +1102,7 @@ export type LeaseCreateWithoutAmendmentsInput = {
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutAmendmentsInput = {
@@ -1100,6 +1130,7 @@ export type LeaseUncheckedCreateWithoutAmendmentsInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutAmendmentsInput = {
@@ -1143,6 +1174,7 @@ export type LeaseUpdateWithoutAmendmentsInput = {
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutAmendmentsInput = {
@@ -1170,6 +1202,7 @@ export type LeaseUncheckedUpdateWithoutAmendmentsInput = {
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutRentInvoicesInput = {
@@ -1197,6 +1230,7 @@ export type LeaseCreateWithoutRentInvoicesInput = {
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutRentInvoicesInput = {
@@ -1224,6 +1258,7 @@ export type LeaseUncheckedCreateWithoutRentInvoicesInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutRentInvoicesInput = {
@@ -1267,6 +1302,7 @@ export type LeaseUpdateWithoutRentInvoicesInput = {
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutRentInvoicesInput = {
@@ -1294,6 +1330,7 @@ export type LeaseUncheckedUpdateWithoutRentInvoicesInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutPaymentsInput = {
@@ -1321,6 +1358,7 @@ export type LeaseCreateWithoutPaymentsInput = {
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutPaymentsInput = {
@@ -1348,6 +1386,7 @@ export type LeaseUncheckedCreateWithoutPaymentsInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutPaymentsInput = {
@@ -1391,6 +1430,7 @@ export type LeaseUpdateWithoutPaymentsInput = {
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutPaymentsInput = {
@@ -1418,6 +1458,7 @@ export type LeaseUncheckedUpdateWithoutPaymentsInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutUtilityBillsInput = {
@@ -1445,6 +1486,7 @@ export type LeaseCreateWithoutUtilityBillsInput = {
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutUtilityBillsInput = {
@@ -1472,6 +1514,7 @@ export type LeaseUncheckedCreateWithoutUtilityBillsInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutUtilityBillsInput = {
@@ -1515,6 +1558,7 @@ export type LeaseUpdateWithoutUtilityBillsInput = {
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutUtilityBillsInput = {
@@ -1542,6 +1586,135 @@ export type LeaseUncheckedUpdateWithoutUtilityBillsInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutLeaseNestedInput
+}
+
+export type LeaseCreateWithoutTicketsInput = {
+  id?: string
+  roomId: string
+  ownerUserId: string
+  primaryTenantUserId: string
+  startDate: Date | string
+  endDate: Date | string
+  rentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: $Enums.LeaseStatus
+  signedAt?: Date | string | null
+  activatedAt?: Date | string | null
+  endedAt?: Date | string | null
+  contractObjectKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenants?: Prisma.LeaseTenantCreateNestedManyWithoutLeaseInput
+  signatures?: Prisma.LeaseSignatureCreateNestedManyWithoutLeaseInput
+  amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
+  rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
+}
+
+export type LeaseUncheckedCreateWithoutTicketsInput = {
+  id?: string
+  roomId: string
+  ownerUserId: string
+  primaryTenantUserId: string
+  startDate: Date | string
+  endDate: Date | string
+  rentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: $Enums.LeaseStatus
+  signedAt?: Date | string | null
+  activatedAt?: Date | string | null
+  endedAt?: Date | string | null
+  contractObjectKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenants?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutLeaseInput
+  signatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutLeaseInput
+  amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
+  rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
+}
+
+export type LeaseCreateOrConnectWithoutTicketsInput = {
+  where: Prisma.LeaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.LeaseCreateWithoutTicketsInput, Prisma.LeaseUncheckedCreateWithoutTicketsInput>
+}
+
+export type LeaseUpsertWithoutTicketsInput = {
+  update: Prisma.XOR<Prisma.LeaseUpdateWithoutTicketsInput, Prisma.LeaseUncheckedUpdateWithoutTicketsInput>
+  create: Prisma.XOR<Prisma.LeaseCreateWithoutTicketsInput, Prisma.LeaseUncheckedCreateWithoutTicketsInput>
+  where?: Prisma.LeaseWhereInput
+}
+
+export type LeaseUpdateToOneWithWhereWithoutTicketsInput = {
+  where?: Prisma.LeaseWhereInput
+  data: Prisma.XOR<Prisma.LeaseUpdateWithoutTicketsInput, Prisma.LeaseUncheckedUpdateWithoutTicketsInput>
+}
+
+export type LeaseUpdateWithoutTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  roomId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryTenantUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenants?: Prisma.LeaseTenantUpdateManyWithoutLeaseNestedInput
+  signatures?: Prisma.LeaseSignatureUpdateManyWithoutLeaseNestedInput
+  amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
+  rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
+}
+
+export type LeaseUncheckedUpdateWithoutTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  roomId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryTenantUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenants?: Prisma.LeaseTenantUncheckedUpdateManyWithoutLeaseNestedInput
+  signatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutLeaseNestedInput
+  amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
+  rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 
@@ -1556,6 +1729,7 @@ export type LeaseCountOutputType = {
   rentInvoices: number
   payments: number
   utilityBills: number
+  tickets: number
 }
 
 export type LeaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1565,6 +1739,7 @@ export type LeaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   rentInvoices?: boolean | LeaseCountOutputTypeCountRentInvoicesArgs
   payments?: boolean | LeaseCountOutputTypeCountPaymentsArgs
   utilityBills?: boolean | LeaseCountOutputTypeCountUtilityBillsArgs
+  tickets?: boolean | LeaseCountOutputTypeCountTicketsArgs
 }
 
 /**
@@ -1619,6 +1794,13 @@ export type LeaseCountOutputTypeCountUtilityBillsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.UtilityBillWhereInput
 }
 
+/**
+ * LeaseCountOutputType without action
+ */
+export type LeaseCountOutputTypeCountTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MaintenanceTicketWhereInput
+}
+
 
 export type LeaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1646,6 +1828,7 @@ export type LeaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   rentInvoices?: boolean | Prisma.Lease$rentInvoicesArgs<ExtArgs>
   payments?: boolean | Prisma.Lease$paymentsArgs<ExtArgs>
   utilityBills?: boolean | Prisma.Lease$utilityBillsArgs<ExtArgs>
+  tickets?: boolean | Prisma.Lease$ticketsArgs<ExtArgs>
   _count?: boolean | Prisma.LeaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lease"]>
 
@@ -1723,6 +1906,7 @@ export type LeaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   rentInvoices?: boolean | Prisma.Lease$rentInvoicesArgs<ExtArgs>
   payments?: boolean | Prisma.Lease$paymentsArgs<ExtArgs>
   utilityBills?: boolean | Prisma.Lease$utilityBillsArgs<ExtArgs>
+  tickets?: boolean | Prisma.Lease$ticketsArgs<ExtArgs>
   _count?: boolean | Prisma.LeaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LeaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1737,6 +1921,7 @@ export type $LeasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     rentInvoices: Prisma.$RentInvoicePayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     utilityBills: Prisma.$UtilityBillPayload<ExtArgs>[]
+    tickets: Prisma.$MaintenanceTicketPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2164,6 +2349,7 @@ export interface Prisma__LeaseClient<T, Null = never, ExtArgs extends runtime.Ty
   rentInvoices<T extends Prisma.Lease$rentInvoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$rentInvoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RentInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Lease$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   utilityBills<T extends Prisma.Lease$utilityBillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$utilityBillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UtilityBillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tickets<T extends Prisma.Lease$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenanceTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2746,6 +2932,30 @@ export type Lease$utilityBillsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.UtilityBillScalarFieldEnum | Prisma.UtilityBillScalarFieldEnum[]
+}
+
+/**
+ * Lease.tickets
+ */
+export type Lease$ticketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MaintenanceTicket
+   */
+  select?: Prisma.MaintenanceTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MaintenanceTicket
+   */
+  omit?: Prisma.MaintenanceTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MaintenanceTicketInclude<ExtArgs> | null
+  where?: Prisma.MaintenanceTicketWhereInput
+  orderBy?: Prisma.MaintenanceTicketOrderByWithRelationInput | Prisma.MaintenanceTicketOrderByWithRelationInput[]
+  cursor?: Prisma.MaintenanceTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MaintenanceTicketScalarFieldEnum | Prisma.MaintenanceTicketScalarFieldEnum[]
 }
 
 /**

@@ -175,6 +175,10 @@ model User {
   paymentsMade         Payment[]          @relation("PaymentTenant")
   meterReadings        MeterReading[]     @relation("MeterReadingSubmitter")
   billShares           BillShare[]        @relation("BillShareTenant")
+  ticketsRaised        MaintenanceTicket[] @relation("TicketRaiser")
+  ticketsResolved      MaintenanceTicket[] @relation("TicketResolver")
+  ticketsClosed        MaintenanceTicket[] @relation("TicketCloser")
+  ticketUpdates        MaintenanceUpdate[] @relation("UpdateAuthor")
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -524,6 +528,7 @@ model Room {
   flat            Flat?            @relation(fields: [flatId], references: [id], onDelete: SetNull)
   applications    Application[]
   viewingRequests ViewingRequest[]
+  tickets         MaintenanceTicket[]
 
   // Full index set (incl. status/available_from, GIN(amenities)) lives in
   // the migration SQL since Prisma can't express composite/partial/GIN
@@ -772,6 +777,7 @@ model Lease {
   rentInvoices RentInvoice[]
   payments     Payment[]
   utilityBills UtilityBill[]
+  tickets      MaintenanceTicket[]
 
   @@index([roomId, status], name: "leases_room_status_idx")
   @@index([ownerUserId, status], name: "leases_owner_status_idx")
@@ -1192,4 +1198,140 @@ model BillShare {
   @@index([billId], name: "bill_shares_bill_idx")
   @@index([tenantUserId, createdAt(sort: Desc)], name: "bill_shares_tenant_idx")
   @@map("bill_shares")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 17: Maintenance tickets + update thread (11 §11.5, 04 §4.6).
+//
+// MaintenanceTicket is raised by a tenant on an ACTIVE lease (or one
+// that ended <= 7 days ago, per spec 11 §11.5.5). The room → property
+// → lease → tenants chain back-resolves the owner for triage.
+//
+// Lifecycle (05 §5.7):
+//   OPEN          → ACKNOWLEDGED, CANCELLED        (owner / tenant)
+//   ACKNOWLEDGED  → IN_PROGRESS, CANCELLED, DISPUTED
+//   IN_PROGRESS   → RESOLVED, DISPUTED
+//   RESOLVED      → CLOSED, DISPUTED
+//   DISPUTED      → RESOLVED                        (ADMIN only)
+//   CLOSED        → terminal
+//   CANCELLED     → terminal
+//
+// SLA policy (per priority, raised_date + slaHours):
+//   LOW      168h   (7d)
+//   MEDIUM    72h   (3d)
+//   HIGH      24h   (1d)
+//   URGENT     4h
+//
+// `sla_breached_at` is set lazily inside `transitionTicket` when a
+// transition happens after sla_target_at while the ticket is still
+// open (NOT yet CLOSED/CANCELLED). It is null while within SLA.
+//
+// `rating` (1..5) is set by the raiser once the ticket is RESOLVED.
+// One rating per ticket — resubmitting returns 409 CONFLICT.
+//
+// `lease_id` is a SNAPSHOT — the ticket remains authoritative even if
+// the lease ends, is terminated, or is amended. The cascade behavior
+// is Restrict on lease so the audit trail is preserved.
+// ──────────────────────────────────────────────────────────────────────
+
+/// Maintenance issue category (04 §4.6).
+enum MaintenanceCategory {
+  PLUMBING
+  ELECTRICAL
+  APPLIANCE
+  HVAC
+  STRUCTURAL
+  PEST
+  OTHER
+}
+
+/// SLA priority bucket. SLA_HOURS_BY_PRIORITY lives in
+/// tickets.state-machine.ts and is the single source of truth.
+enum MaintenancePriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+/// Ticket lifecycle. Mirrors the state machine in
+/// tickets.state-machine.ts.
+enum MaintenanceStatus {
+  OPEN
+  ACKNOWLEDGED
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  CANCELLED
+  /// Tenant disputes an owner's resolution; an ADMIN resolves it.
+  DISPUTED
+}
+
+model MaintenanceTicket {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roomId            String              @map("room_id") @db.Uuid
+  /// Snapshot at raise-time so the ticket remains authoritative even
+  /// if the lease ends/terminates/amends.
+  leaseId           String              @map("lease_id") @db.Uuid
+  raisedByUserId    String              @map("raised_by_user_id") @db.Uuid
+  title             String
+  description       String
+  category          MaintenanceCategory
+  priority          MaintenancePriority @default(MEDIUM)
+  status            MaintenanceStatus   @default(OPEN)
+  /// Computed at raise-time: now() + slaHoursFor(priority).
+  slaTargetAt       DateTime            @map("sla_target_at") @db.Timestamptz(6)
+  /// Set the first time a transition happens after sla_target_at while
+  /// the ticket is still open (not CLOSED/CANCELLED). Null while within
+  /// SLA.
+  slaBreachedAt     DateTime?           @map("sla_breached_at") @db.Timestamptz(6)
+  /// Set on transition into RESOLVED.
+  resolvedAt        DateTime?           @map("resolved_at") @db.Timestamptz(6)
+  resolvedByUserId  String?             @map("resolved_by_user_id") @db.Uuid
+  /// Set on transition into CLOSED.
+  closedAt          DateTime?           @map("closed_at") @db.Timestamptz(6)
+  closedByUserId    String?             @map("closed_by_user_id") @db.Uuid
+  /// Tenant satisfaction rating (1..5). Set only after RESOLVED.
+  rating            Int?
+  ratingComment     String?             @map("rating_comment")
+  ratingSubmittedAt DateTime?           @map("rating_submitted_at") @db.Timestamptz(6)
+  /// Forward-compat v2 multi-tenancy placeholder. Always the constant
+  /// zero-uuid in v1.
+  tenantId          String              @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime            @updatedAt      @map("updated_at") @db.Timestamptz(6)
+
+  room       Room       @relation(fields: [roomId], references: [id], onDelete: Restrict)
+  lease      Lease      @relation(fields: [leaseId], references: [id], onDelete: Restrict)
+  raisedBy   User       @relation("TicketRaiser",   fields: [raisedByUserId],    references: [id], onDelete: Restrict)
+  resolvedBy User?      @relation("TicketResolver", fields: [resolvedByUserId],  references: [id], onDelete: Restrict)
+  closedBy   User?      @relation("TicketCloser",   fields: [closedByUserId],    references: [id], onDelete: Restrict)
+  updates    MaintenanceUpdate[]
+
+  // CHECK (rating BETWEEN 1 AND 5) lives in the migration SQL.
+  @@index([roomId, status],                          name: "tickets_room_status_idx")
+  @@index([status, slaTargetAt],                     name: "tickets_sla_watch_idx")
+  @@index([raisedByUserId, createdAt(sort: Desc)],   name: "tickets_raiser_idx")
+  @@map("maintenance_tickets")
+}
+
+/// Comment thread on a ticket. Append-only.
+///
+/// `statusAfter` is a snapshot of the post-call status when a single
+/// call both adds an update AND transitions the ticket (e.g., the
+/// /dispute convenience endpoint). Null for pure-comment inserts.
+model MaintenanceUpdate {
+  id          String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ticketId    String              @map("ticket_id") @db.Uuid
+  authorUserId String             @map("author_user_id") @db.Uuid
+  body        String
+  statusAfter MaintenanceStatus?  @map("status_after")
+  tenantId    String              @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt   DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  ticket MaintenanceTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author User              @relation("UpdateAuthor", fields: [authorUserId], references: [id], onDelete: Restrict)
+
+  @@index([ticketId, createdAt(sort: Asc)], name: "maintenance_updates_ticket_idx")
+  @@map("maintenance_updates")
 }

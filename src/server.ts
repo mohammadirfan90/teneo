@@ -26,6 +26,7 @@ import { readingsRouter } from '@/modules/bills/readings.routes';
 import { invoicesRouter } from '@/modules/invoices/invoices.routes';
 import { leasesRouter } from '@/modules/leases/leases.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
+import { ticketsRoomRouter, ticketsRouter } from '@/modules/maintenance/tickets.routes';
 import { stripeWebhookHandler } from '@/modules/payments/payments.controller';
 import { paymentsRouter } from '@/modules/payments/payments.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
@@ -212,6 +213,14 @@ export function createApp(): express.Express {
   // Multi-party resource: all transition routes layer requireLeaseParty
   // on top of role gates. /me uses requireAuth only.
   app.use('/api/v1/leases', authenticatedRateLimiter, leasesRouter());
+
+  // ── Phase 17: maintenance tickets ─────────────────────────────────
+  // /rooms/:roomId/tickets (TENANT raises; party reads) lives on the
+  // existing /api/v1/rooms prefix via ticketsRoomRouter.
+  // /tickets/me, /queue, /:id, /:id/updates, /:id/rate live on a
+  // fresh /api/v1/tickets prefix.
+  app.use('/api/v1/rooms', authenticatedRateLimiter, ticketsRoomRouter());
+  app.use('/api/v1/tickets', authenticatedRateLimiter, ticketsRouter());
 
   // ── Phase 14: rent invoice generation + bills facade ────────────────
   // /invoices is auth-gated for every route (party-or-admin on :id);

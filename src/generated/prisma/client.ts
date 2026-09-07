@@ -268,3 +268,17 @@ export type UtilityBill = Prisma.UtilityBillModel
  * weight for PROPORTIONAL split. Null for EQUAL and CUSTOM.
  */
 export type BillShare = Prisma.BillShareModel
+/**
+ * Model MaintenanceTicket
+ * 
+ */
+export type MaintenanceTicket = Prisma.MaintenanceTicketModel
+/**
+ * Model MaintenanceUpdate
+ * Comment thread on a ticket. Append-only.
+ * 
+ * `statusAfter` is a snapshot of the post-call status when a single
+ * call both adds an update AND transitions the ticket (e.g., the
+ * /dispute convenience endpoint). Null for pure-comment inserts.
+ */
+export type MaintenanceUpdate = Prisma.MaintenanceUpdateModel
