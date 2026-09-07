@@ -1,0 +1,71 @@
+# render.yaml — Render Blueprint for the Housing Platform backend.
+#
+# One-click deploy from the Render dashboard ("New → Blueprint"). The
+# managed Postgres + Redis instances are billed separately; this file
+# only describes the web service and its env wiring.
+#
+# Env groups split secrets across two stores:
+#   - "env:staging"   — non-prod secrets (test Stripe, dev Google OAuth)
+#   - "env:production" — prod secrets (rotate Stripe live keys, real OAuth)
+#
+# We do NOT bake secrets into the Docker image. The Dockerfile reads
+# env at container start.
+
+services:
+  - type: web
+    name: housing-platform-api
+    runtime: docker
+    plan: starter
+    # Render passes $PORT to the container at boot; the bootstrap in
+    # src/server.ts reads process.env.PORT.
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: LOG_LEVEL
+        value: info
+      - key: CORS_ORIGINS
+        value: https://housing-platform-web.onrender.com
+      - key: APP_PUBLIC_URL
+        value: https://housing-platform-api.onrender.com
+      # ── Secrets come from the env group, not this file. ──
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: ACCESS_TOKEN_SECRET
+        sync: false
+      - key: REFRESH_TOKEN_SECRET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - fromGroup: env:production
+        type: secret
+        key: STRIPE_WEBHOOK_SECRET
+      - fromGroup: env:production
+        type: secret
+        key: ACCESS_TOKEN_SECRET
+      - fromGroup: env:production
+        type: secret
+        key: REFRESH_TOKEN_SECRET
+    healthCheckPath: /health/ready
+    autoDeploy: true
+    docker:
+      # Render uses the repo-root Dockerfile by default. Explicit here
+      # so a future move of the file doesn't silently break deploys.
+      dockerfilePath: ./Dockerfile
+      # Keep the context at the repo root (so docker-compose.yml and
+      # prisma/ are available if needed).
+      context: .
+    # Render's free tier sleeps after 15min of inactivity. Starter plan
+    # keeps the container warm for the demo video.
+    numInstances: 1

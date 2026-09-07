@@ -7,10 +7,12 @@ import cors from 'cors';
 import express, { type RequestHandler } from 'express';
 import helmet from 'helmet';
 
+import { prisma } from '@/lib/db';
 import { corsOrigins, env } from '@/lib/env';
 import { ok } from '@/lib/envelope';
 import { ValidationError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
+import { redis } from '@/lib/redis';
 import { zodValidate } from '@/lib/validate';
 import { correlationIdMiddleware } from '@/middleware/correlation-id';
 import { errorHandler } from '@/middleware/error-handler';
@@ -113,12 +115,55 @@ export function createApp(): express.Express {
     });
   });
 
-  // /health/ready: readiness — full subsystem check. Wired up in phase 22.
-  app.get('/health/ready', (_req, res) => {
-    res.status(200).json({
-      success: true,
-      message: 'ready',
-      data: { status: 'ok', checks: {} },
+  // /health/ready: readiness — full subsystem check (Phase 22).
+  // Pings the database and Redis so Render's platform probe (and the
+  // container HEALTHCHECK in the Dockerfile) only get a 200 when both
+  // dependencies are reachable. Each subsystem times out at 1s so a
+  // wedged dep doesn't keep the probe hanging.
+  app.get('/health/ready', async (_req, res) => {
+    const checks: Record<string, { ok: boolean; latencyMs: number; error?: string }> = {};
+    let allOk = true;
+
+    // DB check: `SELECT 1` via $queryRaw — no model dependency.
+    const dbStart = Date.now();
+    try {
+      await Promise.race([
+        prisma.$queryRaw`SELECT 1`,
+        new Promise((_, reject) => setTimeout(() => reject(new Error('db_timeout')), 1000)),
+      ]);
+      checks.db = { ok: true, latencyMs: Date.now() - dbStart };
+    } catch (err) {
+      allOk = false;
+      checks.db = { ok: false, latencyMs: Date.now() - dbStart, error: (err as Error).message };
+    }
+
+    // Redis check: PING. ioredis throws on offline-queue-disabled when
+    // the connection is down, so we still catch + tag.
+    const redisStart = Date.now();
+    try {
+      await Promise.race([
+        redis.ping(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('redis_timeout')), 1000)),
+      ]);
+      checks.redis = { ok: true, latencyMs: Date.now() - redisStart };
+    } catch (err) {
+      allOk = false;
+      checks.redis = {
+        ok: false,
+        latencyMs: Date.now() - redisStart,
+        error: (err as Error).message,
+      };
+    }
+
+    const status = allOk ? 200 : 503;
+    res.status(status).json({
+      success: allOk,
+      message: allOk ? 'ready' : 'not_ready',
+      data: {
+        status: allOk ? 'ok' : 'degraded',
+        uptimeSeconds: Math.round(process.uptime()),
+        checks,
+      },
     });
   });
 
