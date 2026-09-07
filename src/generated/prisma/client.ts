@@ -306,3 +306,11 @@ export type NotificationPreference = Prisma.NotificationPreferenceModel
  * + real signed URLs.
  */
 export type Document = Prisma.DocumentModel
+/**
+ * Model FeatureFlag
+ * Runtime kill-switches (Phase 19). Global per the Phase 19 plan:
+ * every row uses the platform tenant_id constant. Phase 21+ can
+ * introduce per-tenant scoping without a schema break by relaxing
+ * the PK to (tenantId, key).
+ */
+export type FeatureFlag = Prisma.FeatureFlagModel

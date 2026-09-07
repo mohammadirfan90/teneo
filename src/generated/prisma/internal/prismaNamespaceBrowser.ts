@@ -82,7 +82,8 @@ export const ModelName = {
   MaintenanceUpdate: 'MaintenanceUpdate',
   Notification: 'Notification',
   NotificationPreference: 'NotificationPreference',
-  Document: 'Document'
+  Document: 'Document',
+  FeatureFlag: 'FeatureFlag'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -666,6 +667,18 @@ export const DocumentScalarFieldEnum = {
 } as const
 
 export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
+
+
+export const FeatureFlagScalarFieldEnum = {
+  key: 'key',
+  enabled: 'enabled',
+  description: 'description',
+  tenantId: 'tenantId',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type FeatureFlagScalarFieldEnum = (typeof FeatureFlagScalarFieldEnum)[keyof typeof FeatureFlagScalarFieldEnum]
 
 
 export const SortOrder = {

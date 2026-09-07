@@ -428,7 +428,8 @@ export const ModelName = {
   MaintenanceUpdate: 'MaintenanceUpdate',
   Notification: 'Notification',
   NotificationPreference: 'NotificationPreference',
-  Document: 'Document'
+  Document: 'Document',
+  FeatureFlag: 'FeatureFlag'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -444,7 +445,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "notification" | "notificationPreference" | "document"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "notification" | "notificationPreference" | "document" | "featureFlag"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2816,6 +2817,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FeatureFlag: {
+      payload: Prisma.$FeatureFlagPayload<ExtArgs>
+      fields: Prisma.FeatureFlagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FeatureFlagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FeatureFlagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
+        }
+        findFirst: {
+          args: Prisma.FeatureFlagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FeatureFlagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
+        }
+        findMany: {
+          args: Prisma.FeatureFlagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>[]
+        }
+        create: {
+          args: Prisma.FeatureFlagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
+        }
+        createMany: {
+          args: Prisma.FeatureFlagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FeatureFlagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>[]
+        }
+        delete: {
+          args: Prisma.FeatureFlagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
+        }
+        update: {
+          args: Prisma.FeatureFlagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
+        }
+        deleteMany: {
+          args: Prisma.FeatureFlagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FeatureFlagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FeatureFlagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>[]
+        }
+        upsert: {
+          args: Prisma.FeatureFlagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
+        }
+        aggregate: {
+          args: Prisma.FeatureFlagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFeatureFlag>
+        }
+        groupBy: {
+          args: Prisma.FeatureFlagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeatureFlagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FeatureFlagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeatureFlagCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3420,6 +3495,18 @@ export const DocumentScalarFieldEnum = {
 } as const
 
 export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
+
+
+export const FeatureFlagScalarFieldEnum = {
+  key: 'key',
+  enabled: 'enabled',
+  description: 'description',
+  tenantId: 'tenantId',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type FeatureFlagScalarFieldEnum = (typeof FeatureFlagScalarFieldEnum)[keyof typeof FeatureFlagScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -4127,6 +4214,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   notificationPreference?: Prisma.NotificationPreferenceOmit
   document?: Prisma.DocumentOmit
+  featureFlag?: Prisma.FeatureFlagOmit
 }
 
 /* Types for Logging */

@@ -17,6 +17,8 @@ import { errorHandler } from '@/middleware/error-handler';
 import { notFoundHandler } from '@/middleware/not-found';
 import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
 import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
+import { adminRouter } from '@/modules/admin/admin.routes';
+import { featureFlagsRouter } from '@/modules/admin/feature-flags.routes';
 import { applicationsRouter } from '@/modules/applications/applications.routes';
 import { viewingsRouter } from '@/modules/applications/viewings.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
@@ -271,6 +273,19 @@ export function createApp(): express.Express {
   // All routes require auth. /upload-url and /:id (DELETE) are state-
   // changing so they pass through withIdempotency inside the router.
   app.use('/api/v1/documents', authenticatedRateLimiter, documentsRouter());
+
+  // ── Phase 19: admin moderation + audit logs + feature flags ────────
+  // Two routers under the /admin prefix:
+  //   adminRouter          — /users/search, /listings/:id/{takedown,reinstate},
+  //                          /health, /audit-logs/*
+  //   featureFlagsRouter   — /feature-flags/* (mounted under /admin)
+  // Both require ADMIN role; non-admin → 403 (must_pass).
+  app.use('/api/v1/admin', authenticatedRateLimiter, adminRouter());
+  app.use(
+    '/api/v1/admin/feature-flags',
+    authenticatedRateLimiter,
+    featureFlagsRouter()
+  );
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);
