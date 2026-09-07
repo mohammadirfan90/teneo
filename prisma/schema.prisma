@@ -170,6 +170,8 @@ model User {
   leaseTenancies    LeaseTenant[]
   leaseSignatures   LeaseSignature[]
   leaseAmendments   LeaseAmendment[]
+  rentInvoicesDisputed RentInvoice[] @relation("RentInvoiceDisputedBy")
+  rentInvoicesWaived   RentInvoice[] @relation("RentInvoiceWaivedBy")
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -613,6 +615,23 @@ enum LeaseAmendmentStatus {
   REJECTED
 }
 
+/// Lifecycle of a rent invoice per spec §5.2.
+///   DUE              — newly generated, awaiting payment
+///   PARTIALLY_PAID   — some but not all of totalMinor has been paid
+///   PAID             — totalMinor <= amountPaidMinor (terminal in Phase 14;
+///                      Phase 15 webhooks will populate)
+///   OVERDUE          — past due_date and not yet settled
+///   WAIVED           — ADMIN cleared the balance (terminal)
+///   DISPUTED         — tenant or owner flagged a concern; admin resolves
+enum InvoiceStatus {
+  DUE
+  PARTIALLY_PAID
+  PAID
+  OVERDUE
+  WAIVED
+  DISPUTED
+}
+
 // ──────────────────────────────────────────────────────────────────────
 // Phase 12: Application model (04 §4.3.4, 05 §5.5)
 // ──────────────────────────────────────────────────────────────────────
@@ -712,11 +731,12 @@ model ApplicationNote {
 /// inside the APPROVED application's `$transaction` and exposes the
 /// full multi-party signing / activation / termination lifecycle.
 ///
-/// `tenantId` is Phase-12 dead weight (a single-tenant placeholder
-/// default). The relational truth for tenancy now lives in the
-/// `LeaseTenant` rows; co-tenants live there too. Phase 14 will drop
-/// this column in a destructive migration.
-/// TODO(phase14): drop tenantId.
+/// Tenancy (multi-tenant scoping) lives on `LeaseTenant` rows +
+/// co-tenant rows; the relational truth never depended on a `Lease`
+/// `tenantId` placeholder. Phase 14 drops that placeholder column.
+///
+/// Rent invoices (`rent_invoices`) hang off a lease; `utilityShareMinor`
+/// is populated by Phase 16's meter + bill-split pipeline.
 model Lease {
   id                   String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   roomId               String         @map("room_id") @db.Uuid
@@ -734,13 +754,13 @@ model Lease {
   activatedAt          DateTime?      @map("activated_at") @db.Timestamptz(6)
   endedAt              DateTime?      @map("ended_at") @db.Timestamptz(6)
   contractObjectKey    String?        @map("contract_object_key")
-  tenantId             String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
   createdAt            DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt            DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  tenants    LeaseTenant[]
-  signatures LeaseSignature[]
-  amendments LeaseAmendment[]
+  tenants       LeaseTenant[]
+  signatures    LeaseSignature[]
+  amendments    LeaseAmendment[]
+  rentInvoices  RentInvoice[]
 
   @@index([roomId, status], name: "leases_room_status_idx")
   @@index([ownerUserId, status], name: "leases_owner_status_idx")
@@ -818,4 +838,68 @@ model LeaseAmendment {
 
   @@index([leaseId], name: "lease_amendments_lease_idx")
   @@map("lease_amendments")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 14: RentInvoice + InvoiceStatus enum (13 §13.2.6, 05 §5.2,
+// 04 §4.3.4, 03 §3.4)
+// ──────────────────────────────────────────────────────────────────────
+
+/// One rent invoice per (lease, periodStart). UNIQUE(lease_id,
+/// period_start) at the migration SQL is the source of truth for
+/// idempotency — POST /bills/generate with the same (lease, periodStart)
+/// is a no-op and returns the existing row.
+///
+/// Phase 14 stores `utilityShareMinor = 0` always; Phase 16 will fill
+/// it from meter readings + bill-splitter.
+///
+/// `tenantId` is forward-compat scaffolding — Phase 14 writes a single
+/// constant for v1 single-tenancy (matches the convention used on every
+/// other table). It is NOT the relational truth for tenancy (that lives
+/// in `lease_tenants`); it is purely a v2 multi-tenancy placeholder.
+///
+/// The dispute flag is inlined (disputed_at / disputed_by_user_id /
+/// dispute_reason) rather than split into a separate table because the
+/// state machine holds at most one open dispute per invoice.
+model RentInvoice {
+  id                String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  leaseId           String        @map("lease_id") @db.Uuid
+  /// First day of the billing period (UTC date).
+  periodStart       DateTime      @map("period_start") @db.Date
+  /// Last day of the billing period (UTC date).
+  periodEnd         DateTime      @map("period_end") @db.Date
+  baseRentMinor     BigInt        @map("base_rent_minor")
+  utilityShareMinor BigInt        @default(0) @map("utility_share_minor")
+  lateFeeMinor      BigInt        @default(0) @map("late_fee_minor")
+  totalMinor        BigInt        @map("total_minor")
+  amountPaidMinor   BigInt        @default(0) @map("amount_paid_minor")
+  currency          String        @db.Char(3)
+  status            InvoiceStatus @default(DUE)
+  dueDate           DateTime      @map("due_date") @db.Date
+  version           Int           @default(0)
+  generatedAt       DateTime      @default(now()) @map("generated_at") @db.Timestamptz(6)
+  disputedAt        DateTime?     @map("disputed_at") @db.Timestamptz(6)
+  disputedByUserId  String?       @map("disputed_by_user_id") @db.Uuid
+  disputeReason     String?       @map("dispute_reason")
+  waivedAt          DateTime?     @map("waived_at") @db.Timestamptz(6)
+  waivedByUserId    String?       @map("waived_by_user_id") @db.Uuid
+  waiveReason       String?       @map("waive_reason")
+  /// Forward-compat: always '00000000-0000-0000-0000-000000000000' in v1.
+  /// Not the relational truth for tenancy (lease_tenants is).
+  tenantId          String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  lease          Lease @relation(fields: [leaseId], references: [id], onDelete: Restrict)
+  disputedByUser User? @relation("RentInvoiceDisputedBy", fields: [disputedByUserId], references: [id], onDelete: SetNull)
+  waivedByUser   User? @relation("RentInvoiceWaivedBy",   fields: [waivedByUserId],   references: [id], onDelete: SetNull)
+
+  // The UNIQUE(lease_id, period_start) constraint is added via the
+  // custom migration SQL (Prisma could express it via @@unique, but
+  // matching the existing hand-edited convention used by lease_tenants
+  // / leases_end_date_active_idx keeps the migration readable).
+  @@index([leaseId, status], name: "rent_invoices_lease_status_idx")
+  @@index([status, dueDate], name: "rent_invoices_status_due_idx")
+  @@index([status, generatedAt], name: "rent_invoices_status_generated_idx")
+  @@map("rent_invoices")
 }

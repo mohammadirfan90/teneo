@@ -151,11 +151,12 @@ export type ApplicationNote = Prisma.ApplicationNoteModel
  * inside the APPROVED application's `$transaction` and exposes the
  * full multi-party signing / activation / termination lifecycle.
  * 
- * `tenantId` is Phase-12 dead weight (a single-tenant placeholder
- * default). The relational truth for tenancy now lives in the
- * `LeaseTenant` rows; co-tenants live there too. Phase 14 will drop
- * this column in a destructive migration.
- * TODO(phase14): drop tenantId.
+ * Tenancy (multi-tenant scoping) lives on `LeaseTenant` rows +
+ * co-tenant rows; the relational truth never depended on a `Lease`
+ * `tenantId` placeholder. Phase 14 drops that placeholder column.
+ * 
+ * Rent invoices (`rent_invoices`) hang off a lease; `utilityShareMinor`
+ * is populated by Phase 16's meter + bill-split pipeline.
  */
 export type Lease = Prisma.LeaseModel
 /**
@@ -182,3 +183,23 @@ export type LeaseSignature = Prisma.LeaseSignatureModel
  * the real shape per spec.
  */
 export type LeaseAmendment = Prisma.LeaseAmendmentModel
+/**
+ * Model RentInvoice
+ * One rent invoice per (lease, periodStart). UNIQUE(lease_id,
+ * period_start) at the migration SQL is the source of truth for
+ * idempotency — POST /bills/generate with the same (lease, periodStart)
+ * is a no-op and returns the existing row.
+ * 
+ * Phase 14 stores `utilityShareMinor = 0` always; Phase 16 will fill
+ * it from meter readings + bill-splitter.
+ * 
+ * `tenantId` is forward-compat scaffolding — Phase 14 writes a single
+ * constant for v1 single-tenancy (matches the convention used on every
+ * other table). It is NOT the relational truth for tenancy (that lives
+ * in `lease_tenants`); it is purely a v2 multi-tenancy placeholder.
+ * 
+ * The dispute flag is inlined (disputed_at / disputed_by_user_id /
+ * dispute_reason) rather than split into a separate table because the
+ * state machine holds at most one open dispute per invoice.
+ */
+export type RentInvoice = Prisma.RentInvoiceModel

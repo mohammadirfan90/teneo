@@ -71,7 +71,8 @@ export const ModelName = {
   Lease: 'Lease',
   LeaseTenant: 'LeaseTenant',
   LeaseSignature: 'LeaseSignature',
-  LeaseAmendment: 'LeaseAmendment'
+  LeaseAmendment: 'LeaseAmendment',
+  RentInvoice: 'RentInvoice'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +408,6 @@ export const LeaseScalarFieldEnum = {
   activatedAt: 'activatedAt',
   endedAt: 'endedAt',
   contractObjectKey: 'contractObjectKey',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -450,6 +450,35 @@ export const LeaseAmendmentScalarFieldEnum = {
 } as const
 
 export type LeaseAmendmentScalarFieldEnum = (typeof LeaseAmendmentScalarFieldEnum)[keyof typeof LeaseAmendmentScalarFieldEnum]
+
+
+export const RentInvoiceScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  baseRentMinor: 'baseRentMinor',
+  utilityShareMinor: 'utilityShareMinor',
+  lateFeeMinor: 'lateFeeMinor',
+  totalMinor: 'totalMinor',
+  amountPaidMinor: 'amountPaidMinor',
+  currency: 'currency',
+  status: 'status',
+  dueDate: 'dueDate',
+  version: 'version',
+  generatedAt: 'generatedAt',
+  disputedAt: 'disputedAt',
+  disputedByUserId: 'disputedByUserId',
+  disputeReason: 'disputeReason',
+  waivedAt: 'waivedAt',
+  waivedByUserId: 'waivedByUserId',
+  waiveReason: 'waiveReason',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RentInvoiceScalarFieldEnum = (typeof RentInvoiceScalarFieldEnum)[keyof typeof RentInvoiceScalarFieldEnum]
 
 
 export const SortOrder = {

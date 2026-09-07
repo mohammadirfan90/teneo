@@ -173,3 +173,15 @@ export const LeaseAmendmentStatus = {
 } as const
 
 export type LeaseAmendmentStatus = (typeof LeaseAmendmentStatus)[keyof typeof LeaseAmendmentStatus]
+
+
+export const InvoiceStatus = {
+  DUE: 'DUE',
+  PARTIALLY_PAID: 'PARTIALLY_PAID',
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE',
+  WAIVED: 'WAIVED',
+  DISPUTED: 'DISPUTED'
+} as const
+
+export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]

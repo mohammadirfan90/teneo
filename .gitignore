@@ -9,6 +9,7 @@ pnpm-debug.log*
 app/dist/
 app/build/
 app/coverage/
+dist/
 
 # Env files (never commit)
 .env

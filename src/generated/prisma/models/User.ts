@@ -285,6 +285,8 @@ export type UserWhereInput = {
   leaseTenancies?: Prisma.LeaseTenantListRelationFilter
   leaseSignatures?: Prisma.LeaseSignatureListRelationFilter
   leaseAmendments?: Prisma.LeaseAmendmentListRelationFilter
+  rentInvoicesDisputed?: Prisma.RentInvoiceListRelationFilter
+  rentInvoicesWaived?: Prisma.RentInvoiceListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -317,6 +319,8 @@ export type UserOrderByWithRelationInput = {
   leaseTenancies?: Prisma.LeaseTenantOrderByRelationAggregateInput
   leaseSignatures?: Prisma.LeaseSignatureOrderByRelationAggregateInput
   leaseAmendments?: Prisma.LeaseAmendmentOrderByRelationAggregateInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceOrderByRelationAggregateInput
+  rentInvoicesWaived?: Prisma.RentInvoiceOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -352,6 +356,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   leaseTenancies?: Prisma.LeaseTenantListRelationFilter
   leaseSignatures?: Prisma.LeaseSignatureListRelationFilter
   leaseAmendments?: Prisma.LeaseAmendmentListRelationFilter
+  rentInvoicesDisputed?: Prisma.RentInvoiceListRelationFilter
+  rentInvoicesWaived?: Prisma.RentInvoiceListRelationFilter
 }, "id">
 
 export type UserOrderByWithAggregationInput = {
@@ -428,6 +434,8 @@ export type UserCreateInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -460,6 +468,8 @@ export type UserUncheckedCreateInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUpdateInput = {
@@ -492,6 +502,8 @@ export type UserUpdateInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -524,6 +536,8 @@ export type UserUncheckedUpdateInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -643,6 +657,11 @@ export type UserMinOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -855,6 +874,38 @@ export type UserUpdateOneRequiredWithoutLeaseAmendmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeaseAmendmentsInput, Prisma.UserUpdateWithoutLeaseAmendmentsInput>, Prisma.UserUncheckedUpdateWithoutLeaseAmendmentsInput>
 }
 
+export type UserCreateNestedOneWithoutRentInvoicesDisputedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesDisputedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesDisputedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRentInvoicesDisputedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutRentInvoicesWaivedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesWaivedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesWaivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRentInvoicesWaivedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutRentInvoicesDisputedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesDisputedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesDisputedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRentInvoicesDisputedInput
+  upsert?: Prisma.UserUpsertWithoutRentInvoicesDisputedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRentInvoicesDisputedInput, Prisma.UserUpdateWithoutRentInvoicesDisputedInput>, Prisma.UserUncheckedUpdateWithoutRentInvoicesDisputedInput>
+}
+
+export type UserUpdateOneWithoutRentInvoicesWaivedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesWaivedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesWaivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRentInvoicesWaivedInput
+  upsert?: Prisma.UserUpsertWithoutRentInvoicesWaivedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRentInvoicesWaivedInput, Prisma.UserUpdateWithoutRentInvoicesWaivedInput>, Prisma.UserUncheckedUpdateWithoutRentInvoicesWaivedInput>
+}
+
 export type UserCreateWithoutRolesInput = {
   id?: string
   email: string
@@ -884,6 +935,8 @@ export type UserCreateWithoutRolesInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutRolesInput = {
@@ -915,6 +968,8 @@ export type UserUncheckedCreateWithoutRolesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutRolesInput = {
@@ -962,6 +1017,8 @@ export type UserUpdateWithoutRolesInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRolesInput = {
@@ -993,6 +1050,8 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutOwnerProfileInput = {
@@ -1024,6 +1083,8 @@ export type UserCreateWithoutOwnerProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutOwnerProfileInput = {
@@ -1055,6 +1116,8 @@ export type UserUncheckedCreateWithoutOwnerProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutOwnerProfileInput = {
@@ -1102,6 +1165,8 @@ export type UserUpdateWithoutOwnerProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOwnerProfileInput = {
@@ -1133,6 +1198,8 @@ export type UserUncheckedUpdateWithoutOwnerProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutTenantProfileInput = {
@@ -1164,6 +1231,8 @@ export type UserCreateWithoutTenantProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutTenantProfileInput = {
@@ -1195,6 +1264,8 @@ export type UserUncheckedCreateWithoutTenantProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutTenantProfileInput = {
@@ -1242,6 +1313,8 @@ export type UserUpdateWithoutTenantProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTenantProfileInput = {
@@ -1273,6 +1346,8 @@ export type UserUncheckedUpdateWithoutTenantProfileInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutKycSubmissionsInput = {
@@ -1304,6 +1379,8 @@ export type UserCreateWithoutKycSubmissionsInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutKycSubmissionsInput = {
@@ -1335,6 +1412,8 @@ export type UserUncheckedCreateWithoutKycSubmissionsInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutKycSubmissionsInput = {
@@ -1382,6 +1461,8 @@ export type UserUpdateWithoutKycSubmissionsInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutKycSubmissionsInput = {
@@ -1413,6 +1494,8 @@ export type UserUncheckedUpdateWithoutKycSubmissionsInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -1444,6 +1527,8 @@ export type UserCreateWithoutRefreshTokensInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -1475,6 +1560,8 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -1522,6 +1609,8 @@ export type UserUpdateWithoutRefreshTokensInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -1553,6 +1642,8 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutTenantPreferencesInput = {
@@ -1584,6 +1675,8 @@ export type UserCreateWithoutTenantPreferencesInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutTenantPreferencesInput = {
@@ -1615,6 +1708,8 @@ export type UserUncheckedCreateWithoutTenantPreferencesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutTenantPreferencesInput = {
@@ -1662,6 +1757,8 @@ export type UserUpdateWithoutTenantPreferencesInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTenantPreferencesInput = {
@@ -1693,6 +1790,8 @@ export type UserUncheckedUpdateWithoutTenantPreferencesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutPropertiesInput = {
@@ -1724,6 +1823,8 @@ export type UserCreateWithoutPropertiesInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutPropertiesInput = {
@@ -1755,6 +1856,8 @@ export type UserUncheckedCreateWithoutPropertiesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutPropertiesInput = {
@@ -1802,6 +1905,8 @@ export type UserUpdateWithoutPropertiesInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPropertiesInput = {
@@ -1833,6 +1938,8 @@ export type UserUncheckedUpdateWithoutPropertiesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutSavedSearchesInput = {
@@ -1864,6 +1971,8 @@ export type UserCreateWithoutSavedSearchesInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutSavedSearchesInput = {
@@ -1895,6 +2004,8 @@ export type UserUncheckedCreateWithoutSavedSearchesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutSavedSearchesInput = {
@@ -1942,6 +2053,8 @@ export type UserUpdateWithoutSavedSearchesInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSavedSearchesInput = {
@@ -1973,6 +2086,8 @@ export type UserUncheckedUpdateWithoutSavedSearchesInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {
@@ -2004,6 +2119,8 @@ export type UserCreateWithoutApplicationsInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -2035,6 +2152,8 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -2082,6 +2201,8 @@ export type UserUpdateWithoutApplicationsInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -2113,6 +2234,8 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutViewingRequestsInput = {
@@ -2144,6 +2267,8 @@ export type UserCreateWithoutViewingRequestsInput = {
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutViewingRequestsInput = {
@@ -2175,6 +2300,8 @@ export type UserUncheckedCreateWithoutViewingRequestsInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutViewingRequestsInput = {
@@ -2222,6 +2349,8 @@ export type UserUpdateWithoutViewingRequestsInput = {
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutViewingRequestsInput = {
@@ -2253,6 +2382,8 @@ export type UserUncheckedUpdateWithoutViewingRequestsInput = {
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutLeaseTenanciesInput = {
@@ -2284,6 +2415,8 @@ export type UserCreateWithoutLeaseTenanciesInput = {
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutLeaseTenanciesInput = {
@@ -2315,6 +2448,8 @@ export type UserUncheckedCreateWithoutLeaseTenanciesInput = {
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutLeaseTenanciesInput = {
@@ -2362,6 +2497,8 @@ export type UserUpdateWithoutLeaseTenanciesInput = {
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaseTenanciesInput = {
@@ -2393,6 +2530,8 @@ export type UserUncheckedUpdateWithoutLeaseTenanciesInput = {
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutLeaseSignaturesInput = {
@@ -2424,6 +2563,8 @@ export type UserCreateWithoutLeaseSignaturesInput = {
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutLeaseSignaturesInput = {
@@ -2455,6 +2596,8 @@ export type UserUncheckedCreateWithoutLeaseSignaturesInput = {
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutLeaseSignaturesInput = {
@@ -2502,6 +2645,8 @@ export type UserUpdateWithoutLeaseSignaturesInput = {
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaseSignaturesInput = {
@@ -2533,6 +2678,8 @@ export type UserUncheckedUpdateWithoutLeaseSignaturesInput = {
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserCreateWithoutLeaseAmendmentsInput = {
@@ -2564,6 +2711,8 @@ export type UserCreateWithoutLeaseAmendmentsInput = {
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserUncheckedCreateWithoutLeaseAmendmentsInput = {
@@ -2595,6 +2744,8 @@ export type UserUncheckedCreateWithoutLeaseAmendmentsInput = {
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
 }
 
 export type UserCreateOrConnectWithoutLeaseAmendmentsInput = {
@@ -2642,6 +2793,8 @@ export type UserUpdateWithoutLeaseAmendmentsInput = {
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaseAmendmentsInput = {
@@ -2673,6 +2826,304 @@ export type UserUncheckedUpdateWithoutLeaseAmendmentsInput = {
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+}
+
+export type UserCreateWithoutRentInvoicesDisputedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
+}
+
+export type UserUncheckedCreateWithoutRentInvoicesDisputedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
+}
+
+export type UserCreateOrConnectWithoutRentInvoicesDisputedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesDisputedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesDisputedInput>
+}
+
+export type UserCreateWithoutRentInvoicesWaivedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+}
+
+export type UserUncheckedCreateWithoutRentInvoicesWaivedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+}
+
+export type UserCreateOrConnectWithoutRentInvoicesWaivedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesWaivedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesWaivedInput>
+}
+
+export type UserUpsertWithoutRentInvoicesDisputedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRentInvoicesDisputedInput, Prisma.UserUncheckedUpdateWithoutRentInvoicesDisputedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesDisputedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesDisputedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRentInvoicesDisputedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRentInvoicesDisputedInput, Prisma.UserUncheckedUpdateWithoutRentInvoicesDisputedInput>
+}
+
+export type UserUpdateWithoutRentInvoicesDisputedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRentInvoicesDisputedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+}
+
+export type UserUpsertWithoutRentInvoicesWaivedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRentInvoicesWaivedInput, Prisma.UserUncheckedUpdateWithoutRentInvoicesWaivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRentInvoicesWaivedInput, Prisma.UserUncheckedCreateWithoutRentInvoicesWaivedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRentInvoicesWaivedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRentInvoicesWaivedInput, Prisma.UserUncheckedUpdateWithoutRentInvoicesWaivedInput>
+}
+
+export type UserUpdateWithoutRentInvoicesWaivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRentInvoicesWaivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
 }
 
 
@@ -2691,6 +3142,8 @@ export type UserCountOutputType = {
   leaseTenancies: number
   leaseSignatures: number
   leaseAmendments: number
+  rentInvoicesDisputed: number
+  rentInvoicesWaived: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2704,6 +3157,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   leaseTenancies?: boolean | UserCountOutputTypeCountLeaseTenanciesArgs
   leaseSignatures?: boolean | UserCountOutputTypeCountLeaseSignaturesArgs
   leaseAmendments?: boolean | UserCountOutputTypeCountLeaseAmendmentsArgs
+  rentInvoicesDisputed?: boolean | UserCountOutputTypeCountRentInvoicesDisputedArgs
+  rentInvoicesWaived?: boolean | UserCountOutputTypeCountRentInvoicesWaivedArgs
 }
 
 /**
@@ -2786,6 +3241,20 @@ export type UserCountOutputTypeCountLeaseAmendmentsArgs<ExtArgs extends runtime.
   where?: Prisma.LeaseAmendmentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRentInvoicesDisputedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RentInvoiceWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRentInvoicesWaivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RentInvoiceWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2817,6 +3286,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   leaseTenancies?: boolean | Prisma.User$leaseTenanciesArgs<ExtArgs>
   leaseSignatures?: boolean | Prisma.User$leaseSignaturesArgs<ExtArgs>
   leaseAmendments?: boolean | Prisma.User$leaseAmendmentsArgs<ExtArgs>
+  rentInvoicesDisputed?: boolean | Prisma.User$rentInvoicesDisputedArgs<ExtArgs>
+  rentInvoicesWaived?: boolean | Prisma.User$rentInvoicesWaivedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2892,6 +3363,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   leaseTenancies?: boolean | Prisma.User$leaseTenanciesArgs<ExtArgs>
   leaseSignatures?: boolean | Prisma.User$leaseSignaturesArgs<ExtArgs>
   leaseAmendments?: boolean | Prisma.User$leaseAmendmentsArgs<ExtArgs>
+  rentInvoicesDisputed?: boolean | Prisma.User$rentInvoicesDisputedArgs<ExtArgs>
+  rentInvoicesWaived?: boolean | Prisma.User$rentInvoicesWaivedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2913,6 +3386,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     leaseTenancies: Prisma.$LeaseTenantPayload<ExtArgs>[]
     leaseSignatures: Prisma.$LeaseSignaturePayload<ExtArgs>[]
     leaseAmendments: Prisma.$LeaseAmendmentPayload<ExtArgs>[]
+    rentInvoicesDisputed: Prisma.$RentInvoicePayload<ExtArgs>[]
+    rentInvoicesWaived: Prisma.$RentInvoicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3338,6 +3813,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   leaseTenancies<T extends Prisma.User$leaseTenanciesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leaseTenanciesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaseTenantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaseSignatures<T extends Prisma.User$leaseSignaturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leaseSignaturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaseSignaturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaseAmendments<T extends Prisma.User$leaseAmendmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leaseAmendmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaseAmendmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  rentInvoicesDisputed<T extends Prisma.User$rentInvoicesDisputedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rentInvoicesDisputedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RentInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  rentInvoicesWaived<T extends Prisma.User$rentInvoicesWaivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rentInvoicesWaivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RentInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4070,6 +4547,54 @@ export type User$leaseAmendmentsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.LeaseAmendmentScalarFieldEnum | Prisma.LeaseAmendmentScalarFieldEnum[]
+}
+
+/**
+ * User.rentInvoicesDisputed
+ */
+export type User$rentInvoicesDisputedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RentInvoice
+   */
+  select?: Prisma.RentInvoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RentInvoice
+   */
+  omit?: Prisma.RentInvoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RentInvoiceInclude<ExtArgs> | null
+  where?: Prisma.RentInvoiceWhereInput
+  orderBy?: Prisma.RentInvoiceOrderByWithRelationInput | Prisma.RentInvoiceOrderByWithRelationInput[]
+  cursor?: Prisma.RentInvoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RentInvoiceScalarFieldEnum | Prisma.RentInvoiceScalarFieldEnum[]
+}
+
+/**
+ * User.rentInvoicesWaived
+ */
+export type User$rentInvoicesWaivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RentInvoice
+   */
+  select?: Prisma.RentInvoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RentInvoice
+   */
+  omit?: Prisma.RentInvoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RentInvoiceInclude<ExtArgs> | null
+  where?: Prisma.RentInvoiceWhereInput
+  orderBy?: Prisma.RentInvoiceOrderByWithRelationInput | Prisma.RentInvoiceOrderByWithRelationInput[]
+  cursor?: Prisma.RentInvoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RentInvoiceScalarFieldEnum | Prisma.RentInvoiceScalarFieldEnum[]
 }
 
 /**

@@ -20,6 +20,8 @@ import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
 import { applicationsRouter } from '@/modules/applications/applications.routes';
 import { viewingsRouter } from '@/modules/applications/viewings.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
+import { billsRouter } from '@/modules/bills/bills.routes';
+import { invoicesRouter } from '@/modules/invoices/invoices.routes';
 import { leasesRouter } from '@/modules/leases/leases.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
@@ -206,6 +208,12 @@ export function createApp(): express.Express {
   // Multi-party resource: all transition routes layer requireLeaseParty
   // on top of role gates. /me uses requireAuth only.
   app.use('/api/v1/leases', authenticatedRateLimiter, leasesRouter());
+
+  // ── Phase 14: rent invoice generation + bills facade ────────────────
+  // /invoices is auth-gated for every route (party-or-admin on :id);
+  // /bills/generate is OWNER-only. Both use per-role rate limiting.
+  app.use('/api/v1/invoices', authenticatedRateLimiter, invoicesRouter());
+  app.use('/api/v1/bills', authenticatedRateLimiter, billsRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

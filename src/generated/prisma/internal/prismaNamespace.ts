@@ -417,7 +417,8 @@ export const ModelName = {
   Lease: 'Lease',
   LeaseTenant: 'LeaseTenant',
   LeaseSignature: 'LeaseSignature',
-  LeaseAmendment: 'LeaseAmendment'
+  LeaseAmendment: 'LeaseAmendment',
+  RentInvoice: 'RentInvoice'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1991,6 +1992,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RentInvoice: {
+      payload: Prisma.$RentInvoicePayload<ExtArgs>
+      fields: Prisma.RentInvoiceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RentInvoiceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RentInvoiceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>
+        }
+        findFirst: {
+          args: Prisma.RentInvoiceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RentInvoiceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>
+        }
+        findMany: {
+          args: Prisma.RentInvoiceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>[]
+        }
+        create: {
+          args: Prisma.RentInvoiceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>
+        }
+        createMany: {
+          args: Prisma.RentInvoiceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RentInvoiceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>[]
+        }
+        delete: {
+          args: Prisma.RentInvoiceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>
+        }
+        update: {
+          args: Prisma.RentInvoiceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>
+        }
+        deleteMany: {
+          args: Prisma.RentInvoiceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RentInvoiceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RentInvoiceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>[]
+        }
+        upsert: {
+          args: Prisma.RentInvoiceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RentInvoicePayload>
+        }
+        aggregate: {
+          args: Prisma.RentInvoiceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRentInvoice>
+        }
+        groupBy: {
+          args: Prisma.RentInvoiceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RentInvoiceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RentInvoiceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RentInvoiceCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2347,7 +2422,6 @@ export const LeaseScalarFieldEnum = {
   activatedAt: 'activatedAt',
   endedAt: 'endedAt',
   contractObjectKey: 'contractObjectKey',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2390,6 +2464,35 @@ export const LeaseAmendmentScalarFieldEnum = {
 } as const
 
 export type LeaseAmendmentScalarFieldEnum = (typeof LeaseAmendmentScalarFieldEnum)[keyof typeof LeaseAmendmentScalarFieldEnum]
+
+
+export const RentInvoiceScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  baseRentMinor: 'baseRentMinor',
+  utilityShareMinor: 'utilityShareMinor',
+  lateFeeMinor: 'lateFeeMinor',
+  totalMinor: 'totalMinor',
+  amountPaidMinor: 'amountPaidMinor',
+  currency: 'currency',
+  status: 'status',
+  dueDate: 'dueDate',
+  version: 'version',
+  generatedAt: 'generatedAt',
+  disputedAt: 'disputedAt',
+  disputedByUserId: 'disputedByUserId',
+  disputeReason: 'disputeReason',
+  waivedAt: 'waivedAt',
+  waivedByUserId: 'waivedByUserId',
+  waiveReason: 'waiveReason',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RentInvoiceScalarFieldEnum = (typeof RentInvoiceScalarFieldEnum)[keyof typeof RentInvoiceScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2776,6 +2879,20 @@ export type ListEnumLeaseAmendmentStatusFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'InvoiceStatus'
+ */
+export type EnumInvoiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InvoiceStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'InvoiceStatus[]'
+ */
+export type ListEnumInvoiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InvoiceStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2960,6 +3077,7 @@ export type GlobalOmitConfig = {
   leaseTenant?: Prisma.LeaseTenantOmit
   leaseSignature?: Prisma.LeaseSignatureOmit
   leaseAmendment?: Prisma.LeaseAmendmentOmit
+  rentInvoice?: Prisma.RentInvoiceOmit
 }
 
 /* Types for Logging */
