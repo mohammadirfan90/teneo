@@ -173,6 +173,8 @@ model User {
   rentInvoicesDisputed RentInvoice[]      @relation("RentInvoiceDisputedBy")
   rentInvoicesWaived   RentInvoice[]      @relation("RentInvoiceWaivedBy")
   paymentsMade         Payment[]          @relation("PaymentTenant")
+  meterReadings        MeterReading[]     @relation("MeterReadingSubmitter")
+  billShares           BillShare[]        @relation("BillShareTenant")
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -428,6 +430,7 @@ model Property {
   owner     User       @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
   buildings Building[]
   rooms     Room[]
+  meters    PropertyMeter[]
 
   // Indexes per §4.3.2 — full SQL (incl. composite city/status/published_at
   // and geo index) lives in the migration since Prisma can't express them
@@ -750,6 +753,11 @@ model Lease {
   currency            String           @db.Char(3)
   lateFeePolicy       Json?            @map("late_fee_policy")
   utilitySplitMode    UtilitySplitMode @default(EQUAL) @map("utility_split_mode")
+  /// CUSTOM-mode percentages per tenant. JSONB array of
+  /// `{ tenantUserId: string, percent: number }` summing to 100.00.
+  /// Required when utility_split_mode = 'CUSTOM'; ignored otherwise.
+  /// Phase 16 reads it for splitCustom; Phase 18+ will add a writer route.
+  utilitySplitCustomPercents Json?      @map("utility_split_custom_percents")
   status              LeaseStatus      @default(DRAFT)
   signedAt            DateTime?        @map("signed_at") @db.Timestamptz(6)
   activatedAt         DateTime?        @map("activated_at") @db.Timestamptz(6)
@@ -763,6 +771,7 @@ model Lease {
   amendments   LeaseAmendment[]
   rentInvoices RentInvoice[]
   payments     Payment[]
+  utilityBills UtilityBill[]
 
   @@index([roomId, status], name: "leases_room_status_idx")
   @@index([ownerUserId, status], name: "leases_owner_status_idx")
@@ -1021,4 +1030,166 @@ model Payment {
   @@index([tenantUserId, createdAt(sort: Desc)], name: "payments_tenant_idx")
   @@index([status, createdAt], name: "payments_status_idx")
   @@map("payments")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 16: Utility meters + readings + bills + bill-shares
+// (13 §13.2.6, 05 §5.3, 04 §4.3.5)
+//
+// Property-level meters (e.g., building water, electricity) carry:
+//   - utility_type (which kind of meter)
+//   - rate_per_unit_minor + unit_label (pricing snapshot at install time)
+//
+// MeterReading rows are append-only with UNIQUE(meter_id, reading_date) —
+// a second reading for the same date is rejected at the DB level. Phase
+// 18+ will add reading-correction flows.
+//
+// UtilityBill rows are created by /bills/generate and are tied to
+// (lease, meter, period). They carry a snapshot of the previous and
+// current readings so the bill is self-contained for audit + replay.
+//
+// BillShare rows split the UtilityBill.total_amount_minor across
+// co-tenants per lease.utility_split_mode. Σ share_minor ==
+// bill.total_amount_minor EXACTLY (largest-remainder rounding invariant
+// — see bill-splitter.ts and verify-p16-splitter.ts).
+//
+// utility_share_minor on rent_invoices is the sum of BillShare.shareMinor
+// for the invoice's lease tenants. It is recomputed by /bills/generate.
+// ──────────────────────────────────────────────────────────────────────
+
+/// Categories of utilities tracked by a PropertyMeter (05 §5.3).
+enum UtilityType {
+  WATER
+  ELECTRICITY
+  GAS
+  INTERNET
+}
+
+/// A meter attached to a Property. Phase 16 only models per-property
+/// meters (e.g., building main water). Per-room sub-meters are deferred
+/// to Phase 18+ (which will introduce a `roomId` nullable field).
+model PropertyMeter {
+  id               String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  propertyId       String      @map("property_id") @db.Uuid
+  utilityType      UtilityType @map("utility_type")
+  /// Human label, e.g., "Main water meter", "Sub-meter #3".
+  label            String
+  /// Per-unit price snapshot. E.g., 350n = $3.50/m³. Phase 18+ will
+  /// replace this with a utility_rates table for rate history.
+  ratePerUnitMinor BigInt      @map("rate_per_unit_minor")
+  currency         String      @db.Char(3)
+  /// Display unit string: "m³", "kWh", "GB", etc. Free-text — informs
+  /// the meter-reading UI without forcing a per-utility enum.
+  unitLabel        String      @map("unit_label")
+  /// Lifecycle: v1 sets once to true; deactivation is Phase 18+.
+  isActive         Boolean     @default(true) @map("is_active")
+  tenantId         String      @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt        DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  property Property       @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+  readings MeterReading[]
+  bills    UtilityBill[]
+
+  // Hand-edited in migration SQL: no partial uniques here (meters don't
+  // need them — UNIQUE is reserved for hand-edited UNIQUE on
+  // meter_readings(meter_id, reading_date) below).
+  @@index([propertyId, isActive], name: "meters_property_active_idx")
+  @@index([propertyId, utilityType], name: "meters_property_type_idx")
+  @@map("property_meters")
+}
+
+/// One reading for one meter on one date. Append-only.
+/// UNIQUE(meter_id, reading_date) at the migration SQL rejects duplicate
+/// readings for the same date (re-submission must use a different date
+/// or correct via the Phase 18+ correction flow).
+model MeterReading {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  meterId          String   @map("meter_id") @db.Uuid
+  /// UTC date. UNIQUE per (meterId, readingDate).
+  readingDate      DateTime @map("reading_date") @db.Date
+  /// Meter reading value. Decimal(12, 4) handles fractional smart-meter
+  /// readings (e.g., 12345.6789 kWh). Phase 18+ may widen to (18, 6).
+  readingValue     Decimal  @map("reading_value") @db.Decimal(12, 4)
+  /// Optional notes (e.g., "estimated — meter inaccessible").
+  notes            String?
+  /// User who submitted the reading. OWNER or a tenant on an active
+  /// lease for the meter's property.
+  submittedByUserId String  @map("submitted_by_user_id") @db.Uuid
+  tenantId         String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  meter     PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict)
+  submitter User          @relation("MeterReadingSubmitter", fields: [submittedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([meterId, readingDate(sort: Desc)], name: "readings_meter_date_idx")
+  @@map("meter_readings")
+}
+
+/// One utility bill per (lease, meter, period). Created by
+/// /bills/generate. The previous/current readings are snapshotted at
+/// generation time so the bill is self-contained for audit + replay.
+///
+/// `superseded` flips to true when a regenerate with new readings
+/// produces a new bill for the same (lease, period, meter); the old
+/// row stays around for audit but is excluded from sum-to-invoice.
+model UtilityBill {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  leaseId             String   @map("lease_id") @db.Uuid
+  meterId             String   @map("meter_id") @db.Uuid
+  periodStart         DateTime @map("period_start") @db.Date
+  periodEnd           DateTime @map("period_end") @db.Date
+  /// Reading snapshot at periodStart (or the meter baseline if no
+  /// earlier reading exists).
+  previousReadingValue Decimal @map("previous_reading_value") @db.Decimal(12, 4)
+  /// Reading snapshot at periodEnd.
+  currentReadingValue  Decimal @map("current_reading_value") @db.Decimal(12, 4)
+  /// Computed: current - previous. Decimal to match the reading
+  /// precision.
+  consumptionUnits    Decimal  @map("consumption_units") @db.Decimal(12, 4)
+  /// Computed: round(consumption × rate_per_unit_minor) — BigInt cents.
+  totalAmountMinor    BigInt   @map("total_amount_minor")
+  currency            String   @db.Char(3)
+  /// Bill generation timestamp.
+  generatedAt         DateTime @default(now()) @map("generated_at") @db.Timestamptz(6)
+  /// Soft-delete: false = contributes to rent_invoice.utility_share_minor.
+  /// Set true when a new UtilityBill for the same (lease, period, meter)
+  /// supersedes this one.
+  superseded          Boolean  @default(false)
+  supersededAt        DateTime? @map("superseded_at") @db.Timestamptz(6)
+  tenantId            String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+
+  lease  Lease        @relation(fields: [leaseId], references: [id], onDelete: Restrict)
+  meter  PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict)
+  shares BillShare[]
+
+  @@index([leaseId, periodStart], name: "utility_bills_lease_period_idx")
+  @@index([meterId, periodStart], name: "utility_bills_meter_period_idx")
+  @@map("utility_bills")
+}
+
+/// One tenant's share of a UtilityBill. Σ share_minor per bill ==
+/// bill.total_amount_minor EXACTLY (largest-remainder rounding).
+///
+/// `splitMode` is a snapshot of lease.utility_split_mode at generation
+/// time, so future changes to the lease don't retroactively alter bills.
+///
+/// `weightUsed` snapshots the liabilityShare (Decimal(5,2)) used as the
+/// weight for PROPORTIONAL split. Null for EQUAL and CUSTOM.
+model BillShare {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  billId       String   @map("bill_id") @db.Uuid
+  tenantUserId String   @map("tenant_user_id") @db.Uuid
+  shareMinor   BigInt   @map("share_minor")
+  splitMode    String   @map("split_mode") @db.VarChar(16)
+  weightUsed   Decimal? @map("weight_used") @db.Decimal(5, 2)
+  tenantId     String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  bill   UtilityBill @relation(fields: [billId], references: [id], onDelete: Cascade)
+  tenant User        @relation("BillShareTenant", fields: [tenantUserId], references: [id], onDelete: Restrict)
+
+  @@index([billId], name: "bill_shares_bill_idx")
+  @@index([tenantUserId, createdAt(sort: Desc)], name: "bill_shares_tenant_idx")
+  @@map("bill_shares")
 }

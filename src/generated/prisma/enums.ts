@@ -202,3 +202,13 @@ export const PaymentStatus = {
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const UtilityType = {
+  WATER: 'WATER',
+  ELECTRICITY: 'ELECTRICITY',
+  GAS: 'GAS',
+  INTERNET: 'INTERNET'
+} as const
+
+export type UtilityType = (typeof UtilityType)[keyof typeof UtilityType]

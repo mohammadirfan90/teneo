@@ -213,7 +213,23 @@ export async function generateInvoiceForLease(
   }
 
   return await prisma.$transaction(async (tx) => {
-    // 1. Load lease.
+    return generateInvoiceCoreInTx(tx, callerUserId, input);
+  });
+}
+
+/**
+ * Phase 16 hook. Runs the Phase 14 generation logic inside an
+ * existing transaction so the caller can layer additional writes
+ * (utility bills + BillShares) atomically on top of the invoice.
+ *
+ * Mirrors the body of `generateInvoiceForLease` above. If those
+ * invariants change, this function must be updated.
+ */
+export async function generateInvoiceCoreInTx(
+  tx: Prisma.TransactionClient,
+  callerUserId: string,
+  input: GenerateInvoiceInput
+): Promise<InvoiceView> {
     const lease = await tx.lease.findUnique({
       where: { id: input.leaseId },
       select: {
@@ -415,8 +431,7 @@ export async function generateInvoiceForLease(
     });
     if (!reloaded) throw new NotFoundError('Invoice vanished after create');
     return invoiceRowToView(reloaded as unknown as InvoiceRow);
-  });
-}
+  }
 
 // ──────────────────────────────────────────────────────────────────────
 // listInvoicesForCaller — GET /invoices/me

@@ -21,6 +21,8 @@ import { applicationsRouter } from '@/modules/applications/applications.routes';
 import { viewingsRouter } from '@/modules/applications/viewings.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
 import { billsRouter } from '@/modules/bills/bills.routes';
+import { metersRouter } from '@/modules/bills/meters.routes';
+import { readingsRouter } from '@/modules/bills/readings.routes';
 import { invoicesRouter } from '@/modules/invoices/invoices.routes';
 import { leasesRouter } from '@/modules/leases/leases.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
@@ -216,6 +218,23 @@ export function createApp(): express.Express {
   // /bills/generate is OWNER-only. Both use per-role rate limiting.
   app.use('/api/v1/invoices', authenticatedRateLimiter, invoicesRouter());
   app.use('/api/v1/bills', authenticatedRateLimiter, billsRouter());
+
+  // ── Phase 16: utility meters + readings ─────────────────────────────
+  // /properties/:propertyId/meters (OWNER | ADMIN)
+  // /meters/:meterId/readings        (OWNER | TENANT | ADMIN)
+  // The metersRouter is mounted under /properties so the path
+  // /:propertyId/meters resolves correctly with mergeParams.
+  // The readingsRouter is mounted under /meters for the same reason.
+  app.use(
+    '/api/v1/properties',
+    authenticatedRateLimiter,
+    metersRouter()
+  );
+  app.use(
+    '/api/v1/meters',
+    authenticatedRateLimiter,
+    readingsRouter()
+  );
 
   // ── Phase 15: Stripe payments + webhook ──────────────────────────────
   // CRITICAL: webhook MUST mount BEFORE the authenticated rate limiter

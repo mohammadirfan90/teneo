@@ -230,3 +230,41 @@ export type RentInvoice = Prisma.RentInvoiceModel
  * 
  */
 export type Payment = Prisma.PaymentModel
+/**
+ * Model PropertyMeter
+ * A meter attached to a Property. Phase 16 only models per-property
+ * meters (e.g., building main water). Per-room sub-meters are deferred
+ * to Phase 18+ (which will introduce a `roomId` nullable field).
+ */
+export type PropertyMeter = Prisma.PropertyMeterModel
+/**
+ * Model MeterReading
+ * One reading for one meter on one date. Append-only.
+ * UNIQUE(meter_id, reading_date) at the migration SQL rejects duplicate
+ * readings for the same date (re-submission must use a different date
+ * or correct via the Phase 18+ correction flow).
+ */
+export type MeterReading = Prisma.MeterReadingModel
+/**
+ * Model UtilityBill
+ * One utility bill per (lease, meter, period). Created by
+ * /bills/generate. The previous/current readings are snapshotted at
+ * generation time so the bill is self-contained for audit + replay.
+ * 
+ * `superseded` flips to true when a regenerate with new readings
+ * produces a new bill for the same (lease, period, meter); the old
+ * row stays around for audit but is excluded from sum-to-invoice.
+ */
+export type UtilityBill = Prisma.UtilityBillModel
+/**
+ * Model BillShare
+ * One tenant's share of a UtilityBill. Σ share_minor per bill ==
+ * bill.total_amount_minor EXACTLY (largest-remainder rounding).
+ * 
+ * `splitMode` is a snapshot of lease.utility_split_mode at generation
+ * time, so future changes to the lease don't retroactively alter bills.
+ * 
+ * `weightUsed` snapshots the liabilityShare (Decimal(5,2)) used as the
+ * weight for PROPORTIONAL split. Null for EQUAL and CUSTOM.
+ */
+export type BillShare = Prisma.BillShareModel

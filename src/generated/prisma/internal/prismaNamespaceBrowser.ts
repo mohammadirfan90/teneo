@@ -73,7 +73,11 @@ export const ModelName = {
   LeaseSignature: 'LeaseSignature',
   LeaseAmendment: 'LeaseAmendment',
   RentInvoice: 'RentInvoice',
-  Payment: 'Payment'
+  Payment: 'Payment',
+  PropertyMeter: 'PropertyMeter',
+  MeterReading: 'MeterReading',
+  UtilityBill: 'UtilityBill',
+  BillShare: 'BillShare'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,6 +408,7 @@ export const LeaseScalarFieldEnum = {
   currency: 'currency',
   lateFeePolicy: 'lateFeePolicy',
   utilitySplitMode: 'utilitySplitMode',
+  utilitySplitCustomPercents: 'utilitySplitCustomPercents',
   status: 'status',
   signedAt: 'signedAt',
   activatedAt: 'activatedAt',
@@ -508,6 +513,71 @@ export const PaymentScalarFieldEnum = {
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const PropertyMeterScalarFieldEnum = {
+  id: 'id',
+  propertyId: 'propertyId',
+  utilityType: 'utilityType',
+  label: 'label',
+  ratePerUnitMinor: 'ratePerUnitMinor',
+  currency: 'currency',
+  unitLabel: 'unitLabel',
+  isActive: 'isActive',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PropertyMeterScalarFieldEnum = (typeof PropertyMeterScalarFieldEnum)[keyof typeof PropertyMeterScalarFieldEnum]
+
+
+export const MeterReadingScalarFieldEnum = {
+  id: 'id',
+  meterId: 'meterId',
+  readingDate: 'readingDate',
+  readingValue: 'readingValue',
+  notes: 'notes',
+  submittedByUserId: 'submittedByUserId',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type MeterReadingScalarFieldEnum = (typeof MeterReadingScalarFieldEnum)[keyof typeof MeterReadingScalarFieldEnum]
+
+
+export const UtilityBillScalarFieldEnum = {
+  id: 'id',
+  leaseId: 'leaseId',
+  meterId: 'meterId',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  previousReadingValue: 'previousReadingValue',
+  currentReadingValue: 'currentReadingValue',
+  consumptionUnits: 'consumptionUnits',
+  totalAmountMinor: 'totalAmountMinor',
+  currency: 'currency',
+  generatedAt: 'generatedAt',
+  superseded: 'superseded',
+  supersededAt: 'supersededAt',
+  tenantId: 'tenantId'
+} as const
+
+export type UtilityBillScalarFieldEnum = (typeof UtilityBillScalarFieldEnum)[keyof typeof UtilityBillScalarFieldEnum]
+
+
+export const BillShareScalarFieldEnum = {
+  id: 'id',
+  billId: 'billId',
+  tenantUserId: 'tenantUserId',
+  shareMinor: 'shareMinor',
+  splitMode: 'splitMode',
+  weightUsed: 'weightUsed',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type BillShareScalarFieldEnum = (typeof BillShareScalarFieldEnum)[keyof typeof BillShareScalarFieldEnum]
 
 
 export const SortOrder = {

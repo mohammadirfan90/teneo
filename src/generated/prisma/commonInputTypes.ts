@@ -806,6 +806,23 @@ export type EnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumPaymentStatusFilter<$PrismaModel>
 }
 
+export type EnumUtilityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilityType | Prisma.EnumUtilityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilityTypeFilter<$PrismaModel> | $Enums.UtilityType
+}
+
+export type EnumUtilityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilityType | Prisma.EnumUtilityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilityTypeWithAggregatesFilter<$PrismaModel> | $Enums.UtilityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUtilityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUtilityTypeFilter<$PrismaModel>
+}
+
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1551,6 +1568,23 @@ export type NestedEnumPaymentStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPaymentStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPaymentStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumUtilityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilityType | Prisma.EnumUtilityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilityTypeFilter<$PrismaModel> | $Enums.UtilityType
+}
+
+export type NestedEnumUtilityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UtilityType | Prisma.EnumUtilityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UtilityType[] | Prisma.ListEnumUtilityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUtilityTypeWithAggregatesFilter<$PrismaModel> | $Enums.UtilityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUtilityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUtilityTypeFilter<$PrismaModel>
 }
 
 

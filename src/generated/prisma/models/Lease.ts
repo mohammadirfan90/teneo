@@ -98,6 +98,7 @@ export type LeaseCountAggregateOutputType = {
   currency: number
   lateFeePolicy: number
   utilitySplitMode: number
+  utilitySplitCustomPercents: number
   status: number
   signedAt: number
   activatedAt: number
@@ -171,6 +172,7 @@ export type LeaseCountAggregateInputType = {
   currency?: true
   lateFeePolicy?: true
   utilitySplitMode?: true
+  utilitySplitCustomPercents?: true
   status?: true
   signedAt?: true
   activatedAt?: true
@@ -279,6 +281,7 @@ export type LeaseGroupByOutputType = {
   currency: string
   lateFeePolicy: runtime.JsonValue | null
   utilitySplitMode: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents: runtime.JsonValue | null
   status: $Enums.LeaseStatus
   signedAt: Date | null
   activatedAt: Date | null
@@ -323,6 +326,7 @@ export type LeaseWhereInput = {
   currency?: Prisma.StringFilter<"Lease"> | string
   lateFeePolicy?: Prisma.JsonNullableFilter<"Lease">
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFilter<"Lease"> | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.JsonNullableFilter<"Lease">
   status?: Prisma.EnumLeaseStatusFilter<"Lease"> | $Enums.LeaseStatus
   signedAt?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
   activatedAt?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
@@ -335,6 +339,7 @@ export type LeaseWhereInput = {
   amendments?: Prisma.LeaseAmendmentListRelationFilter
   rentInvoices?: Prisma.RentInvoiceListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  utilityBills?: Prisma.UtilityBillListRelationFilter
 }
 
 export type LeaseOrderByWithRelationInput = {
@@ -349,6 +354,7 @@ export type LeaseOrderByWithRelationInput = {
   currency?: Prisma.SortOrder
   lateFeePolicy?: Prisma.SortOrderInput | Prisma.SortOrder
   utilitySplitMode?: Prisma.SortOrder
+  utilitySplitCustomPercents?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   activatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -361,6 +367,7 @@ export type LeaseOrderByWithRelationInput = {
   amendments?: Prisma.LeaseAmendmentOrderByRelationAggregateInput
   rentInvoices?: Prisma.RentInvoiceOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
+  utilityBills?: Prisma.UtilityBillOrderByRelationAggregateInput
 }
 
 export type LeaseWhereUniqueInput = Prisma.AtLeast<{
@@ -378,6 +385,7 @@ export type LeaseWhereUniqueInput = Prisma.AtLeast<{
   currency?: Prisma.StringFilter<"Lease"> | string
   lateFeePolicy?: Prisma.JsonNullableFilter<"Lease">
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFilter<"Lease"> | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.JsonNullableFilter<"Lease">
   status?: Prisma.EnumLeaseStatusFilter<"Lease"> | $Enums.LeaseStatus
   signedAt?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
   activatedAt?: Prisma.DateTimeNullableFilter<"Lease"> | Date | string | null
@@ -390,6 +398,7 @@ export type LeaseWhereUniqueInput = Prisma.AtLeast<{
   amendments?: Prisma.LeaseAmendmentListRelationFilter
   rentInvoices?: Prisma.RentInvoiceListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  utilityBills?: Prisma.UtilityBillListRelationFilter
 }, "id">
 
 export type LeaseOrderByWithAggregationInput = {
@@ -404,6 +413,7 @@ export type LeaseOrderByWithAggregationInput = {
   currency?: Prisma.SortOrder
   lateFeePolicy?: Prisma.SortOrderInput | Prisma.SortOrder
   utilitySplitMode?: Prisma.SortOrder
+  utilitySplitCustomPercents?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   activatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -433,6 +443,7 @@ export type LeaseScalarWhereWithAggregatesInput = {
   currency?: Prisma.StringWithAggregatesFilter<"Lease"> | string
   lateFeePolicy?: Prisma.JsonNullableWithAggregatesFilter<"Lease">
   utilitySplitMode?: Prisma.EnumUtilitySplitModeWithAggregatesFilter<"Lease"> | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.JsonNullableWithAggregatesFilter<"Lease">
   status?: Prisma.EnumLeaseStatusWithAggregatesFilter<"Lease"> | $Enums.LeaseStatus
   signedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lease"> | Date | string | null
   activatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lease"> | Date | string | null
@@ -454,6 +465,7 @@ export type LeaseCreateInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -466,6 +478,7 @@ export type LeaseCreateInput = {
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateInput = {
@@ -480,6 +493,7 @@ export type LeaseUncheckedCreateInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -492,6 +506,7 @@ export type LeaseUncheckedCreateInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUpdateInput = {
@@ -506,6 +521,7 @@ export type LeaseUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -518,6 +534,7 @@ export type LeaseUpdateInput = {
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateInput = {
@@ -532,6 +549,7 @@ export type LeaseUncheckedUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -544,6 +562,7 @@ export type LeaseUncheckedUpdateInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateManyInput = {
@@ -558,6 +577,7 @@ export type LeaseCreateManyInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -579,6 +599,7 @@ export type LeaseUpdateManyMutationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -600,6 +621,7 @@ export type LeaseUncheckedUpdateManyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -621,6 +643,7 @@ export type LeaseCountOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   lateFeePolicy?: Prisma.SortOrder
   utilitySplitMode?: Prisma.SortOrder
+  utilitySplitCustomPercents?: Prisma.SortOrder
   status?: Prisma.SortOrder
   signedAt?: Prisma.SortOrder
   activatedAt?: Prisma.SortOrder
@@ -763,6 +786,20 @@ export type LeaseUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LeaseUpdateToOneWithWhereWithoutPaymentsInput, Prisma.LeaseUpdateWithoutPaymentsInput>, Prisma.LeaseUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type LeaseCreateNestedOneWithoutUtilityBillsInput = {
+  create?: Prisma.XOR<Prisma.LeaseCreateWithoutUtilityBillsInput, Prisma.LeaseUncheckedCreateWithoutUtilityBillsInput>
+  connectOrCreate?: Prisma.LeaseCreateOrConnectWithoutUtilityBillsInput
+  connect?: Prisma.LeaseWhereUniqueInput
+}
+
+export type LeaseUpdateOneRequiredWithoutUtilityBillsNestedInput = {
+  create?: Prisma.XOR<Prisma.LeaseCreateWithoutUtilityBillsInput, Prisma.LeaseUncheckedCreateWithoutUtilityBillsInput>
+  connectOrCreate?: Prisma.LeaseCreateOrConnectWithoutUtilityBillsInput
+  upsert?: Prisma.LeaseUpsertWithoutUtilityBillsInput
+  connect?: Prisma.LeaseWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LeaseUpdateToOneWithWhereWithoutUtilityBillsInput, Prisma.LeaseUpdateWithoutUtilityBillsInput>, Prisma.LeaseUncheckedUpdateWithoutUtilityBillsInput>
+}
+
 export type LeaseCreateWithoutTenantsInput = {
   id?: string
   roomId: string
@@ -775,6 +812,7 @@ export type LeaseCreateWithoutTenantsInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -786,6 +824,7 @@ export type LeaseCreateWithoutTenantsInput = {
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutTenantsInput = {
@@ -800,6 +839,7 @@ export type LeaseUncheckedCreateWithoutTenantsInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -811,6 +851,7 @@ export type LeaseUncheckedCreateWithoutTenantsInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutTenantsInput = {
@@ -841,6 +882,7 @@ export type LeaseUpdateWithoutTenantsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -852,6 +894,7 @@ export type LeaseUpdateWithoutTenantsInput = {
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutTenantsInput = {
@@ -866,6 +909,7 @@ export type LeaseUncheckedUpdateWithoutTenantsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -877,6 +921,7 @@ export type LeaseUncheckedUpdateWithoutTenantsInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutSignaturesInput = {
@@ -891,6 +936,7 @@ export type LeaseCreateWithoutSignaturesInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -902,6 +948,7 @@ export type LeaseCreateWithoutSignaturesInput = {
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutSignaturesInput = {
@@ -916,6 +963,7 @@ export type LeaseUncheckedCreateWithoutSignaturesInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -927,6 +975,7 @@ export type LeaseUncheckedCreateWithoutSignaturesInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutSignaturesInput = {
@@ -957,6 +1006,7 @@ export type LeaseUpdateWithoutSignaturesInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -968,6 +1018,7 @@ export type LeaseUpdateWithoutSignaturesInput = {
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutSignaturesInput = {
@@ -982,6 +1033,7 @@ export type LeaseUncheckedUpdateWithoutSignaturesInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -993,6 +1045,7 @@ export type LeaseUncheckedUpdateWithoutSignaturesInput = {
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutAmendmentsInput = {
@@ -1007,6 +1060,7 @@ export type LeaseCreateWithoutAmendmentsInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -1018,6 +1072,7 @@ export type LeaseCreateWithoutAmendmentsInput = {
   signatures?: Prisma.LeaseSignatureCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutAmendmentsInput = {
@@ -1032,6 +1087,7 @@ export type LeaseUncheckedCreateWithoutAmendmentsInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -1043,6 +1099,7 @@ export type LeaseUncheckedCreateWithoutAmendmentsInput = {
   signatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutAmendmentsInput = {
@@ -1073,6 +1130,7 @@ export type LeaseUpdateWithoutAmendmentsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1084,6 +1142,7 @@ export type LeaseUpdateWithoutAmendmentsInput = {
   signatures?: Prisma.LeaseSignatureUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutAmendmentsInput = {
@@ -1098,6 +1157,7 @@ export type LeaseUncheckedUpdateWithoutAmendmentsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1109,6 +1169,7 @@ export type LeaseUncheckedUpdateWithoutAmendmentsInput = {
   signatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutRentInvoicesInput = {
@@ -1123,6 +1184,7 @@ export type LeaseCreateWithoutRentInvoicesInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -1134,6 +1196,7 @@ export type LeaseCreateWithoutRentInvoicesInput = {
   signatures?: Prisma.LeaseSignatureCreateNestedManyWithoutLeaseInput
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutRentInvoicesInput = {
@@ -1148,6 +1211,7 @@ export type LeaseUncheckedCreateWithoutRentInvoicesInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -1159,6 +1223,7 @@ export type LeaseUncheckedCreateWithoutRentInvoicesInput = {
   signatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutLeaseInput
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutRentInvoicesInput = {
@@ -1189,6 +1254,7 @@ export type LeaseUpdateWithoutRentInvoicesInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1200,6 +1266,7 @@ export type LeaseUpdateWithoutRentInvoicesInput = {
   signatures?: Prisma.LeaseSignatureUpdateManyWithoutLeaseNestedInput
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutRentInvoicesInput = {
@@ -1214,6 +1281,7 @@ export type LeaseUncheckedUpdateWithoutRentInvoicesInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1225,6 +1293,7 @@ export type LeaseUncheckedUpdateWithoutRentInvoicesInput = {
   signatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutLeaseNestedInput
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseCreateWithoutPaymentsInput = {
@@ -1239,6 +1308,7 @@ export type LeaseCreateWithoutPaymentsInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -1250,6 +1320,7 @@ export type LeaseCreateWithoutPaymentsInput = {
   signatures?: Prisma.LeaseSignatureCreateNestedManyWithoutLeaseInput
   amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseUncheckedCreateWithoutPaymentsInput = {
@@ -1264,6 +1335,7 @@ export type LeaseUncheckedCreateWithoutPaymentsInput = {
   currency: string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: $Enums.LeaseStatus
   signedAt?: Date | string | null
   activatedAt?: Date | string | null
@@ -1275,6 +1347,7 @@ export type LeaseUncheckedCreateWithoutPaymentsInput = {
   signatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutLeaseInput
   amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
   rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
+  utilityBills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutLeaseInput
 }
 
 export type LeaseCreateOrConnectWithoutPaymentsInput = {
@@ -1305,6 +1378,7 @@ export type LeaseUpdateWithoutPaymentsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1316,6 +1390,7 @@ export type LeaseUpdateWithoutPaymentsInput = {
   signatures?: Prisma.LeaseSignatureUpdateManyWithoutLeaseNestedInput
   amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUpdateManyWithoutLeaseNestedInput
 }
 
 export type LeaseUncheckedUpdateWithoutPaymentsInput = {
@@ -1330,6 +1405,7 @@ export type LeaseUncheckedUpdateWithoutPaymentsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1341,6 +1417,131 @@ export type LeaseUncheckedUpdateWithoutPaymentsInput = {
   signatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutLeaseNestedInput
   amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
   rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
+  utilityBills?: Prisma.UtilityBillUncheckedUpdateManyWithoutLeaseNestedInput
+}
+
+export type LeaseCreateWithoutUtilityBillsInput = {
+  id?: string
+  roomId: string
+  ownerUserId: string
+  primaryTenantUserId: string
+  startDate: Date | string
+  endDate: Date | string
+  rentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: $Enums.LeaseStatus
+  signedAt?: Date | string | null
+  activatedAt?: Date | string | null
+  endedAt?: Date | string | null
+  contractObjectKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenants?: Prisma.LeaseTenantCreateNestedManyWithoutLeaseInput
+  signatures?: Prisma.LeaseSignatureCreateNestedManyWithoutLeaseInput
+  amendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutLeaseInput
+  rentInvoices?: Prisma.RentInvoiceCreateNestedManyWithoutLeaseInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutLeaseInput
+}
+
+export type LeaseUncheckedCreateWithoutUtilityBillsInput = {
+  id?: string
+  roomId: string
+  ownerUserId: string
+  primaryTenantUserId: string
+  startDate: Date | string
+  endDate: Date | string
+  rentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: $Enums.LeaseStatus
+  signedAt?: Date | string | null
+  activatedAt?: Date | string | null
+  endedAt?: Date | string | null
+  contractObjectKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenants?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutLeaseInput
+  signatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutLeaseInput
+  amendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutLeaseInput
+  rentInvoices?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutLeaseInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutLeaseInput
+}
+
+export type LeaseCreateOrConnectWithoutUtilityBillsInput = {
+  where: Prisma.LeaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.LeaseCreateWithoutUtilityBillsInput, Prisma.LeaseUncheckedCreateWithoutUtilityBillsInput>
+}
+
+export type LeaseUpsertWithoutUtilityBillsInput = {
+  update: Prisma.XOR<Prisma.LeaseUpdateWithoutUtilityBillsInput, Prisma.LeaseUncheckedUpdateWithoutUtilityBillsInput>
+  create: Prisma.XOR<Prisma.LeaseCreateWithoutUtilityBillsInput, Prisma.LeaseUncheckedCreateWithoutUtilityBillsInput>
+  where?: Prisma.LeaseWhereInput
+}
+
+export type LeaseUpdateToOneWithWhereWithoutUtilityBillsInput = {
+  where?: Prisma.LeaseWhereInput
+  data: Prisma.XOR<Prisma.LeaseUpdateWithoutUtilityBillsInput, Prisma.LeaseUncheckedUpdateWithoutUtilityBillsInput>
+}
+
+export type LeaseUpdateWithoutUtilityBillsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  roomId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryTenantUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenants?: Prisma.LeaseTenantUpdateManyWithoutLeaseNestedInput
+  signatures?: Prisma.LeaseSignatureUpdateManyWithoutLeaseNestedInput
+  amendments?: Prisma.LeaseAmendmentUpdateManyWithoutLeaseNestedInput
+  rentInvoices?: Prisma.RentInvoiceUpdateManyWithoutLeaseNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutLeaseNestedInput
+}
+
+export type LeaseUncheckedUpdateWithoutUtilityBillsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  roomId?: Prisma.StringFieldUpdateOperationsInput | string
+  ownerUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryTenantUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  lateFeePolicy?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  utilitySplitMode?: Prisma.EnumUtilitySplitModeFieldUpdateOperationsInput | $Enums.UtilitySplitMode
+  utilitySplitCustomPercents?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.EnumLeaseStatusFieldUpdateOperationsInput | $Enums.LeaseStatus
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  activatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenants?: Prisma.LeaseTenantUncheckedUpdateManyWithoutLeaseNestedInput
+  signatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutLeaseNestedInput
+  amendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutLeaseNestedInput
+  rentInvoices?: Prisma.RentInvoiceUncheckedUpdateManyWithoutLeaseNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutLeaseNestedInput
 }
 
 
@@ -1354,6 +1555,7 @@ export type LeaseCountOutputType = {
   amendments: number
   rentInvoices: number
   payments: number
+  utilityBills: number
 }
 
 export type LeaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1362,6 +1564,7 @@ export type LeaseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   amendments?: boolean | LeaseCountOutputTypeCountAmendmentsArgs
   rentInvoices?: boolean | LeaseCountOutputTypeCountRentInvoicesArgs
   payments?: boolean | LeaseCountOutputTypeCountPaymentsArgs
+  utilityBills?: boolean | LeaseCountOutputTypeCountUtilityBillsArgs
 }
 
 /**
@@ -1409,6 +1612,13 @@ export type LeaseCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.PaymentWhereInput
 }
 
+/**
+ * LeaseCountOutputType without action
+ */
+export type LeaseCountOutputTypeCountUtilityBillsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UtilityBillWhereInput
+}
+
 
 export type LeaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1422,6 +1632,7 @@ export type LeaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   currency?: boolean
   lateFeePolicy?: boolean
   utilitySplitMode?: boolean
+  utilitySplitCustomPercents?: boolean
   status?: boolean
   signedAt?: boolean
   activatedAt?: boolean
@@ -1434,6 +1645,7 @@ export type LeaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   amendments?: boolean | Prisma.Lease$amendmentsArgs<ExtArgs>
   rentInvoices?: boolean | Prisma.Lease$rentInvoicesArgs<ExtArgs>
   payments?: boolean | Prisma.Lease$paymentsArgs<ExtArgs>
+  utilityBills?: boolean | Prisma.Lease$utilityBillsArgs<ExtArgs>
   _count?: boolean | Prisma.LeaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lease"]>
 
@@ -1449,6 +1661,7 @@ export type LeaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   currency?: boolean
   lateFeePolicy?: boolean
   utilitySplitMode?: boolean
+  utilitySplitCustomPercents?: boolean
   status?: boolean
   signedAt?: boolean
   activatedAt?: boolean
@@ -1470,6 +1683,7 @@ export type LeaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   currency?: boolean
   lateFeePolicy?: boolean
   utilitySplitMode?: boolean
+  utilitySplitCustomPercents?: boolean
   status?: boolean
   signedAt?: boolean
   activatedAt?: boolean
@@ -1491,6 +1705,7 @@ export type LeaseSelectScalar = {
   currency?: boolean
   lateFeePolicy?: boolean
   utilitySplitMode?: boolean
+  utilitySplitCustomPercents?: boolean
   status?: boolean
   signedAt?: boolean
   activatedAt?: boolean
@@ -1500,13 +1715,14 @@ export type LeaseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LeaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "ownerUserId" | "primaryTenantUserId" | "startDate" | "endDate" | "rentMinor" | "depositMinor" | "currency" | "lateFeePolicy" | "utilitySplitMode" | "status" | "signedAt" | "activatedAt" | "endedAt" | "contractObjectKey" | "createdAt" | "updatedAt", ExtArgs["result"]["lease"]>
+export type LeaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "ownerUserId" | "primaryTenantUserId" | "startDate" | "endDate" | "rentMinor" | "depositMinor" | "currency" | "lateFeePolicy" | "utilitySplitMode" | "utilitySplitCustomPercents" | "status" | "signedAt" | "activatedAt" | "endedAt" | "contractObjectKey" | "createdAt" | "updatedAt", ExtArgs["result"]["lease"]>
 export type LeaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenants?: boolean | Prisma.Lease$tenantsArgs<ExtArgs>
   signatures?: boolean | Prisma.Lease$signaturesArgs<ExtArgs>
   amendments?: boolean | Prisma.Lease$amendmentsArgs<ExtArgs>
   rentInvoices?: boolean | Prisma.Lease$rentInvoicesArgs<ExtArgs>
   payments?: boolean | Prisma.Lease$paymentsArgs<ExtArgs>
+  utilityBills?: boolean | Prisma.Lease$utilityBillsArgs<ExtArgs>
   _count?: boolean | Prisma.LeaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LeaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1520,6 +1736,7 @@ export type $LeasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     amendments: Prisma.$LeaseAmendmentPayload<ExtArgs>[]
     rentInvoices: Prisma.$RentInvoicePayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
+    utilityBills: Prisma.$UtilityBillPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1533,6 +1750,13 @@ export type $LeasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     currency: string
     lateFeePolicy: runtime.JsonValue | null
     utilitySplitMode: $Enums.UtilitySplitMode
+    /**
+     * CUSTOM-mode percentages per tenant. JSONB array of
+     * `{ tenantUserId: string, percent: number }` summing to 100.00.
+     * Required when utility_split_mode = 'CUSTOM'; ignored otherwise.
+     * Phase 16 reads it for splitCustom; Phase 18+ will add a writer route.
+     */
+    utilitySplitCustomPercents: runtime.JsonValue | null
     status: $Enums.LeaseStatus
     signedAt: Date | null
     activatedAt: Date | null
@@ -1939,6 +2163,7 @@ export interface Prisma__LeaseClient<T, Null = never, ExtArgs extends runtime.Ty
   amendments<T extends Prisma.Lease$amendmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$amendmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaseAmendmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   rentInvoices<T extends Prisma.Lease$rentInvoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$rentInvoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RentInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Lease$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  utilityBills<T extends Prisma.Lease$utilityBillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lease$utilityBillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UtilityBillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1979,6 +2204,7 @@ export interface LeaseFieldRefs {
   readonly currency: Prisma.FieldRef<"Lease", 'String'>
   readonly lateFeePolicy: Prisma.FieldRef<"Lease", 'Json'>
   readonly utilitySplitMode: Prisma.FieldRef<"Lease", 'UtilitySplitMode'>
+  readonly utilitySplitCustomPercents: Prisma.FieldRef<"Lease", 'Json'>
   readonly status: Prisma.FieldRef<"Lease", 'LeaseStatus'>
   readonly signedAt: Prisma.FieldRef<"Lease", 'DateTime'>
   readonly activatedAt: Prisma.FieldRef<"Lease", 'DateTime'>
@@ -2496,6 +2722,30 @@ export type Lease$paymentsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * Lease.utilityBills
+ */
+export type Lease$utilityBillsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UtilityBill
+   */
+  select?: Prisma.UtilityBillSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UtilityBill
+   */
+  omit?: Prisma.UtilityBillOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UtilityBillInclude<ExtArgs> | null
+  where?: Prisma.UtilityBillWhereInput
+  orderBy?: Prisma.UtilityBillOrderByWithRelationInput | Prisma.UtilityBillOrderByWithRelationInput[]
+  cursor?: Prisma.UtilityBillWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UtilityBillScalarFieldEnum | Prisma.UtilityBillScalarFieldEnum[]
 }
 
 /**

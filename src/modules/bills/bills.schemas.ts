@@ -2,9 +2,10 @@
 //
 // Zod schemas for /api/v1/bills body / params inputs.
 //
-// Phase 14 scope: only POST /bills/generate. The handler is a thin
-// facade that proxies to invoices.service.generateInvoiceForLease.
-// Phase 16 (utility meters + bill-split) will extend this file.
+// Phase 16 endpoints:
+//   POST /bills/generate     — extended Phase 14 hot path
+//   GET  /bills/me           — list bills for caller
+//   GET  /bills/:id          — bill detail with shares
 
 import { z } from 'zod';
 
@@ -26,6 +27,26 @@ export const generateBillSchema = z
   })
   .strict();
 export type GenerateBillInput = z.infer<typeof generateBillSchema>;
+
+/**
+ * GET /bills/:id — params shape.
+ */
+export const billIdParamsSchema = z.object({
+  id: z.string().uuid({ message: 'id must be a UUID' }),
+});
+export type BillIdParams = z.infer<typeof billIdParamsSchema>;
+
+/**
+ * GET /bills/me — query shape.
+ */
+export const listBillsQuerySchema = z.object({
+  limit: z
+    .string()
+    .regex(/^\d+$/, 'limit must be a positive integer')
+    .optional(),
+  cursor: z.string().min(1).optional(),
+});
+export type ListBillsQuery = z.infer<typeof listBillsQuerySchema>;
 
 /**
  * Coerces the validated body to a service-input shape (Date objects).
