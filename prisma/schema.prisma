@@ -179,6 +179,9 @@ model User {
   ticketsResolved      MaintenanceTicket[] @relation("TicketResolver")
   ticketsClosed        MaintenanceTicket[] @relation("TicketCloser")
   ticketUpdates        MaintenanceUpdate[] @relation("UpdateAuthor")
+  notifications        Notification[]
+  notificationPreference NotificationPreference?
+  documents            Document[]
 
   // Partial unique indexes live in the migration SQL:
   //   users(email) WHERE deleted_at IS NULL            → users_email_active_uniq
@@ -1334,4 +1337,173 @@ model MaintenanceUpdate {
 
   @@index([ticketId, createdAt(sort: Asc)], name: "maintenance_updates_ticket_idx")
   @@map("maintenance_updates")
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Phase 18: Notifications + Documents (04 §4.3.7, 05 §5.8, 13 §13.2.8)
+//
+// Notification rows back the in-app feed. Phases 9-17 already write
+// outbox_events rows for ≈30 distinct event types — Phase 18 ships
+// the receiver + a synchronous emit() helper that other modules can
+// call from inside their prisma.$transaction. Phase 19+ replaces the
+// in-tx model with an outbox-relay dispatcher and wires real EMAIL
+// delivery.
+//
+// Notification.eventType uses a closed-set enum so the TypeScript
+// type system catches typos at every call site. The map keys stored in
+// NotificationPreference.channelEventMap are FREE-FORM strings —
+// clients can opt into new event types added in Phase 19+ without
+// breaking serialization.
+//
+// Document rows are the new home for everything that previously held
+// a bare objectKey string (KYC submissions, leases, room photos,
+// maintenance ticket attachments). Phase 18 ships presigned-URL stubs
+// (`https://stub.local/...` URLs that expire in 15 minutes); Phase 19+
+// replaces them with real S3 / Cloudflare R2 signed URLs.
+//
+// Both tables cascade-delete with the owning user so soft-delete or
+// PII anonymization in Phase 8 cleans them up automatically.
+// ──────────────────────────────────────────────────────────────────────
+
+/// Channel a notification can be delivered on. IN_APP is the in-app
+/// feed row; EMAIL is the outbound email intent (Phase 19+ wires the
+/// actual send).
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+}
+
+/// Closed-set enum covering every outbox event_type shipped by Phases
+/// 9-17. New event types added in Phase 19+ MUST extend this enum AND
+/// `NotificationPreference.channelEventMap` resolution in
+/// notifications.service.ts.
+enum NotificationEventType {
+  // KYC (Phase 9)
+  KYC_APPROVED
+  KYC_REJECTED
+  KYC_REQUEST_INFO
+  // Properties (Phase 10)
+  PROPERTY_PUBLISHED
+  PROPERTY_SOFT_DELETED
+  ROOM_PUBLISHED
+  // Applications + viewings (Phase 12)
+  APPLICATION_RECEIVED
+  APPLICATION_APPROVED
+  APPLICATION_STATUS_CHANGED
+  VIEWING_REQUESTED
+  VIEWING_CONFIRMED
+  // Leases (Phase 13)
+  LEASE_DRAFT_CREATED
+  LEASE_SIGNED
+  LEASE_PARTIAL_SIGNATURE
+  LEASE_ACTIVATED
+  LEASE_STATUS_CHANGED
+  LEASE_TERMINATED
+  LEASE_AMENDMENT_PROPOSED
+  LEASE_AMENDMENT_SIGNED
+  // Invoices (Phase 14)
+  INVOICE_GENERATED
+  INVOICE_WAIVED
+  INVOICE_STATUS_CHANGED
+  INVOICE_PAID
+  // Payments (Phase 15)
+  PAYMENT_PROCESSING
+  PAYMENT_SUCCEEDED
+  PAYMENT_FAILED
+  PAYMENT_REFUND_REQUESTED
+  PAYMENT_REFUNDED
+  PAYMENT_PARTIAL_REFUND
+  // Meters + bills (Phase 16)
+  METER_CREATED
+  METER_READING_SUBMITTED
+  UTILITY_BILL_GENERATED
+  // Tickets (Phase 17)
+  TICKET_CREATED
+  TICKET_TRANSITION
+  TICKET_RATED
+}
+
+model Notification {
+  id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  recipientUserId String                @map("recipient_user_id") @db.Uuid
+  /// Closed-set; emit() callers pass values from NotificationEventType.
+  eventType       NotificationEventType @map("event_type")
+  /// JSONB copy of the originating event payload. Kept independent so
+  /// the feed doesn't have to join outbox_events (which Phase 19+ may
+  /// soft-delete after dispatch).
+  payload         Json
+  /// Optional FK to the source outbox_event for idempotency — repeat
+  /// emits with the same sourceEventId are no-ops at the DB level via
+  /// the partial UNIQUE index below.
+  sourceEventId   String?               @map("source_event_id") @db.Uuid
+  /// IN_APP rows: read=false until POST /:id/read. EMAIL rows: same
+  /// flag (delivery confirmation in Phase 19+).
+  read            Boolean               @default(false)
+  readAt          DateTime?             @map("read_at") @db.Timestamptz(6)
+  /// Channels the user opted into for this event. Resolved at emit
+  /// time by reading NotificationPreference; defaults to [IN_APP].
+  channels        NotificationChannel[]
+  /// Forward-compat v2 multi-tenancy placeholder.
+  tenantId        String                @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt       DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  recipient User @relation(fields: [recipientUserId], references: [id], onDelete: Cascade)
+
+  // Partial UNIQUE(recipient_user_id, source_event_id) WHERE
+  // source_event_id IS NOT NULL — added in the migration SQL so
+  // emit() can re-issue identical events without doubling rows.
+  @@index([recipientUserId, read, createdAt(sort: Desc)], name: "notifications_feed_idx")
+  @@map("notifications")
+}
+
+/// Per-user channel preferences. One row per user (PK = userId).
+/// `channelEventMap` is a JSONB object whose keys are free-form
+/// event-type strings — clients can store future event types without
+/// a schema migration. Empty map = default to [IN_APP] for everything.
+model NotificationPreference {
+  userId           String   @map("user_id") @db.Uuid
+  /// { 'application.received': ['IN_APP','EMAIL'], ... }
+  /// Default = {} (empty map). Resolution falls back to [IN_APP] for
+  /// any event NOT in the map.
+  channelEventMap  Json     @default("{}") @map("channel_event_map")
+  tenantId         String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  updatedAt        DateTime @updatedAt      @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId])
+  @@map("notification_preferences")
+}
+
+/// Owned storage object — a single source of truth for everything
+/// that previously held a bare objectKey string (KYC documents,
+/// lease contracts, room photos, maintenance ticket attachments).
+///
+/// Phase 18 returns mock S3 URLs (`https://stub.local/...`) and never
+/// verifies the upload completed. Phase 19+ adds the finalize path
+/// + real signed URLs.
+model Document {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ownerUserId String    @map("owner_user_id") @db.Uuid
+  /// Storage key (e.g., `kyc/{userId}/{uuid}.pdf`).
+  objectKey   String    @map("object_key")
+  contentType String    @map("content_type")
+  /// Byte size hint for the eventual upload. Phase 18 doesn't
+  /// verify — Phase 19+ reconciles against the upload event.
+  sizeBytes   BigInt    @map("size_bytes")
+  /// Free-text label (e.g., "Passport scan", "Lease contract").
+  label       String?
+  /// Lifecycle: ACTIVE | SOFT_DELETED. Phase 18 sets ACTIVE on
+  /// upload-url mint; DELETE flips the flag and stamps deletedAt.
+  status      String    @default("ACTIVE") @db.VarChar(16)
+  deletedAt   DateTime? @map("deleted_at") @db.Timestamptz(6)
+  tenantId    String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt      @map("updated_at") @db.Timestamptz(6)
+
+  owner User @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+
+  @@index([ownerUserId, status], name: "documents_owner_status_idx")
+  @@index([objectKey], name: "documents_object_key_idx")
+  @@map("documents")
 }

@@ -79,7 +79,10 @@ export const ModelName = {
   UtilityBill: 'UtilityBill',
   BillShare: 'BillShare',
   MaintenanceTicket: 'MaintenanceTicket',
-  MaintenanceUpdate: 'MaintenanceUpdate'
+  MaintenanceUpdate: 'MaintenanceUpdate',
+  Notification: 'Notification',
+  NotificationPreference: 'NotificationPreference',
+  Document: 'Document'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -620,6 +623,49 @@ export const MaintenanceUpdateScalarFieldEnum = {
 } as const
 
 export type MaintenanceUpdateScalarFieldEnum = (typeof MaintenanceUpdateScalarFieldEnum)[keyof typeof MaintenanceUpdateScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  recipientUserId: 'recipientUserId',
+  eventType: 'eventType',
+  payload: 'payload',
+  sourceEventId: 'sourceEventId',
+  read: 'read',
+  readAt: 'readAt',
+  channels: 'channels',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const NotificationPreferenceScalarFieldEnum = {
+  userId: 'userId',
+  channelEventMap: 'channelEventMap',
+  tenantId: 'tenantId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferenceScalarFieldEnum)[keyof typeof NotificationPreferenceScalarFieldEnum]
+
+
+export const DocumentScalarFieldEnum = {
+  id: 'id',
+  ownerUserId: 'ownerUserId',
+  objectKey: 'objectKey',
+  contentType: 'contentType',
+  sizeBytes: 'sizeBytes',
+  label: 'label',
+  status: 'status',
+  deletedAt: 'deletedAt',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
 
 
 export const SortOrder = {

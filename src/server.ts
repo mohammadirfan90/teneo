@@ -23,10 +23,12 @@ import { authRouter } from '@/modules/auth/auth.routes';
 import { billsRouter } from '@/modules/bills/bills.routes';
 import { metersRouter } from '@/modules/bills/meters.routes';
 import { readingsRouter } from '@/modules/bills/readings.routes';
+import { documentsRouter } from '@/modules/documents/documents.routes';
 import { invoicesRouter } from '@/modules/invoices/invoices.routes';
-import { leasesRouter } from '@/modules/leases/leases.routes';
 import { kycRouter } from '@/modules/kyc/kyc.routes';
+import { leasesRouter } from '@/modules/leases/leases.routes';
 import { ticketsRoomRouter, ticketsRouter } from '@/modules/maintenance/tickets.routes';
+import { notificationsRouter } from '@/modules/notifications/notifications.routes';
 import { stripeWebhookHandler } from '@/modules/payments/payments.controller';
 import { paymentsRouter } from '@/modules/payments/payments.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
@@ -258,6 +260,17 @@ export function createApp(): express.Express {
 
   // The normal auth-gated payments router (intent / me / :id / refund).
   app.use('/api/v1/payments', authenticatedRateLimiter, paymentsRouter());
+
+  // ── Phase 18: notifications feed + channel preferences ───────────────
+  // All routes require auth; per-role limiter applies uniformly. Feed is
+  // caller-scoped (own notifications only) and preferences are
+  // caller-scoped.
+  app.use('/api/v1/notifications', authenticatedRateLimiter, notificationsRouter());
+
+  // ── Phase 18: documents (stubbed presigned URLs + soft-delete) ──────
+  // All routes require auth. /upload-url and /:id (DELETE) are state-
+  // changing so they pass through withIdempotency inside the router.
+  app.use('/api/v1/documents', authenticatedRateLimiter, documentsRouter());
 
   // ── Error handling (must be last) ───────────────────────────────────
   app.use(notFoundHandler);

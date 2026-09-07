@@ -260,3 +260,27 @@ export type MaintenanceTicket = Prisma.MaintenanceTicketModel
  * /dispute convenience endpoint). Null for pure-comment inserts.
  */
 export type MaintenanceUpdate = Prisma.MaintenanceUpdateModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model NotificationPreference
+ * Per-user channel preferences. One row per user (PK = userId).
+ * `channelEventMap` is a JSONB object whose keys are free-form
+ * event-type strings — clients can store future event types without
+ * a schema migration. Empty map = default to [IN_APP] for everything.
+ */
+export type NotificationPreference = Prisma.NotificationPreferenceModel
+/**
+ * Model Document
+ * Owned storage object — a single source of truth for everything
+ * that previously held a bare objectKey string (KYC documents,
+ * lease contracts, room photos, maintenance ticket attachments).
+ * 
+ * Phase 18 returns mock S3 URLs (`https://stub.local/...`) and never
+ * verifies the upload completed. Phase 19+ adds the finalize path
+ * + real signed URLs.
+ */
+export type Document = Prisma.DocumentModel
