@@ -21,6 +21,7 @@
 import { Prisma } from '@/generated/prisma/client';
 import type { ApplicationStatus, ViewingStatus } from '@/generated/prisma/enums';
 
+import * as cacheLib from '@/lib/cache';
 import { prisma } from '@/lib/db';
 import { ConflictError, ForbiddenError, NotFoundError } from '@/lib/errors';
 
@@ -319,6 +320,9 @@ export async function createApplication(
   });
 
   const full = await loadApplication(createdId);
+  // Bust the tenant's /applications/me cache so the new row is
+  // visible on the next read.
+  await cacheLib.invalidateTag(`applications:tenant:${callerUserId}`);
   return toApplicationView(full);
 }
 
@@ -330,6 +334,14 @@ export async function listApplicationsForTenant(
   callerUserId: string,
   query: ListApplicationsQuery
 ): Promise<ApplicationPage> {
+  // Phase 21: cache wrapper. The tenant's own application list is a
+  // hot dashboard endpoint; we cache for 60s and bust the tag from
+  // every mutating path (createApplication, withdrawApplication,
+  // transitionApplication) so the next read sees the fresh state.
+  const cacheKey = buildTenantApplicationsCacheKey(callerUserId, query);
+  const cached = await cacheLib.get<ApplicationPage>(cacheKey);
+  if (cached !== null) return cached;
+
   const limit = query.limit;
   const take = limit + 1;
   const rows = await prisma.application.findMany({
@@ -365,10 +377,28 @@ export async function listApplicationsForTenant(
   const hasMore = rows.length > limit;
   const page = hasMore ? rows.slice(0, limit) : rows;
   const nextCursor = hasMore && page.length > 0 ? (page[page.length - 1]?.id ?? null) : null;
-  return {
+  const result: ApplicationPage = {
     items: page.map((r) => toApplicationView(r as unknown as ApplicationRow)),
     nextCursor,
   };
+  await cacheLib.taggedSet(cacheKey, result, 60, [`applications:tenant:${callerUserId}`]);
+  return result;
+}
+
+// Cache-key builder. Opaque hash so the key length stays bounded
+// regardless of how many filters the caller sends. status/limit/cursor
+// are encoded into the hash; the userId is part of the tag so all
+// of one tenant's pages bust together.
+function buildTenantApplicationsCacheKey(
+  callerUserId: string,
+  query: ListApplicationsQuery
+): string {
+  const filterHash = cacheLib.hashFilter({
+    status: query.status ?? '',
+    cursor: query.cursor ?? '',
+    limit: query.limit,
+  });
+  return `applications:tenant:${callerUserId}:${filterHash}`;
 }
 
 /**
@@ -449,10 +479,16 @@ export async function transitionApplication(
 
   // For APPROVED we take the FOR UPDATE path; for everything else
   // we run the optimistic version-guarded update inline.
+  let view: ApplicationView;
   if (body.to === 'APPROVED') {
-    return await transitionToApproved(callerUserId, applicationId, existing);
+    view = await transitionToApproved(callerUserId, applicationId, existing);
+  } else {
+    view = await transitionGeneric(callerUserId, applicationId, existing, body.to);
   }
-  return await transitionGeneric(callerUserId, applicationId, existing, body.to);
+  // Bust the tenant's /applications/me cache so the new status shows
+  // on the next read.
+  await cacheLib.invalidateTag(`applications:tenant:${existing.tenantUserId}`);
+  return view;
 }
 
 /**
@@ -821,6 +857,9 @@ export async function withdrawApplication(
     });
   });
   const fresh = await loadApplication(applicationId);
+  // Bust the tenant's /applications/me cache so the new status shows
+  // on the next read.
+  await cacheLib.invalidateTag(`applications:tenant:${existing.tenantUserId}`);
   return toApplicationView(fresh);
 }
 

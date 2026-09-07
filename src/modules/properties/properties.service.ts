@@ -22,8 +22,10 @@
 import type { Prisma } from '@/generated/prisma/client';
 import type { PropertyStatus, PropertyType, RoomStatus } from '@/generated/prisma/enums';
 
+import * as cacheLib from '@/lib/cache';
 import { prisma } from '@/lib/db';
 import { ConflictError, ForbiddenError, NotFoundError } from '@/lib/errors';
+import { logger } from '@/lib/logger';
 
 import type {
   CreatePropertyInput,
@@ -246,21 +248,37 @@ export async function getProperty(
   callerUserId: string,
   callerRoles: readonly string[]
 ): Promise<PropertyView> {
-  // Authorization: any logged-in user can READ a property (public-safe
-  // subset). The view itself is identical regardless of caller; the
-  // "public-safe subset" filtering happens at the rooms level
-  // (see rooms.service.ts). Here we only need to hide soft-deleted.
+  void callerUserId;
+  void callerRoles;
+
+  // Phase 21: cache lookup. Misses fall through to the DB; we also
+  // negative-cache 404s for 60s per SPEC §8.4.1 (deflect enumeration
+  // of /properties/:id by unauthorized clients).
+  const key = `property:${propertyId}`;
+  const cached = await cacheLib.get<PropertyView>(key);
+  if (cached !== null) {
+    if (cacheLib.isNegative(cached)) {
+      logger.info({ key }, 'cache_negative_hit');
+      throw new NotFoundError('Property not found');
+    }
+    logger.info({ key }, 'cache_hit');
+    return cached;
+  }
+
   const row = await prisma.property.findFirst({
     where: { id: propertyId, deletedAt: null },
     select: propertySelect,
   });
-  if (!row) throw new NotFoundError('Property not found');
-  // We don't refuse non-owners / non-admins from reading — the
-  // public-safe subset is exposed to everyone (callers get the same
-  // view; owner-only fields are not on Property).
-  void callerUserId;
-  void callerRoles;
-  return toPropertyView(row);
+  if (!row) {
+    // Negative-cache 404s for 60s. Tagged with property:{id} so a
+    // property becoming findable (e.g., via admin reinstate) evicts
+    // the negative too.
+    await cacheLib.cacheNegative(key, 60);
+    throw new NotFoundError('Property not found');
+  }
+  const view = toPropertyView(row);
+  await cacheLib.taggedSet(key, view, 600, [`property:${propertyId}`]);
+  return view;
 }
 
 // ──────────────────────────────────────────────────────────────────────
@@ -301,6 +319,15 @@ export async function patchProperty(
       after: { title: updated.title, status: updated.status, version: updated.version },
     },
   });
+
+  // Phase 21: bust the per-property cache, the search cache for
+  // this city (PATCH may change the title used in search snippets),
+  // and the owner's dashboard list (which embeds the same row).
+  await Promise.all([
+    cacheLib.invalidateTag(`property:${updated.id}`),
+    cacheLib.invalidateTag(`search:${updated.city.toLowerCase()}`),
+    cacheLib.invalidateTag(`properties:owner:${updated.ownerUserId}`),
+  ]);
 
   return toPropertyView(updated);
 }
@@ -346,6 +373,15 @@ export async function softDeleteProperty(
       } as Prisma.InputJsonValue,
     },
   });
+
+  // Phase 21: evict cache entries for this property, the city's search
+  // results, and the owner's dashboard list (soft-delete hides it
+  // from search and from /me).
+  await Promise.all([
+    cacheLib.invalidateTag(`property:${updated.id}`),
+    cacheLib.invalidateTag(`search:${existing.city.toLowerCase()}`),
+    cacheLib.invalidateTag(`properties:owner:${callerUserId}`),
+  ]);
 
   return {
     id: updated.id,
@@ -460,6 +496,16 @@ export async function listMyProperties(
   ownerUserId: string,
   query: ListMyPropertiesQuery
 ): Promise<PropertyListPage> {
+  // Phase 21: cache the per-owner list. TTL 60s — owners see their
+  // own changes within a minute, which is the SPEC ceiling for
+  // staleness in a marketplace dashboard.
+  const cacheKey = `properties:owner:${ownerUserId}:${query.cursor ?? ''}:${query.limit}`;
+  const cached = await cacheLib.get<PropertyListPage>(cacheKey);
+  if (cached !== null) {
+    logger.info({ cacheKey }, 'cache_hit');
+    return cached;
+  }
+
   // query.limit is schema-coerced to a finite number by listMyPropertiesQuerySchema
   // (z.coerce.number().int().min(1).max(100).default(20)).
   const limit = query.limit;
@@ -476,10 +522,12 @@ export async function listMyProperties(
   const page = hasMore ? rows.slice(0, limit) : rows;
   const nextCursor = hasMore ? (page[page.length - 1]?.id ?? null) : null;
 
-  return {
+  const result: PropertyListPage = {
     items: page.map(toPropertyView),
     nextCursor,
   };
+  await cacheLib.taggedSet(cacheKey, result, 60, [`properties:owner:${ownerUserId}`]);
+  return result;
 }
 
 // ──────────────────────────────────────────────────────────────────────

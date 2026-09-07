@@ -19,8 +19,11 @@
 import type { Prisma } from '@/generated/prisma/client';
 import type { RoomStatus } from '@/generated/prisma/enums';
 
+import * as cacheLib from '@/lib/cache';
+import { hashFilter } from '@/lib/cache';
 import { prisma } from '@/lib/db';
 import { ConflictError, NotFoundError } from '@/lib/errors';
+import { logger } from '@/lib/logger';
 
 import type {
   CreateSavedSearchInput,
@@ -248,6 +251,20 @@ async function runSearchQuery(
 // ──────────────────────────────────────────────────────────────────────
 
 export async function searchRooms(query: SearchRoomsQuery): Promise<SearchRoomsPage> {
+  // Phase 21: cache wrapper. The cache key includes the city (so a
+  // search in 'Mumbai' doesn't pollute 'Bangalore' results) plus a
+  // deterministic hash of the remaining filter set (rent_min/max,
+  // amenities, sort, cursor, q, etc.). TTL 120s; invalidated by
+  // tag 'search:{city}' on property PATCH/takedown (Phase 21 wires
+  // that path in properties.service.ts).
+  const cacheKey = buildSearchCacheKey(query);
+  const cached = await cacheLib.get<SearchRoomsPage>(cacheKey);
+  if (cached !== null) {
+    logger.info({ cacheKey }, 'cache_hit');
+    return cached;
+  }
+  logger.info({ cacheKey }, 'cache_miss');
+
   // Hard filters: only PUBLISHED rooms on PUBLISHED, non-deleted
   // properties (rooms on MAINTENANCE / TAKEN_DOWN are hidden per
   // 05 §5.4 invariant — MAINTENANCE rooms don't appear in search).
@@ -311,11 +328,37 @@ export async function searchRooms(query: SearchRoomsQuery): Promise<SearchRoomsP
   const page = hasMore ? rows.slice(0, limit) : rows;
   const nextCursor = hasMore && page.length > 0 ? (page[page.length - 1]?.id ?? null) : null;
 
-  return {
+  const result: SearchRoomsPage = {
     items: page.map(toRoomSearchView),
     nextCursor,
     hasMore,
   };
+
+  // Cache write-through. Tag every entry with search:{city} so a
+  // property takedown in this city evicts them in one call.
+  await cacheLib.taggedSet(cacheKey, result, 120, [
+    query.city ? `search:${query.city.toLowerCase()}` : 'search:all',
+  ]);
+
+  return result;
+}
+
+// Cache-key builder. Opaque hash so the key length stays bounded
+// regardless of how many amenities / filter fields the caller sends.
+function buildSearchCacheKey(query: SearchRoomsQuery): string {
+  const filterHash = hashFilter({
+    city: query.city ?? '',
+    q: query.q ?? '',
+    currency: query.currency ?? '',
+    rent_min: query.rent_min ?? '',
+    rent_max: query.rent_max ?? '',
+    amenities: (query.amenities ?? []).slice().sort(),
+    available_from: query.available_from ?? '',
+    sort: query.sort ?? '',
+    cursor: query.cursor ?? '',
+    limit: query.limit,
+  });
+  return `search:rooms:${query.city ?? 'all'}:${filterHash}`;
 }
 
 // ──────────────────────────────────────────────────────────────────────
