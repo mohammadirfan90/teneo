@@ -32,6 +32,9 @@ Thumbs.db
 # Logs
 *.log
 
+# Smoke test artifacts
+temp_reports/
+
 # Test artifacts
 .jest-cache/
 
@@ -43,8 +46,10 @@ app/prisma/migrations/migration_lock.toml.tmp
 app/pgdata/
 
 # ── Assignment meta files (not part of the project) ──────────────────────
-# Spec lives in housing-platform/ which IS tracked. The loose assignment
-# docs at the repo root are scaffolding for the work, not deliverables.
+# Scaffolding for the work, not deliverables. The design spec in
+# housing-platform/ is kept locally but untracked — README.md is the
+# single documented entry point for this repo.
+housing-platform/
 AGENTS.md
 idea-hub.md
 project_requirements.md
