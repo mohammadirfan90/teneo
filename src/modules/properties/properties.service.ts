@@ -3,21 +3,21 @@
 // Business logic for /properties/* per spec §13.2.3 + 04 §4.3.2 + 02 §2.6.
 //
 // Surfaces (from 13 §13.2.3):
-//   POST   /properties                      OWNER + KYC_APPROVED (for OWNER role) — create DRAFT
-//   GET    /properties/:id                  any logged-in (public-safe subset if not owner/admin)
-//   PATCH  /properties/:id                  OWNER (own) or ADMIN
-//   DELETE /properties/:id                  OWNER (own) or ADMIN — soft-delete
-//   POST   /properties/:id/publish          OWNER (own) + KYC_APPROVED — cascade rooms
-//   GET    /properties/me                   OWNER — cursor-paginated own list
+// POST /properties OWNER + KYC_APPROVED (for OWNER role) — create DRAFT
+// GET /properties/:id any logged-in (public-safe subset if not owner/admin)
+// PATCH /properties/:id OWNER (own) or ADMIN
+// DELETE /properties/:id OWNER (own) or ADMIN — soft-delete
+// POST /properties/:id/publish OWNER (own) + KYC_APPROVED — cascade rooms
+// GET /properties/me OWNER — cursor-paginated own list
 //
 // Atomicity: the publish cascade runs in a single $transaction that
-//   1. flips property status DRAFT → PUBLISHED, sets published_at,
-//      bumps version (optimistic concurrency, 05 §6)
-//   2. flips every DRAFT room on this property → PUBLISHED (also bumps
-//      their version)
-//   3. writes audit_log row (action=property.published)
-//   4. writes outbox_events row (eventType=property.published) for
-//      the search indexer + notification fan-out (per 03 §3.1)
+// 1. flips property status DRAFT → PUBLISHED, sets published_at,
+// bumps version (optimistic concurrency, 05 §6)
+// 2. flips every DRAFT room on this property → PUBLISHED (also bumps
+// their version)
+// 3. writes audit_log row (action=property.published)
+// 4. writes audit events row (eventType=property.published) for
+// the search indexer + notification fan-out (per 03 §3.1)
 
 import type { Prisma } from '@/generated/prisma/client';
 import type { PropertyStatus, PropertyType, RoomStatus } from '@/generated/prisma/enums';
@@ -306,7 +306,7 @@ export async function patchProperty(
     select: propertySelect,
   });
 
-  // Audit the change (no outbox event for non-publish edits per spec;
+  // Audit the change (no audit event for non-publish edits per spec;
   // 03 §3.1 only enumerates property.published).
   await prisma.auditLog.create({
     data: {
@@ -350,7 +350,7 @@ export async function softDeleteProperty(
     select: { id: true, deletedAt: true, status: true, version: true },
   });
 
-  // Audit + outbox — soft-delete is a published-side event too.
+  // audit — soft-delete is a published-side event too.
   await prisma.auditLog.create({
     data: {
       actorUserId: callerUserId,
@@ -363,16 +363,7 @@ export async function softDeleteProperty(
     },
   });
 
-  await prisma.outboxEvent.create({
-    data: {
-      eventType: 'property.soft_deleted',
-      payload: {
-        propertyId: updated.id,
-        ownerUserId: callerUserId,
-        deletedAt: now.toISOString(),
-      } as Prisma.InputJsonValue,
-    },
-  });
+  
 
   // Phase 21: evict cache entries for this property, the city's search
   // results, and the owner's dashboard list (soft-delete hides it
@@ -464,18 +455,8 @@ export async function publishProperty(
       },
     });
 
-    // 4. Outbox event (search indexer + notification fan-out).
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'property.published',
-        payload: {
-          propertyId,
-          ownerUserId: callerUserId,
-          publishedAt: now.toISOString(),
-          roomIds: draftRoomIds.map((r) => r.id),
-        } as Prisma.InputJsonValue,
-      },
-    });
+    // 4. audit event (search indexer + notification fan-out).
+    
 
     return { roomsPublished };
   });

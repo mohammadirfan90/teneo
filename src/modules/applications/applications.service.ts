@@ -5,13 +5,13 @@
 //
 // Hot path of the phase: the SHORTLISTED → APPROVED transition runs
 // inside a single $transaction that:
-//   1. Locks the room row (`SELECT ... FOR UPDATE`) so concurrent
-//      owner clicks on different applications for the same room
-//      serialize on Postgres.
-//   2. Re-validates the application with an optimistic `version` guard.
-//   3. Bulk-rejects every other active application on the same room.
-//   4. Flips the room to RESERVED.
-//   5. Writes audit + outbox rows in the same tx.
+// 1. Locks the room row (`SELECT ... FOR UPDATE`) so concurrent
+// owner clicks on different applications for the same room
+// serialize on Postgres.
+// 2. Re-validates the application with an optimistic `version` guard.
+// 3. Bulk-rejects every other active application on the same room.
+// 4. Flips the room to RESERVED.
+// 5. Writes audit rows in the same tx.
 //
 // Combined with the partial UNIQUE
 // `(room_id, tenant_user_id) WHERE status IN (active set)` from the
@@ -26,7 +26,6 @@ import { prisma } from '@/lib/db';
 import { ConflictError, ForbiddenError, NotFoundError } from '@/lib/errors';
 
 import type {
-  AddApplicationNoteInput,
   CancelViewingInput,
   ConfirmViewingInput,
   CreateApplicationInput,
@@ -40,14 +39,6 @@ import { isValidTransition } from './applications.state-machine';
 // ──────────────────────────────────────────────────────────────────────
 // Views (render-ready DTOs)
 // ──────────────────────────────────────────────────────────────────────
-
-export interface ApplicationNoteView {
-  id: string;
-  applicationId: string;
-  authorUserId: string;
-  note: string;
-  createdAt: string;
-}
 
 export interface ApplicationView {
   id: string;
@@ -95,22 +86,6 @@ const ACTIVE_APPLICATION_STATUSES: ApplicationStatus[] = [
   'SHORTLISTED',
   'APPROVED',
 ];
-
-function noteToView(n: {
-  id: string;
-  applicationId: string;
-  authorUserId: string;
-  note: string;
-  createdAt: Date;
-}): ApplicationNoteView {
-  return {
-    id: n.id,
-    applicationId: n.applicationId,
-    authorUserId: n.authorUserId,
-    note: n.note,
-    createdAt: n.createdAt.toISOString(),
-  };
-}
 
 type ApplicationRow = {
   id: string;
@@ -284,7 +259,7 @@ export async function createApplication(
     throw e;
   }
 
-  // Outbox + audit in a follow-up $transaction so a flaky outbox
+  // Audit in a follow-up $transaction so a flaky audit
   // doesn't roll back the application creation.
   const ownerId = await prisma.room
     .findUnique({
@@ -306,17 +281,7 @@ export async function createApplication(
         after: { status: 'SUBMITTED', roomId: body.roomId },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'application.received',
-        payload: {
-          applicationId: createdId,
-          roomId: body.roomId,
-          tenantUserId: callerUserId,
-          ownerUserId: ownerId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
   });
 
   const full = await loadApplication(createdId);
@@ -327,7 +292,7 @@ export async function createApplication(
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// GET /applications  (TENANT own)
+// GET /applications (TENANT own)
 // ──────────────────────────────────────────────────────────────────────
 
 export async function listApplicationsForTenant(
@@ -464,7 +429,7 @@ export async function getApplication(applicationId: string): Promise<Application
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// POST /applications/:id/transition  — the HOT PATH for APPROVED
+// POST /applications/:id/transition — the HOT PATH for APPROVED
 // ──────────────────────────────────────────────────────────────────────
 
 export async function transitionApplication(
@@ -502,7 +467,7 @@ export async function transitionApplication(
  *      lease_tenants row (nested create) inside the same tx so lease
  *      creation is atomic with the application approval per spec
  *      §7.5.1.
- *   6. Audit + outbox (now including lease.draft_created) in the same tx.
+ *   6. audit (now including lease.draft_created) in the same tx.
  *
  * If the room is already RESERVED (another application won the race),
  * we surface 409 STATE_MACHINE.
@@ -623,11 +588,8 @@ async function transitionToApproved(
       select: { id: true },
     });
 
-    // Audit + outbox. We now have ownerId from roomForLease (no extra
-    // query needed).
-    const ownerId = roomForLease.property.ownerUserId;
+    // Audit. Lease draft was created above;.
     const leaseId = lease.id;
-
     await tx.auditLog.create({
       data: {
         actorUserId: callerUserId,
@@ -654,42 +616,9 @@ async function transitionToApproved(
         },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'application.approved',
-        payload: {
-          applicationId,
-          roomId: existing.roomId,
-          tenantUserId: existing.tenantUserId,
-          ownerUserId: ownerId,
-          leaseId,
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'lease.draft_created',
-        payload: {
-          leaseId,
-          applicationId,
-          roomId: existing.roomId,
-          tenantUserId: existing.tenantUserId,
-          ownerUserId: ownerId,
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'application.status_changed',
-        payload: {
-          applicationId,
-          roomId: existing.roomId,
-          tenantUserId: existing.tenantUserId,
-          from: 'SHORTLISTED',
-          to: 'APPROVED',
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
+    
+    
 
     const fresh = await tx.application.findUnique({
       where: { id: applicationId },
@@ -715,7 +644,7 @@ async function transitionToApproved(
 
 /**
  * Generic (non-APPROVED) transition: optimistic version-guarded
- * update inside a $transaction with audit + outbox.
+ * update inside a $transaction with audit.
  */
 async function transitionGeneric(
   callerUserId: string,
@@ -764,18 +693,7 @@ async function transitionGeneric(
         after: { status: to },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'application.status_changed',
-        payload: {
-          applicationId,
-          roomId: existing.roomId,
-          tenantUserId: existing.tenantUserId,
-          from: existing.status,
-          to,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     return { ownerId };
   });
@@ -840,67 +758,13 @@ export async function withdrawApplication(
         after: { status: 'WITHDRAWN' },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'application.status_changed',
-        payload: {
-          applicationId,
-          roomId: existing.roomId,
-          tenantUserId: existing.tenantUserId,
-          from: existing.status,
-          to: 'WITHDRAWN',
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
   });
   const fresh = await loadApplication(applicationId);
   // Bust the tenant's /applications/me cache so the new status shows
   // on the next read.
   await cacheLib.invalidateTag(`applications:tenant:${existing.tenantUserId}`);
   return toApplicationView(fresh);
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// POST /applications/:id/notes
-// ──────────────────────────────────────────────────────────────────────
-
-export async function addApplicationNote(
-  callerUserId: string,
-  applicationId: string,
-  body: AddApplicationNoteInput
-): Promise<ApplicationNoteView> {
-  // Ensure the application exists. Ownership is enforced by middleware.
-  // Existence/404 guard: loadApplication throws when the row is missing.
-  await loadApplication(applicationId);
-  const created = await prisma.$transaction(async (tx) => {
-    const note = await tx.applicationNote.create({
-      data: {
-        applicationId,
-        authorUserId: callerUserId,
-        note: body.note,
-      },
-      select: {
-        id: true,
-        applicationId: true,
-        authorUserId: true,
-        note: true,
-        createdAt: true,
-      },
-    });
-    await tx.auditLog.create({
-      data: {
-        actorUserId: callerUserId,
-        actorRole: 'OWNER',
-        action: 'application.note_added',
-        targetEntityType: 'application',
-        targetEntityId: applicationId,
-        before: Prisma.JsonNull,
-        after: { noteId: note.id },
-      },
-    });
-    return note;
-  });
-  return noteToView(created);
 }
 
 // ──────────────────────────────────────────────────────────────────────
@@ -960,26 +824,8 @@ export async function createViewingRequest(
           version: { increment: 1 },
         },
       });
-      await tx.outboxEvent.create({
-        data: {
-          eventType: 'application.status_changed',
-          payload: {
-            applicationId,
-            roomId: existing.roomId,
-            tenantUserId: existing.tenantUserId,
-            from: existing.status,
-            to: 'VIEWING_SCHEDULED',
-          } as Prisma.InputJsonValue,
-        },
-      });
+      
     }
-
-    const ownerId = await tx.room
-      .findUnique({
-        where: { id: existing.roomId },
-        select: { property: { select: { ownerUserId: true } } },
-      })
-      .then((r) => r?.property.ownerUserId ?? null);
 
     await tx.auditLog.create({
       data: {
@@ -992,19 +838,7 @@ export async function createViewingRequest(
         after: { applicationId, proposedSlots: body.proposedSlots },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'viewing.requested',
-        payload: {
-          viewingId: v.id,
-          applicationId,
-          roomId: existing.roomId,
-          ownerUserId: ownerId,
-          tenantUserId: existing.tenantUserId,
-          proposedSlots: body.proposedSlots,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
     return v;
   });
 
@@ -1086,16 +920,7 @@ export async function confirmViewing(
         after: { status: 'CONFIRMED', confirmedSlot: body.confirmedSlot },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'viewing.confirmed',
-        payload: {
-          viewingId,
-          applicationId: v.applicationId,
-          confirmedSlot: body.confirmedSlot,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
     return v;
   });
   return toViewingView(updated);

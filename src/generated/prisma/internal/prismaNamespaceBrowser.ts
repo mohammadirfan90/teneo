@@ -59,7 +59,6 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   RefreshToken: 'RefreshToken',
   PreferencesTenant: 'PreferencesTenant',
-  OutboxEvent: 'OutboxEvent',
   Property: 'Property',
   Building: 'Building',
   Flat: 'Flat',
@@ -67,7 +66,6 @@ export const ModelName = {
   SavedSearch: 'SavedSearch',
   Application: 'Application',
   ViewingRequest: 'ViewingRequest',
-  ApplicationNote: 'ApplicationNote',
   Lease: 'Lease',
   LeaseTenant: 'LeaseTenant',
   LeaseSignature: 'LeaseSignature',
@@ -80,11 +78,8 @@ export const ModelName = {
   BillShare: 'BillShare',
   MaintenanceTicket: 'MaintenanceTicket',
   MaintenanceUpdate: 'MaintenanceUpdate',
-  Notification: 'Notification',
-  NotificationPreference: 'NotificationPreference',
   Document: 'Document',
   RoomPhoto: 'RoomPhoto',
-  FeatureFlag: 'FeatureFlag',
   MatchResult: 'MatchResult',
   IntroRequest: 'IntroRequest'
 } as const
@@ -243,22 +238,6 @@ export const PreferencesTenantScalarFieldEnum = {
 export type PreferencesTenantScalarFieldEnum = (typeof PreferencesTenantScalarFieldEnum)[keyof typeof PreferencesTenantScalarFieldEnum]
 
 
-export const OutboxEventScalarFieldEnum = {
-  id: 'id',
-  eventType: 'eventType',
-  payload: 'payload',
-  dispatched: 'dispatched',
-  dispatchedAt: 'dispatchedAt',
-  attempts: 'attempts',
-  lastError: 'lastError',
-  tenantId: 'tenantId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type OutboxEventScalarFieldEnum = (typeof OutboxEventScalarFieldEnum)[keyof typeof OutboxEventScalarFieldEnum]
-
-
 export const PropertyScalarFieldEnum = {
   id: 'id',
   ownerUserId: 'ownerUserId',
@@ -391,18 +370,6 @@ export const ViewingRequestScalarFieldEnum = {
 } as const
 
 export type ViewingRequestScalarFieldEnum = (typeof ViewingRequestScalarFieldEnum)[keyof typeof ViewingRequestScalarFieldEnum]
-
-
-export const ApplicationNoteScalarFieldEnum = {
-  id: 'id',
-  applicationId: 'applicationId',
-  authorUserId: 'authorUserId',
-  note: 'note',
-  tenantId: 'tenantId',
-  createdAt: 'createdAt'
-} as const
-
-export type ApplicationNoteScalarFieldEnum = (typeof ApplicationNoteScalarFieldEnum)[keyof typeof ApplicationNoteScalarFieldEnum]
 
 
 export const LeaseScalarFieldEnum = {
@@ -629,32 +596,6 @@ export const MaintenanceUpdateScalarFieldEnum = {
 export type MaintenanceUpdateScalarFieldEnum = (typeof MaintenanceUpdateScalarFieldEnum)[keyof typeof MaintenanceUpdateScalarFieldEnum]
 
 
-export const NotificationScalarFieldEnum = {
-  id: 'id',
-  recipientUserId: 'recipientUserId',
-  eventType: 'eventType',
-  payload: 'payload',
-  sourceEventId: 'sourceEventId',
-  read: 'read',
-  readAt: 'readAt',
-  channels: 'channels',
-  tenantId: 'tenantId',
-  createdAt: 'createdAt'
-} as const
-
-export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
-
-
-export const NotificationPreferenceScalarFieldEnum = {
-  userId: 'userId',
-  channelEventMap: 'channelEventMap',
-  tenantId: 'tenantId',
-  updatedAt: 'updatedAt'
-} as const
-
-export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferenceScalarFieldEnum)[keyof typeof NotificationPreferenceScalarFieldEnum]
-
-
 export const DocumentScalarFieldEnum = {
   id: 'id',
   ownerUserId: 'ownerUserId',
@@ -699,18 +640,6 @@ export const RoomPhotoScalarFieldEnum = {
 } as const
 
 export type RoomPhotoScalarFieldEnum = (typeof RoomPhotoScalarFieldEnum)[keyof typeof RoomPhotoScalarFieldEnum]
-
-
-export const FeatureFlagScalarFieldEnum = {
-  key: 'key',
-  enabled: 'enabled',
-  description: 'description',
-  tenantId: 'tenantId',
-  updatedAt: 'updatedAt',
-  createdAt: 'createdAt'
-} as const
-
-export type FeatureFlagScalarFieldEnum = (typeof FeatureFlagScalarFieldEnum)[keyof typeof FeatureFlagScalarFieldEnum]
 
 
 export const MatchResultScalarFieldEnum = {

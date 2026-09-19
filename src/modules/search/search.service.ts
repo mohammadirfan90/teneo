@@ -5,9 +5,9 @@
 // Phase 11 ships the Postgres fallback path only — no Elasticsearch /
 // OpenSearch. The schema relies on indexes already created in Phase 10:
 //
-//   properties_city_status_published_idx(city, status, published_at)
-//   rooms_status_available_idx(status, available_from)
-//   rooms_amenities_gin               GIN on rooms.amenities TEXT[]
+// properties_city_status_published_idx(city, status, published_at)
+// rooms_status_available_idx(status, available_from)
+// rooms_amenities_gin GIN on rooms.amenities TEXT[]
 //
 // Sort `relevance` falls back to `newest` (no BM25 / `tsvector` yet;
 // FTS upgrade is deferred to Phase 20). Geo radius and saved-search
@@ -490,7 +490,7 @@ export async function deleteSavedSearch(
     select: { id: true },
   });
 
-  // Audit (no outbox event for v1 — Phase 18 notifications can opt in).
+  // Audit.
   await prisma.auditLog.create({
     data: {
       actorUserId: userId,

@@ -8,7 +8,6 @@
 //   POST  /listings/:id/reinstate
 //   GET   /health
 //   GET   /audit-logs                (sub-router — see below)
-//   GET   /audit-logs/export         (CSV streaming; part of audit.controller)
 //
 // The audit-logs sub-router is mounted INSIDE this file (rather than a
 // separate admin/audit.routes.ts) so we honor phases.json files_allowed

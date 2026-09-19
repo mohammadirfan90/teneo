@@ -4,21 +4,21 @@
 // /api/v1/tickets/* per spec §5.7 + §11.5 (Phase 17).
 //
 // Authorization model:
-//   • TENANT on the lease (raise-time must be ACTIVE or ended within
-//     POST_LEASE_GRACE_DAYS — spec 11 §11.5.5) may CREATE tickets and
-//     CANCEL their own pre-ACKNOWLEDGED ticket. They may also DISPUTE
-//     a RESOLVED ticket.
-//   • OWNER of the room's parent property may acknowledge, transition
-//     to IN_PROGRESS, RESOLVE, or CLOSE.
-//   • ADMIN may do any of the above AND may move DISPUTED → RESOLVED
-//     (which neither owners nor tenants can).
-//   • Any party (owner / tenant / admin) may READ the ticket and ADD
-//     comments.
+// • TENANT on the lease (raise-time must be ACTIVE or ended within
+// POST_LEASE_GRACE_DAYS — spec 11 §11.5.5) may CREATE tickets and
+// CANCEL their own pre-ACKNOWLEDGED ticket. They may also DISPUTE
+// a RESOLVED ticket.
+// • OWNER of the room's parent property may acknowledge, transition
+// to IN_PROGRESS, RESOLVE, or CLOSE.
+// • ADMIN may do any of the above AND may move DISPUTED → RESOLVED
+// (which neither owners nor tenants can).
+// • Any party (owner / tenant / admin) may READ the ticket and ADD
+// comments.
 //
 // Rating rules (POST /tickets/:id/rate):
-//   • Only the raiser (raisedByUserId === caller) can rate.
-//   • Only valid when status === RESOLVED.
-//   • Only once per ticket (rating IS NULL pre-rate).
+// • Only the raiser (raisedByUserId === caller) can rate.
+// • Only valid when status === RESOLVED.
+// • Only once per ticket (rating IS NULL pre-rate).
 
 import { Prisma } from '@/generated/prisma/client';
 import type {
@@ -401,7 +401,7 @@ export interface CreateTicketServiceInput {
  * Create a new maintenance ticket. Caller must be a tenant on an
  * eligible lease (see findEligibleLeaseForRaise). Computes SLA target
  * from priority, writes the ticket + first update row + audit +
- * outbox in a single transaction.
+ * in a single transaction.
  */
 export async function createTicket(
   callerUserId: string,
@@ -463,7 +463,7 @@ export async function createTicket(
       select: { id: true },
     });
 
-    // 6. Audit + outbox.
+    // 6. audit.
     await tx.auditLog.create({
       data: {
         actorUserId: callerUserId,
@@ -482,21 +482,7 @@ export async function createTicket(
         },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'ticket.created',
-        payload: {
-          ticketId: created.id,
-          roomId: input.roomId,
-          leaseId: eligible.leaseId,
-          raisedByUserId: callerUserId,
-          title: input.title,
-          category: input.category,
-          priority: input.priority,
-          slaTargetAt: slaTargetAt.toISOString(),
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     // 7. Reload for view.
     const reloaded = await tx.maintenanceTicket.findUnique({
@@ -639,7 +625,7 @@ export async function transitionTicket(
       });
     }
 
-    // 8. Audit + outbox.
+    // 8. audit.
     await tx.auditLog.create({
       data: {
         actorUserId: callerUserId,
@@ -651,18 +637,7 @@ export async function transitionTicket(
         after: { status: input.toStatus },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'ticket.transition',
-        payload: {
-          ticketId: input.id,
-          from: ticket.status,
-          to: input.toStatus,
-          actorUserId: callerUserId,
-          slaBreached: data.slaBreachedAt != null,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     return ticketRowToView(updated as unknown as TicketRow);
   });
@@ -787,7 +762,6 @@ export async function addUpdate(
 
     // If we're transitioning in the same call, validate the state
     // machine + authz for the transition target.
-    let breachUpdate: Date | null = null;
     if (input.statusAfter) {
       // Delegate to transitionTicket (without comment) so the auth +
       // SLA + audit logic stays in one place.
@@ -838,7 +812,6 @@ export async function addUpdate(
         input.statusAfter !== 'CANCELLED' &&
         input.statusAfter !== 'RESOLVED'
       ) {
-        breachUpdate = now;
         updateData.slaBreachedAt = now;
       }
       await tx.maintenanceTicket.update({
@@ -939,16 +912,7 @@ export async function rateTicket(
       select: fullTicketSelect(),
     });
 
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'ticket.rated',
-        payload: {
-          ticketId: input.id,
-          rating: input.rating,
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
     await tx.auditLog.create({
       data: {
         actorUserId: callerUserId,
@@ -1115,7 +1079,7 @@ async function paginateTickets(
   const { cursorDate, cursorId } = decodeCursor(cursor);
   if (cursorDate && !Number.isNaN(cursorDate.getTime())) {
     // Cursor pagination: (createdAt < cursor.date) OR
-    //                    (createdAt = cursor.date AND id < cursor.id).
+    // (createdAt = cursor.date AND id < cursor.id).
     const or: Prisma.MaintenanceTicketWhereInput[] = [
       { createdAt: { lt: cursorDate } },
     ];

@@ -19,25 +19,18 @@ import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import {
-  confirmPasswordReset,
   googleOAuthCallback,
   login,
   logout,
   logoutAll,
   refresh,
-  requestPasswordReset,
-  resendVerification,
   signup,
-  verifyEmail,
 } from './auth.controller';
 import {
   googleOAuthCallbackSchema,
   loginSchema,
-  passwordResetConfirmSchema,
-  passwordResetRequestSchema,
   refreshSchema,
   signupSchema,
-  verifyEmailResendSchema,
 } from './auth.schemas';
 
 /**
@@ -58,26 +51,6 @@ export function authRouter(): Router {
   r.post('/logout', requireAuth, asyncHandler(logout));
 
   r.post('/logout/all', requireAuth, asyncHandler(logoutAll));
-
-  r.post(
-    '/password/reset/request',
-    zodValidate({ body: passwordResetRequestSchema }),
-    asyncHandler(requestPasswordReset)
-  );
-
-  r.post(
-    '/password/reset/confirm',
-    zodValidate({ body: passwordResetConfirmSchema }),
-    asyncHandler(confirmPasswordReset)
-  );
-
-  r.post(
-    '/verify-email/resend',
-    zodValidate({ body: verifyEmailResendSchema }),
-    asyncHandler(resendVerification)
-  );
-
-  r.get('/verify-email', asyncHandler(verifyEmail));
 
   // Phase 7: Google OAuth (JS-SDK flow). No requireAuth — the idToken
   // IS the auth. Endpoint returns 503 if GOOGLE_CLIENT_ID is unset.

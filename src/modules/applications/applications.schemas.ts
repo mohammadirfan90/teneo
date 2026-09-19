@@ -71,14 +71,6 @@ export const withdrawApplicationSchema = z
   .strict();
 export type WithdrawApplicationInput = z.infer<typeof withdrawApplicationSchema>;
 
-/** POST /applications/:id/notes — owner attaches a free-text note. */
-export const addApplicationNoteSchema = z.object({
-  note: z
-    .string()
-    .min(1, 'note must not be empty')
-    .max(2000, 'note must be at most 2000 characters'),
-});
-export type AddApplicationNoteInput = z.infer<typeof addApplicationNoteSchema>;
 
 /** POST /applications/:id/viewing — owner proposes slots. */
 export const createViewingSchema = z.object({

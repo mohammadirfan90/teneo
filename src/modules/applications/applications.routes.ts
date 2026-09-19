@@ -9,7 +9,6 @@
 //   GET    /:id                       TENANT (own), OWNER (own), ADMIN → read
 //   POST   /:id/transition            OWNER (own), ADMIN → state move
 //   POST   /:id/withdraw              TENANT (own) → pull application
-//   POST   /:id/notes                 OWNER (own), ADMIN → owner note
 //   POST   /:id/viewing               OWNER (own), ADMIN → propose slots
 //
 // Viewing confirm/cancel live under /api/v1/viewings (viewings.routes.ts).
@@ -23,7 +22,6 @@ import { requireOwnership } from '@/middleware/ownership';
 import { requireRole } from '@/middleware/role';
 
 import {
-  addApplicationNoteHandler,
   createApplicationHandler,
   createViewingHandler,
   getApplicationHandler,
@@ -32,7 +30,6 @@ import {
   withdrawApplicationHandler,
 } from './applications.controller';
 import {
-  addApplicationNoteSchema,
   applicationIdParamsSchema,
   createApplicationSchema,
   createViewingSchema,
@@ -112,19 +109,6 @@ export function applicationsRouter(): Router {
       body: withdrawApplicationSchema,
     }),
     asyncHandler(withdrawApplicationHandler)
-  );
-
-  // POST /:id/notes — owner-only free-text notes.
-  r.post(
-    '/:id/notes',
-    requireAuth,
-    requireRole('OWNER', 'ADMIN'),
-    requireOwnership(async (req) => resolveOwnerIdForApplication(paramId(req, 'id'))),
-    zodValidate({
-      params: applicationIdParamsSchema,
-      body: addApplicationNoteSchema,
-    }),
-    asyncHandler(addApplicationNoteHandler)
   );
 
   // POST /:id/viewing — owner creates a viewing with proposed slots.

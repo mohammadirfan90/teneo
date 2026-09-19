@@ -3,17 +3,17 @@
 // Business logic for /api/v1/invoices per spec §13.2.6, §5.2, §7.9.
 //
 // Hot paths (all guarded by `prisma.$transaction`):
-//   generateInvoiceForLease  — POST /bills/generate facade entrypoint.
-//                              Loads lease, validates state, idempotent
-//                              insert (UNIQUE(lease_id, period_start)),
-//                              computes prorated rent + late fee, writes
-//                              audit + 2 outbox events.
-//   listInvoicesForCaller    — GET /invoices/me cursor pagination.
-//   getInvoice               — GET /invoices/:id with party check.
-//   waiveInvoice             — POST /invoices/:id/waive (ADMIN).
-//   disputeInvoice           — POST /invoices/:id/dispute (party).
+// generateInvoiceForLease — POST /bills/generate facade entrypoint.
+// Loads lease, validates state, idempotent
+// insert (UNIQUE(lease_id, period_start)),
+// computes prorated rent + late fee, writes
+// audit.
+// listInvoicesForCaller — GET /invoices/me cursor pagination.
+// getInvoice — GET /invoices/:id with party check.
+// waiveInvoice — POST /invoices/:id/waive (ADMIN).
+// disputeInvoice — POST /invoices/:id/dispute (party).
 //
-// All transitions emit audit + outbox rows in the same tx (pattern
+// All transitions emit audit rows in the same tx (pattern
 // from Phase 12 applications.service.ts + Phase 13 leases.service.ts).
 //
 // Pure helpers (prorate, total, late fee) live in rent-calculator.ts
@@ -191,14 +191,14 @@ export interface GenerateInvoiceInput {
  *   3. Validate period: periodStart <= periodEnd, both within
  *      [lease.startDate, lease.endDate] window.
  *   4. Idempotency: select existing invoice for (leaseId, periodStart).
- *      If found → return existing view (no-op, no audit, no outbox).
+ *      If found → return existing view (no-op, no audit, ).
  *   5. Compute baseRentMinor (prorate for first-period mid-month start).
  *   6. Compute lateFeeMinor (JSONB policy; null policy → 0).
  *   7. Compute totalMinor = baseRentMinor + utilityShareMinor +
  *      lateFeeMinor.
  *   8. Compute dueDate = periodEnd + 5 calendar days.
  *   9. Insert row; on P2002 (UNIQUE race), re-fetch and return winner.
- *  10. Audit + 2 outbox events (invoice.generated + status_changed).
+ *  10. audit events.
  *  11. Re-load + return view.
  */
 export async function generateInvoiceForLease(
@@ -285,7 +285,7 @@ export async function generateInvoiceCoreInTx(
     });
     if (existing) {
       // Return existing row view — caller sees the same shape as a fresh
-      // create. No audit, no outbox (this is the no-op idempotent branch).
+      // create. No audit, (this is the no-op idempotent branch).
       const reloaded = await tx.rentInvoice.findUnique({
         where: { id: existing.id },
         select: fullInvoiceSelect(),
@@ -372,7 +372,7 @@ export async function generateInvoiceCoreInTx(
       throw e;
     }
 
-    // 10. Audit + outbox.
+    // 10. audit.
     await tx.auditLog.create({
       data: {
         actorUserId: callerUserId,
@@ -395,34 +395,8 @@ export async function generateInvoiceCoreInTx(
         },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.generated',
-        payload: {
-          invoiceId,
-          leaseId: input.leaseId,
-          tenantUserIds: lease.tenants.map((t) => t.tenantUserId),
-          ownerUserId: lease.ownerUserId,
-          periodStart: input.periodStart.toISOString(),
-          periodEnd: input.periodEnd.toISOString(),
-          totalMinor: totalMinor.toString(),
-          currency: lease.currency,
-          dueDate: dueDate.toISOString(),
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.status_changed',
-        payload: {
-          invoiceId,
-          leaseId: input.leaseId,
-          from: null,
-          to: 'DUE',
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
+    
 
     // 11. Reload for view.
     const reloaded = await tx.rentInvoice.findUnique({
@@ -523,7 +497,7 @@ export async function getInvoice(invoiceId: string): Promise<InvoiceView> {
 // ──────────────────────────────────────────────────────────────────────
 
 /**
- * ADMIN transitions the invoice to WAIVED. Audit + outbox + state-
+ * ADMIN transitions the invoice to WAIVED. state-
  * machine guard. Idempotency: caller provides Idempotency-Key header
  * (handled in the route layer), so this function trusts the request
  * and does not second-guess.
@@ -567,29 +541,8 @@ export async function waiveInvoice(
         after: { status: 'WAIVED', waiveReason: body.reason, waivedAt: now.toISOString() },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.waived',
-        payload: {
-          invoiceId,
-          from: invoice.status,
-          to: 'WAIVED',
-          actorUserId: callerUserId,
-          reason: body.reason,
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.status_changed',
-        payload: {
-          invoiceId,
-          from: invoice.status,
-          to: 'WAIVED',
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
+    
     const reloaded = await tx.rentInvoice.findUnique({
       where: { id: invoiceId },
       select: fullInvoiceSelect(),
@@ -665,30 +618,8 @@ export async function disputeInvoice(
         after: { status: 'DISPUTED', disputeReason: body.reason, disputedAt: now.toISOString() },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.disputed',
-        payload: {
-          invoiceId,
-          from: invoice.status,
-          to: 'DISPUTED',
-          actorUserId: callerUserId,
-          actorRole: callerActorRole,
-          reason: body.reason,
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.status_changed',
-        payload: {
-          invoiceId,
-          from: invoice.status,
-          to: 'DISPUTED',
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
+    
     const reloaded = await tx.rentInvoice.findUnique({
       where: { id: invoiceId },
       select: fullInvoiceSelect(),

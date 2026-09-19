@@ -1,4 +1,0 @@
-$kind: http-request
-url: "{{baseUrl}}/api/v1/admin/feature-flags"
-method: GET
-order: 8000

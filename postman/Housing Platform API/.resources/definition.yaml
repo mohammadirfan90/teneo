@@ -2,7 +2,7 @@ $kind: collection
 description: |-
   Production-shaped REST API for the Housing & Roommate Management Platform (B7A6 backend assignment).
 
-  Covers every endpoint shipped in Phases 5–21: Auth, Users, Profiles, Preferences, KYC, Properties, Buildings, Rooms, Search, Applications, Viewings, Leases, Invoices, Payments, Bills, Meters, Readings, Maintenance Tickets, Notifications, Documents, Match, Admin Moderation, Audit Logs, Feature Flags.
+  Covers every endpoint shipped in Phases 5–21: Auth, Users, Profiles, Preferences, KYC, Properties, Buildings, Rooms, Search, Applications, Viewings, Leases, Invoices, Payments, Bills, Meters, Readings, Maintenance Tickets, Documents, Match, Admin Moderation, Audit Logs.
 
   Role-aware auth: every non-public request picks up the Bearer token from `{{accessToken}}` via the collection-level pre-request script. Run `/auth/login` first to populate it.
 
@@ -72,17 +72,12 @@ scripts:
           if (path.includes('/documents')) pm.environment.set('documentId', json.data.id);
           if (path.includes('/kyc/submissions')) pm.environment.set('kycSubmissionId', json.data.id);
           if (path.match(/\/users\/[^/]+$/)) pm.environment.set('userId', json.data.id);
-          if (path.includes('/notifications')) pm.environment.set('notificationId', json.data.id);
         }
         if (json.data.payment && json.data.payment.id) pm.environment.set('paymentId', json.data.payment.id);
         if (json.data.bills && json.data.bills[0] && json.data.bills[0].id) pm.environment.set('billId', json.data.bills[0].id);
-        if (json.data.items && json.data.items[0] && json.data.items[0].id) {
-          if (path.includes('/notifications')) pm.environment.set('notificationId', json.data.items[0].id);
-        }
         if (Array.isArray(json.data) && json.data[0] && json.data[0].id) {
           if (path.includes('/payments')) pm.environment.set('paymentId', json.data[0].id);
           if (path.includes('/bills')) pm.environment.set('billId', json.data[0].id);
-          if (path.includes('/notifications')) pm.environment.set('notificationId', json.data[0].id);
         }
       }
     language: text/javascript

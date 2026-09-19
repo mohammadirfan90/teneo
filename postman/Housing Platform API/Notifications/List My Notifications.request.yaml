@@ -1,7 +1,0 @@
-$kind: http-request
-url: "{{baseUrl}}/api/v1/notifications/me?limit=20&unreadOnly=true"
-method: GET
-queryParams:
-  limit: "20"
-  unreadOnly: "true"
-order: 1000

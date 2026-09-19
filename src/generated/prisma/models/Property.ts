@@ -782,6 +782,14 @@ export type EnumPropertyStatusFieldUpdateOperationsInput = {
   set?: $Enums.PropertyStatus
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type PropertyCreateNestedOneWithoutBuildingsInput = {
   create?: Prisma.XOR<Prisma.PropertyCreateWithoutBuildingsInput, Prisma.PropertyUncheckedCreateWithoutBuildingsInput>
   connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutBuildingsInput

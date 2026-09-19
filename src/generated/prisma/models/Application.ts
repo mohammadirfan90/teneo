@@ -287,7 +287,6 @@ export type ApplicationWhereInput = {
   room?: Prisma.XOR<Prisma.RoomScalarRelationFilter, Prisma.RoomWhereInput>
   tenant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   viewings?: Prisma.ViewingRequestListRelationFilter
-  notes?: Prisma.ApplicationNoteListRelationFilter
 }
 
 export type ApplicationOrderByWithRelationInput = {
@@ -307,7 +306,6 @@ export type ApplicationOrderByWithRelationInput = {
   room?: Prisma.RoomOrderByWithRelationInput
   tenant?: Prisma.UserOrderByWithRelationInput
   viewings?: Prisma.ViewingRequestOrderByRelationAggregateInput
-  notes?: Prisma.ApplicationNoteOrderByRelationAggregateInput
 }
 
 export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -330,7 +328,6 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   room?: Prisma.XOR<Prisma.RoomScalarRelationFilter, Prisma.RoomWhereInput>
   tenant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   viewings?: Prisma.ViewingRequestListRelationFilter
-  notes?: Prisma.ApplicationNoteListRelationFilter
 }, "id">
 
 export type ApplicationOrderByWithAggregationInput = {
@@ -388,7 +385,6 @@ export type ApplicationCreateInput = {
   room: Prisma.RoomCreateNestedOneWithoutApplicationsInput
   tenant: Prisma.UserCreateNestedOneWithoutApplicationsInput
   viewings?: Prisma.ViewingRequestCreateNestedManyWithoutApplicationInput
-  notes?: Prisma.ApplicationNoteCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateInput = {
@@ -406,7 +402,6 @@ export type ApplicationUncheckedCreateInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   viewings?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutApplicationInput
-  notes?: Prisma.ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationUpdateInput = {
@@ -424,7 +419,6 @@ export type ApplicationUpdateInput = {
   room?: Prisma.RoomUpdateOneRequiredWithoutApplicationsNestedInput
   tenant?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
   viewings?: Prisma.ViewingRequestUpdateManyWithoutApplicationNestedInput
-  notes?: Prisma.ApplicationNoteUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateInput = {
@@ -442,7 +436,6 @@ export type ApplicationUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   viewings?: Prisma.ViewingRequestUncheckedUpdateManyWithoutApplicationNestedInput
-  notes?: Prisma.ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyInput = {
@@ -562,11 +555,6 @@ export type ApplicationNullableScalarRelationFilter = {
   isNot?: Prisma.ApplicationWhereInput | null
 }
 
-export type ApplicationScalarRelationFilter = {
-  is?: Prisma.ApplicationWhereInput
-  isNot?: Prisma.ApplicationWhereInput
-}
-
 export type ApplicationCreateNestedManyWithoutTenantInput = {
   create?: Prisma.XOR<Prisma.ApplicationCreateWithoutTenantInput, Prisma.ApplicationUncheckedCreateWithoutTenantInput> | Prisma.ApplicationCreateWithoutTenantInput[] | Prisma.ApplicationUncheckedCreateWithoutTenantInput[]
   connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutTenantInput | Prisma.ApplicationCreateOrConnectWithoutTenantInput[]
@@ -671,20 +659,6 @@ export type ApplicationUpdateOneWithoutViewingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ApplicationUpdateToOneWithWhereWithoutViewingsInput, Prisma.ApplicationUpdateWithoutViewingsInput>, Prisma.ApplicationUncheckedUpdateWithoutViewingsInput>
 }
 
-export type ApplicationCreateNestedOneWithoutNotesInput = {
-  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutNotesInput, Prisma.ApplicationUncheckedCreateWithoutNotesInput>
-  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutNotesInput
-  connect?: Prisma.ApplicationWhereUniqueInput
-}
-
-export type ApplicationUpdateOneRequiredWithoutNotesNestedInput = {
-  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutNotesInput, Prisma.ApplicationUncheckedCreateWithoutNotesInput>
-  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutNotesInput
-  upsert?: Prisma.ApplicationUpsertWithoutNotesInput
-  connect?: Prisma.ApplicationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ApplicationUpdateToOneWithWhereWithoutNotesInput, Prisma.ApplicationUpdateWithoutNotesInput>, Prisma.ApplicationUncheckedUpdateWithoutNotesInput>
-}
-
 export type ApplicationCreateWithoutTenantInput = {
   id?: string
   message?: string | null
@@ -699,7 +673,6 @@ export type ApplicationCreateWithoutTenantInput = {
   deletedAt?: Date | string | null
   room: Prisma.RoomCreateNestedOneWithoutApplicationsInput
   viewings?: Prisma.ViewingRequestCreateNestedManyWithoutApplicationInput
-  notes?: Prisma.ApplicationNoteCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutTenantInput = {
@@ -716,7 +689,6 @@ export type ApplicationUncheckedCreateWithoutTenantInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   viewings?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutApplicationInput
-  notes?: Prisma.ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutTenantInput = {
@@ -778,7 +750,6 @@ export type ApplicationCreateWithoutRoomInput = {
   deletedAt?: Date | string | null
   tenant: Prisma.UserCreateNestedOneWithoutApplicationsInput
   viewings?: Prisma.ViewingRequestCreateNestedManyWithoutApplicationInput
-  notes?: Prisma.ApplicationNoteCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutRoomInput = {
@@ -795,7 +766,6 @@ export type ApplicationUncheckedCreateWithoutRoomInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   viewings?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutApplicationInput
-  notes?: Prisma.ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutRoomInput = {
@@ -838,7 +808,6 @@ export type ApplicationCreateWithoutViewingsInput = {
   deletedAt?: Date | string | null
   room: Prisma.RoomCreateNestedOneWithoutApplicationsInput
   tenant: Prisma.UserCreateNestedOneWithoutApplicationsInput
-  notes?: Prisma.ApplicationNoteCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutViewingsInput = {
@@ -855,7 +824,6 @@ export type ApplicationUncheckedCreateWithoutViewingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  notes?: Prisma.ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutViewingsInput = {
@@ -888,7 +856,6 @@ export type ApplicationUpdateWithoutViewingsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   room?: Prisma.RoomUpdateOneRequiredWithoutApplicationsNestedInput
   tenant?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
-  notes?: Prisma.ApplicationNoteUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutViewingsInput = {
@@ -905,91 +872,6 @@ export type ApplicationUncheckedUpdateWithoutViewingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  notes?: Prisma.ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
-}
-
-export type ApplicationCreateWithoutNotesInput = {
-  id?: string
-  message?: string | null
-  status?: $Enums.ApplicationStatus
-  submittedAt?: Date | string
-  decidedAt?: Date | string | null
-  decidedByUserId?: string | null
-  version?: number
-  tenantId?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedAt?: Date | string | null
-  room: Prisma.RoomCreateNestedOneWithoutApplicationsInput
-  tenant: Prisma.UserCreateNestedOneWithoutApplicationsInput
-  viewings?: Prisma.ViewingRequestCreateNestedManyWithoutApplicationInput
-}
-
-export type ApplicationUncheckedCreateWithoutNotesInput = {
-  id?: string
-  roomId: string
-  tenantUserId: string
-  message?: string | null
-  status?: $Enums.ApplicationStatus
-  submittedAt?: Date | string
-  decidedAt?: Date | string | null
-  decidedByUserId?: string | null
-  version?: number
-  tenantId?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedAt?: Date | string | null
-  viewings?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutApplicationInput
-}
-
-export type ApplicationCreateOrConnectWithoutNotesInput = {
-  where: Prisma.ApplicationWhereUniqueInput
-  create: Prisma.XOR<Prisma.ApplicationCreateWithoutNotesInput, Prisma.ApplicationUncheckedCreateWithoutNotesInput>
-}
-
-export type ApplicationUpsertWithoutNotesInput = {
-  update: Prisma.XOR<Prisma.ApplicationUpdateWithoutNotesInput, Prisma.ApplicationUncheckedUpdateWithoutNotesInput>
-  create: Prisma.XOR<Prisma.ApplicationCreateWithoutNotesInput, Prisma.ApplicationUncheckedCreateWithoutNotesInput>
-  where?: Prisma.ApplicationWhereInput
-}
-
-export type ApplicationUpdateToOneWithWhereWithoutNotesInput = {
-  where?: Prisma.ApplicationWhereInput
-  data: Prisma.XOR<Prisma.ApplicationUpdateWithoutNotesInput, Prisma.ApplicationUncheckedUpdateWithoutNotesInput>
-}
-
-export type ApplicationUpdateWithoutNotesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
-  submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  room?: Prisma.RoomUpdateOneRequiredWithoutApplicationsNestedInput
-  tenant?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
-  viewings?: Prisma.ViewingRequestUpdateManyWithoutApplicationNestedInput
-}
-
-export type ApplicationUncheckedUpdateWithoutNotesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  roomId?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
-  submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  viewings?: Prisma.ViewingRequestUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyTenantInput = {
@@ -1021,7 +903,6 @@ export type ApplicationUpdateWithoutTenantInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   room?: Prisma.RoomUpdateOneRequiredWithoutApplicationsNestedInput
   viewings?: Prisma.ViewingRequestUpdateManyWithoutApplicationNestedInput
-  notes?: Prisma.ApplicationNoteUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutTenantInput = {
@@ -1038,7 +919,6 @@ export type ApplicationUncheckedUpdateWithoutTenantInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   viewings?: Prisma.ViewingRequestUncheckedUpdateManyWithoutApplicationNestedInput
-  notes?: Prisma.ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateManyWithoutTenantInput = {
@@ -1085,7 +965,6 @@ export type ApplicationUpdateWithoutRoomInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenant?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
   viewings?: Prisma.ViewingRequestUpdateManyWithoutApplicationNestedInput
-  notes?: Prisma.ApplicationNoteUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutRoomInput = {
@@ -1102,7 +981,6 @@ export type ApplicationUncheckedUpdateWithoutRoomInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   viewings?: Prisma.ViewingRequestUncheckedUpdateManyWithoutApplicationNestedInput
-  notes?: Prisma.ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateManyWithoutRoomInput = {
@@ -1127,12 +1005,10 @@ export type ApplicationUncheckedUpdateManyWithoutRoomInput = {
 
 export type ApplicationCountOutputType = {
   viewings: number
-  notes: number
 }
 
 export type ApplicationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   viewings?: boolean | ApplicationCountOutputTypeCountViewingsArgs
-  notes?: boolean | ApplicationCountOutputTypeCountNotesArgs
 }
 
 /**
@@ -1150,13 +1026,6 @@ export type ApplicationCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
  */
 export type ApplicationCountOutputTypeCountViewingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ViewingRequestWhereInput
-}
-
-/**
- * ApplicationCountOutputType without action
- */
-export type ApplicationCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ApplicationNoteWhereInput
 }
 
 
@@ -1177,7 +1046,6 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   viewings?: boolean | Prisma.Application$viewingsArgs<ExtArgs>
-  notes?: boolean | Prisma.Application$notesArgs<ExtArgs>
   _count?: boolean | Prisma.ApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
@@ -1238,7 +1106,6 @@ export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.Internal
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   viewings?: boolean | Prisma.Application$viewingsArgs<ExtArgs>
-  notes?: boolean | Prisma.Application$notesArgs<ExtArgs>
   _count?: boolean | Prisma.ApplicationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1256,7 +1123,6 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     room: Prisma.$RoomPayload<ExtArgs>
     tenant: Prisma.$UserPayload<ExtArgs>
     viewings: Prisma.$ViewingRequestPayload<ExtArgs>[]
-    notes: Prisma.$ApplicationNotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1674,7 +1540,6 @@ export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends runt
   room<T extends Prisma.RoomDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoomDefaultArgs<ExtArgs>>): Prisma.Prisma__RoomClient<runtime.Types.Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tenant<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   viewings<T extends Prisma.Application$viewingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$viewingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ViewingRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  notes<T extends Prisma.Application$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2139,30 +2004,6 @@ export type Application$viewingsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ViewingRequestScalarFieldEnum | Prisma.ViewingRequestScalarFieldEnum[]
-}
-
-/**
- * Application.notes
- */
-export type Application$notesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ApplicationNote
-   */
-  select?: Prisma.ApplicationNoteSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ApplicationNote
-   */
-  omit?: Prisma.ApplicationNoteOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ApplicationNoteInclude<ExtArgs> | null
-  where?: Prisma.ApplicationNoteWhereInput
-  orderBy?: Prisma.ApplicationNoteOrderByWithRelationInput | Prisma.ApplicationNoteOrderByWithRelationInput[]
-  cursor?: Prisma.ApplicationNoteWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ApplicationNoteScalarFieldEnum | Prisma.ApplicationNoteScalarFieldEnum[]
 }
 
 /**

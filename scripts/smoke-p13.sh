@@ -17,7 +17,6 @@
 #   G. GET /document — stub returns mock://signed-url/<id>
 #   H. POST /amend + /amendments/:aid/sign — stubs return PROPOSED → SIGNED
 #   I. Multi-party: psql inserts a 2nd co-tenant; DRAFT until ALL signed
-#   J. Outbox sanity: lease.draft_created/signed/activated/terminated events
 
 set -u
 BASE="${BASE:-http://localhost:3000}"
@@ -278,15 +277,6 @@ SIG_COUNT=$(python -c "import json;print(len(json.load(open('$BODY_FILE'))['data
                                || { echo "  ✗ mp lease = $MP_STATUS"; fail=$((fail+1)); }
 [[ "$SIG_COUNT" == "3" ]] && { echo "  ✓ mp signatures = 3 (owner + T1 + T3)"; pass=$((pass+1)); } \
                           || { echo "  ✗ mp signatures = $SIG_COUNT (want 3)"; fail=$((fail+1)); }
-
-# ── Case I — outbox sanity ────────────────────────────────────────────
-echo "── Case I: outbox sanity ──"
-for EVT in lease.draft_created lease.signed lease.activated lease.terminated lease.amendment_proposed lease.amendment_signed; do
-  COUNT=$(psql_q "SELECT count(*) FROM outbox_events WHERE event_type='$EVT';" 2>&1)
-  COUNT=$(echo "$COUNT" | tr -d '[:space:]')
-  [[ "$COUNT" -ge 1 ]] && { echo "  ✓ $EVT present ($COUNT rows)"; pass=$((pass+1)); } \
-                       || { echo "  ✗ $EVT missing or zero"; fail=$((fail+1)); }
-done
 
 # ── summary ──────────────────────────────────────────────────────────
 echo "=== $pass passed, $fail failed ==="

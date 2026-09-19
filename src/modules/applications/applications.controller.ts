@@ -7,7 +7,6 @@ import type { RequestHandler } from 'express';
 import { ok } from '@/lib/envelope';
 
 import type {
-  AddApplicationNoteInput,
   ApplicationIdParams,
   CreateApplicationInput,
   CreateViewingInput,
@@ -16,7 +15,6 @@ import type {
   WithdrawApplicationInput,
 } from './applications.schemas';
 import {
-  addApplicationNote,
   createApplication,
   createViewingRequest,
   getApplication,
@@ -71,14 +69,6 @@ export const withdrawApplicationHandler: RequestHandler = async (req, res) => {
   const body = req.body as WithdrawApplicationInput;
   const data = await withdrawApplication(userId, id, body);
   res.status(200).json(ok(data, 'Application withdrawn'));
-};
-
-export const addApplicationNoteHandler: RequestHandler = async (req, res) => {
-  const userId = req.user!.id;
-  const { id } = req.params as unknown as ApplicationIdParams;
-  const body = req.body as AddApplicationNoteInput;
-  const data = await addApplicationNote(userId, id, body);
-  res.status(201).json(ok(data, 'Note added'));
 };
 
 // ── Viewing creation (lives under /applications/:id/viewing) ──────────

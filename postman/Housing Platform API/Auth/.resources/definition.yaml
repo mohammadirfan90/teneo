@@ -1,3 +1,3 @@
 $kind: collection
-description: Email+password, refresh-token rotation, OAuth placeholder, email-verify, password-reset.
+description: Email+password, refresh-token rotation, OAuth placeholder.
 order: 1000

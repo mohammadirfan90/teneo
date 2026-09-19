@@ -46,8 +46,6 @@ values:
     value: ''
   - key: kycSubmissionId
     value: ''
-  - key: featureFlagKey
-    value: maintenance_v2_enabled
   - key: idempotencyKey
     value: ''
   - key: photoId
@@ -61,6 +59,4 @@ values:
   - key: billId
     value: ''
   - key: amendmentId
-    value: ''
-  - key: notificationId
     value: ''

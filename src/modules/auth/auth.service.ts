@@ -24,11 +24,8 @@ import type { AppRole } from '@/middleware/auth';
 import type {
   GoogleOAuthCallbackInput,
   LoginInput,
-  PasswordResetConfirmInput,
-  PasswordResetRequestInput,
   RefreshInput,
   SignupInput,
-  VerifyEmailResendInput,
 } from './auth.schemas';
 import { verifyGoogleIdToken } from './google-oauth.service';
 import { validatePasswordPolicy } from './password.service';
@@ -288,62 +285,6 @@ export async function logoutCurrentSession(
 /** Strict logout-everywhere. Returns the count of revoked refresh rows. */
 export async function logoutAll(userId: string): Promise<number> {
   return revokeAllRefreshForUser(userId);
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// password reset (stubs)
-// ──────────────────────────────────────────────────────────────────────
-
-/**
- * Request a password-reset email. Phase 6 stub: we accept any email and
- * log a single line. Phase 7/22 will wire the actual email send.
- *
- * We deliberately do NOT 404 on unknown emails — that would leak
- * account existence (§11.3.3). Same generic "ok" for everyone.
- */
-export async function requestPasswordReset(input: PasswordResetRequestInput): Promise<void> {
-  logger.info(
-    { email: input.email.toLowerCase(), kind: 'password_reset_request' },
-    'password reset requested (stub — email not actually sent)'
-  );
-}
-
-/**
- * Confirm a password-reset token. Phase 6 stub: always rejects because
- * we haven't minted any tokens yet. Phase 7/22 will:
- *   1. look up the token row
- *   2. validate the new password against policy
- *   3. update user.passwordHash + revoke all refresh tokens for that user
- */
-export async function confirmPasswordReset(input: PasswordResetConfirmInput): Promise<void> {
-  const policy = validatePasswordPolicy(input.newPassword);
-  if (!policy.ok) {
-    throw new ValidationError('Password does not meet policy', policy.errors);
-  }
-  logger.info(
-    { tokenPrefix: input.token.slice(0, 8), kind: 'password_reset_confirm' },
-    'password reset confirm attempted (stub — no token table yet)'
-  );
-  throw new UnauthorizedError('Password reset is not available yet');
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// verify email (stubs)
-// ──────────────────────────────────────────────────────────────────────
-
-export async function resendVerification(input: VerifyEmailResendInput): Promise<void> {
-  logger.info(
-    { email: input.email.toLowerCase(), kind: 'verify_email_resend' },
-    'verify-email resend requested (stub — email not actually sent)'
-  );
-}
-
-/** GET /verify-email?token=… handler. Stub: always 200, never consumes. */
-export async function verifyEmail(token: string | undefined): Promise<void> {
-  logger.info(
-    { tokenPrefix: token ? token.slice(0, 8) : null, kind: 'verify_email' },
-    'verify-email link visited (stub — token not actually consumed)'
-  );
 }
 
 // ──────────────────────────────────────────────────────────────────────

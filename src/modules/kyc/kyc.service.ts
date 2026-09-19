@@ -3,29 +3,27 @@
 // Business logic for /kyc/* endpoints per 06 §6.10 + 09 §9.3.
 //
 // Surfaces:
-//   - User side:
-//     POST   /kyc/submissions            create PENDING for self
-//     GET    /kyc/submissions/me         list own submissions
-//     GET    /kyc/submissions/:id        read one (own OR admin)
-//   - Admin side:
-//     GET    /kyc/queue                  PENDING list, OWNER before TENANT, cursor-paginated
-//     POST   /kyc/submissions/:id/decision   APPROVED|REJECTED + notes
-//     POST   /kyc/submissions/:id/request-info  PENDING + notes (no state change)
+// - User side:
+// POST /kyc/submissions create PENDING for self
+// GET /kyc/submissions/me list own submissions
+// GET /kyc/submissions/:id read one (own OR admin)
+// - Admin side:
+// GET /kyc/queue PENDING list, OWNER before TENANT, cursor-paginated
+// POST /kyc/submissions/:id/decision APPROVED|REJECTED + notes
+// POST /kyc/submissions/:id/request-info PENDING + notes (no state change)
 //
 // Atomicity: the decision path runs in a single $transaction that
-//   1. flips submission status + reviewerUserId + decidedAt + reviewNotes
-//   2. writes audit_log row (actor=admin, action=kyc.decision, before/after)
-//   3. on APPROVED: flips profile.kycStatus + kycBadgeGrantedAt + expiresAt
-//   4. on APPROVED: writes outbox_events row (event_type=kyc.approved)
+// 1. flips submission status + reviewerUserId + decidedAt + reviewNotes
+// 2. writes audit_log row (actor=admin, action=kyc.decision, before/after)
+// 3. on APPROVED: flips profile.kycStatus + kycBadgeGrantedAt + expiresAt
+// 4. on APPROVED: writes audit events row (event_type=kyc.approved)
 //
 // Cross-user duplicate detection: when docHash matches a prior submission
 // from another user, `flagged_for_review` flips true. Admin queue exposes
 // flagged rows first.
 
-import type { Prisma } from '@/generated/prisma/client';
-
 import { prisma } from '@/lib/db';
-import { ConflictError, ForbiddenError, NotFoundError, SemanticError } from '@/lib/errors';
+import { ConflictError, NotFoundError, SemanticError } from '@/lib/errors';
 
 import type {
   CreateSubmissionInput,
@@ -362,20 +360,8 @@ export async function decideSubmission(
       },
     });
 
-    // 4. Outbox event for downstream consumers (notifications, etc.).
-    await tx.outboxEvent.create({
-      data: {
-        eventType: body.decision === 'APPROVED' ? 'kyc.approved' : 'kyc.rejected',
-        payload: {
-          submissionId: updated.id,
-          userId: updated.userId,
-          role: updated.role,
-          decidedAt: now.toISOString(),
-          expiresAt: expiresAt?.toISOString() ?? null,
-          notes: body.notes,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    // 4. audit event for downstream consumers (notifications, etc.).
+    
 
     return updated;
   });
@@ -404,7 +390,6 @@ export async function requestInfo(
     );
   }
 
-  const now = new Date();
   const updated = await prisma.kycSubmission.update({
     where: { id: submissionId },
     data: {
@@ -415,7 +400,7 @@ export async function requestInfo(
     select: submissionSelect,
   });
 
-  // Audit + outbox for the info request (not a decision).
+  // audit for the info request (not a decision).
   await prisma.auditLog.create({
     data: {
       actorUserId: adminId,
@@ -428,18 +413,7 @@ export async function requestInfo(
     },
   });
 
-  await prisma.outboxEvent.create({
-    data: {
-      eventType: 'kyc.request_info',
-      payload: {
-        submissionId: updated.id,
-        userId: updated.userId,
-        role: updated.role,
-        requestedAt: now.toISOString(),
-        notes: body.notes,
-      } as Prisma.InputJsonValue,
-    },
-  });
+  
 
   return toSubmissionView(updated);
 }

@@ -128,28 +128,7 @@ The Phase 14 invoice generator runs on a cron OR on-demand via an OWNER endpoint
 
 ---
 
-## 8 — Notifications appear
-
-```bash
-# As tenant
-curl -sS http://localhost:3000/api/v1/notifications/me?unreadOnly=true \
-  -H "Authorization: Bearer <tenantToken>"
-```
-
-Expected: **200**; notifications for application.status_changed, lease.signed, invoice.generated, ticket.status_changed, etc.
-
-Mark all as read:
-
-```bash
-curl -sS -X POST http://localhost:3000/api/v1/notifications/read-all \
-  -H "Authorization: Bearer <tenantToken>"
-```
-
-Expected: **200**.
-
----
-
-## 9 — Admin reviews audit log
+## 8 — Admin reviews audit log
 
 ```bash
 curl -sS "http://localhost:3000/api/v1/admin/audit-logs?limit=20" \
@@ -170,7 +149,7 @@ Expected: **200**; `Content-Type: text/csv`; rows match the JSON view.
 
 ---
 
-## 10 — Admin takedown → cache invalidates
+## 9 — Admin takedown → cache invalidates
 
 1. As tenant, `GET /search/rooms?city=Berlin` → see the published room. **200**.
 2. As admin, `POST /admin/listings/{propertyId}/takedown` with `{ "reason":"..." }` → **200**; `status: TAKEN_DOWN`.

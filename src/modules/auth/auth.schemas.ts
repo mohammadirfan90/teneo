@@ -32,25 +32,6 @@ export const refreshSchema = z.object({
 
 export type RefreshInput = z.infer<typeof refreshSchema>;
 
-export const passwordResetRequestSchema = z.object({
-  email: z.string().email().max(254),
-});
-
-export type PasswordResetRequestInput = z.infer<typeof passwordResetRequestSchema>;
-
-export const passwordResetConfirmSchema = z.object({
-  token: z.string().min(20).max(256),
-  newPassword: z.string().min(12).max(256),
-});
-
-export type PasswordResetConfirmInput = z.infer<typeof passwordResetConfirmSchema>;
-
-export const verifyEmailResendSchema = z.object({
-  email: z.string().email().max(254),
-});
-
-export type VerifyEmailResendInput = z.infer<typeof verifyEmailResendSchema>;
-
 /**
  * Google OAuth callback (Phase 7). The client posts a Google Identity
  * Services idToken (a signed JWT, typically 800–1200 chars). 4 KiB

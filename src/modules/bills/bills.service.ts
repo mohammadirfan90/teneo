@@ -4,19 +4,19 @@
 // Phase 14 thin facade.
 //
 // Hot paths:
-//   generateBillsForLease        — Extends POST /bills/generate. Wraps
-//                                  Phase 14's generateInvoiceForLease
-//                                  to ALSO compute per-utility
-//                                  consumption, split per
-//                                  lease.utilitySplitMode, persist
-//                                  UtilityBill + BillShare rows, and
-//                                  set rent_invoices.utility_share_minor
-//                                  to Σ shares for the invoice's lease
-//                                  tenants.
-//   listBillsForCaller           — GET /bills/me (TENANT) and OWNER
-//                                  views. Cursor pagination.
-//   getBill                      — GET /bills/:id with party check.
-//   resolvePartiesForBill        — Owner + BillShare tenants.
+// generateBillsForLease — Extends POST /bills/generate. Wraps
+// Phase 14's generateInvoiceForLease
+// to ALSO compute per-utility
+// consumption, split per
+// lease.utilitySplitMode, persist
+// UtilityBill + BillShare rows, and
+// set rent_invoices.utility_share_minor
+// to Σ shares for the invoice's lease
+// tenants.
+// listBillsForCaller — GET /bills/me (TENANT) and OWNER
+// views. Cursor pagination.
+// getBill — GET /bills/:id with party check.
+// resolvePartiesForBill — Owner + BillShare tenants.
 //
 // Split-mode logic lives in ./bill-splitter.ts (pure, tested in
 // scripts/verify-p16-splitter.ts). This file only handles DB I/O,
@@ -25,7 +25,7 @@
 import { Prisma } from '@/generated/prisma/client';
 
 import { prisma } from '@/lib/db';
-import { ConflictError, ForbiddenError, NotFoundError } from '@/lib/errors';
+import { ConflictError, NotFoundError } from '@/lib/errors';
 
 import {
   generateInvoiceCoreInTx,
@@ -236,13 +236,13 @@ export interface GenerateBillsInput {
  * BillShare rows + update rent_invoices.utility_share_minor.
  *
  * The whole operation runs in ONE `prisma.$transaction` so the rent
- * invoice + utility bills + shares + audit + outbox are atomic.
+ * invoice + utility bills + shares + audit are atomic.
  *
  * Algorithm:
  *   1. Re-use Phase 14's generateInvoiceForLease to create the rent
  *      invoice. If one already exists for (lease, periodStart), the
  *      Phase 14 helper returns the existing row WITHOUT writing audit
- *      or outbox — in that case Phase 16 also skips utility-bill
+ *       Phase 16 also skips utility-bill
  *      generation (idempotency: regenerating utility bills for an
  *      already-issued invoice would double-count).
  *   2. Load the property + its active meters (via rooms → leases).
@@ -254,7 +254,7 @@ export interface GenerateBillsInput {
  *      largest-remainder split for cents → BillShare rows.
  *   5. Persist UtilityBill + BillShare rows.
  *   6. UPDATE rent_invoice.utility_share_minor = Σ shares.
- *   7. Audit + 2 outbox events per bill (utility_bill.generated +
+ *   7. audit events per bill (utility_bill.generated +
  *      bill_shares.persisted).
  *
  * NOTE: existing-bills-but-new-readings case is handled by the
@@ -275,7 +275,7 @@ export async function generateBillsForLease(
   return await prisma.$transaction(async (tx) => {
     // ── Phase 14 step: generate / fetch rent invoice ────────────────
     // We invoke the Phase 14 core inside OUR tx so the invoice +
-    // utility bills + shares + audit + outbox are atomic.
+    // utility bills + shares + audit are atomic.
     const invoiceView = await generateInvoiceCoreInTx(tx, callerUserId, {
       leaseId: input.leaseId,
       periodStart: input.periodStart,
@@ -490,7 +490,7 @@ export async function generateBillsForLease(
       invoiceView.totalMinor = newTotal.toString();
     }
 
-    // ── Phase 16 step: audit + outbox ───────────────────────────────
+    // ── Phase 16 step: audit ───────────────────────────────
     for (const bill of allBills) {
       await tx.auditLog.create({
         data: {
@@ -513,22 +513,7 @@ export async function generateBillsForLease(
           },
         },
       });
-      await tx.outboxEvent.create({
-        data: {
-          eventType: 'utility_bill.generated',
-          payload: {
-            billId: bill.id,
-            leaseId: bill.leaseId,
-            meterId: bill.meterId,
-            periodStart: bill.periodStart.toISOString().slice(0, 10),
-            periodEnd: bill.periodEnd.toISOString().slice(0, 10),
-            totalAmountMinor: bill.totalAmountMinor.toString(),
-            currency: bill.currency,
-            tenantUserIds: lease.tenants.map((t) => t.tenantUserId),
-            actorUserId: callerUserId,
-          } as Prisma.InputJsonValue,
-        },
-      });
+      
     }
 
     return {

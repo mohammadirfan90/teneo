@@ -179,8 +179,6 @@ model User {
   ticketsResolved        MaintenanceTicket[]     @relation("TicketResolver")
   ticketsClosed          MaintenanceTicket[]     @relation("TicketCloser")
   ticketUpdates          MaintenanceUpdate[]     @relation("UpdateAuthor")
-  notifications          Notification[]
-  notificationPreference NotificationPreference?
   documents              Document[]
   roomPhotos             RoomPhoto[]
   matchResultsCaller     MatchResult[]           @relation("MatchCaller")
@@ -371,38 +369,6 @@ model PreferencesTenant {
   @@map("preferences_tenant")
 }
 
-// ──────────────────────────────────────────────────────────────────────
-// Outbox (Phase 9, 13 §13.2.8)
-// ──────────────────────────────────────────────────────────────────────
-
-/// Transactional outbox queue. Writers insert an event row in the same
-/// transaction as the domain mutation (e.g. KYC approval); a separate
-/// relay worker reads pending rows and dispatches them to the
-/// notification + event-bus consumers.
-///
-/// v1 only writes here from KYC decision flows. Phase 13+ adds the
-/// relay worker that actually drains the queue.
-model OutboxEvent {
-  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  /// Event name, e.g. "kyc.approved", "kyc.rejected", "kyc.request_info".
-  eventType    String    @map("event_type")
-  /// Free-form payload — JSON shape is per eventType; consumers validate.
-  payload      Json
-  /// Soft-delete flag for the relay worker: false=pending, true=dispatched.
-  dispatched   Boolean   @default(false)
-  dispatchedAt DateTime? @map("dispatched_at") @db.Timestamptz(6)
-  /// Optimistic-lock counter for the relay worker's CAS updates.
-  attempts     Int       @default(0)
-  /// Last dispatch error message (truncated). Cleared on next success.
-  lastError    String?   @map("last_error")
-  tenantId     String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
-
-  @@index([dispatched, createdAt], name: "outbox_events_dispatch_idx")
-  @@index([eventType, createdAt], name: "outbox_events_type_idx")
-  @@map("outbox_events")
-}
 
 // ──────────────────────────────────────────────────────────────────────
 // Phase 10: property hierarchy + publish state machine (04 §4.3.2,
@@ -680,7 +646,6 @@ model Application {
   room     Room              @relation(fields: [roomId], references: [id], onDelete: Cascade)
   tenant   User              @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
   viewings ViewingRequest[]
-  notes    ApplicationNote[]
 
   // Prisma-tracked indexes; the critical partial UNIQUE on active
   // applications lives in the migration SQL.
@@ -720,25 +685,6 @@ model ViewingRequest {
   @@map("viewing_requests")
 }
 
-// ──────────────────────────────────────────────────────────────────────
-// Phase 12: ApplicationNote (owner-only private notes on an application)
-// ──────────────────────────────────────────────────────────────────────
-
-/// Free-text notes the owner attaches to an application for screening
-/// memory. Owners can only see their own; tenants can never read these.
-model ApplicationNote {
-  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  applicationId String   @map("application_id") @db.Uuid
-  authorUserId  String   @map("author_user_id") @db.Uuid
-  note          String
-  tenantId      String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
-
-  @@index([applicationId, createdAt(sort: Desc)], name: "application_notes_app_idx")
-  @@map("application_notes")
-}
 
 // ──────────────────────────────────────────────────────────────────────
 // Phase 12: Lease stub (Phase 13 owns the API surface; schema only here)
@@ -1371,116 +1317,6 @@ model MaintenanceUpdate {
 // PII anonymization in Phase 8 cleans them up automatically.
 // ──────────────────────────────────────────────────────────────────────
 
-/// Channel a notification can be delivered on. IN_APP is the in-app
-/// feed row; EMAIL is the outbound email intent (Phase 19+ wires the
-/// actual send).
-enum NotificationChannel {
-  IN_APP
-  EMAIL
-}
-
-/// Closed-set enum covering every outbox event_type shipped by Phases
-/// 9-17. New event types added in Phase 19+ MUST extend this enum AND
-/// `NotificationPreference.channelEventMap` resolution in
-/// notifications.service.ts.
-enum NotificationEventType {
-  // KYC (Phase 9)
-  KYC_APPROVED
-  KYC_REJECTED
-  KYC_REQUEST_INFO
-  // Properties (Phase 10)
-  PROPERTY_PUBLISHED
-  PROPERTY_SOFT_DELETED
-  ROOM_PUBLISHED
-  // Applications + viewings (Phase 12)
-  APPLICATION_RECEIVED
-  APPLICATION_APPROVED
-  APPLICATION_STATUS_CHANGED
-  VIEWING_REQUESTED
-  VIEWING_CONFIRMED
-  // Leases (Phase 13)
-  LEASE_DRAFT_CREATED
-  LEASE_SIGNED
-  LEASE_PARTIAL_SIGNATURE
-  LEASE_ACTIVATED
-  LEASE_STATUS_CHANGED
-  LEASE_TERMINATED
-  LEASE_AMENDMENT_PROPOSED
-  LEASE_AMENDMENT_SIGNED
-  // Invoices (Phase 14)
-  INVOICE_GENERATED
-  INVOICE_WAIVED
-  INVOICE_STATUS_CHANGED
-  INVOICE_PAID
-  // Payments (Phase 15)
-  PAYMENT_PROCESSING
-  PAYMENT_SUCCEEDED
-  PAYMENT_FAILED
-  PAYMENT_REFUND_REQUESTED
-  PAYMENT_REFUNDED
-  PAYMENT_PARTIAL_REFUND
-  // Meters + bills (Phase 16)
-  METER_CREATED
-  METER_READING_SUBMITTED
-  UTILITY_BILL_GENERATED
-  // Tickets (Phase 17)
-  TICKET_CREATED
-  TICKET_TRANSITION
-  TICKET_RATED
-}
-
-model Notification {
-  id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  recipientUserId String                @map("recipient_user_id") @db.Uuid
-  /// Closed-set; emit() callers pass values from NotificationEventType.
-  eventType       NotificationEventType @map("event_type")
-  /// JSONB copy of the originating event payload. Kept independent so
-  /// the feed doesn't have to join outbox_events (which Phase 19+ may
-  /// soft-delete after dispatch).
-  payload         Json
-  /// Optional FK to the source outbox_event for idempotency — repeat
-  /// emits with the same sourceEventId are no-ops at the DB level via
-  /// the partial UNIQUE index below.
-  sourceEventId   String?               @map("source_event_id") @db.Uuid
-  /// IN_APP rows: read=false until POST /:id/read. EMAIL rows: same
-  /// flag (delivery confirmation in Phase 19+).
-  read            Boolean               @default(false)
-  readAt          DateTime?             @map("read_at") @db.Timestamptz(6)
-  /// Channels the user opted into for this event. Resolved at emit
-  /// time by reading NotificationPreference; defaults to [IN_APP].
-  channels        NotificationChannel[]
-  /// Forward-compat v2 multi-tenancy placeholder.
-  tenantId        String                @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  createdAt       DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  recipient User @relation(fields: [recipientUserId], references: [id], onDelete: Cascade)
-
-  // Partial UNIQUE(recipient_user_id, source_event_id) WHERE
-  // source_event_id IS NOT NULL — added in the migration SQL so
-  // emit() can re-issue identical events without doubling rows.
-  @@index([recipientUserId, read, createdAt(sort: Desc)], name: "notifications_feed_idx")
-  @@map("notifications")
-}
-
-/// Per-user channel preferences. One row per user (PK = userId).
-/// `channelEventMap` is a JSONB object whose keys are free-form
-/// event-type strings — clients can store future event types without
-/// a schema migration. Empty map = default to [IN_APP] for everything.
-model NotificationPreference {
-  userId          String   @map("user_id") @db.Uuid
-  /// { 'application.received': ['IN_APP','EMAIL'], ... }
-  /// Default = {} (empty map). Resolution falls back to [IN_APP] for
-  /// any event NOT in the map.
-  channelEventMap Json     @default("{}") @map("channel_event_map")
-  tenantId        String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId])
-  @@map("notification_preferences")
-}
-
 /// Owned storage object — a single source of truth for private files
 /// (KYC documents, lease contracts, maintenance ticket attachments).
 ///
@@ -1572,27 +1408,6 @@ model RoomPhoto {
   @@map("room_photos")
 }
 
-// ──────────────────────────────────────────────────────────────────────
-// Phase 19: feature flags (09 §9.6, 13 §13.2.9)
-// ──────────────────────────────────────────────────────────────────────
-
-/// Runtime kill-switches (Phase 19). Global per the Phase 19 plan:
-/// every row uses the platform tenant_id constant. Phase 21+ can
-/// introduce per-tenant scoping without a schema break by relaxing
-/// the PK to (tenantId, key).
-model FeatureFlag {
-  key         String   @id @db.VarChar(64)
-  /// Default false — kill-switches are opt-in.
-  enabled     Boolean  @default(false)
-  /// Free-text rationale (e.g., "kill switch during Stripe outage
-  /// 2026-09-12"). Audit-log captures who/when; this captures why.
-  description String?
-  tenantId    String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
-  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
-  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  @@map("feature_flags")
-}
 
 // ──────────────────────────────────────────────────────────────────────
 // Phase 20: Roommate matching (13 §13.2.4, 05 §5.1)

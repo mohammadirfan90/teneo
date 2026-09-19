@@ -3,16 +3,16 @@
 // Business logic for /api/v1/leases per spec §13.2.5, §7.5.1, §7.5.2.
 //
 // Hot paths (all guarded by `prisma.$transaction`):
-//   - signLease:        insert lease_signature row, flip DRAFT → SIGNED
-//                       only when every required party has signed.
-//                       Idempotent per party via UNIQUE(lease_id, signer_user_id).
-//   - confirmMoveIn:    SELECT ... FOR UPDATE on rooms row + optimistic
-//                       version-guarded lease update + room → OCCUPIED.
-//   - terminateLease:   SELECT ... FOR UPDATE on rooms row + optimistic
-//                       version-guarded lease update + room → MAINTENANCE_CHECK
-//                       (per MoveOut saga §7.5.2).
+// - signLease: insert lease_signature row, flip DRAFT → SIGNED
+// only when every required party has signed.
+// Idempotent per party via UNIQUE(lease_id, signer_user_id).
+// - confirmMoveIn: SELECT ... FOR UPDATE on rooms row + optimistic
+// version-guarded lease update + room → OCCUPIED.
+// - terminateLease: SELECT ... FOR UPDATE on rooms row + optimistic
+// version-guarded lease update + room → MAINTENANCE_CHECK
+// (per MoveOut saga §7.5.2).
 //
-// All transitions emit audit + outbox rows in the same tx (pattern
+// All transitions emit audit rows in the same tx (pattern
 // from Phase 12 applications.service.ts).
 
 import { Prisma } from '@/generated/prisma/client';
@@ -407,10 +407,9 @@ export async function signLease(
       select: { id: true, signedAt: true, signerRole: true },
     });
     let insertedNow = false;
-    let signedAtFinal: Date;
     if (!existing) {
       try {
-        const created = await tx.leaseSignature.create({
+        await tx.leaseSignature.create({
           data: {
             leaseId,
             signerUserId: callerUserId,
@@ -421,26 +420,15 @@ export async function signLease(
           select: { id: true, signedAt: true },
         });
         insertedNow = true;
-        signedAtFinal = created.signedAt;
       } catch (e) {
         // P2002 from the UNIQUE(leaseId, signerUserId) constraint means
         // a concurrent signer inserted in between the check above and
         // this point. Treat as idempotent — the row we lost the race
         // to is the canonical signature.
-        if ((e as { code?: string }).code === 'P2002') {
-          const winner = await tx.leaseSignature.findUnique({
-            where: {
-              lease_signatures_lease_signer_uq: { leaseId, signerUserId: callerUserId },
-            },
-            select: { signedAt: true },
-          });
-          signedAtFinal = winner?.signedAt ?? new Date();
-        } else {
+        if ((e as { code?: string }).code !== 'P2002') {
           throw e;
         }
       }
-    } else {
-      signedAtFinal = existing.signedAt;
     }
 
     // Recompute "all parties signed".
@@ -484,45 +472,12 @@ export async function signLease(
           },
         },
       });
-      await tx.outboxEvent.create({
-        data: {
-          eventType: 'lease.signed',
-          payload: {
-            leaseId,
-            signedAt: signedAtFinal.toISOString(),
-            signers: signedRows.map((s) => ({
-              userId: s.signerUserId,
-              role: s.signerRole,
-              signedAt: s.signedAt.toISOString(),
-            })),
-          } as Prisma.InputJsonValue,
-        },
-      });
-      await tx.outboxEvent.create({
-        data: {
-          eventType: 'lease.status_changed',
-          payload: {
-            leaseId,
-            from: 'DRAFT',
-            to: 'SIGNED',
-            actorUserId: callerUserId,
-          } as Prisma.InputJsonValue,
-        },
-      });
+      
+      
     } else if (insertedNow) {
       // Partial signing — record the individual signature event but no
       // status change yet. Useful for downstream "X signed" notifications.
-      await tx.outboxEvent.create({
-        data: {
-          eventType: 'lease.partial_signature',
-          payload: {
-            leaseId,
-            signerUserId: callerUserId,
-            signerRole: isOwner ? 'OWNER' : 'TENANT',
-            signedAt: signedAtFinal.toISOString(),
-          } as Prisma.InputJsonValue,
-        },
-      });
+      
     }
 
     // Re-load lease for the view.
@@ -657,29 +612,8 @@ export async function confirmMoveIn(
         after: { status: 'ACTIVE', activatedAt: now.toISOString() },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'lease.activated',
-        payload: {
-          leaseId,
-          roomId: lease.roomId,
-          activatedAt: now.toISOString(),
-          tenantUserId: callerUserId,
-          ownerUserId: lease.ownerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'lease.status_changed',
-        payload: {
-          leaseId,
-          from: 'SIGNED',
-          to: 'ACTIVE',
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
+    
 
     const reloaded = await tx.lease.findUnique({
       where: { id: leaseId },
@@ -800,29 +734,8 @@ export async function terminateLease(
         after: { status: 'TERMINATED', endedAt: now.toISOString(), reason: body.reason },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'lease.terminated',
-        payload: {
-          leaseId,
-          roomId: lease.roomId,
-          terminatedAt: now.toISOString(),
-          terminatedByUserId: callerUserId,
-          reason: body.reason,
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'lease.status_changed',
-        payload: {
-          leaseId,
-          from: 'ACTIVE',
-          to: 'TERMINATED',
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
+    
 
     const reloaded = await tx.lease.findUnique({
       where: { id: leaseId },
@@ -895,7 +808,7 @@ export async function getLeaseDocument(leaseId: string): Promise<LeaseDocumentVi
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// POST /leases/:id/amend  (Phase 13 stub)
+// POST /leases/:id/amend (Phase 13 stub)
 // ──────────────────────────────────────────────────────────────────────
 
 export async function proposeAmendment(
@@ -947,23 +860,14 @@ export async function proposeAmendment(
         after: { leaseId, payload: body.payload as Prisma.JsonValue },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'lease.amendment_proposed',
-        payload: {
-          leaseId,
-          amendmentId: amendment.id,
-          proposedByUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     return amendmentToView(amendment);
   });
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// POST /leases/:id/amendments/:aid/sign  (Phase 13 stub)
+// POST /leases/:id/amendments/:aid/sign (Phase 13 stub)
 // ──────────────────────────────────────────────────────────────────────
 
 export async function signAmendment(
@@ -1037,16 +941,7 @@ export async function signAmendment(
         after: { status: 'SIGNED', signedAt: now.toISOString() },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'lease.amendment_signed',
-        payload: {
-          leaseId,
-          amendmentId,
-          signedByUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     return amendmentToView(updated);
   });

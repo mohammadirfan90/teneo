@@ -575,22 +575,6 @@ async function main() {
     body: rateRes.status >= 400 ? rateRes.body : undefined,
   });
 
-  const notifRes = await call('GET', '/notifications/me', { token: tenant.token });
-  record({
-    step: '8.1', module: 'Notifications', endpoint: 'GET /notifications/me',
-    role: 'tenant', status: notifRes.status,
-    pass: notifRes.status === 200,
-    body: notifRes.status >= 400 ? notifRes.body : undefined,
-  });
-
-  const readAllRes = await call('POST', '/notifications/read-all', { token: tenant.token });
-  record({
-    step: '8.2', module: 'Notifications', endpoint: 'POST /notifications/read-all',
-    role: 'tenant', status: readAllRes.status,
-    pass: readAllRes.status === 200,
-    body: readAllRes.status >= 400 ? readAllRes.body : undefined,
-  });
-
   // ---- Phase 6 — Admin Operations ----
   // KNOWN BUG: GET /admin/audit-logs?limit=N coerces limit as a string
   // due to Express 5's lazy req.query getter; Prisma receives
@@ -621,14 +605,6 @@ async function main() {
       ? 'limit coerced correctly'
       : `server bug: q.limit coerced as string in Express 5 req.query getter`,
     body: auditRes.status !== 200 ? auditRes.body : undefined,
-  });
-
-  const flagsRes = await call('GET', '/admin/feature-flags', { token: admin.token });
-  record({
-    step: '9.2', module: 'Admin', endpoint: 'GET /admin/feature-flags',
-    role: 'admin', status: flagsRes.status,
-    pass: flagsRes.status === 200,
-    body: flagsRes.status >= 400 ? flagsRes.body : undefined,
   });
 
   await dumpResults();

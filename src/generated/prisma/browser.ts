@@ -73,17 +73,6 @@ export type RefreshToken = Prisma.RefreshTokenModel
  */
 export type PreferencesTenant = Prisma.PreferencesTenantModel
 /**
- * Model OutboxEvent
- * Transactional outbox queue. Writers insert an event row in the same
- * transaction as the domain mutation (e.g. KYC approval); a separate
- * relay worker reads pending rows and dispatches them to the
- * notification + event-bus consumers.
- * 
- * v1 only writes here from KYC decision flows. Phase 13+ adds the
- * relay worker that actually drains the queue.
- */
-export type OutboxEvent = Prisma.OutboxEventModel
-/**
  * Model Property
  * A property is the top of the owner-published hierarchy. It is the
  * unit of address / geo and the unit of publication (POST /publish
@@ -138,12 +127,6 @@ export type Application = Prisma.ApplicationModel
  * one to set `confirmedSlot`. Cancel by either party.
  */
 export type ViewingRequest = Prisma.ViewingRequestModel
-/**
- * Model ApplicationNote
- * Free-text notes the owner attaches to an application for screening
- * memory. Owners can only see their own; tenants can never read these.
- */
-export type ApplicationNote = Prisma.ApplicationNoteModel
 /**
  * Model Lease
  * Lease contract between a tenant and an owner for a specific room.
@@ -261,19 +244,6 @@ export type MaintenanceTicket = Prisma.MaintenanceTicketModel
  */
 export type MaintenanceUpdate = Prisma.MaintenanceUpdateModel
 /**
- * Model Notification
- * 
- */
-export type Notification = Prisma.NotificationModel
-/**
- * Model NotificationPreference
- * Per-user channel preferences. One row per user (PK = userId).
- * `channelEventMap` is a JSONB object whose keys are free-form
- * event-type strings — clients can store future event types without
- * a schema migration. Empty map = default to [IN_APP] for everything.
- */
-export type NotificationPreference = Prisma.NotificationPreferenceModel
-/**
  * Model Document
  * Owned storage object — a single source of truth for private files
  * (KYC documents, lease contracts, maintenance ticket attachments).
@@ -296,14 +266,6 @@ export type Document = Prisma.DocumentModel
  * the intermediate states. Ordering is normalised in service code.
  */
 export type RoomPhoto = Prisma.RoomPhotoModel
-/**
- * Model FeatureFlag
- * Runtime kill-switches (Phase 19). Global per the Phase 19 plan:
- * every row uses the platform tenant_id constant. Phase 21+ can
- * introduce per-tenant scoping without a schema break by relaxing
- * the PK to (tenantId, key).
- */
-export type FeatureFlag = Prisma.FeatureFlagModel
 /**
  * Model MatchResult
  * One row per (caller, candidate) pair produced by `POST /match/run`.

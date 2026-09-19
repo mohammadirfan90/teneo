@@ -13,11 +13,8 @@ import { ok } from '@/lib/envelope';
 import type {
   GoogleOAuthCallbackInput,
   LoginInput,
-  PasswordResetConfirmInput,
-  PasswordResetRequestInput,
   RefreshInput,
   SignupInput,
-  VerifyEmailResendInput,
 } from './auth.schemas';
 import * as svc from './auth.service';
 
@@ -67,30 +64,6 @@ export const logoutAll: RequestHandler = async (req, res) => {
   const userId = req.user!.id;
   const revoked = await svc.logoutAll(userId);
   res.status(200).json(ok({ revoked }, 'Signed out from all sessions'));
-};
-
-export const requestPasswordReset: RequestHandler = async (req, res) => {
-  const body = req.body as PasswordResetRequestInput;
-  await svc.requestPasswordReset(body);
-  res.status(200).json(ok(null, 'If the email is registered, a reset link has been sent'));
-};
-
-export const confirmPasswordReset: RequestHandler = async (req, res) => {
-  const body = req.body as PasswordResetConfirmInput;
-  await svc.confirmPasswordReset(body);
-  res.status(200).json(ok(null, 'Password has been reset'));
-};
-
-export const resendVerification: RequestHandler = async (req, res) => {
-  const body = req.body as VerifyEmailResendInput;
-  await svc.resendVerification(body);
-  res.status(200).json(ok(null, 'If the email is registered, a verification link has been sent'));
-};
-
-export const verifyEmail: RequestHandler = async (req, res) => {
-  const token = typeof req.query.token === 'string' ? req.query.token : undefined;
-  await svc.verifyEmail(token);
-  res.status(200).json(ok(null, 'Verification processed'));
 };
 
 export const googleOAuthCallback: RequestHandler = async (req, res) => {

@@ -1,4 +1,0 @@
-$kind: http-request
-url: "{{baseUrl}}/api/v1/notifications/me/preferences"
-method: GET
-order: 4000

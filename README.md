@@ -33,7 +33,7 @@ Three roles share one API surface, separated by role-based access control:
 |---|---|
 | **TENANT** | Search rooms, save searches, apply, request viewings, sign leases, pay invoices, split bills, raise tickets, find roommates |
 | **OWNER** | Publish properties/buildings/flats/rooms, screen applications, issue and countersign leases, generate rent invoices, record meter readings, resolve tickets |
-| **ADMIN** | Approve KYC, moderate listings, read the audit log, toggle feature flags, act on any resource |
+| **ADMIN** | Approve KYC, moderate listings, read the audit log, act on any resource |
 
 The service is built around a few deliberate constraints: every mutating endpoint is idempotent, every state transition is a validated machine rather than a free-form status column, every money path is reconciled against Stripe, and every privileged action lands in an append-only audit log.
 
@@ -50,7 +50,7 @@ The service is built around a few deliberate constraints: every mutating endpoin
 - Faceted room search, plus saved searches per tenant
 
 **Tenancy**
-- Applications with owner screening notes and viewing-request scheduling
+- Applications with viewing-request scheduling
 - Multi-tenant leases with counterparty signing, signature tracking, and amendments
 - Rent invoice generation on a lease schedule
 
@@ -60,9 +60,8 @@ The service is built around a few deliberate constraints: every mutating endpoin
 
 **Operations**
 - Maintenance tickets with a lifecycle state machine and post-resolution rating
-- In-app notifications with per-user delivery preferences
 - Private document vault (KYC, leases) behind signed short-lived URLs
-- Admin moderation, audit log, and runtime feature flags
+- Admin moderation and audit log
 - Roommate matching on declared lifestyle preferences
 
 ## Tech stack
@@ -204,16 +203,15 @@ Per-IP for anonymous traffic, per-user for authenticated traffic, tiered by role
 | `/kyc` | Identity submission and admin review |
 | `/properties`, `/buildings`, `/flats`, `/rooms` | Listing hierarchy and room photos |
 | `/search` | Room search and saved searches |
-| `/applications`, `/viewings` | Applications, screening notes, viewing requests |
+| `/applications`, `/viewings` | Applications and viewing requests |
 | `/leases` | Lease issue, counterparty signing, amendments |
 | `/invoices` | Rent invoice generation and retrieval |
 | `/payments` | Stripe PaymentIntent and webhook |
 | `/properties/:id/meters`, `/meters/:id/readings`, `/bills` | Utility metering and bill splitting |
 | `/tickets`, `/rooms/:id/tickets` | Maintenance lifecycle and rating |
-| `/notifications` | In-app notifications and delivery preferences |
 | `/documents` | Private document upload and signed URLs |
 | `/match` | Roommate matching and intro requests |
-| `/admin`, `/admin/feature-flags` | Moderation, audit log, runtime flags |
+| `/admin` | Moderation and audit log |
 
 A runnable reference lives in [`postman/`](./postman/) — import the environment file first (it auto-populates `accessToken` on login), then the collection, and walk the folders in order. [`docs/SMOKE_TEST.md`](./docs/SMOKE_TEST.md) is the same path as a narrated walkthrough.
 
@@ -260,21 +258,21 @@ Both singletons are cached on `globalThis`, so watch-mode reloads do not leak co
 
 ## Data model
 
-36 Prisma models across seven domains:
+31 Prisma models across seven domains:
 
 | Domain | Models |
 |---|---|
 | Identity | `User`, `UserRole`, `OwnerProfile`, `TenantProfile`, `PreferencesTenant`, `RefreshToken`, `KycSubmission` |
 | Listings | `Property`, `Building`, `Flat`, `Room`, `RoomPhoto`, `SavedSearch` |
-| Applications | `Application`, `ApplicationNote`, `ViewingRequest` |
+| Applications | `Application`, `ViewingRequest` |
 | Leasing | `Lease`, `LeaseTenant`, `LeaseSignature`, `LeaseAmendment` |
 | Money | `RentInvoice`, `Payment`, `PropertyMeter`, `MeterReading`, `UtilityBill`, `BillShare` |
-| Operations | `MaintenanceTicket`, `MaintenanceUpdate`, `Notification`, `NotificationPreference`, `Document` |
-| Platform | `AuditLog`, `OutboxEvent`, `FeatureFlag`, `MatchResult`, `IntroRequest` |
+| Operations | `MaintenanceTicket`, `MaintenanceUpdate`, `Document` |
+| Platform | `AuditLog`, `MatchResult`, `IntroRequest` |
 
 Schema in [`prisma/schema.prisma`](./prisma/schema.prisma); ordered migrations under [`prisma/migrations/`](./prisma/migrations/). The generated client is committed to `src/generated/prisma/`, since Prisma 7 no longer writes into `node_modules`.
 
-Two choices worth calling out: `citext` for case-insensitive email uniqueness, which keeps `LOWER()` out of every lookup, and an outbox table so side effects commit atomically with the state change that triggered them.
+One choice worth calling out: `citext` for case-insensitive email uniqueness, which keeps `LOWER()` out of every lookup.
 
 ## Testing and verification
 

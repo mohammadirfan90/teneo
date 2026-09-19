@@ -4,17 +4,17 @@
 // machine) + 05 §6 (optimistic concurrency via `version`).
 //
 // Surfaces:
-//   GET   /rooms/:id                  public-safe if not owner/admin
-//   PATCH /rooms/:id                  OWNER (own via property)
-//   POST  /rooms/:id/publish          OWNER (own) + KYC_APPROVED — DRAFT→PUBLISHED
-//   POST  /rooms/:id/transition       OWNER (own) / ADMIN — explicit transition
-//   POST  /rooms/:id/photos           OWNER (own) — multipart → Cloudinary
-//   DELETE /rooms/:id/photos/:photo_id OWNER (own) — soft-delete + destroy
-//   POST  /rooms/:id/photos/:photo_id/reorder OWNER (own) — gallery order
+// GET /rooms/:id public-safe if not owner/admin
+// PATCH /rooms/:id OWNER (own via property)
+// POST /rooms/:id/publish OWNER (own) + KYC_APPROVED — DRAFT→PUBLISHED
+// POST /rooms/:id/transition OWNER (own) / ADMIN — explicit transition
+// POST /rooms/:id/photos OWNER (own) — multipart → Cloudinary
+// DELETE /rooms/:id/photos/:photo_id OWNER (own) — soft-delete + destroy
+// POST /rooms/:id/photos/:photo_id/reorder OWNER (own) — gallery order
 //
 // Atomicity: every state transition (publish + transition) runs the
 // row update inside a `prisma.$transaction` along with audit_log and
-// (for publish) outbox_events. Optimistic concurrency: UPDATE WHERE
+// (for publish) audit events. Optimistic concurrency: UPDATE WHERE
 // id=? AND version=? — 0 rows affected → 409 STATE_MACHINE.
 
 import { randomUUID } from 'node:crypto';
@@ -458,19 +458,7 @@ export async function publishRoom(
       },
     });
 
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'room.published',
-        payload: {
-          roomId,
-          propertyId: (await tx.room.findUnique({
-            where: { id: roomId },
-            select: { propertyId: true },
-          }))!.propertyId,
-          ownerUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     return tx.room.findUniqueOrThrow({
       where: { id: roomId },
@@ -555,8 +543,8 @@ export async function transitionRoom(
       },
     });
 
-    // SPEC: §3.1 only requires outbox event for property.published;
-    // explicit room transitions are not enumerated as outbox events
+    // SPEC: §3.1 only requires audit event for property.published;
+    // explicit room transitions are not enumerated as audit events
     // until notification fan-out lands (Phase 18).
 
     return tx.room.findUniqueOrThrow({

@@ -405,7 +405,6 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   RefreshToken: 'RefreshToken',
   PreferencesTenant: 'PreferencesTenant',
-  OutboxEvent: 'OutboxEvent',
   Property: 'Property',
   Building: 'Building',
   Flat: 'Flat',
@@ -413,7 +412,6 @@ export const ModelName = {
   SavedSearch: 'SavedSearch',
   Application: 'Application',
   ViewingRequest: 'ViewingRequest',
-  ApplicationNote: 'ApplicationNote',
   Lease: 'Lease',
   LeaseTenant: 'LeaseTenant',
   LeaseSignature: 'LeaseSignature',
@@ -426,11 +424,8 @@ export const ModelName = {
   BillShare: 'BillShare',
   MaintenanceTicket: 'MaintenanceTicket',
   MaintenanceUpdate: 'MaintenanceUpdate',
-  Notification: 'Notification',
-  NotificationPreference: 'NotificationPreference',
   Document: 'Document',
   RoomPhoto: 'RoomPhoto',
-  FeatureFlag: 'FeatureFlag',
   MatchResult: 'MatchResult',
   IntroRequest: 'IntroRequest'
 } as const
@@ -448,7 +443,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "notification" | "notificationPreference" | "document" | "roomPhoto" | "featureFlag" | "matchResult" | "introRequest"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "document" | "roomPhoto" | "matchResult" | "introRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1044,80 +1039,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    OutboxEvent: {
-      payload: Prisma.$OutboxEventPayload<ExtArgs>
-      fields: Prisma.OutboxEventFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.OutboxEventFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.OutboxEventFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>
-        }
-        findFirst: {
-          args: Prisma.OutboxEventFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.OutboxEventFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>
-        }
-        findMany: {
-          args: Prisma.OutboxEventFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>[]
-        }
-        create: {
-          args: Prisma.OutboxEventCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>
-        }
-        createMany: {
-          args: Prisma.OutboxEventCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.OutboxEventCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>[]
-        }
-        delete: {
-          args: Prisma.OutboxEventDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>
-        }
-        update: {
-          args: Prisma.OutboxEventUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>
-        }
-        deleteMany: {
-          args: Prisma.OutboxEventDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.OutboxEventUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.OutboxEventUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>[]
-        }
-        upsert: {
-          args: Prisma.OutboxEventUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OutboxEventPayload>
-        }
-        aggregate: {
-          args: Prisma.OutboxEventAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateOutboxEvent>
-        }
-        groupBy: {
-          args: Prisma.OutboxEventGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OutboxEventGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.OutboxEventCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OutboxEventCountAggregateOutputType> | number
-        }
-      }
-    }
     Property: {
       payload: Prisma.$PropertyPayload<ExtArgs>
       fields: Prisma.PropertyFieldRefs
@@ -1633,80 +1554,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ViewingRequestCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ViewingRequestCountAggregateOutputType> | number
-        }
-      }
-    }
-    ApplicationNote: {
-      payload: Prisma.$ApplicationNotePayload<ExtArgs>
-      fields: Prisma.ApplicationNoteFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ApplicationNoteFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ApplicationNoteFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
-        }
-        findFirst: {
-          args: Prisma.ApplicationNoteFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ApplicationNoteFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
-        }
-        findMany: {
-          args: Prisma.ApplicationNoteFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>[]
-        }
-        create: {
-          args: Prisma.ApplicationNoteCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
-        }
-        createMany: {
-          args: Prisma.ApplicationNoteCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ApplicationNoteCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>[]
-        }
-        delete: {
-          args: Prisma.ApplicationNoteDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
-        }
-        update: {
-          args: Prisma.ApplicationNoteUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
-        }
-        deleteMany: {
-          args: Prisma.ApplicationNoteDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ApplicationNoteUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ApplicationNoteUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>[]
-        }
-        upsert: {
-          args: Prisma.ApplicationNoteUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
-        }
-        aggregate: {
-          args: Prisma.ApplicationNoteAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateApplicationNote>
-        }
-        groupBy: {
-          args: Prisma.ApplicationNoteGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ApplicationNoteGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ApplicationNoteCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ApplicationNoteCountAggregateOutputType> | number
         }
       }
     }
@@ -2598,154 +2445,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Notification: {
-      payload: Prisma.$NotificationPayload<ExtArgs>
-      fields: Prisma.NotificationFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.NotificationFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
-        }
-        findFirst: {
-          args: Prisma.NotificationFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
-        }
-        findMany: {
-          args: Prisma.NotificationFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
-        }
-        create: {
-          args: Prisma.NotificationCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
-        }
-        createMany: {
-          args: Prisma.NotificationCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
-        }
-        delete: {
-          args: Prisma.NotificationDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
-        }
-        update: {
-          args: Prisma.NotificationUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
-        }
-        deleteMany: {
-          args: Prisma.NotificationDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.NotificationUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
-        }
-        upsert: {
-          args: Prisma.NotificationUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
-        }
-        aggregate: {
-          args: Prisma.NotificationAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateNotification>
-        }
-        groupBy: {
-          args: Prisma.NotificationGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.NotificationGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.NotificationCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.NotificationCountAggregateOutputType> | number
-        }
-      }
-    }
-    NotificationPreference: {
-      payload: Prisma.$NotificationPreferencePayload<ExtArgs>
-      fields: Prisma.NotificationPreferenceFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.NotificationPreferenceFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.NotificationPreferenceFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
-        }
-        findFirst: {
-          args: Prisma.NotificationPreferenceFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.NotificationPreferenceFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
-        }
-        findMany: {
-          args: Prisma.NotificationPreferenceFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>[]
-        }
-        create: {
-          args: Prisma.NotificationPreferenceCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
-        }
-        createMany: {
-          args: Prisma.NotificationPreferenceCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.NotificationPreferenceCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>[]
-        }
-        delete: {
-          args: Prisma.NotificationPreferenceDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
-        }
-        update: {
-          args: Prisma.NotificationPreferenceUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
-        }
-        deleteMany: {
-          args: Prisma.NotificationPreferenceDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.NotificationPreferenceUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.NotificationPreferenceUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>[]
-        }
-        upsert: {
-          args: Prisma.NotificationPreferenceUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPreferencePayload>
-        }
-        aggregate: {
-          args: Prisma.NotificationPreferenceAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateNotificationPreference>
-        }
-        groupBy: {
-          args: Prisma.NotificationPreferenceGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.NotificationPreferenceGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.NotificationPreferenceCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.NotificationPreferenceCountAggregateOutputType> | number
-        }
-      }
-    }
     Document: {
       payload: Prisma.$DocumentPayload<ExtArgs>
       fields: Prisma.DocumentFieldRefs
@@ -2891,80 +2590,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.RoomPhotoCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.RoomPhotoCountAggregateOutputType> | number
-        }
-      }
-    }
-    FeatureFlag: {
-      payload: Prisma.$FeatureFlagPayload<ExtArgs>
-      fields: Prisma.FeatureFlagFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.FeatureFlagFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.FeatureFlagFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
-        }
-        findFirst: {
-          args: Prisma.FeatureFlagFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.FeatureFlagFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
-        }
-        findMany: {
-          args: Prisma.FeatureFlagFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>[]
-        }
-        create: {
-          args: Prisma.FeatureFlagCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
-        }
-        createMany: {
-          args: Prisma.FeatureFlagCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.FeatureFlagCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>[]
-        }
-        delete: {
-          args: Prisma.FeatureFlagDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
-        }
-        update: {
-          args: Prisma.FeatureFlagUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
-        }
-        deleteMany: {
-          args: Prisma.FeatureFlagDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.FeatureFlagUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.FeatureFlagUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>[]
-        }
-        upsert: {
-          args: Prisma.FeatureFlagUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureFlagPayload>
-        }
-        aggregate: {
-          args: Prisma.FeatureFlagAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateFeatureFlag>
-        }
-        groupBy: {
-          args: Prisma.FeatureFlagGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.FeatureFlagGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.FeatureFlagCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.FeatureFlagCountAggregateOutputType> | number
         }
       }
     }
@@ -3293,22 +2918,6 @@ export const PreferencesTenantScalarFieldEnum = {
 export type PreferencesTenantScalarFieldEnum = (typeof PreferencesTenantScalarFieldEnum)[keyof typeof PreferencesTenantScalarFieldEnum]
 
 
-export const OutboxEventScalarFieldEnum = {
-  id: 'id',
-  eventType: 'eventType',
-  payload: 'payload',
-  dispatched: 'dispatched',
-  dispatchedAt: 'dispatchedAt',
-  attempts: 'attempts',
-  lastError: 'lastError',
-  tenantId: 'tenantId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type OutboxEventScalarFieldEnum = (typeof OutboxEventScalarFieldEnum)[keyof typeof OutboxEventScalarFieldEnum]
-
-
 export const PropertyScalarFieldEnum = {
   id: 'id',
   ownerUserId: 'ownerUserId',
@@ -3441,18 +3050,6 @@ export const ViewingRequestScalarFieldEnum = {
 } as const
 
 export type ViewingRequestScalarFieldEnum = (typeof ViewingRequestScalarFieldEnum)[keyof typeof ViewingRequestScalarFieldEnum]
-
-
-export const ApplicationNoteScalarFieldEnum = {
-  id: 'id',
-  applicationId: 'applicationId',
-  authorUserId: 'authorUserId',
-  note: 'note',
-  tenantId: 'tenantId',
-  createdAt: 'createdAt'
-} as const
-
-export type ApplicationNoteScalarFieldEnum = (typeof ApplicationNoteScalarFieldEnum)[keyof typeof ApplicationNoteScalarFieldEnum]
 
 
 export const LeaseScalarFieldEnum = {
@@ -3679,32 +3276,6 @@ export const MaintenanceUpdateScalarFieldEnum = {
 export type MaintenanceUpdateScalarFieldEnum = (typeof MaintenanceUpdateScalarFieldEnum)[keyof typeof MaintenanceUpdateScalarFieldEnum]
 
 
-export const NotificationScalarFieldEnum = {
-  id: 'id',
-  recipientUserId: 'recipientUserId',
-  eventType: 'eventType',
-  payload: 'payload',
-  sourceEventId: 'sourceEventId',
-  read: 'read',
-  readAt: 'readAt',
-  channels: 'channels',
-  tenantId: 'tenantId',
-  createdAt: 'createdAt'
-} as const
-
-export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
-
-
-export const NotificationPreferenceScalarFieldEnum = {
-  userId: 'userId',
-  channelEventMap: 'channelEventMap',
-  tenantId: 'tenantId',
-  updatedAt: 'updatedAt'
-} as const
-
-export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferenceScalarFieldEnum)[keyof typeof NotificationPreferenceScalarFieldEnum]
-
-
 export const DocumentScalarFieldEnum = {
   id: 'id',
   ownerUserId: 'ownerUserId',
@@ -3749,18 +3320,6 @@ export const RoomPhotoScalarFieldEnum = {
 } as const
 
 export type RoomPhotoScalarFieldEnum = (typeof RoomPhotoScalarFieldEnum)[keyof typeof RoomPhotoScalarFieldEnum]
-
-
-export const FeatureFlagScalarFieldEnum = {
-  key: 'key',
-  enabled: 'enabled',
-  description: 'description',
-  tenantId: 'tenantId',
-  updatedAt: 'updatedAt',
-  createdAt: 'createdAt'
-} as const
-
-export type FeatureFlagScalarFieldEnum = (typeof FeatureFlagScalarFieldEnum)[keyof typeof FeatureFlagScalarFieldEnum]
 
 
 export const MatchResultScalarFieldEnum = {
@@ -3997,20 +3556,6 @@ export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'PropertyType'
  */
 export type EnumPropertyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PropertyType'>
@@ -4035,6 +3580,20 @@ export type EnumPropertyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'PropertyStatus[]'
  */
 export type ListEnumPropertyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PropertyStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -4277,34 +3836,6 @@ export type ListEnumMaintenanceStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
- * Reference to a field of type 'NotificationEventType'
- */
-export type EnumNotificationEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationEventType'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationEventType[]'
- */
-export type ListEnumNotificationEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationEventType[]'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationChannel[]'
- */
-export type ListEnumNotificationChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationChannel[]'>
-    
-
-
-/**
- * Reference to a field of type 'NotificationChannel'
- */
-export type EnumNotificationChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationChannel'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4476,7 +4007,6 @@ export type GlobalOmitConfig = {
   auditLog?: Prisma.AuditLogOmit
   refreshToken?: Prisma.RefreshTokenOmit
   preferencesTenant?: Prisma.PreferencesTenantOmit
-  outboxEvent?: Prisma.OutboxEventOmit
   property?: Prisma.PropertyOmit
   building?: Prisma.BuildingOmit
   flat?: Prisma.FlatOmit
@@ -4484,7 +4014,6 @@ export type GlobalOmitConfig = {
   savedSearch?: Prisma.SavedSearchOmit
   application?: Prisma.ApplicationOmit
   viewingRequest?: Prisma.ViewingRequestOmit
-  applicationNote?: Prisma.ApplicationNoteOmit
   lease?: Prisma.LeaseOmit
   leaseTenant?: Prisma.LeaseTenantOmit
   leaseSignature?: Prisma.LeaseSignatureOmit
@@ -4497,11 +4026,8 @@ export type GlobalOmitConfig = {
   billShare?: Prisma.BillShareOmit
   maintenanceTicket?: Prisma.MaintenanceTicketOmit
   maintenanceUpdate?: Prisma.MaintenanceUpdateOmit
-  notification?: Prisma.NotificationOmit
-  notificationPreference?: Prisma.NotificationPreferenceOmit
   document?: Prisma.DocumentOmit
   roomPhoto?: Prisma.RoomPhotoOmit
-  featureFlag?: Prisma.FeatureFlagOmit
   matchResult?: Prisma.MatchResultOmit
   introRequest?: Prisma.IntroRequestOmit
 }

@@ -3,10 +3,10 @@
 // Phase 16: utility meter CRUD + party resolution.
 //
 // Authorization model:
-//   • OWNER of the parent property can create, list, and update a meter.
-//   • ADMIN can do anything.
-//   • TENANT of an active lease for the meter's property can list
-//     (used by tenant-facing UI to see meter labels).
+// • OWNER of the parent property can create, list, and update a meter.
+// • ADMIN can do anything.
+// • TENANT of an active lease for the meter's property can list
+// (used by tenant-facing UI to see meter labels).
 //
 // The `resolvePartiesForMeter` function backs the
 // `requireMeterParty` middleware in meters.controller.ts — it follows
@@ -160,7 +160,7 @@ export interface CreateMeterInput {
  * Create a meter on the given property. Caller must be OWNER of the
  * property (ADMIN bypasses via requireRole in the route).
  *
- * Audit + outbox events are written in the same transaction.
+ * audit events are written in the same transaction.
  */
 export async function createMeter(
   callerUserId: string,
@@ -194,7 +194,7 @@ export async function createMeter(
       select: { id: true },
     });
 
-    // 3. Audit + outbox.
+    // 3. audit.
     await tx.auditLog.create({
       data: {
         actorUserId: callerUserId,
@@ -214,18 +214,7 @@ export async function createMeter(
         },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'meter.created',
-        payload: {
-          meterId: created.id,
-          propertyId: input.propertyId,
-          utilityType: input.utilityType,
-          label: input.label,
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     // 4. Reload for view.
     const reloaded = await tx.propertyMeter.findUnique({

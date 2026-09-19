@@ -3,45 +3,45 @@
 // Business logic for /api/v1/payments per spec §7.4, §13.2.7.
 //
 // Hot paths (mostly wrapped in prisma.$transaction):
-//   createPaymentIntent  — POST /payments/stripe/intent. TENANT.
-//                          Idempotent insert via UNIQUE(idempotency_key).
-//                          Calls Stripe.paymentIntents.create; stores the
-//                          PI id + clientSecret; audit + outbox in same tx.
-//   listPaymentsForCaller — GET /payments/me. TENANT cursor pagination.
-//   getPayment           — GET /payments/:id with party check.
-//   refundPayment        — POST /payments/:id/refund. ADMIN. Creates
-//                          Stripe.Refund; webhook updates status async.
-//                          Audit row written immediately.
+// createPaymentIntent — POST /payments/stripe/intent. TENANT.
+// Idempotent insert via UNIQUE(idempotency_key).
+// Calls Stripe.paymentIntents.create; stores the
+// PI id + clientSecret; audit in same tx.
+// listPaymentsForCaller — GET /payments/me. TENANT cursor pagination.
+// getPayment — GET /payments/:id with party check.
+// refundPayment — POST /payments/:id/refund. ADMIN. Creates
+// Stripe.Refund; webhook updates status async.
+// Audit row written immediately.
 //
 // Webhook handlers (called by the webhook controller; not exported via
 // the auth-gated router):
-//   verifyAndDedupWebhookEvent — signature + Redis dedup. Returns the
-//                                verified Stripe.Event or throws.
-//   handleIntentSucceeded      — payment_intent.succeeded → update
-//                                Payment + invoice (amount_paid += amount,
-//                                status = PAID/PARTIALLY_PAID) + audit +
-//                                2 outbox in one tx.
-//   handleIntentFailed         — payment_intent.payment_failed → FAILED.
-//   handleChargeRefunded       — charge.refunded → REFUNDED + decrement
-//                                invoice.amount_paid + audit + outbox.
-//                                Partial refunds are logged but don't
-//                                flip status (full-only in v1).
+// verifyAndDedupWebhookEvent — signature + Redis dedup. Returns the
+// verified Stripe.Event or throws.
+// handleIntentSucceeded — payment_intent.succeeded → update
+// Payment + invoice (amount_paid += amount,
+// status = PAID/PARTIALLY_PAID) + audit +
+// audit rows in one tx.
+// handleIntentFailed — payment_intent.payment_failed → FAILED.
+// handleChargeRefunded — charge.refunded → REFUNDED + decrement
+// invoice.amount_paid + audit.
+// Partial refunds are logged but don't
+// flip status (full-only in v1).
 //
 // Idempotency layers:
-//   1. idempotency_key — TRUE UNIQUE in DB; withIdempotency middleware
-//      caches the response 24h.
-//   2. (gateway, gateway_payment_intent_id) PARTIAL UNIQUE — DB-level
-//      race protection for webhook duplicates before the row is fully
-//      populated.
-//   3. Redis SET NX EX 86400 stripe:webhook:seen:{event.id} — surface
-//      dedup at the webhook route.
+// 1. idempotency_key — TRUE UNIQUE in DB; withIdempotency middleware
+// caches the response 24h.
+// 2. (gateway, gateway_payment_intent_id) PARTIAL UNIQUE — DB-level
+// race protection for webhook duplicates before the row is fully
+// populated.
+// 3. Redis SET NX EX 86400 stripe:webhook:seen:{event.id} — surface
+// dedup at the webhook route.
 //
 // Audit policy:
-//   - User-initiated actions (intent, refund) → actorRole = TENANT|ADMIN.
-//   - Webhook-driven actions → actorUserId=null, actorRole='SYSTEM'.
-//     We introduce 'SYSTEM' as a special actor role (string-typed by
-//     audit_logs.actor_role, no FK to roles table). It's appended in
-//     audit helper comment.
+// - User-initiated actions (intent, refund) → actorRole = TENANT|ADMIN.
+// - Webhook-driven actions → actorUserId=null, actorRole='SYSTEM'.
+// We introduce 'SYSTEM' as a special actor role (string-typed by
+// audit_logs.actor_role, no FK to roles table). It's appended in
+// audit helper comment.
 
 import { Prisma } from '@/generated/prisma/client';
 import type { InvoiceStatus, PaymentStatus } from '@/generated/prisma/enums';
@@ -211,7 +211,7 @@ export interface CreatePaymentIntentResult {
  *   6. Compute amount = invoice.totalMinor; ensure currency matches.
  *   7. Call stripe.paymentIntents.create(...)
  *   8. Insert row; on P2002 race-loser, re-fetch and return winner.
- *   9. Audit + outbox in same tx.
+ *   9. audit in same tx.
  */
 export async function createPaymentIntent(
   callerUserId: string,
@@ -378,22 +378,9 @@ export async function createPaymentIntent(
       },
     });
 
-    // 9. Outbox row — payment.processing (no status_changed variant;
+    // 9. audit row — payment.processing (no status_changed variant;
     // process starts in PROCESSING, not transitioning from null).
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'payment.processing',
-        payload: {
-          paymentId,
-          invoiceId: invoice.id,
-          leaseId: invoice.leaseId,
-          tenantUserId: callerUserId,
-          amountMinor: invoice.totalMinor.toString(),
-          currency: invoice.currency,
-          gatewayPaymentIntentId: paymentIntent.id,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     // 10. Re-load + return.
     const reloaded = await tx.payment.findUnique({
@@ -493,7 +480,7 @@ export async function getPayment(paymentId: string): Promise<PaymentView> {
  * ADMIN initiates a refund. Always full refund in v1 (partial is
  * deferred). The route layer enforces ADMIN role + Idempotency-Key
  * header; this function trusts those and does the Stripe call +
- * audit + outbox rows in a tx.
+ * audit rows in a tx.
  *
  * The `charge.refunded` webhook will asynchronously update the
  * Payment.status to REFUNDED and decrement the invoice.amount_paid.
@@ -572,20 +559,7 @@ export async function refundPayment(
         } as Prisma.InputJsonValue,
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'payment.refund_requested',
-        payload: {
-          paymentId: payment.id,
-          invoiceId: payment.invoiceId,
-          leaseId: payment.leaseId,
-          tenantUserId: payment.tenantUserId,
-          gatewayRefundId: refund.id,
-          actorUserId: callerUserId,
-          reason: body.reason,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     const reloaded = await tx.payment.findUnique({
       where: { id: payment.id },
@@ -695,7 +669,7 @@ export async function clearWebhookDedup(eventId: string): Promise<void> {
  *   - Update RentInvoice: amount_paid += amount_received; status flips
  *     to PAID (when total covered) or PARTIALLY_PAID (when not).
  *   - Guard state machine: only transition DUE/OVERDUE/PARTIALLY_PAID.
- *   - Audit + 2 outbox events in same tx.
+ *   - audit events in same tx.
  */
 export async function handleIntentSucceeded(event: Stripe.Event): Promise<void> {
   const pi = event.data.object as Stripe.PaymentIntent;
@@ -811,34 +785,9 @@ export async function handleIntentSucceeded(event: Stripe.Event): Promise<void> 
       },
     });
 
-    // Outbox events.
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'payment.succeeded',
-        payload: {
-          paymentId: payment.id,
-          invoiceId: payment.invoiceId,
-          leaseId: invoice.leaseId,
-          amountReceivedMinor: amountReceivedMinor.toString(),
-          currency: invoice.currency,
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.paid',
-        payload: {
-          invoiceId: payment.invoiceId,
-          leaseId: invoice.leaseId,
-          paymentId: payment.id,
-          amountReceivedMinor: amountReceivedMinor.toString(),
-          invoiceStatus: targetStatus,
-          amountPaidMinor: newAmountPaid.toString(),
-          totalMinor: invoice.totalMinor.toString(),
-          currency: invoice.currency,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    // audit events.
+    
+    
   });
 }
 
@@ -895,17 +844,7 @@ export async function handleIntentFailed(event: Stripe.Event): Promise<void> {
       },
     });
 
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'payment.failed',
-        payload: {
-          paymentId: payment.id,
-          invoiceId: payment.invoiceId,
-          failureCode,
-          failureReason,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
   });
 }
 
@@ -916,7 +855,7 @@ export async function handleIntentFailed(event: Stripe.Event): Promise<void> {
 /**
  * charge.refunded: full refund only in v1. If amount_refunded < amount
  * (partial), log a warning and write `payment.partial_refund` audit +
- * outbox but keep status=SUCCEEDED. (Full PARTIALLY_REFUNDED support
+ * audit but keep status=SUCCEEDED. (Full PARTIALLY_REFUNDED support
  * is deferred to Phase 18+.)
  */
 export async function handleChargeRefunded(event: Stripe.Event): Promise<void> {
@@ -965,7 +904,7 @@ export async function handleChargeRefunded(event: Stripe.Event): Promise<void> {
 
     const isPartial = amountRefundedMinor < payment.amountMinor;
     if (isPartial) {
-      // Log + audit + outbox but DON'T flip status. Spec defers partial
+      // Log + audit but DON'T flip status. Spec defers partial
       // refund support to Phase 18+.
       logger.warn(
         {
@@ -990,16 +929,7 @@ export async function handleChargeRefunded(event: Stripe.Event): Promise<void> {
           } as Prisma.InputJsonValue,
         },
       });
-      await tx.outboxEvent.create({
-        data: {
-          eventType: 'payment.partial_refund',
-          payload: {
-            paymentId: payment.id,
-            refundedAmountMinor: amountRefundedMinor.toString(),
-            note: 'partial refunds ignored in v1',
-          } as Prisma.InputJsonValue,
-        },
-      });
+      
       return;
     }
 
@@ -1098,32 +1028,8 @@ export async function handleChargeRefunded(event: Stripe.Event): Promise<void> {
       },
     });
 
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'payment.refunded',
-        payload: {
-          paymentId: payment.id,
-          invoiceId: payment.invoiceId,
-          leaseId: invoice.leaseId,
-          refundId,
-          refundedAmountMinor: amountRefundedMinor.toString(),
-        } as Prisma.InputJsonValue,
-      },
-    });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'invoice.paid',
-        payload: {
-          invoiceId: payment.invoiceId,
-          leaseId: invoice.leaseId,
-          paymentId: payment.id,
-          invoiceStatus: targetStatus,
-          amountPaidMinor: newAmountPaid.toString(),
-          totalMinor: invoice.totalMinor.toString(),
-          currency: invoice.currency,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
+    
   });
 }
 

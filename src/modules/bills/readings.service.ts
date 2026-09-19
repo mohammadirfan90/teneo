@@ -8,10 +8,10 @@
 // the Phase 18+ correction flow, NOT a second POST.
 //
 // Authorization model:
-//   • OWNER of the meter's parent property can submit a reading.
-//   • TENANT on an ACTIVE lease for the meter's property can submit.
-//   • ADMIN can submit.
-//   • Anyone party to the meter can list its readings.
+// • OWNER of the meter's parent property can submit a reading.
+// • TENANT on an ACTIVE lease for the meter's property can submit.
+// • ADMIN can submit.
+// • Anyone party to the meter can list its readings.
 //
 // The pattern for UNIQUE handling is the standard P2002 catch (mirrors
 // Phase 13 lease sign + Phase 14 invoice generate + Phase 15 payment
@@ -215,7 +215,7 @@ export async function createReading(
       throw e;
     }
 
-    // 5. Audit + outbox.
+    // 5. audit.
     await tx.auditLog.create({
       data: {
         actorUserId: callerUserId,
@@ -232,18 +232,7 @@ export async function createReading(
         },
       },
     });
-    await tx.outboxEvent.create({
-      data: {
-        eventType: 'meter.reading_submitted',
-        payload: {
-          readingId,
-          meterId: input.meterId,
-          readingDate: input.readingDate.toISOString().slice(0, 10),
-          readingValue: value.toString(),
-          actorUserId: callerUserId,
-        } as Prisma.InputJsonValue,
-      },
-    });
+    
 
     // 6. Reload.
     const reloaded = await tx.meterReading.findUnique({

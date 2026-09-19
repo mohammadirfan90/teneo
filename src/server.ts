@@ -17,7 +17,6 @@ import { errorHandler } from '@/middleware/error-handler';
 import { notFoundHandler } from '@/middleware/not-found';
 import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
 import { adminRouter } from '@/modules/admin/admin.routes';
-import { featureFlagsRouter } from '@/modules/admin/feature-flags.routes';
 import { applicationsRouter } from '@/modules/applications/applications.routes';
 import { viewingsRouter } from '@/modules/applications/viewings.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
@@ -30,11 +29,9 @@ import { kycRouter } from '@/modules/kyc/kyc.routes';
 import { leasesRouter } from '@/modules/leases/leases.routes';
 import { ticketsRoomRouter, ticketsRouter } from '@/modules/maintenance/tickets.routes';
 import { matchRouter } from '@/modules/match/match.routes';
-import { notificationsRouter } from '@/modules/notifications/notifications.routes';
 import { stripeWebhookHandler } from '@/modules/payments/payments.controller';
 import { paymentsRouter } from '@/modules/payments/payments.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
-import { flatsRouter } from '@/modules/properties/flats.routes';
 import { propertiesRouter } from '@/modules/properties/properties.routes';
 import { roomsRouter } from '@/modules/properties/rooms.routes';
 import { searchPublicRouter, searchSavedRouter } from '@/modules/search/search.routes';
@@ -185,7 +182,7 @@ export function createApp(): express.Express {
   // was shipping publicly and served no production purpose.
 
   // ── Phase 6: auth router (signup/login/refresh/logout/…) ───────────
-  // Public routes (signup, login, refresh, verify-email) get the
+  // Public routes (signup, login, refresh) get the
   // anonymous rate limiter treatment for the /auth prefix. The /logout
   // route itself requires requireAuth inside the router.
   app.use('/api/v1/auth', anonymousRateLimiter, authRouter());
@@ -201,12 +198,11 @@ export function createApp(): express.Express {
   // All KYC routes require auth (rate limit per role).
   app.use('/api/v1/kyc', authenticatedRateLimiter, kycRouter());
 
-  // ── Phase 10: properties + buildings + flats + rooms ──────────────
+  // ── Phase 10: properties + buildings + rooms ─────────────────────
   // All routes require auth; per-role limiter (publish + admin paths
   // live behind `requireRole` in each router).
   app.use('/api/v1/properties', authenticatedRateLimiter, propertiesRouter());
   app.use('/api/v1/buildings', authenticatedRateLimiter, buildingsRouter());
-  app.use('/api/v1/flats', authenticatedRateLimiter, flatsRouter());
   app.use('/api/v1/rooms', authenticatedRateLimiter, roomsRouter());
 
   // ── Phase 11: room search (PG fallback) + saved searches ─────────
@@ -265,25 +261,16 @@ export function createApp(): express.Express {
   // The normal auth-gated payments router (intent / me / :id / refund).
   app.use('/api/v1/payments', authenticatedRateLimiter, paymentsRouter());
 
-  // ── Phase 18: notifications feed + channel preferences ───────────────
-  // All routes require auth; per-role limiter applies uniformly. Feed is
-  // caller-scoped (own notifications only) and preferences are
-  // caller-scoped.
-  app.use('/api/v1/notifications', authenticatedRateLimiter, notificationsRouter());
-
   // ── Phase 18: documents (stubbed presigned URLs + soft-delete) ──────
   // All routes require auth. /upload-url and /:id (DELETE) are state-
   // changing so they pass through withIdempotency inside the router.
   app.use('/api/v1/documents', authenticatedRateLimiter, documentsRouter());
 
-  // ── Phase 19: admin moderation + audit logs + feature flags ────────
-  // Two routers under the /admin prefix:
-  //   adminRouter          — /users/search, /listings/:id/{takedown,reinstate},
-  //                          /health, /audit-logs/*
-  //   featureFlagsRouter   — /feature-flags/* (mounted under /admin)
-  // Both require ADMIN role; non-admin → 403 (must_pass).
+  // ── Phase 19: admin moderation + audit logs ─────────────────────
+  // adminRouter — /users/search, /listings/:id/{takedown,reinstate},
+  //               /health, /audit-logs/*
+  // Requires ADMIN role; non-admin → 403 (must_pass).
   app.use('/api/v1/admin', authenticatedRateLimiter, adminRouter());
-  app.use('/api/v1/admin/feature-flags', authenticatedRateLimiter, featureFlagsRouter());
 
   // ── Phase 20: roommate matching (lite) ─────────────────────────────
   // /match/* — TENANT-only (every endpoint is caller-scoped). Match

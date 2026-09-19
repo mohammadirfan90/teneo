@@ -14,8 +14,6 @@
 #      → APPROVED; sibling T2 bulk-rejected; room → RESERVED
 #   D. Viewing flow: owner proposes; tenant confirms one; cancel one
 #   E. KYC gate: 3rd tenant (T3) with kycStatus=PENDING → 403
-#   F. Note authorization: own OWNER adds; other-property OWNER 403;
-#      tenant 403
 #
 # The smoke run is idempotent across runs because every test uses
 # fresh tenants (T3) or fresh rooms (published in the seed step at
@@ -205,19 +203,6 @@ expect "POST /applications (T3 KYC=PENDING) → 403" 403 "$code"
 KYCCODE=$(python -c "import json;print(json.load(open('$BODY_FILE'))['errors'][0]['code'])")
 [[ "$KYCCODE" == "KYC_REQUIRED" ]] && { echo "  ✓ error code = KYC_REQUIRED"; pass=$((pass+1)); } \
                                      || { echo "  ✗ error code: $KYCCODE"; fail=$((fail+1)); }
-
-# ── Case F — note authorization ─────────────────────────────────────
-echo "── Case F: note authorization ──"
-code=$(status -X POST "$BASE/api/v1/applications/$APP1/notes" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"note":"Looks great, will follow up next week."}')
-expect "POST /notes (own OWNER O1) → 201" 201 "$code"
-
-# Different-property owner (O2) tries → 403
-code=$(status -X POST "$BASE/api/v1/applications/$APP1/notes" -H "Content-Type: application/json" -H "Authorization: Bearer $O2" -d '{"note":"hostile note from O2"}')
-expect "POST /notes (other-property OWNER O2) → 403" 403 "$code"
-
-# Tenant tries → 403
-code=$(status -X POST "$BASE/api/v1/applications/$APP1/notes" -H "Content-Type: application/json" -H "Authorization: Bearer $T1" -d '{"note":"self-note as tenant"}')
-expect "POST /notes (tenant T1) → 403" 403 "$code"
 
 # ── summary ──────────────────────────────────────────────────────────
 echo "=== $pass passed, $fail failed ==="
