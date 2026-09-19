@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "{{adminEmail}}",
+      "password": "{{demoPassword}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      let json = {};
+      try { json = pm.response.json(); } catch (e) {}
+      if (json && json.data) {
+        if (json.data.accessToken) pm.environment.set('accessToken', json.data.accessToken);
+        if (json.data.refreshToken) pm.environment.set('refreshToken', json.data.refreshToken);
+      }
+    language: text/javascript
+order: 2000

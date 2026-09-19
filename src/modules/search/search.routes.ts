@@ -16,6 +16,7 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 
@@ -27,12 +28,6 @@ import {
   suggestRoomsHandler,
 } from './search.controller';
 import { createSavedSearchSchema, savedSearchIdParamsSchema } from './search.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 /** Public read router — anonymous-OK. Mounted under anon limiter. */
 export function searchPublicRouter(): Router {

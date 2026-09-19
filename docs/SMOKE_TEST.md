@@ -16,17 +16,17 @@ Each step is also a one-click Postman request — import `postman/Housing-Platfo
 # Admin
 curl -sS -X POST http://localhost:3000/api/v1/auth/login \
   -H 'Content-Type: application/json' \
-  -d '{"email":"admin@housing.local","password":"Demo123!@#"}'
+  -d '{"email":"demo@admin.local","password":"Demo123!@#"}'
 
-# Owner (Alice)
+# Owner (Olivia)
 curl -sS -X POST http://localhost:3000/api/v1/auth/login \
   -H 'Content-Type: application/json' \
-  -d '{"email":"alice.owner@housing.local","password":"Demo123!@#"}'
+  -d '{"email":"owner1@demo.local","password":"Demo123!@#"}'
 
-# Tenant (Carol)
+# Tenant (Tara)
 curl -sS -X POST http://localhost:3000/api/v1/auth/login \
   -H 'Content-Type: application/json' \
-  -d '{"email":"carol.tenant@housing.local","password":"Demo123!@#"}'
+  -d '{"email":"tenant1@demo.local","password":"Demo123!@#"}'
 ```
 
 Expected: **200** with `{ success, message, data: { accessToken, refreshToken, ... } }`. Save each `accessToken` for the next steps.

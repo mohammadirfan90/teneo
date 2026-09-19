@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/properties/{{propertyId}}/publish"
+method: POST
+order: 6000

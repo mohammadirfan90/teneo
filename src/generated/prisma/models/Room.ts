@@ -382,6 +382,7 @@ export type RoomWhereInput = {
   applications?: Prisma.ApplicationListRelationFilter
   viewingRequests?: Prisma.ViewingRequestListRelationFilter
   tickets?: Prisma.MaintenanceTicketListRelationFilter
+  photos?: Prisma.RoomPhotoListRelationFilter
 }
 
 export type RoomOrderByWithRelationInput = {
@@ -412,6 +413,7 @@ export type RoomOrderByWithRelationInput = {
   applications?: Prisma.ApplicationOrderByRelationAggregateInput
   viewingRequests?: Prisma.ViewingRequestOrderByRelationAggregateInput
   tickets?: Prisma.MaintenanceTicketOrderByRelationAggregateInput
+  photos?: Prisma.RoomPhotoOrderByRelationAggregateInput
 }
 
 export type RoomWhereUniqueInput = Prisma.AtLeast<{
@@ -445,6 +447,7 @@ export type RoomWhereUniqueInput = Prisma.AtLeast<{
   applications?: Prisma.ApplicationListRelationFilter
   viewingRequests?: Prisma.ViewingRequestListRelationFilter
   tickets?: Prisma.MaintenanceTicketListRelationFilter
+  photos?: Prisma.RoomPhotoListRelationFilter
 }, "id">
 
 export type RoomOrderByWithAggregationInput = {
@@ -531,6 +534,7 @@ export type RoomCreateInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateInput = {
@@ -559,6 +563,7 @@ export type RoomUncheckedCreateInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUpdateInput = {
@@ -587,6 +592,7 @@ export type RoomUpdateInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateInput = {
@@ -615,6 +621,7 @@ export type RoomUncheckedUpdateInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomCreateManyInput = {
@@ -949,6 +956,20 @@ export type RoomUpdateOneRequiredWithoutTicketsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RoomUpdateToOneWithWhereWithoutTicketsInput, Prisma.RoomUpdateWithoutTicketsInput>, Prisma.RoomUncheckedUpdateWithoutTicketsInput>
 }
 
+export type RoomCreateNestedOneWithoutPhotosInput = {
+  create?: Prisma.XOR<Prisma.RoomCreateWithoutPhotosInput, Prisma.RoomUncheckedCreateWithoutPhotosInput>
+  connectOrCreate?: Prisma.RoomCreateOrConnectWithoutPhotosInput
+  connect?: Prisma.RoomWhereUniqueInput
+}
+
+export type RoomUpdateOneRequiredWithoutPhotosNestedInput = {
+  create?: Prisma.XOR<Prisma.RoomCreateWithoutPhotosInput, Prisma.RoomUncheckedCreateWithoutPhotosInput>
+  connectOrCreate?: Prisma.RoomCreateOrConnectWithoutPhotosInput
+  upsert?: Prisma.RoomUpsertWithoutPhotosInput
+  connect?: Prisma.RoomWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RoomUpdateToOneWithWhereWithoutPhotosInput, Prisma.RoomUpdateWithoutPhotosInput>, Prisma.RoomUncheckedUpdateWithoutPhotosInput>
+}
+
 export type RoomCreateWithoutPropertyInput = {
   id?: string
   label: string
@@ -974,6 +995,7 @@ export type RoomCreateWithoutPropertyInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateWithoutPropertyInput = {
@@ -1001,6 +1023,7 @@ export type RoomUncheckedCreateWithoutPropertyInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomCreateOrConnectWithoutPropertyInput = {
@@ -1082,6 +1105,7 @@ export type RoomCreateWithoutFlatInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateWithoutFlatInput = {
@@ -1109,6 +1133,7 @@ export type RoomUncheckedCreateWithoutFlatInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomCreateOrConnectWithoutFlatInput = {
@@ -1162,6 +1187,7 @@ export type RoomCreateWithoutApplicationsInput = {
   flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateWithoutApplicationsInput = {
@@ -1189,6 +1215,7 @@ export type RoomUncheckedCreateWithoutApplicationsInput = {
   deletedAt?: Date | string | null
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomCreateOrConnectWithoutApplicationsInput = {
@@ -1232,6 +1259,7 @@ export type RoomUpdateWithoutApplicationsInput = {
   flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateWithoutApplicationsInput = {
@@ -1259,6 +1287,7 @@ export type RoomUncheckedUpdateWithoutApplicationsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomCreateWithoutViewingRequestsInput = {
@@ -1286,6 +1315,7 @@ export type RoomCreateWithoutViewingRequestsInput = {
   flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateWithoutViewingRequestsInput = {
@@ -1313,6 +1343,7 @@ export type RoomUncheckedCreateWithoutViewingRequestsInput = {
   deletedAt?: Date | string | null
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
   tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomCreateOrConnectWithoutViewingRequestsInput = {
@@ -1356,6 +1387,7 @@ export type RoomUpdateWithoutViewingRequestsInput = {
   flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateWithoutViewingRequestsInput = {
@@ -1383,6 +1415,7 @@ export type RoomUncheckedUpdateWithoutViewingRequestsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomCreateWithoutTicketsInput = {
@@ -1410,6 +1443,7 @@ export type RoomCreateWithoutTicketsInput = {
   flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoCreateNestedManyWithoutRoomInput
 }
 
 export type RoomUncheckedCreateWithoutTicketsInput = {
@@ -1437,6 +1471,7 @@ export type RoomUncheckedCreateWithoutTicketsInput = {
   deletedAt?: Date | string | null
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
+  photos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutRoomInput
 }
 
 export type RoomCreateOrConnectWithoutTicketsInput = {
@@ -1480,6 +1515,7 @@ export type RoomUpdateWithoutTicketsInput = {
   flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateWithoutTicketsInput = {
@@ -1507,6 +1543,135 @@ export type RoomUncheckedUpdateWithoutTicketsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutRoomNestedInput
+}
+
+export type RoomCreateWithoutPhotosInput = {
+  id?: string
+  label: string
+  roomType: $Enums.RoomType
+  sizeSqft?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: number
+  baseRentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  billsIncluded?: boolean
+  amenities?: Prisma.RoomCreateamenitiesInput | string[]
+  status?: $Enums.RoomStatus
+  availableFrom?: Date | string | null
+  minLeaseMonths?: number | null
+  maxLeaseMonths?: number | null
+  rules?: string | null
+  version?: number
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  property: Prisma.PropertyCreateNestedOneWithoutRoomsInput
+  flat?: Prisma.FlatCreateNestedOneWithoutRoomsInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutRoomInput
+  tickets?: Prisma.MaintenanceTicketCreateNestedManyWithoutRoomInput
+}
+
+export type RoomUncheckedCreateWithoutPhotosInput = {
+  id?: string
+  propertyId: string
+  flatId?: string | null
+  label: string
+  roomType: $Enums.RoomType
+  sizeSqft?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: number
+  baseRentMinor: bigint | number
+  depositMinor: bigint | number
+  currency: string
+  billsIncluded?: boolean
+  amenities?: Prisma.RoomCreateamenitiesInput | string[]
+  status?: $Enums.RoomStatus
+  availableFrom?: Date | string | null
+  minLeaseMonths?: number | null
+  maxLeaseMonths?: number | null
+  rules?: string | null
+  version?: number
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutRoomInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutRoomInput
+  tickets?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRoomInput
+}
+
+export type RoomCreateOrConnectWithoutPhotosInput = {
+  where: Prisma.RoomWhereUniqueInput
+  create: Prisma.XOR<Prisma.RoomCreateWithoutPhotosInput, Prisma.RoomUncheckedCreateWithoutPhotosInput>
+}
+
+export type RoomUpsertWithoutPhotosInput = {
+  update: Prisma.XOR<Prisma.RoomUpdateWithoutPhotosInput, Prisma.RoomUncheckedUpdateWithoutPhotosInput>
+  create: Prisma.XOR<Prisma.RoomCreateWithoutPhotosInput, Prisma.RoomUncheckedCreateWithoutPhotosInput>
+  where?: Prisma.RoomWhereInput
+}
+
+export type RoomUpdateToOneWithWhereWithoutPhotosInput = {
+  where?: Prisma.RoomWhereInput
+  data: Prisma.XOR<Prisma.RoomUpdateWithoutPhotosInput, Prisma.RoomUncheckedUpdateWithoutPhotosInput>
+}
+
+export type RoomUpdateWithoutPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  roomType?: Prisma.EnumRoomTypeFieldUpdateOperationsInput | $Enums.RoomType
+  sizeSqft?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: Prisma.IntFieldUpdateOperationsInput | number
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  billsIncluded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amenities?: Prisma.RoomUpdateamenitiesInput | string[]
+  status?: Prisma.EnumRoomStatusFieldUpdateOperationsInput | $Enums.RoomStatus
+  availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  property?: Prisma.PropertyUpdateOneRequiredWithoutRoomsNestedInput
+  flat?: Prisma.FlatUpdateOneWithoutRoomsNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
+  tickets?: Prisma.MaintenanceTicketUpdateManyWithoutRoomNestedInput
+}
+
+export type RoomUncheckedUpdateWithoutPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  flatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  roomType?: Prisma.EnumRoomTypeFieldUpdateOperationsInput | $Enums.RoomType
+  sizeSqft?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  maxOccupants?: Prisma.IntFieldUpdateOperationsInput | number
+  baseRentMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  depositMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  billsIncluded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  amenities?: Prisma.RoomUpdateamenitiesInput | string[]
+  status?: Prisma.EnumRoomStatusFieldUpdateOperationsInput | $Enums.RoomStatus
+  availableFrom?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
+  tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomCreateManyPropertyInput = {
@@ -1558,6 +1723,7 @@ export type RoomUpdateWithoutPropertyInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateWithoutPropertyInput = {
@@ -1585,6 +1751,7 @@ export type RoomUncheckedUpdateWithoutPropertyInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateManyWithoutPropertyInput = {
@@ -1660,6 +1827,7 @@ export type RoomUpdateWithoutFlatInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateWithoutFlatInput = {
@@ -1687,6 +1855,7 @@ export type RoomUncheckedUpdateWithoutFlatInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutRoomNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutRoomNestedInput
   tickets?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRoomNestedInput
+  photos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutRoomNestedInput
 }
 
 export type RoomUncheckedUpdateManyWithoutFlatInput = {
@@ -1722,12 +1891,14 @@ export type RoomCountOutputType = {
   applications: number
   viewingRequests: number
   tickets: number
+  photos: number
 }
 
 export type RoomCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   applications?: boolean | RoomCountOutputTypeCountApplicationsArgs
   viewingRequests?: boolean | RoomCountOutputTypeCountViewingRequestsArgs
   tickets?: boolean | RoomCountOutputTypeCountTicketsArgs
+  photos?: boolean | RoomCountOutputTypeCountPhotosArgs
 }
 
 /**
@@ -1761,6 +1932,13 @@ export type RoomCountOutputTypeCountTicketsArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.MaintenanceTicketWhereInput
 }
 
+/**
+ * RoomCountOutputType without action
+ */
+export type RoomCountOutputTypeCountPhotosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RoomPhotoWhereInput
+}
+
 
 export type RoomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1790,6 +1968,7 @@ export type RoomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   applications?: boolean | Prisma.Room$applicationsArgs<ExtArgs>
   viewingRequests?: boolean | Prisma.Room$viewingRequestsArgs<ExtArgs>
   tickets?: boolean | Prisma.Room$ticketsArgs<ExtArgs>
+  photos?: boolean | Prisma.Room$photosArgs<ExtArgs>
   _count?: boolean | Prisma.RoomCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["room"]>
 
@@ -1879,6 +2058,7 @@ export type RoomInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   applications?: boolean | Prisma.Room$applicationsArgs<ExtArgs>
   viewingRequests?: boolean | Prisma.Room$viewingRequestsArgs<ExtArgs>
   tickets?: boolean | Prisma.Room$ticketsArgs<ExtArgs>
+  photos?: boolean | Prisma.Room$photosArgs<ExtArgs>
   _count?: boolean | Prisma.RoomCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RoomIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1898,6 +2078,7 @@ export type $RoomPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     applications: Prisma.$ApplicationPayload<ExtArgs>[]
     viewingRequests: Prisma.$ViewingRequestPayload<ExtArgs>[]
     tickets: Prisma.$MaintenanceTicketPayload<ExtArgs>[]
+    photos: Prisma.$RoomPhotoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2342,6 +2523,7 @@ export interface Prisma__RoomClient<T, Null = never, ExtArgs extends runtime.Typ
   applications<T extends Prisma.Room$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Room$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   viewingRequests<T extends Prisma.Room$viewingRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Room$viewingRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ViewingRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tickets<T extends Prisma.Room$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Room$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MaintenanceTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  photos<T extends Prisma.Room$photosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Room$photosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoomPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2882,6 +3064,30 @@ export type Room$ticketsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.MaintenanceTicketScalarFieldEnum | Prisma.MaintenanceTicketScalarFieldEnum[]
+}
+
+/**
+ * Room.photos
+ */
+export type Room$photosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RoomPhoto
+   */
+  select?: Prisma.RoomPhotoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RoomPhoto
+   */
+  omit?: Prisma.RoomPhotoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RoomPhotoInclude<ExtArgs> | null
+  where?: Prisma.RoomPhotoWhereInput
+  orderBy?: Prisma.RoomPhotoOrderByWithRelationInput | Prisma.RoomPhotoOrderByWithRelationInput[]
+  cursor?: Prisma.RoomPhotoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RoomPhotoScalarFieldEnum | Prisma.RoomPhotoScalarFieldEnum[]
 }
 
 /**

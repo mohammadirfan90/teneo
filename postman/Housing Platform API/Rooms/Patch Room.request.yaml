@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "baseRentMinor": 80000,
+      "availableFrom": "2026-11-01"
+    }
+order: 3000

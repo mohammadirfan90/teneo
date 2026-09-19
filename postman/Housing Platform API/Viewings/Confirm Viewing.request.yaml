@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/viewings/{{viewingId}}/confirm"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "confirmedSlot": "2026-09-15T10:00:00.000Z"
+    }
+order: 2000

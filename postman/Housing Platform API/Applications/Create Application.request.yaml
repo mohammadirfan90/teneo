@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/applications"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "roomId": "{{roomId}}",
+      "message": "Hi, I'm interested in this room and can move in from next month. I'm a quiet professional."
+    }
+order: 1000

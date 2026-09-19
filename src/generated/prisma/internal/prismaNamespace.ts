@@ -429,6 +429,7 @@ export const ModelName = {
   Notification: 'Notification',
   NotificationPreference: 'NotificationPreference',
   Document: 'Document',
+  RoomPhoto: 'RoomPhoto',
   FeatureFlag: 'FeatureFlag',
   MatchResult: 'MatchResult',
   IntroRequest: 'IntroRequest'
@@ -447,7 +448,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "notification" | "notificationPreference" | "document" | "featureFlag" | "matchResult" | "introRequest"
+    modelProps: "user" | "userRole" | "ownerProfile" | "tenantProfile" | "kycSubmission" | "auditLog" | "refreshToken" | "preferencesTenant" | "outboxEvent" | "property" | "building" | "flat" | "room" | "savedSearch" | "application" | "viewingRequest" | "applicationNote" | "lease" | "leaseTenant" | "leaseSignature" | "leaseAmendment" | "rentInvoice" | "payment" | "propertyMeter" | "meterReading" | "utilityBill" | "billShare" | "maintenanceTicket" | "maintenanceUpdate" | "notification" | "notificationPreference" | "document" | "roomPhoto" | "featureFlag" | "matchResult" | "introRequest"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2819,6 +2820,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RoomPhoto: {
+      payload: Prisma.$RoomPhotoPayload<ExtArgs>
+      fields: Prisma.RoomPhotoFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoomPhotoFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoomPhotoFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>
+        }
+        findFirst: {
+          args: Prisma.RoomPhotoFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoomPhotoFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>
+        }
+        findMany: {
+          args: Prisma.RoomPhotoFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>[]
+        }
+        create: {
+          args: Prisma.RoomPhotoCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>
+        }
+        createMany: {
+          args: Prisma.RoomPhotoCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RoomPhotoCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>[]
+        }
+        delete: {
+          args: Prisma.RoomPhotoDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>
+        }
+        update: {
+          args: Prisma.RoomPhotoUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>
+        }
+        deleteMany: {
+          args: Prisma.RoomPhotoDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoomPhotoUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RoomPhotoUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>[]
+        }
+        upsert: {
+          args: Prisma.RoomPhotoUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomPhotoPayload>
+        }
+        aggregate: {
+          args: Prisma.RoomPhotoAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRoomPhoto>
+        }
+        groupBy: {
+          args: Prisma.RoomPhotoGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomPhotoGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoomPhotoCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomPhotoCountAggregateOutputType> | number
+        }
+      }
+    }
     FeatureFlag: {
       payload: Prisma.$FeatureFlagPayload<ExtArgs>
       fields: Prisma.FeatureFlagFieldRefs
@@ -3638,6 +3713,10 @@ export const DocumentScalarFieldEnum = {
   sizeBytes: 'sizeBytes',
   label: 'label',
   status: 'status',
+  storageProvider: 'storageProvider',
+  resourceType: 'resourceType',
+  deliveryType: 'deliveryType',
+  etag: 'etag',
   deletedAt: 'deletedAt',
   tenantId: 'tenantId',
   createdAt: 'createdAt',
@@ -3645,6 +3724,31 @@ export const DocumentScalarFieldEnum = {
 } as const
 
 export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
+
+
+export const RoomPhotoScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  uploadedByUserId: 'uploadedByUserId',
+  publicId: 'publicId',
+  secureUrl: 'secureUrl',
+  storageProvider: 'storageProvider',
+  resourceType: 'resourceType',
+  deliveryType: 'deliveryType',
+  contentType: 'contentType',
+  sizeBytes: 'sizeBytes',
+  width: 'width',
+  height: 'height',
+  etag: 'etag',
+  position: 'position',
+  alt: 'alt',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type RoomPhotoScalarFieldEnum = (typeof RoomPhotoScalarFieldEnum)[keyof typeof RoomPhotoScalarFieldEnum]
 
 
 export const FeatureFlagScalarFieldEnum = {
@@ -4396,6 +4500,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   notificationPreference?: Prisma.NotificationPreferenceOmit
   document?: Prisma.DocumentOmit
+  roomPhoto?: Prisma.RoomPhotoOmit
   featureFlag?: Prisma.FeatureFlagOmit
   matchResult?: Prisma.MatchResultOmit
   introRequest?: Prisma.IntroRequestOmit

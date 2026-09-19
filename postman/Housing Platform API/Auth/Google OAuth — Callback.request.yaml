@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/auth/oauth/google/callback"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ij..."
+    }
+order: 12000

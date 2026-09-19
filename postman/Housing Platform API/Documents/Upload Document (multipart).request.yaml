@@ -1,0 +1,30 @@
+$kind: http-request
+description: Streams the file to Cloudinary as a private (`authenticated`) asset, then records it. Pick a file in the Body → form-data tab before sending. Returns 503 STORAGE_DISABLED if CLOUDINARY_* is unset.
+url: "{{baseUrl}}/api/v1/documents"
+method: POST
+headers:
+  Idempotency-Key: "{{$guid}}"
+body:
+  type: formdata
+  content:
+    - type: file
+      key: file
+      src: []
+      description: PDF/JPEG/PNG/WebP, max 15MB
+    - type: text
+      key: objectKeyPrefix
+      value: kyc
+    - type: text
+      key: label
+      value: Lease agreement scan
+scripts:
+  - type: afterResponse
+    code: |-
+      let json = {};
+      try { json = pm.response.json(); } catch (e) {}
+      if (json && json.data && json.data.id) pm.environment.set('documentId', json.data.id);
+      pm.test('upload returns 201 (or 503 when CLOUDINARY_* is unset)', function () {
+        pm.expect(pm.response.code).to.be.oneOf([201, 503]);
+      });
+    language: text/javascript
+order: 1000

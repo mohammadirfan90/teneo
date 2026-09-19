@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/leases/{{leaseId}}/amend"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "payload": { "monthlyRentMinor": "275000", "petsAllowed": true },
+      "note": "Rent adjustment per addendum negotiated 2026-09-07."
+    }
+order: 7000

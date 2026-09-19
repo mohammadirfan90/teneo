@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}/tickets"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "Leaking kitchen faucet",
+      "description": "The cold-water tap drips continuously. Started two days ago.",
+      "category": "PLUMBING",
+      "priority": "MEDIUM"
+    }
+order: 1000

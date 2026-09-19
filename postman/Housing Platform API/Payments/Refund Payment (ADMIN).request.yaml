@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/payments/{{paymentId}}/refund"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "reason": "Duplicate charge confirmed by tenant; refund issued per support ticket #4421."
+    }
+order: 4000

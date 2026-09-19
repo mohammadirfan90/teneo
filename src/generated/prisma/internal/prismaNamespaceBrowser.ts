@@ -83,6 +83,7 @@ export const ModelName = {
   Notification: 'Notification',
   NotificationPreference: 'NotificationPreference',
   Document: 'Document',
+  RoomPhoto: 'RoomPhoto',
   FeatureFlag: 'FeatureFlag',
   MatchResult: 'MatchResult',
   IntroRequest: 'IntroRequest'
@@ -662,6 +663,10 @@ export const DocumentScalarFieldEnum = {
   sizeBytes: 'sizeBytes',
   label: 'label',
   status: 'status',
+  storageProvider: 'storageProvider',
+  resourceType: 'resourceType',
+  deliveryType: 'deliveryType',
+  etag: 'etag',
   deletedAt: 'deletedAt',
   tenantId: 'tenantId',
   createdAt: 'createdAt',
@@ -669,6 +674,31 @@ export const DocumentScalarFieldEnum = {
 } as const
 
 export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
+
+
+export const RoomPhotoScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  uploadedByUserId: 'uploadedByUserId',
+  publicId: 'publicId',
+  secureUrl: 'secureUrl',
+  storageProvider: 'storageProvider',
+  resourceType: 'resourceType',
+  deliveryType: 'deliveryType',
+  contentType: 'contentType',
+  sizeBytes: 'sizeBytes',
+  width: 'width',
+  height: 'height',
+  etag: 'etag',
+  position: 'position',
+  alt: 'alt',
+  tenantId: 'tenantId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type RoomPhotoScalarFieldEnum = (typeof RoomPhotoScalarFieldEnum)[keyof typeof RoomPhotoScalarFieldEnum]
 
 
 export const FeatureFlagScalarFieldEnum = {

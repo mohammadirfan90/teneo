@@ -9,6 +9,7 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';
@@ -16,12 +17,6 @@ import { requireRole } from '@/middleware/role';
 
 import { listFlagsHandler, upsertFlagHandler } from './feature-flags.controller';
 import { flagKeyParamsSchema, upsertFlagBodySchema } from './feature-flags.controller';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function featureFlagsRouter(): Router {
   const r = Router();

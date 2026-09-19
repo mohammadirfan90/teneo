@@ -1,0 +1,32 @@
+$kind: http-request
+description: OWNER (own room) or ADMIN. Uploads to Cloudinary as a public CDN asset and appends it to the gallery. Max 20 photos per room.
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}/photos"
+method: POST
+headers:
+  Idempotency-Key: "{{$guid}}"
+body:
+  type: formdata
+  content:
+    - type: file
+      key: file
+      src: []
+      description: JPEG/PNG/WebP, max 8MB
+    - type: text
+      key: alt
+      value: Bright double room facing the garden
+scripts:
+  - type: afterResponse
+    code: |-
+      // The collection-level capture keys off data.id but deliberately skips
+      // nested paths, so the photo id would otherwise never reach the env and
+      // the Delete/Reorder requests would have nothing to target.
+      let json = {};
+      try { json = pm.response.json(); } catch (e) {}
+      if (json && json.data && json.data.id) {
+        pm.environment.set('photoId', json.data.id);
+      }
+      pm.test('upload returns 201 (or 503 when CLOUDINARY_* is unset)', function () {
+        pm.expect(pm.response.code).to.be.oneOf([201, 503]);
+      });
+    language: text/javascript
+order: 6000

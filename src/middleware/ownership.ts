@@ -61,11 +61,3 @@ export function requireOwnership(getOwnerId: OwnerIdResolver): RequestHandler {
     }
   };
 }
-
-/**
- * Re-export of ForbiddenError purely for callers that want to throw
- * "this resource forbids this role combination" — used by other
- * ownership-style checks that don't fit the single-owner-id model
- * (e.g. multi-party lease view).
- */
-export { ForbiddenError };

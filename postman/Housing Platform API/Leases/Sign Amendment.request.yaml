@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/leases/{{leaseId}}/amendments/{{amendmentId}}/sign"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "acknowledge": "Agreed to amendment terms."
+    }
+order: 8000

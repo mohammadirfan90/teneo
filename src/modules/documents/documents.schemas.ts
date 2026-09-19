@@ -1,12 +1,17 @@
 // src/modules/documents/documents.schemas.ts
 //
-// Zod schemas for /api/v1/documents/* per Phase 18 (04 §4.3.7,
-// 13 §13.2.8). All endpoints are stubs returning mock S3 URLs.
+// Zod schemas for /api/v1/documents/* (04 §4.3.7, 13 §13.2.8).
 //
 // Endpoints:
-//   POST  /upload-url      requestUploadUrl
-//   GET   /:id/url         getDownloadUrl
+//   POST   /documents      uploadDocument      (multipart/form-data)
+//   GET    /:id/url        getDownloadUrl
 //   DELETE /:id            softDeleteDocument
+//
+// The upload is multipart, so the file itself is validated by
+// src/middleware/upload.ts (size cap, MIME allowlist, magic-byte check)
+// rather than by Zod — a Buffer is not something Zod should parse. What
+// remains for Zod is the accompanying text fields, which arrive as raw
+// strings because multipart carries no types.
 
 import { z } from 'zod';
 
@@ -22,62 +27,48 @@ export const documentIdParamsSchema = z.object({
 export type DocumentIdParams = z.infer<typeof documentIdParamsSchema>;
 
 // ──────────────────────────────────────────────────────────────────────
-// POST /upload-url — body
+// POST /documents — multipart text fields
 // ──────────────────────────────────────────────────────────────────────
 
 /**
- * Mints an upload URL and creates a Document row. The body validates
- * the caller is sending sane metadata; size is enforced as a positive
- * integer so the BigInt column never receives garbage.
+ * `objectKeyPrefix` namespaces the asset inside the Cloudinary folder
+ * tree, e.g. `kyc` → `teneo/documents/kyc/{userId}/{uuid}`. It is
+ * regex-bounded because it is interpolated into a storage path: a `..`
+ * or a leading `/` would let a caller write outside their own namespace.
  *
- * `objectKeyPrefix` is optional — defaults to `user-uploads`. Used
- * by other modules (Phase 19+) to namespace their documents, e.g.,
- * `kyc/{userId}` or `leases/{leaseId}`.
+ * Note `.strict()` is deliberately NOT used here. Multipart parsers add
+ * their own bookkeeping fields, and rejecting unknown keys would make
+ * ordinary form posts fail for reasons the caller cannot see.
  */
-export const requestUploadUrlSchema = z
-  .object({
-    objectKeyPrefix: z
-      .string()
-      .min(1)
-      .max(120)
-      .regex(/^[a-zA-Z0-9_\-/]+$/, 'prefix must be a safe path segment')
-      .optional(),
-    contentType: z
-      .string()
-      .min(1)
-      .max(120)
-      .regex(/^[\w.-]+\/[\w.+-]+$/, 'contentType must look like MIME/type'),
-    sizeBytes: z
-      .number()
-      .int()
-      .positive('sizeBytes must be positive')
-      .max(100 * 1024 * 1024, 'sizeBytes exceeds 100MB limit'),
-    label: z.string().min(1).max(200).optional(),
-  })
-  .strict();
-export type RequestUploadUrlInput = z.infer<typeof requestUploadUrlSchema>;
+export const uploadDocumentSchema = z.object({
+  objectKeyPrefix: z
+    .string()
+    .min(1)
+    .max(120)
+    .regex(/^[a-zA-Z0-9_\-/]+$/, 'prefix must be a safe path segment')
+    .refine((v) => !v.includes('..') && !v.startsWith('/') && !v.endsWith('/'), {
+      message: 'prefix must not traverse or begin/end with a separator',
+    })
+    .optional(),
+  label: z.string().min(1).max(200).optional(),
+});
+export type UploadDocumentInput = z.infer<typeof uploadDocumentSchema>;
 
-export interface RequestUploadUrlServiceInput {
+export interface UploadDocumentTextFields {
   objectKeyPrefix: string;
-  contentType: string;
-  sizeBytes: bigint;
   label: string | null;
 }
 
-export function toRequestUploadUrlServiceInput(
-  body: RequestUploadUrlInput
-): RequestUploadUrlServiceInput {
+export function toUploadDocumentFields(body: UploadDocumentInput): UploadDocumentTextFields {
   return {
     objectKeyPrefix: body.objectKeyPrefix ?? 'user-uploads',
-    contentType: body.contentType,
-    sizeBytes: BigInt(body.sizeBytes),
     label: body.label ?? null,
   };
 }
 
 // ──────────────────────────────────────────────────────────────────────
 // Status enum (lives in the service file because the migration uses a
-// free-text VARCHAR(16) — the values here are the only legal ones).
+// free-text VARCHAR(16) — the values there are the only legal ones).
 // Re-exported here for controllers that want the type.
 // ──────────────────────────────────────────────────────────────────────
 

@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/invoices/{{invoiceId}}/dispute"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "reason": "Charged for plumbing repair that was landlord responsibility per lease §6."
+    }
+order: 4000

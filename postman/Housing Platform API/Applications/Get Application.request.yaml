@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/applications/{{applicationId}}"
+method: GET
+order: 3000

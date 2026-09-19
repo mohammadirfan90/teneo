@@ -15,6 +15,7 @@
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import { z } from 'zod';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { prisma } from '@/lib/db';
 import { ok } from '@/lib/envelope';
 
@@ -109,14 +110,6 @@ function rowToView(r: AuditLogRow): AuditLogView {
 // Helpers
 // ──────────────────────────────────────────────────────────────────────
 
-function asyncHandler(
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>
-): RequestHandler {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-}
-
 function decodeCursor(cursor: string | undefined): Date | null {
   if (!cursor) return null;
   try {
@@ -150,7 +143,7 @@ function csvEscape(v: unknown): string {
 // ──────────────────────────────────────────────────────────────────────
 
 export const listAuditLogsHandler: RequestHandler = asyncHandler(async (req, res) => {
-  const q = req.query as unknown as z.infer<typeof listAuditLogsQuerySchema>;
+  const q: z.infer<typeof listAuditLogsQuerySchema> = listAuditLogsQuerySchema.parse(req.query);
 
   const where = buildWhere(q);
 

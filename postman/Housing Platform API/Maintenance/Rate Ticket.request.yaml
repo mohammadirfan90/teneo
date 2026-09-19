@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/tickets/{{ticketId}}/rate"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "rating": 5,
+      "comment": "Quick fix and very polite."
+    }
+order: 8000

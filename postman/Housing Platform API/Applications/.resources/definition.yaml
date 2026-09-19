@@ -1,0 +1,3 @@
+$kind: collection
+description: Tenant application lifecycle against a room.
+order: 11000

@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/payments/stripe/webhook"
+method: POST
+headers:
+  Content-Type: application/json
+  Stripe-Signature: t=1694000000,v1=abcdef0123456789
+body:
+  type: text
+  content: |-
+    {
+      "id": "evt_1NxYzABC1234567890",
+      "object": "event",
+      "type": "payment_intent.succeeded",
+      "data": {
+        "object": {
+          "id": "pi_3NxYzABC1234567890",
+          "amount": 275000,
+          "currency": "usd",
+          "status": "succeeded",
+          "metadata": { "invoiceId": "{{invoiceId}}" }
+        }
+      }
+    }
+order: 5000

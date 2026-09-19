@@ -724,7 +724,7 @@ async function transitionGeneric(
   to: ApplicationStatus
 ): Promise<ApplicationView> {
   const now = new Date();
-  const result = await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx) => {
     const upd = await tx.application.updateMany({
       where: {
         id: applicationId,
@@ -780,9 +780,6 @@ async function transitionGeneric(
     return { ownerId };
   });
 
-  // Suppress unused-warning while keeping the value available for
-  // future outbox payloads that need ownerUserId.
-  void result.ownerId;
 
   const fresh = await loadApplication(applicationId);
   return toApplicationView(fresh);
@@ -873,7 +870,8 @@ export async function addApplicationNote(
   body: AddApplicationNoteInput
 ): Promise<ApplicationNoteView> {
   // Ensure the application exists. Ownership is enforced by middleware.
-  const existing = await loadApplication(applicationId);
+  // Existence/404 guard: loadApplication throws when the row is missing.
+  await loadApplication(applicationId);
   const created = await prisma.$transaction(async (tx) => {
     const note = await tx.applicationNote.create({
       data: {
@@ -902,9 +900,6 @@ export async function addApplicationNote(
     });
     return note;
   });
-  // Use existing to keep the linter happy about unused vars; useful
-  // in future if we want to short-circuit when the app is terminal.
-  void existing;
   return noteToView(created);
 }
 
@@ -1051,7 +1046,7 @@ export async function confirmViewing(
 ): Promise<ViewingView> {
   const viewing = await prisma.viewingRequest.findUnique({
     where: { id: viewingId },
-    select: { id: true, status: true, proposedSlots: true },
+    select: { id: true, status: true },
   });
   if (!viewing) throw new NotFoundError('Viewing not found');
   if (viewing.status !== 'REQUESTED') {
@@ -1060,8 +1055,8 @@ export async function confirmViewing(
   const confirmedSlotDate = new Date(body.confirmedSlot);
   // Relaxed: we accept any ISO datetime even if it wasn't in the
   // originally proposed list (owners may slip a slot via direct
-  // negotiation). Strict matching is a future enhancement.
-  void viewing.proposedSlots;
+  // negotiation). Strict matching is a future enhancement, and is
+  // why proposedSlots is deliberately not selected above.
 
   const updated = await prisma.$transaction(async (tx) => {
     const v = await tx.viewingRequest.update({

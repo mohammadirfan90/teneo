@@ -1,0 +1,3 @@
+$kind: collection
+description: Rooms under a flat; publish + transition state machine.
+order: 9000

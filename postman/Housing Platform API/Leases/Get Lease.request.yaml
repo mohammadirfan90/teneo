@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/leases/{{leaseId}}"
+method: GET
+order: 2000

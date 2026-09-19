@@ -1,0 +1,13 @@
+$kind: http-request
+description: Moves the photo to `position`; the rest shift to stay dense. 0 = cover.
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}/photos/{{photoId}}/reorder"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "position": 0
+    }
+order: 9000

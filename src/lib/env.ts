@@ -31,6 +31,16 @@ const Env = z.object({
   GOOGLE_CLIENT_ID: z.string().optional().default(''),
   GOOGLE_CLIENT_SECRET: z.string().optional().default(''),
 
+  // Cloudinary object storage (room photos + KYC/lease documents).
+  // Optional in dev — upload routes return 503 STORAGE_DISABLED when unset,
+  // same contract as the Stripe keys above.
+  CLOUDINARY_CLOUD_NAME: z.string().optional().default(''),
+  CLOUDINARY_API_KEY: z.string().optional().default(''),
+  CLOUDINARY_API_SECRET: z.string().optional().default(''),
+  /// Root folder every asset is namespaced under, so one Cloudinary
+  /// account can host dev/staging/prod without collisions.
+  CLOUDINARY_FOLDER: z.string().optional().default('teneo'),
+
   APP_PUBLIC_URL: z.string().url().default('http://localhost:3000'),
 });
 

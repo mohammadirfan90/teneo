@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}/tickets?status=OPEN&priority=MEDIUM&limit=20"
+method: GET
+queryParams:
+  status: OPEN
+  priority: MEDIUM
+  limit: "20"
+order: 2000

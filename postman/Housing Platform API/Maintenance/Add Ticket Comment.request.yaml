@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/tickets/{{ticketId}}/updates"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "body": "Plumber visited today and replaced the cartridge.",
+      "statusAfter": "IN_PROGRESS"
+    }
+order: 7000

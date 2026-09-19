@@ -275,15 +275,27 @@ export type Notification = Prisma.NotificationModel
 export type NotificationPreference = Prisma.NotificationPreferenceModel
 /**
  * Model Document
- * Owned storage object — a single source of truth for everything
- * that previously held a bare objectKey string (KYC documents,
- * lease contracts, room photos, maintenance ticket attachments).
+ * Owned storage object — a single source of truth for private files
+ * (KYC documents, lease contracts, maintenance ticket attachments).
  * 
- * Phase 18 returns mock S3 URLs (`https://stub.local/...`) and never
- * verifies the upload completed. Phase 19+ adds the finalize path
- * + real signed URLs.
+ * Backed by Cloudinary with `type: authenticated`, so the bytes are
+ * never publicly addressable: GET /documents/:id/url mints a signed
+ * URL that expires after 15 minutes. Public listing images are a
+ * different concern and live in `RoomPhoto` instead.
  */
 export type Document = Prisma.DocumentModel
+/**
+ * Model RoomPhoto
+ * Room listing photos stored in Cloudinary (public `upload` delivery —
+ * these are marketing images on a published listing, fetched by
+ * anonymous browsers, so they carry no signature).
+ * 
+ * `position` drives gallery order. It is deliberately NOT uniquely
+ * constrained per room: reordering rewrites several rows inside one
+ * transaction, and a unique index would need to be DEFERRABLE to allow
+ * the intermediate states. Ordering is normalised in service code.
+ */
+export type RoomPhoto = Prisma.RoomPhotoModel
 /**
  * Model FeatureFlag
  * Runtime kill-switches (Phase 19). Global per the Phase 19 plan:

@@ -96,14 +96,25 @@ expect "GET /rooms/:id as TENANT → 200" 200 "$code"
 code=$(status -X POST "$BASE/api/v1/properties/$PID/publish" -H "Authorization: Bearer $O1")
 expect "POST /properties publish (cascade) → 200" 200 "$code"
 
-# 12. POST /rooms/:id/photos stub
-code=$(status -X POST "$BASE/api/v1/rooms/$RID/photos" -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $O1" -d '{"contentType":"image/jpeg"}')
-expect "POST /rooms/:id/photos stub → 200" 200 "$code"
+# 12. POST /rooms/:id/photos — multipart upload to Cloudinary.
+# A 1x1 PNG is generated inline so the smoke test needs no fixture file.
+# 201 when CLOUDINARY_* is configured; 503 STORAGE_DISABLED when it is not,
+# and both are a pass here — this script asserts routing and auth, not that
+# the developer running it has storage credentials.
+PNG_TMP="$(mktemp -t roomphoto.XXXXXX).png"
+printf '\211PNG\r\n\032\n\0\0\0\015IHDR\0\0\0\001\0\0\0\001\010\006\0\0\0\037\025\304\211\0\0\0\012IDATx\234c\370\017\0\001\001\001\0\033\267\140\204\0\0\0\0IEND\256B`\202' > "$PNG_TMP"
+code=$(status -X POST "$BASE/api/v1/rooms/$RID/photos" \
+  -H "Authorization: Bearer $O1" -F "file=@$PNG_TMP;type=image/png" -F "alt=smoke test")
+if [ "$code" != "201" ] && [ "$code" != "503" ]; then
+  expect "POST /rooms/:id/photos → 201 or 503" 201 "$code"
+else
+  expect "POST /rooms/:id/photos → $code (201 or 503 ok)" "$code" "$code"
+fi
+rm -f "$PNG_TMP"
 
-# 13. DELETE photo → 501
+# 13. DELETE a photo id that does not exist → 404 (was 501 before real storage)
 code=$(status -X DELETE "$BASE/api/v1/rooms/$RID/photos/00000000-0000-0000-0000-000000000000" -H "Authorization: Bearer $O1")
-expect "DELETE /rooms/:id/photos/:pid → 501" 501 "$code"
+expect "DELETE /rooms/:id/photos/:pid (unknown) → 404" 404 "$code"
 
 # 14. GET /properties/me as TENANT → 403
 code=$(status "$BASE/api/v1/properties/me" -H "Authorization: Bearer $T1")

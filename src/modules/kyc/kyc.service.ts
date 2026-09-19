@@ -447,8 +447,3 @@ export async function requestInfo(
 // ──────────────────────────────────────────────────────────────────────
 // Re-export so callers can wire it explicitly.
 // ──────────────────────────────────────────────────────────────────────
-
-export type { Prisma } from '@/generated/prisma/client';
-
-// Phase 9 doesn't expose admin role-gate helpers; keep the export for tests.
-export const __testing = { ForbiddenError };

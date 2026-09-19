@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/properties"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "Sunny 3BR apartment in Berlin Mitte",
+      "description": "Spacious flat near Rosenthaler Platz.",
+      "addressLine1": "Brunnenstr. 123",
+      "addressLine2": "Apt 4",
+      "city": "Berlin",
+      "area": "Mitte",
+      "postalCode": "10115",
+      "countryCode": "DE",
+      "latitude": 52.531677,
+      "longitude": 13.401847,
+      "propertyType": "BUILDING"
+    }
+order: 1000

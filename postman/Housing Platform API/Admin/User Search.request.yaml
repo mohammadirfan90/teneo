@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/admin/users/search?q=carol&limit=20"
+method: GET
+queryParams:
+  q: carol
+  limit: "20"
+order: 1000

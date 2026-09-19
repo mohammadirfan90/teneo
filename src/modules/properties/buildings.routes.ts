@@ -11,6 +11,7 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { requireRole } from '@/middleware/role';
@@ -22,12 +23,6 @@ import {
 } from './buildings.schemas';
 import { createFlat } from './flats.controller';
 import { buildingIdParamsSchema, createFlatSchema } from './flats.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function buildingsRouter(): Router {
   const r = Router();

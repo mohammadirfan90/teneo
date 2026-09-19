@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/preferences/tenant"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "budgetMinMinor": 120000,
+      "budgetMaxMinor": 250000,
+      "preferredCities": ["Toronto", "Mississauga"],
+      "moveInFrom": "2026-10-01",
+      "moveInTo": "2026-12-31",
+      "lifestyle": { "pets": "NO", "smoking": "NO", "sleep": "EARLY" },
+      "interests": ["yoga", "cooking", "hiking"],
+      "visibility": "PUBLIC"
+    }
+order: 2000

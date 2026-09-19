@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/profiles/tenant"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "displayName": "Carol Tenant",
+      "bio": "Quiet professional looking for a 1BR.",
+      "avatarObjectKey": "avatars/carol.jpg"
+    }
+order: 4000

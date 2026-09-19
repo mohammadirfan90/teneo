@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/flats/{{flatId}}/rooms"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "label": "Room A",
+      "roomType": "PRIVATE",
+      "sizeSqft": 180,
+      "maxOccupants": 1,
+      "baseRentMinor": 75000,
+      "depositMinor": 150000,
+      "currency": "EUR",
+      "billsIncluded": false,
+      "amenities": ["wifi", "heating", "desk"],
+      "availableFrom": "2026-10-01",
+      "minLeaseMonths": 6,
+      "maxLeaseMonths": 12,
+      "rules": "No smoking. Quiet hours after 10pm."
+    }
+order: 1000

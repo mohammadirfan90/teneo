@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/kyc/submissions/{{kycSubmissionId}}"
+method: GET
+order: 3000

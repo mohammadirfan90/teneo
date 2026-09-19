@@ -16,6 +16,7 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';
@@ -34,12 +35,6 @@ import {
 } from './admin.controller';
 import { listAuditLogsHandler } from './audit.controller';
 import { listAuditLogsQuerySchema } from './audit.controller';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function adminRouter(): Router {
   const r = Router();

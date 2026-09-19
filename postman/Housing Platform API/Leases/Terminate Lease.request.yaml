@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/leases/{{leaseId}}/terminate"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "reason": "Tenant relocating for new job; mutually agreed early termination."
+    }
+order: 5000

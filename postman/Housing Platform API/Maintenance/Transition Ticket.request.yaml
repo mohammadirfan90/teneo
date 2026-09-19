@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/tickets/{{ticketId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "toStatus": "IN_PROGRESS",
+      "comment": "Plumber scheduled for tomorrow 10am."
+    }
+order: 6000

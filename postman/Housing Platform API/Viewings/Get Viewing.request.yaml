@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/viewings/{{viewingId}}"
+method: GET
+order: 1000

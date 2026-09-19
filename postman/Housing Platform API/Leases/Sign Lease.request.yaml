@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/leases/{{leaseId}}/sign"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "acknowledge": "I have read and agree to the lease terms dated 2026-09-01."
+    }
+order: 3000

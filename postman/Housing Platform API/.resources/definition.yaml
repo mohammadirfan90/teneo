@@ -1,0 +1,94 @@
+$kind: collection
+description: |-
+  Production-shaped REST API for the Housing & Roommate Management Platform (B7A6 backend assignment).
+
+  Covers every endpoint shipped in Phases 5–21: Auth, Users, Profiles, Preferences, KYC, Properties, Buildings, Rooms, Search, Applications, Viewings, Leases, Invoices, Payments, Bills, Meters, Readings, Maintenance Tickets, Notifications, Documents, Match, Admin Moderation, Audit Logs, Feature Flags.
+
+  Role-aware auth: every non-public request picks up the Bearer token from `{{accessToken}}` via the collection-level pre-request script. Run `/auth/login` first to populate it.
+
+  Idempotency: every mutating POST/PUT/PATCH that runs through `withIdempotency` middleware gets an `Idempotency-Key: {{idempotencyKey}}` header (auto-rotated per request) — safe to retry.
+variables:
+  baseUrl: "{{baseUrl}}"
+scripts:
+  - type: http:beforeRequest
+    code: |-
+      // Attach a fresh Idempotency-Key to every state-changing request.
+      //
+      // Postman sandbox note: there is no Node `crypto` module here, so
+      // require('crypto') throws "Cannot find module". UUIDs come from
+      // Postman's built-in {{$guid}} dynamic variable instead.
+      function uuid() {
+        return pm.variables.replaceIn('{{$guid}}');
+      }
+
+      // DELETE is included deliberately: the server treats POST/PUT/PATCH/DELETE
+      // as state-changing (see src/middleware/idempotency.ts) and answers 422
+      // when the header is missing, so omitting DELETE here broke every
+      // idempotent delete route.
+      const STATE_CHANGING = ['POST', 'PUT', 'PATCH', 'DELETE'];
+
+      if (STATE_CHANGING.includes(pm.request.method.toUpperCase())) {
+        if (!pm.request.headers.has('Idempotency-Key')) {
+          const key = uuid();
+          pm.request.headers.upsert({ key: 'Idempotency-Key', value: key });
+          // Kept in the environment purely so you can see the key that was
+          // sent; each request generates its own, so retrying a click never
+          // replays a cached response by accident.
+          pm.environment.set('idempotencyKey', key);
+        }
+      }
+    language: text/javascript
+  - type: http:afterResponse
+    code: |-
+      // Standard envelope shape: { success, message, data, meta? }.
+      // Most endpoints also stash `id` in `data.id`; capture that into
+      // the environment so the next request can reference it.
+      let json = {};
+      try { json = pm.response.json(); } catch (e) {}
+
+      if (json && json.data) {
+        const path = pm.request.url.path.join('/');
+        if (path.includes('/auth/login')) {
+          if (json.data.accessToken) pm.environment.set('accessToken', json.data.accessToken);
+          if (json.data.refreshToken) pm.environment.set('refreshToken', json.data.refreshToken);
+        }
+        if (json.data.id) {
+          if (path.includes('/properties')) pm.environment.set('propertyId', json.data.id);
+          if (path.includes('/buildings')) pm.environment.set('buildingId', json.data.id);
+          if (path.includes('/flats')) pm.environment.set('flatId', json.data.id);
+          if (path.endsWith('/rooms') || /\/rooms\/[^/]+$/.test(path)) pm.environment.set('roomId', json.data.id);
+          if (path.includes('/applications')) pm.environment.set('applicationId', json.data.id);
+          if (path.includes('/viewings')) pm.environment.set('viewingId', json.data.id);
+          if (path.includes('/leases')) pm.environment.set('leaseId', json.data.id);
+          if (path.includes('/amend')) pm.environment.set('amendmentId', json.data.id);
+          if (path.includes('/invoices')) pm.environment.set('invoiceId', json.data.id);
+          if (path.includes('/payments')) pm.environment.set('paymentId', json.data.id);
+          if (path.includes('/bills')) pm.environment.set('billId', json.data.id);
+          if (path.includes('/meters')) pm.environment.set('meterId', json.data.id);
+          if (path.includes('/tickets')) pm.environment.set('ticketId', json.data.id);
+          if (path.includes('/search/saved')) pm.environment.set('savedSearchId', json.data.id);
+          if (path.includes('/match/results')) pm.environment.set('matchId', json.data.id);
+          if (path.includes('/intro-requests')) pm.environment.set('introId', json.data.id);
+          if (path.includes('/documents')) pm.environment.set('documentId', json.data.id);
+          if (path.includes('/kyc/submissions')) pm.environment.set('kycSubmissionId', json.data.id);
+          if (path.match(/\/users\/[^/]+$/)) pm.environment.set('userId', json.data.id);
+          if (path.includes('/notifications')) pm.environment.set('notificationId', json.data.id);
+        }
+        if (json.data.payment && json.data.payment.id) pm.environment.set('paymentId', json.data.payment.id);
+        if (json.data.bills && json.data.bills[0] && json.data.bills[0].id) pm.environment.set('billId', json.data.bills[0].id);
+        if (json.data.items && json.data.items[0] && json.data.items[0].id) {
+          if (path.includes('/notifications')) pm.environment.set('notificationId', json.data.items[0].id);
+        }
+        if (Array.isArray(json.data) && json.data[0] && json.data[0].id) {
+          if (path.includes('/payments')) pm.environment.set('paymentId', json.data[0].id);
+          if (path.includes('/bills')) pm.environment.set('billId', json.data[0].id);
+          if (path.includes('/notifications')) pm.environment.set('notificationId', json.data[0].id);
+        }
+      }
+    language: text/javascript
+auth:
+  - id: 77efbd6f-d5d3-461c-8eae-722c52ccda4a
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{accessToken}}"

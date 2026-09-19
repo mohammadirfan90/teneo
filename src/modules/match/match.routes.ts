@@ -10,6 +10,7 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';
@@ -23,12 +24,6 @@ import {
   runMatchHandler,
 } from './match.controller';
 import { introIdParamsSchema, matchIdParamsSchema } from './match.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function matchRouter(): Router {
   const r = Router();

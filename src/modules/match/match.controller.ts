@@ -10,18 +10,11 @@
 
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';
 
 import type { IntroIdParams, MatchIdParams } from './match.schemas';
 import { acceptIntro, declineIntro, listMyResults, openIntro, runMatch } from './match.service';
-
-function asyncHandler(
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>
-): RequestHandler {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-}
 
 // ──────────────────────────────────────────────────────────────────────
 // POST /run

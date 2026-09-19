@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/meters/{{meterId}}/readings"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "readingDate": "2026-08-31",
+      "readingValue": 1245.5,
+      "notes": "End-of-month reading"
+    }
+order: 3000

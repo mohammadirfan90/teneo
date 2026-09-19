@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/auth/signup"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "jane.doe@example.com",
+      "password": "S3cur3P@ssw0rd!"
+    }
+order: 1000

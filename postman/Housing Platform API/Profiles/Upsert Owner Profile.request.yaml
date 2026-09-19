@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/profiles/owner"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "displayName": "Alice Owner",
+      "bio": "Friendly landlord in downtown Toronto.",
+      "avatarObjectKey": "avatars/alice.jpg"
+    }
+order: 2000

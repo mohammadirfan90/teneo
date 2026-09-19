@@ -4,16 +4,20 @@
 
 import type { RequestHandler } from 'express';
 
+import { isStorageEnabled } from '@/lib/cloudinary';
 import { ok } from '@/lib/envelope';
+import { StorageDisabledError } from '@/lib/errors';
+import { assertMagicBytes, requireFile } from '@/middleware/upload';
 
 import type {
   CreateRoomInput,
   FlatIdParams,
   PatchRoomInput,
   PhotoIdParams,
-  RequestPhotoUploadInput,
+  ReorderPhotoInput,
   RoomIdParams,
   TransitionRoomInput,
+  UploadPhotoInput,
 } from './rooms.schemas';
 import * as svc from './rooms.service';
 
@@ -60,25 +64,51 @@ export const transitionRoom: RequestHandler = async (req, res) => {
   res.status(200).json(ok(data, 'Room transitioned'));
 };
 
-export const requestPhotoUpload: RequestHandler = async (req, res) => {
+/** 503 before any DB work when Cloudinary credentials are absent. */
+function assertStorageEnabled(): void {
+  if (!isStorageEnabled()) throw new StorageDisabledError();
+}
+
+export const uploadPhoto: RequestHandler = async (req, res) => {
   const userId = req.user!.id;
   const roles = req.user!.roles;
   const { id } = req.params as unknown as RoomIdParams;
-  const body = req.body as RequestPhotoUploadInput;
-  const data = await svc.requestPhotoUpload(id, userId, roles, body);
-  res.status(200).json(ok(data, 'Photo upload URL issued'));
+
+  // Request validation comes first: a bad upload is a 400 regardless of
+  // whether this environment happens to have storage credentials.
+  const file = requireFile(req.file);
+  // The declared Content-Type is caller-supplied; check the bytes agree
+  // before spending an upload on it.
+  assertMagicBytes(file);
+
+  assertStorageEnabled();
+
+  const data = await svc.uploadRoomPhoto(id, userId, roles, {
+    fields: req.body as UploadPhotoInput,
+    file: { buffer: file.buffer, mimetype: file.mimetype, size: file.size },
+  });
+  res.status(201).json(ok(data, 'Photo uploaded'));
 };
 
-export const deletePhoto: RequestHandler = async (_req, _res) => {
-  // Throws 501 — caught by asyncHandler.
-  svc.deletePhotoStub();
+export const listPhotos: RequestHandler = async (req, res) => {
+  const { id } = req.params as unknown as RoomIdParams;
+  const data = await svc.listRoomPhotos(id);
+  res.status(200).json(ok(data, 'Photos retrieved'));
 };
 
-export const reorderPhoto: RequestHandler = async (_req, _res) => {
-  // Throws 501 — caught by asyncHandler.
-  svc.reorderPhotoStub();
+export const deletePhoto: RequestHandler = async (req, res) => {
+  const userId = req.user!.id;
+  const roles = req.user!.roles;
+  const { id, photoId } = req.params as unknown as PhotoIdParams;
+  const data = await svc.deleteRoomPhoto(id, photoId, userId, roles);
+  res.status(200).json(ok(data, 'Photo deleted'));
 };
 
-// Silence the unused `PhotoIdParams` import — it's referenced in the
-// route file directly.
-export type { PhotoIdParams };
+export const reorderPhoto: RequestHandler = async (req, res) => {
+  const userId = req.user!.id;
+  const roles = req.user!.roles;
+  const { id, photoId } = req.params as unknown as PhotoIdParams;
+  const { position } = req.body as ReorderPhotoInput;
+  const data = await svc.reorderRoomPhoto(id, photoId, userId, roles, position);
+  res.status(200).json(ok(data, 'Photos reordered'));
+};

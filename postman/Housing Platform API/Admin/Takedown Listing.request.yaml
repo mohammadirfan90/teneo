@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/admin/listings/{{propertyId}}/takedown"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "reason": "Verified fraudulent listing per support ticket #4521"
+    }
+order: 3000

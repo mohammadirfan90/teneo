@@ -1,0 +1,3 @@
+$kind: collection
+description: "Admin moderation: user search, listing takedown, health, audit logs, feature flags."
+order: 22000

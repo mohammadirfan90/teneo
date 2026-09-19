@@ -1,0 +1,66 @@
+name: Housing Platform — Local
+values:
+  - key: baseUrl
+    value: 'http://localhost:3000'
+  - key: accessToken
+    value: ''
+  - key: refreshToken
+    value: ''
+  - key: adminEmail
+    value: demo@admin.local
+  - key: ownerEmail
+    value: owner1@demo.local
+  - key: tenantEmail
+    value: tenant1@demo.local
+  - key: demoPassword
+    value: Demo123!@#
+  - key: propertyId
+    value: ''
+  - key: buildingId
+    value: ''
+  - key: flatId
+    value: ''
+  - key: roomId
+    value: ''
+  - key: applicationId
+    value: ''
+  - key: viewingId
+    value: ''
+  - key: leaseId
+    value: ''
+  - key: invoiceId
+    value: ''
+  - key: meterId
+    value: ''
+  - key: ticketId
+    value: ''
+  - key: savedSearchId
+    value: ''
+  - key: matchId
+    value: ''
+  - key: introId
+    value: ''
+  - key: documentId
+    value: ''
+  - key: userId
+    value: ''
+  - key: kycSubmissionId
+    value: ''
+  - key: featureFlagKey
+    value: maintenance_v2_enabled
+  - key: idempotencyKey
+    value: ''
+  - key: photoId
+    value: ''
+  - key: owner2Email
+    value: owner2@demo.local
+  - key: tenant2Email
+    value: tenant2@demo.local
+  - key: paymentId
+    value: ''
+  - key: billId
+    value: ''
+  - key: amendmentId
+    value: ''
+  - key: notificationId
+    value: ''

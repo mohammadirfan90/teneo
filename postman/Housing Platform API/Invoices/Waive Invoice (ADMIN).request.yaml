@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/invoices/{{invoiceId}}/waive"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "reason": "Goodwill waiver after maintenance delay complaint resolved."
+    }
+order: 3000

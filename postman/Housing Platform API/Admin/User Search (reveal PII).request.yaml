@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/admin/users/search?q=carol&revealPii=true"
+method: GET
+queryParams:
+  q: carol
+  revealPii: "true"
+order: 2000

@@ -1,0 +1,3 @@
+$kind: collection
+description: Private document storage on Cloudinary. Upload is multipart/form-data (field `file`); download returns a signed URL that expires after 15 minutes.
+order: 20000

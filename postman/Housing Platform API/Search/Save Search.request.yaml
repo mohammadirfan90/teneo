@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/search/saved"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Berlin under 1000 EUR",
+      "query": {
+        "city": "Berlin",
+        "rent_min": 50000,
+        "rent_max": 100000,
+        "currency": "EUR",
+        "sort": "price_asc",
+        "limit": 20
+      }
+    }
+order: 3000

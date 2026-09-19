@@ -14,13 +14,15 @@
 //   - Lazy-connect is opt-out (we want fail-fast on a missing Redis).
 //
 // Deployment note:
-//   On Render we front this with Upstash Redis (TLS). ioredis picks up
-//   `rediss://` URLs automatically; no code change needed.
+//   On Render, REDIS_URL is injected from the managed Key Value service
+//   declared in render.yaml (internal `redis://`, private network, no TLS).
+//   Repointing at an external provider such as Upstash needs no code change
+//   either — ioredis enables TLS from a `rediss://` URL on its own.
 
 import { config as loadDotenv } from 'dotenv';
 import { Redis } from 'ioredis';
 
-import { env } from '@/lib/env';
+import { env, isProd } from '@/lib/env';
 import { logger } from '@/lib/logger';
 
 // Make redis.ts safely importable from any entrypoint (scripts, tests, REPL).
@@ -33,8 +35,17 @@ const g = globalThis as GlobalWithRedis;
 
 function buildClient(): Redis {
   const client = new Redis(env.REDIS_URL, {
-    // Don't queue commands before the first connection — fail fast.
-    enableOfflineQueue: false,
+    // Dev: fail fast, so a forgotten `docker compose up` is loud rather
+    // than a request hanging on a queue that will never drain.
+    // Prod: buffer instead. Managed Redis drops idle connections, and with
+    // the queue off every command issued mid-reconnect rejects instantly.
+    // cache.ts degrades gracefully on that, but the access-token lookup in
+    // auth.ts and the rate-limit store would 401/500 a real user over a
+    // blip that resolves in milliseconds.
+    enableOfflineQueue: isProd,
+    // Keep the socket warm so the provider's idle reaper never closes it —
+    // reconnecting is the expensive part, not the keepalive probe.
+    keepAlive: 10_000,
     // Reasonable defaults; bumps under load are the operator's call.
     maxRetriesPerRequest: 3,
     retryStrategy: (times: number) => Math.min(times * 200, 2000),

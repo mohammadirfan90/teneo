@@ -19,6 +19,14 @@
 //   - The body hash uses `req.rawBody` (captured by express.json's
 //     `verify` callback — see src/server.ts). Hashing the raw bytes
 //     means canonical JSON reordering doesn't break idempotency.
+//   - Multipart uploads have NO rawBody: express.json skips bodies whose
+//     Content-Type isn't JSON, so the `verify` hook never fires. Those
+//     requests are hashed from the multer-parsed file buffer plus the
+//     text fields instead. Without this every upload would hash to the
+//     same empty-body digest, and a client reusing one Idempotency-Key
+//     across two different photos would silently get the first photo's
+//     response back while the second was never stored. This is why
+//     `withIdempotency` must be mounted AFTER the multer middleware.
 //   - We grab `req.route.path` AFTER Express has matched the route
 //     (i.e. after `app.use(withIdempotency)` runs downstream of
 //     `app.use(router)`). To handle this we fall back to
@@ -46,8 +54,24 @@ interface RequestWithRawBody extends Request {
 
 function bodyHash(req: Request): string {
   const raw = (req as RequestWithRawBody).rawBody;
-  const bytes = raw && raw.length > 0 ? raw : '{}';
-  return createHash('sha256').update(bytes).digest('hex');
+  if (raw && raw.length > 0) {
+    return createHash('sha256').update(raw).digest('hex');
+  }
+
+  // Multipart: hash the uploaded bytes plus the accompanying text fields
+  // so two different files never collide on the same digest.
+  const file = req.file;
+  if (file?.buffer) {
+    const h = createHash('sha256');
+    h.update(file.originalname ?? '');
+    h.update(file.mimetype ?? '');
+    h.update(file.buffer);
+    // req.body holds the parsed text parts; key order is parser-stable.
+    h.update(JSON.stringify(req.body ?? {}));
+    return h.digest('hex');
+  }
+
+  return createHash('sha256').update('{}').digest('hex');
 }
 
 function routeId(req: Request): string {
@@ -106,7 +130,6 @@ function captureResponse(res: Response): void {
     },
     set(v: number) {
       pendingStatus = v;
-      pendingStatus;
     },
   });
 }
@@ -159,7 +182,10 @@ export const withIdempotency: RequestHandler = async (req, res, next) => {
         entry = JSON.parse(existing) as CachedResponse;
       } catch {
         // Corrupt cache row — drop and let the request run through.
-        await redis.del(`idem:${key}`);
+        // `key` already carries the `idem:` namespace (see cacheKey), so it
+        // is passed through verbatim; re-prefixing it here deleted a key
+        // that never existed and left the corrupt row in place forever.
+        await redis.del(key);
         entry = { requestHash: '', status: 0, body: '' };
       }
       if (entry.requestHash && entry.requestHash !== requestHash) {
@@ -198,7 +224,3 @@ export const withIdempotency: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
-
-// Re-exports so route code that uses withIdempotency can also import
-// the success/error builders without an additional import.
-export { ok, fail };

@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/bills/generate"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "leaseId": "{{leaseId}}",
+      "periodStart": "2026-08-01",
+      "periodEnd": "2026-08-31"
+    }
+order: 1000

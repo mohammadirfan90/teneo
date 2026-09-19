@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/payments/stripe/intent"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "invoiceId": "{{invoiceId}}",
+      "idempotencyKey": "client-uuid-9f1e2c8a-2026-09-07-pay-attempt-1"
+    }
+order: 1000

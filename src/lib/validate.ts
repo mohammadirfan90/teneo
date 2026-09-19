@@ -79,8 +79,13 @@ export function zodValidate(opts: ZodValidateOptions): RequestHandler {
       }
       if (opts.query) {
         const parsed = parseOrThrow('query', opts.query, req.query);
-        // req.query is a getter on Express 5's Request; assign back via mutation.
-        Object.assign(req.query, parsed);
+        // req.query is a getter on Express 5's Request prototype; override on the instance.
+        Object.defineProperty(req, 'query', {
+          value: parsed,
+          writable: true,
+          configurable: true,
+          enumerable: true,
+        });
       }
       if (opts.params) {
         const parsed = parseOrThrow('params', opts.params, req.params);

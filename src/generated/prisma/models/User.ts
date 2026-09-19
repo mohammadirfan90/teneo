@@ -297,6 +297,7 @@ export type UserWhereInput = {
   notifications?: Prisma.NotificationListRelationFilter
   notificationPreference?: Prisma.XOR<Prisma.NotificationPreferenceNullableScalarRelationFilter, Prisma.NotificationPreferenceWhereInput> | null
   documents?: Prisma.DocumentListRelationFilter
+  roomPhotos?: Prisma.RoomPhotoListRelationFilter
   matchResultsCaller?: Prisma.MatchResultListRelationFilter
   matchResultsCandidate?: Prisma.MatchResultListRelationFilter
   introsAsCaller?: Prisma.IntroRequestListRelationFilter
@@ -345,6 +346,7 @@ export type UserOrderByWithRelationInput = {
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   notificationPreference?: Prisma.NotificationPreferenceOrderByWithRelationInput
   documents?: Prisma.DocumentOrderByRelationAggregateInput
+  roomPhotos?: Prisma.RoomPhotoOrderByRelationAggregateInput
   matchResultsCaller?: Prisma.MatchResultOrderByRelationAggregateInput
   matchResultsCandidate?: Prisma.MatchResultOrderByRelationAggregateInput
   introsAsCaller?: Prisma.IntroRequestOrderByRelationAggregateInput
@@ -396,6 +398,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   notifications?: Prisma.NotificationListRelationFilter
   notificationPreference?: Prisma.XOR<Prisma.NotificationPreferenceNullableScalarRelationFilter, Prisma.NotificationPreferenceWhereInput> | null
   documents?: Prisma.DocumentListRelationFilter
+  roomPhotos?: Prisma.RoomPhotoListRelationFilter
   matchResultsCaller?: Prisma.MatchResultListRelationFilter
   matchResultsCandidate?: Prisma.MatchResultListRelationFilter
   introsAsCaller?: Prisma.IntroRequestListRelationFilter
@@ -488,6 +491,7 @@ export type UserCreateInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -536,6 +540,7 @@ export type UserUncheckedCreateInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -584,6 +589,7 @@ export type UserUpdateInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -632,6 +638,7 @@ export type UserUncheckedUpdateInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -1148,6 +1155,20 @@ export type UserUpdateOneRequiredWithoutDocumentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDocumentsInput, Prisma.UserUpdateWithoutDocumentsInput>, Prisma.UserUncheckedUpdateWithoutDocumentsInput>
 }
 
+export type UserCreateNestedOneWithoutRoomPhotosInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoomPhotosInput, Prisma.UserUncheckedCreateWithoutRoomPhotosInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoomPhotosInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRoomPhotosNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoomPhotosInput, Prisma.UserUncheckedCreateWithoutRoomPhotosInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoomPhotosInput
+  upsert?: Prisma.UserUpsertWithoutRoomPhotosInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRoomPhotosInput, Prisma.UserUpdateWithoutRoomPhotosInput>, Prisma.UserUncheckedUpdateWithoutRoomPhotosInput>
+}
+
 export type UserCreateNestedOneWithoutMatchResultsCallerInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutMatchResultsCallerInput, Prisma.UserUncheckedCreateWithoutMatchResultsCallerInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutMatchResultsCallerInput
@@ -1245,6 +1266,7 @@ export type UserCreateWithoutRolesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -1292,6 +1314,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -1355,6 +1378,7 @@ export type UserUpdateWithoutRolesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -1402,6 +1426,7 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -1449,6 +1474,7 @@ export type UserCreateWithoutOwnerProfileInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -1496,6 +1522,7 @@ export type UserUncheckedCreateWithoutOwnerProfileInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -1559,6 +1586,7 @@ export type UserUpdateWithoutOwnerProfileInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -1606,6 +1634,7 @@ export type UserUncheckedUpdateWithoutOwnerProfileInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -1653,6 +1682,7 @@ export type UserCreateWithoutTenantProfileInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -1700,6 +1730,7 @@ export type UserUncheckedCreateWithoutTenantProfileInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -1763,6 +1794,7 @@ export type UserUpdateWithoutTenantProfileInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -1810,6 +1842,7 @@ export type UserUncheckedUpdateWithoutTenantProfileInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -1857,6 +1890,7 @@ export type UserCreateWithoutKycSubmissionsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -1904,6 +1938,7 @@ export type UserUncheckedCreateWithoutKycSubmissionsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -1967,6 +2002,7 @@ export type UserUpdateWithoutKycSubmissionsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -2014,6 +2050,7 @@ export type UserUncheckedUpdateWithoutKycSubmissionsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -2061,6 +2098,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -2108,6 +2146,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -2171,6 +2210,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -2218,6 +2258,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -2265,6 +2306,7 @@ export type UserCreateWithoutTenantPreferencesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -2312,6 +2354,7 @@ export type UserUncheckedCreateWithoutTenantPreferencesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -2375,6 +2418,7 @@ export type UserUpdateWithoutTenantPreferencesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -2422,6 +2466,7 @@ export type UserUncheckedUpdateWithoutTenantPreferencesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -2469,6 +2514,7 @@ export type UserCreateWithoutPropertiesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -2516,6 +2562,7 @@ export type UserUncheckedCreateWithoutPropertiesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -2579,6 +2626,7 @@ export type UserUpdateWithoutPropertiesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -2626,6 +2674,7 @@ export type UserUncheckedUpdateWithoutPropertiesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -2673,6 +2722,7 @@ export type UserCreateWithoutSavedSearchesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -2720,6 +2770,7 @@ export type UserUncheckedCreateWithoutSavedSearchesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -2783,6 +2834,7 @@ export type UserUpdateWithoutSavedSearchesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -2830,6 +2882,7 @@ export type UserUncheckedUpdateWithoutSavedSearchesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -2877,6 +2930,7 @@ export type UserCreateWithoutApplicationsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -2924,6 +2978,7 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -2987,6 +3042,7 @@ export type UserUpdateWithoutApplicationsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -3034,6 +3090,7 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -3081,6 +3138,7 @@ export type UserCreateWithoutViewingRequestsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -3128,6 +3186,7 @@ export type UserUncheckedCreateWithoutViewingRequestsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -3191,6 +3250,7 @@ export type UserUpdateWithoutViewingRequestsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -3238,6 +3298,7 @@ export type UserUncheckedUpdateWithoutViewingRequestsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -3285,6 +3346,7 @@ export type UserCreateWithoutLeaseTenanciesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -3332,6 +3394,7 @@ export type UserUncheckedCreateWithoutLeaseTenanciesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -3395,6 +3458,7 @@ export type UserUpdateWithoutLeaseTenanciesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -3442,6 +3506,7 @@ export type UserUncheckedUpdateWithoutLeaseTenanciesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -3489,6 +3554,7 @@ export type UserCreateWithoutLeaseSignaturesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -3536,6 +3602,7 @@ export type UserUncheckedCreateWithoutLeaseSignaturesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -3599,6 +3666,7 @@ export type UserUpdateWithoutLeaseSignaturesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -3646,6 +3714,7 @@ export type UserUncheckedUpdateWithoutLeaseSignaturesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -3693,6 +3762,7 @@ export type UserCreateWithoutLeaseAmendmentsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -3740,6 +3810,7 @@ export type UserUncheckedCreateWithoutLeaseAmendmentsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -3803,6 +3874,7 @@ export type UserUpdateWithoutLeaseAmendmentsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -3850,6 +3922,7 @@ export type UserUncheckedUpdateWithoutLeaseAmendmentsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -3897,6 +3970,7 @@ export type UserCreateWithoutRentInvoicesDisputedInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -3944,6 +4018,7 @@ export type UserUncheckedCreateWithoutRentInvoicesDisputedInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -3996,6 +4071,7 @@ export type UserCreateWithoutRentInvoicesWaivedInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -4043,6 +4119,7 @@ export type UserUncheckedCreateWithoutRentInvoicesWaivedInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -4106,6 +4183,7 @@ export type UserUpdateWithoutRentInvoicesDisputedInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -4153,6 +4231,7 @@ export type UserUncheckedUpdateWithoutRentInvoicesDisputedInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -4211,6 +4290,7 @@ export type UserUpdateWithoutRentInvoicesWaivedInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -4258,6 +4338,7 @@ export type UserUncheckedUpdateWithoutRentInvoicesWaivedInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -4305,6 +4386,7 @@ export type UserCreateWithoutPaymentsMadeInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -4352,6 +4434,7 @@ export type UserUncheckedCreateWithoutPaymentsMadeInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -4415,6 +4498,7 @@ export type UserUpdateWithoutPaymentsMadeInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -4462,6 +4546,7 @@ export type UserUncheckedUpdateWithoutPaymentsMadeInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -4509,6 +4594,7 @@ export type UserCreateWithoutMeterReadingsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -4556,6 +4642,7 @@ export type UserUncheckedCreateWithoutMeterReadingsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -4619,6 +4706,7 @@ export type UserUpdateWithoutMeterReadingsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -4666,6 +4754,7 @@ export type UserUncheckedUpdateWithoutMeterReadingsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -4713,6 +4802,7 @@ export type UserCreateWithoutBillSharesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -4760,6 +4850,7 @@ export type UserUncheckedCreateWithoutBillSharesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -4823,6 +4914,7 @@ export type UserUpdateWithoutBillSharesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -4870,6 +4962,7 @@ export type UserUncheckedUpdateWithoutBillSharesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -4917,6 +5010,7 @@ export type UserCreateWithoutTicketsRaisedInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -4964,6 +5058,7 @@ export type UserUncheckedCreateWithoutTicketsRaisedInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -5016,6 +5111,7 @@ export type UserCreateWithoutTicketsResolvedInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -5063,6 +5159,7 @@ export type UserUncheckedCreateWithoutTicketsResolvedInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -5115,6 +5212,7 @@ export type UserCreateWithoutTicketsClosedInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -5162,6 +5260,7 @@ export type UserUncheckedCreateWithoutTicketsClosedInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -5225,6 +5324,7 @@ export type UserUpdateWithoutTicketsRaisedInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -5272,6 +5372,7 @@ export type UserUncheckedUpdateWithoutTicketsRaisedInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -5330,6 +5431,7 @@ export type UserUpdateWithoutTicketsResolvedInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -5377,6 +5479,7 @@ export type UserUncheckedUpdateWithoutTicketsResolvedInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -5435,6 +5538,7 @@ export type UserUpdateWithoutTicketsClosedInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -5482,6 +5586,7 @@ export type UserUncheckedUpdateWithoutTicketsClosedInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -5529,6 +5634,7 @@ export type UserCreateWithoutTicketUpdatesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -5576,6 +5682,7 @@ export type UserUncheckedCreateWithoutTicketUpdatesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -5639,6 +5746,7 @@ export type UserUpdateWithoutTicketUpdatesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -5686,6 +5794,7 @@ export type UserUncheckedUpdateWithoutTicketUpdatesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -5733,6 +5842,7 @@ export type UserCreateWithoutNotificationsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -5780,6 +5890,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -5843,6 +5954,7 @@ export type UserUpdateWithoutNotificationsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -5890,6 +6002,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -5937,6 +6050,7 @@ export type UserCreateWithoutNotificationPreferenceInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -5984,6 +6098,7 @@ export type UserUncheckedCreateWithoutNotificationPreferenceInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -6047,6 +6162,7 @@ export type UserUpdateWithoutNotificationPreferenceInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -6094,6 +6210,7 @@ export type UserUncheckedUpdateWithoutNotificationPreferenceInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -6141,6 +6258,7 @@ export type UserCreateWithoutDocumentsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -6188,6 +6306,7 @@ export type UserUncheckedCreateWithoutDocumentsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -6251,6 +6370,7 @@ export type UserUpdateWithoutDocumentsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -6298,6 +6418,215 @@ export type UserUncheckedUpdateWithoutDocumentsInput = {
   ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
+  matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
+  matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
+  introsAsCandidate?: Prisma.IntroRequestUncheckedUpdateManyWithoutCandidateNestedInput
+}
+
+export type UserCreateWithoutRoomPhotosInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
+  matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
+  introsAsCandidate?: Prisma.IntroRequestCreateNestedManyWithoutCandidateInput
+}
+
+export type UserUncheckedCreateWithoutRoomPhotosInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
+  matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
+  introsAsCandidate?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCandidateInput
+}
+
+export type UserCreateOrConnectWithoutRoomPhotosInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRoomPhotosInput, Prisma.UserUncheckedCreateWithoutRoomPhotosInput>
+}
+
+export type UserUpsertWithoutRoomPhotosInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRoomPhotosInput, Prisma.UserUncheckedUpdateWithoutRoomPhotosInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRoomPhotosInput, Prisma.UserUncheckedCreateWithoutRoomPhotosInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRoomPhotosInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRoomPhotosInput, Prisma.UserUncheckedUpdateWithoutRoomPhotosInput>
+}
+
+export type UserUpdateWithoutRoomPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
+  matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
+  introsAsCandidate?: Prisma.IntroRequestUpdateManyWithoutCandidateNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRoomPhotosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -6346,6 +6675,7 @@ export type UserCreateWithoutMatchResultsCallerInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
   introsAsCandidate?: Prisma.IntroRequestCreateNestedManyWithoutCandidateInput
@@ -6393,6 +6723,7 @@ export type UserUncheckedCreateWithoutMatchResultsCallerInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
   introsAsCandidate?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCandidateInput
@@ -6445,6 +6776,7 @@ export type UserCreateWithoutMatchResultsCandidateInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
   introsAsCandidate?: Prisma.IntroRequestCreateNestedManyWithoutCandidateInput
@@ -6492,6 +6824,7 @@ export type UserUncheckedCreateWithoutMatchResultsCandidateInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
   introsAsCandidate?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCandidateInput
@@ -6555,6 +6888,7 @@ export type UserUpdateWithoutMatchResultsCallerInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
   introsAsCandidate?: Prisma.IntroRequestUpdateManyWithoutCandidateNestedInput
@@ -6602,6 +6936,7 @@ export type UserUncheckedUpdateWithoutMatchResultsCallerInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
   introsAsCandidate?: Prisma.IntroRequestUncheckedUpdateManyWithoutCandidateNestedInput
@@ -6660,6 +6995,7 @@ export type UserUpdateWithoutMatchResultsCandidateInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
   introsAsCandidate?: Prisma.IntroRequestUpdateManyWithoutCandidateNestedInput
@@ -6707,6 +7043,7 @@ export type UserUncheckedUpdateWithoutMatchResultsCandidateInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
   introsAsCandidate?: Prisma.IntroRequestUncheckedUpdateManyWithoutCandidateNestedInput
@@ -6754,6 +7091,7 @@ export type UserCreateWithoutIntrosAsCallerInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCandidate?: Prisma.IntroRequestCreateNestedManyWithoutCandidateInput
@@ -6801,6 +7139,7 @@ export type UserUncheckedCreateWithoutIntrosAsCallerInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCandidate?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCandidateInput
@@ -6853,6 +7192,7 @@ export type UserCreateWithoutIntrosAsCandidateInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
@@ -6900,6 +7240,7 @@ export type UserUncheckedCreateWithoutIntrosAsCandidateInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedCreateNestedOneWithoutUserInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
   matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
@@ -6963,6 +7304,7 @@ export type UserUpdateWithoutIntrosAsCallerInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCandidate?: Prisma.IntroRequestUpdateManyWithoutCandidateNestedInput
@@ -7010,6 +7352,7 @@ export type UserUncheckedUpdateWithoutIntrosAsCallerInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCandidate?: Prisma.IntroRequestUncheckedUpdateManyWithoutCandidateNestedInput
@@ -7068,6 +7411,7 @@ export type UserUpdateWithoutIntrosAsCandidateInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
@@ -7115,6 +7459,7 @@ export type UserUncheckedUpdateWithoutIntrosAsCandidateInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
   notificationPreference?: Prisma.NotificationPreferenceUncheckedUpdateOneWithoutUserNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
   matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
   matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
@@ -7147,6 +7492,7 @@ export type UserCountOutputType = {
   ticketUpdates: number
   notifications: number
   documents: number
+  roomPhotos: number
   matchResultsCaller: number
   matchResultsCandidate: number
   introsAsCaller: number
@@ -7175,6 +7521,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   ticketUpdates?: boolean | UserCountOutputTypeCountTicketUpdatesArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   documents?: boolean | UserCountOutputTypeCountDocumentsArgs
+  roomPhotos?: boolean | UserCountOutputTypeCountRoomPhotosArgs
   matchResultsCaller?: boolean | UserCountOutputTypeCountMatchResultsCallerArgs
   matchResultsCandidate?: boolean | UserCountOutputTypeCountMatchResultsCandidateArgs
   introsAsCaller?: boolean | UserCountOutputTypeCountIntrosAsCallerArgs
@@ -7341,6 +7688,13 @@ export type UserCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountRoomPhotosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RoomPhotoWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountMatchResultsCallerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MatchResultWhereInput
 }
@@ -7409,6 +7763,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   notificationPreference?: boolean | Prisma.User$notificationPreferenceArgs<ExtArgs>
   documents?: boolean | Prisma.User$documentsArgs<ExtArgs>
+  roomPhotos?: boolean | Prisma.User$roomPhotosArgs<ExtArgs>
   matchResultsCaller?: boolean | Prisma.User$matchResultsCallerArgs<ExtArgs>
   matchResultsCandidate?: boolean | Prisma.User$matchResultsCandidateArgs<ExtArgs>
   introsAsCaller?: boolean | Prisma.User$introsAsCallerArgs<ExtArgs>
@@ -7500,6 +7855,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   notificationPreference?: boolean | Prisma.User$notificationPreferenceArgs<ExtArgs>
   documents?: boolean | Prisma.User$documentsArgs<ExtArgs>
+  roomPhotos?: boolean | Prisma.User$roomPhotosArgs<ExtArgs>
   matchResultsCaller?: boolean | Prisma.User$matchResultsCallerArgs<ExtArgs>
   matchResultsCandidate?: boolean | Prisma.User$matchResultsCandidateArgs<ExtArgs>
   introsAsCaller?: boolean | Prisma.User$introsAsCallerArgs<ExtArgs>
@@ -7537,6 +7893,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     notificationPreference: Prisma.$NotificationPreferencePayload<ExtArgs> | null
     documents: Prisma.$DocumentPayload<ExtArgs>[]
+    roomPhotos: Prisma.$RoomPhotoPayload<ExtArgs>[]
     matchResultsCaller: Prisma.$MatchResultPayload<ExtArgs>[]
     matchResultsCandidate: Prisma.$MatchResultPayload<ExtArgs>[]
     introsAsCaller: Prisma.$IntroRequestPayload<ExtArgs>[]
@@ -7978,6 +8335,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notificationPreference<T extends Prisma.User$notificationPreferenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationPreferenceArgs<ExtArgs>>): Prisma.Prisma__NotificationPreferenceClient<runtime.Types.Result.GetResult<Prisma.$NotificationPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   documents<T extends Prisma.User$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  roomPhotos<T extends Prisma.User$roomPhotosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roomPhotosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoomPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   matchResultsCaller<T extends Prisma.User$matchResultsCallerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$matchResultsCallerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   matchResultsCandidate<T extends Prisma.User$matchResultsCandidateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$matchResultsCandidateArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   introsAsCaller<T extends Prisma.User$introsAsCallerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$introsAsCallerArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IntroRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8997,6 +9355,30 @@ export type User$documentsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
+}
+
+/**
+ * User.roomPhotos
+ */
+export type User$roomPhotosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RoomPhoto
+   */
+  select?: Prisma.RoomPhotoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RoomPhoto
+   */
+  omit?: Prisma.RoomPhotoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RoomPhotoInclude<ExtArgs> | null
+  where?: Prisma.RoomPhotoWhereInput
+  orderBy?: Prisma.RoomPhotoOrderByWithRelationInput | Prisma.RoomPhotoOrderByWithRelationInput[]
+  cursor?: Prisma.RoomPhotoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RoomPhotoScalarFieldEnum | Prisma.RoomPhotoScalarFieldEnum[]
 }
 
 /**

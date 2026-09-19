@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/search/rooms?city=Berlin&rent_min=50000&rent_max=150000&currency=EUR&amenities=wifi,heating&sort=price_asc&limit=20"
+method: GET
+queryParams:
+  city: Berlin
+  rent_min: "50000"
+  rent_max: "150000"
+  currency: EUR
+  amenities: wifi,heating
+  sort: price_asc
+  limit: "20"
+order: 1000

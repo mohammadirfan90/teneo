@@ -6,7 +6,7 @@
 -- New tables (4):
 --   property_meters  — one row per physical meter installed on a property.
 --                      Carries utility_type, rate_per_unit_minor snapshot,
-+                      unit_label, currency, is_active.
+--                      unit_label, currency, is_active.
 --   meter_readings   — append-only readings. UNIQUE(meter_id, reading_date)
 --                      prevents duplicate submissions for the same date.
 --   utility_bills    — created by POST /bills/generate. Snapshots

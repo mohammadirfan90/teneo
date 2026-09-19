@@ -145,7 +145,11 @@ async function main(): Promise<void> {
   }
 
   console.log('Done.');
-  console.log('Login with: demo@admin / Demo123!@#');
+  // Print the admin row verbatim rather than a hand-typed string — a
+  // truncated address here is the first thing anyone copies and the
+  // last thing anyone re-checks.
+  const admin = DEMO_USERS.find((u) => u.role === 'ADMIN');
+  if (admin) console.log(`Login with: ${admin.email} / ${admin.password}`);
 }
 
 main()

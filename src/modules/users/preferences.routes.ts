@@ -2,18 +2,13 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { requireRole } from '@/middleware/role';
 
 import { getPreferences, patchVisibility, putPreferences } from './preferences.controller';
 import { preferencesPutSchema, preferencesVisibilitySchema } from './users.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function preferencesRouter(): Router {
   const r = Router();

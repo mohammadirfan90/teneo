@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/admin/audit-logs?limit=20"
+method: GET
+queryParams:
+  limit: "20"
+order: 6000

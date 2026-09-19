@@ -232,14 +232,13 @@ export const EVENT_RECIPIENT_RESOLVERS: Record<
 > = {} as Record<NotificationEventType, string>;
 
 export async function resolveRecipientForEvent(
-  eventType: NotificationEventType,
-  // unused for now — Phase 19+ will pass typed contexts per event.
+  // Both params are unused: this is a Phase 19 placeholder that always
+  // returns null, so callers must pass recipientUserId to emit()
+  // explicitly. Underscore-prefixed rather than `void`-ed so the
+  // intent is visible in the signature itself.
+  _eventType: NotificationEventType,
   _context: Record<string, unknown> = {}
 ): Promise<string | null> {
-  // Phase 19 hooks each event_type to its own resolver. For now,
-  // callers must pass recipientUserId to emit() explicitly.
-  void eventType;
-  void _context;
   return null;
 }
 

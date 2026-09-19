@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/kyc/submissions/{{kycSubmissionId}}/decision"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "decision": "REJECTED",
+      "notes": "Proof of address is older than 90 days."
+    }
+order: 6000

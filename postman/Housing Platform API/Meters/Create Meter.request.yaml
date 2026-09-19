@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/properties/{{propertyId}}/meters"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "utilityType": "ELECTRICITY",
+      "label": "Main kitchen meter",
+      "ratePerUnitMinor": 150,
+      "currency": "USD",
+      "unitLabel": "kWh"
+    }
+order: 1000

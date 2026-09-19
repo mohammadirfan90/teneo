@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/search/rooms/suggest?q=mit&limit=10"
+method: GET
+queryParams:
+  q: mit
+  limit: "10"
+order: 2000

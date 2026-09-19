@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/match/intro-requests/{{introId}}/decline"
+method: POST
+order: 5000

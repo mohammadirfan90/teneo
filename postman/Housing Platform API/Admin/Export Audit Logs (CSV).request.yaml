@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/admin/audit-logs?format=csv&from=2026-09-01T00:00:00.000Z&to=2026-09-30T00:00:00.000Z"
+method: GET
+queryParams:
+  format: csv
+  from: 2026-09-01T00:00:00.000Z
+  to: 2026-09-30T00:00:00.000Z
+order: 7000

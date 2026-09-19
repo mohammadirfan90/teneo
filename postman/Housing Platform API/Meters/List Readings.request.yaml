@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/meters/{{meterId}}/readings?limit=50"
+method: GET
+queryParams:
+  limit: "50"
+order: 4000

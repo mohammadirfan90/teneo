@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/properties/{{propertyId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "title": "Updated title",
+      "city": "Berlin",
+      "propertyType": "VILLA"
+    }
+order: 4000

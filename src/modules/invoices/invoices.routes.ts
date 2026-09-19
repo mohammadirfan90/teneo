@@ -14,6 +14,7 @@ import { type RequestHandler, Router } from 'express';
 import { withIdempotency } from '@/middleware/idempotency';
 import { requireAuth } from '@/middleware/auth';
 import { requireRole } from '@/middleware/role';
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 
 import {
@@ -28,12 +29,6 @@ import {
   invoiceIdParamsSchema,
   waiveInvoiceSchema,
 } from './invoices.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function invoicesRouter(): Router {
   const r = Router();

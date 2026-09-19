@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/applications/{{applicationId}}/transition"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "to": "SCREENING",
+      "note": "Strong income, moving to screening."
+    }
+order: 4000

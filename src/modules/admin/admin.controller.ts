@@ -13,6 +13,7 @@
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import { z } from 'zod';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';
 
 import { getAdminHealth, reinstateListing, searchUsers, takedownListing } from './admin.service';
@@ -48,14 +49,6 @@ export const takedownBodySchema = z
 // ──────────────────────────────────────────────────────────────────────
 // Helpers
 // ──────────────────────────────────────────────────────────────────────
-
-function asyncHandler(
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>
-): RequestHandler {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-}
 
 /**
  * Best-effort extraction of caller IP + user-agent for audit logging.

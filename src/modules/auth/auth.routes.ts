@@ -15,6 +15,7 @@ import {
   Router,
 } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import {
@@ -44,11 +45,6 @@ import {
  * global error-handler middleware. Stays inline — no utility file
  * (scope discipline).
  */
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function authRouter(): Router {
   const r = Router();

@@ -9,6 +9,7 @@
 
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';
 import { ForbiddenError, NotFoundError, UnauthorizedError } from '@/lib/errors';
 
@@ -60,14 +61,6 @@ export const requireViewingParty: RequestHandler = async (req, _res, next) => {
 // ──────────────────────────────────────────────────────────────────────
 // Handlers
 // ──────────────────────────────────────────────────────────────────────
-
-function asyncHandler(
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<unknown>
-): RequestHandler {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-}
 
 export const getViewingHandler: RequestHandler = asyncHandler(async (req, res) => {
   const { id } = req.params as unknown as ViewingIdParams;

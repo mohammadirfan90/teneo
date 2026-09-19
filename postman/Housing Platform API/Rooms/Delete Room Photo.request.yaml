@@ -1,0 +1,5 @@
+$kind: http-request
+description: Soft-deletes the row, closes the ordering gap, destroys the remote asset.
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}/photos/{{photoId}}"
+method: DELETE
+order: 8000

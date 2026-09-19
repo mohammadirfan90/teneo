@@ -108,11 +108,3 @@ export function verifyWebhookSignature(
 
   return event;
 }
-
-/**
- * No-op for API symmetry with disconnectRedis. Stripe SDK has no
- * explicit close; the underlying HTTP keep-alive sockets are GC'd.
- */
-export function disconnectStripe(): void {
-  // intentionally empty
-}

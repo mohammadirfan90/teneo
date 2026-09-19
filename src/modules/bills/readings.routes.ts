@@ -11,6 +11,7 @@ import { type RequestHandler, Router } from 'express';
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';
 import { requireRole } from '@/middleware/role';
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 
 import {
@@ -23,12 +24,6 @@ import {
   listReadingsQuerySchema,
   meterIdParamsSchema,
 } from './readings.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function readingsRouter(): Router {
   const r = Router({ mergeParams: true });

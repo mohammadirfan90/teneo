@@ -16,6 +16,7 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { requireOwnership } from '@/middleware/ownership';
@@ -48,12 +49,6 @@ function paramId(req: import('express').Request, key: string): string {
   if (typeof v === 'string') return v;
   return Array.isArray(v) && v.length > 0 && typeof v[0] === 'string' ? (v[0] as string) : '';
 }
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function applicationsRouter(): Router {
   const r = Router();

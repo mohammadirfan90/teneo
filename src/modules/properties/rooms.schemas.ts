@@ -100,17 +100,29 @@ export const transitionRoomSchema = z.object({
 export type TransitionRoomInput = z.infer<typeof transitionRoomSchema>;
 
 // ──────────────────────────────────────────────────────────────────────
-// POST /rooms/:id/photos — presigned URL stub (Phase 18 will own real upload)
+// POST /rooms/:id/photos — multipart upload to Cloudinary
 // ──────────────────────────────────────────────────────────────────────
 
-export const requestPhotoUploadSchema = z.object({
-  contentType: z
-    .string()
-    .regex(/^image\/(jpeg|png|webp)$/i, 'contentType must be image/jpeg, image/png, or image/webp'),
-  ext: z.enum(['jpg', 'jpeg', 'png', 'webp']).optional(),
+/**
+ * Text fields that accompany the `file` part. The image itself is
+ * validated by src/middleware/upload.ts (8MB cap, image/* allowlist,
+ * magic-byte check) — Zod only sees the metadata.
+ *
+ * Not `.strict()`: multipart parsers contribute their own fields, and
+ * rejecting unknown keys would break ordinary form posts.
+ */
+export const uploadPhotoSchema = z.object({
+  /** Accessibility text. Worth requiring eventually; optional for now. */
+  alt: z.string().min(1).max(300).optional(),
+  /**
+   * Desired gallery slot. Arrives as a string because multipart is
+   * untyped, so it is coerced. Out-of-range values are clamped to the
+   * end of the gallery by the service rather than rejected.
+   */
+  position: z.coerce.number().int().min(0).max(1000).optional(),
 });
 
-export type RequestPhotoUploadInput = z.infer<typeof requestPhotoUploadSchema>;
+export type UploadPhotoInput = z.infer<typeof uploadPhotoSchema>;
 
 // ──────────────────────────────────────────────────────────────────────
 // POST /rooms/:id/photos/:photo_id/reorder

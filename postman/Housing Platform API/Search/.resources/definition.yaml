@@ -1,0 +1,3 @@
+$kind: collection
+description: Public room search + suggest + saved searches.
+order: 10000

@@ -1,0 +1,3 @@
+$kind: collection
+description: Self-service profile + role activation; admin user lookups.
+order: 2000

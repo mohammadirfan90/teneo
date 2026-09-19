@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/applications/{{applicationId}}/viewing"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "proposedSlots": [
+        "2026-09-15T10:00:00.000Z",
+        "2026-09-15T14:00:00.000Z",
+        "2026-09-16T11:00:00.000Z"
+      ]
+    }
+order: 8000

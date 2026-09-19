@@ -14,13 +14,13 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Document
- * Owned storage object — a single source of truth for everything
- * that previously held a bare objectKey string (KYC documents,
- * lease contracts, room photos, maintenance ticket attachments).
+ * Owned storage object — a single source of truth for private files
+ * (KYC documents, lease contracts, maintenance ticket attachments).
  * 
- * Phase 18 returns mock S3 URLs (`https://stub.local/...`) and never
- * verifies the upload completed. Phase 19+ adds the finalize path
- * + real signed URLs.
+ * Backed by Cloudinary with `type: authenticated`, so the bytes are
+ * never publicly addressable: GET /documents/:id/url mints a signed
+ * URL that expires after 15 minutes. Public listing images are a
+ * different concern and live in `RoomPhoto` instead.
  */
 export type DocumentModel = runtime.Types.Result.DefaultSelection<Prisma.$DocumentPayload>
 
@@ -48,6 +48,10 @@ export type DocumentMinAggregateOutputType = {
   sizeBytes: bigint | null
   label: string | null
   status: string | null
+  storageProvider: string | null
+  resourceType: string | null
+  deliveryType: string | null
+  etag: string | null
   deletedAt: Date | null
   tenantId: string | null
   createdAt: Date | null
@@ -62,6 +66,10 @@ export type DocumentMaxAggregateOutputType = {
   sizeBytes: bigint | null
   label: string | null
   status: string | null
+  storageProvider: string | null
+  resourceType: string | null
+  deliveryType: string | null
+  etag: string | null
   deletedAt: Date | null
   tenantId: string | null
   createdAt: Date | null
@@ -76,6 +84,10 @@ export type DocumentCountAggregateOutputType = {
   sizeBytes: number
   label: number
   status: number
+  storageProvider: number
+  resourceType: number
+  deliveryType: number
+  etag: number
   deletedAt: number
   tenantId: number
   createdAt: number
@@ -100,6 +112,10 @@ export type DocumentMinAggregateInputType = {
   sizeBytes?: true
   label?: true
   status?: true
+  storageProvider?: true
+  resourceType?: true
+  deliveryType?: true
+  etag?: true
   deletedAt?: true
   tenantId?: true
   createdAt?: true
@@ -114,6 +130,10 @@ export type DocumentMaxAggregateInputType = {
   sizeBytes?: true
   label?: true
   status?: true
+  storageProvider?: true
+  resourceType?: true
+  deliveryType?: true
+  etag?: true
   deletedAt?: true
   tenantId?: true
   createdAt?: true
@@ -128,6 +148,10 @@ export type DocumentCountAggregateInputType = {
   sizeBytes?: true
   label?: true
   status?: true
+  storageProvider?: true
+  resourceType?: true
+  deliveryType?: true
+  etag?: true
   deletedAt?: true
   tenantId?: true
   createdAt?: true
@@ -229,6 +253,10 @@ export type DocumentGroupByOutputType = {
   sizeBytes: bigint
   label: string | null
   status: string
+  storageProvider: string
+  resourceType: string
+  deliveryType: string
+  etag: string | null
   deletedAt: Date | null
   tenantId: string
   createdAt: Date
@@ -266,6 +294,10 @@ export type DocumentWhereInput = {
   sizeBytes?: Prisma.BigIntFilter<"Document"> | bigint | number
   label?: Prisma.StringNullableFilter<"Document"> | string | null
   status?: Prisma.StringFilter<"Document"> | string
+  storageProvider?: Prisma.StringFilter<"Document"> | string
+  resourceType?: Prisma.StringFilter<"Document"> | string
+  deliveryType?: Prisma.StringFilter<"Document"> | string
+  etag?: Prisma.StringNullableFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   tenantId?: Prisma.UuidFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
@@ -281,6 +313,10 @@ export type DocumentOrderByWithRelationInput = {
   sizeBytes?: Prisma.SortOrder
   label?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageProvider?: Prisma.SortOrder
+  resourceType?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  etag?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -299,6 +335,10 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   sizeBytes?: Prisma.BigIntFilter<"Document"> | bigint | number
   label?: Prisma.StringNullableFilter<"Document"> | string | null
   status?: Prisma.StringFilter<"Document"> | string
+  storageProvider?: Prisma.StringFilter<"Document"> | string
+  resourceType?: Prisma.StringFilter<"Document"> | string
+  deliveryType?: Prisma.StringFilter<"Document"> | string
+  etag?: Prisma.StringNullableFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   tenantId?: Prisma.UuidFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
@@ -314,6 +354,10 @@ export type DocumentOrderByWithAggregationInput = {
   sizeBytes?: Prisma.SortOrder
   label?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageProvider?: Prisma.SortOrder
+  resourceType?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  etag?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -336,6 +380,10 @@ export type DocumentScalarWhereWithAggregatesInput = {
   sizeBytes?: Prisma.BigIntWithAggregatesFilter<"Document"> | bigint | number
   label?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"Document"> | string
+  storageProvider?: Prisma.StringWithAggregatesFilter<"Document"> | string
+  resourceType?: Prisma.StringWithAggregatesFilter<"Document"> | string
+  deliveryType?: Prisma.StringWithAggregatesFilter<"Document"> | string
+  etag?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Document"> | Date | string | null
   tenantId?: Prisma.UuidWithAggregatesFilter<"Document"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Document"> | Date | string
@@ -349,6 +397,10 @@ export type DocumentCreateInput = {
   sizeBytes: bigint | number
   label?: string | null
   status?: string
+  storageProvider?: string
+  resourceType?: string
+  deliveryType?: string
+  etag?: string | null
   deletedAt?: Date | string | null
   tenantId?: string
   createdAt?: Date | string
@@ -364,6 +416,10 @@ export type DocumentUncheckedCreateInput = {
   sizeBytes: bigint | number
   label?: string | null
   status?: string
+  storageProvider?: string
+  resourceType?: string
+  deliveryType?: string
+  etag?: string | null
   deletedAt?: Date | string | null
   tenantId?: string
   createdAt?: Date | string
@@ -377,6 +433,10 @@ export type DocumentUpdateInput = {
   sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  storageProvider?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
+  etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -392,6 +452,10 @@ export type DocumentUncheckedUpdateInput = {
   sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  storageProvider?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
+  etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -406,6 +470,10 @@ export type DocumentCreateManyInput = {
   sizeBytes: bigint | number
   label?: string | null
   status?: string
+  storageProvider?: string
+  resourceType?: string
+  deliveryType?: string
+  etag?: string | null
   deletedAt?: Date | string | null
   tenantId?: string
   createdAt?: Date | string
@@ -419,6 +487,10 @@ export type DocumentUpdateManyMutationInput = {
   sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  storageProvider?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
+  etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -433,6 +505,10 @@ export type DocumentUncheckedUpdateManyInput = {
   sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  storageProvider?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
+  etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -457,6 +533,10 @@ export type DocumentCountOrderByAggregateInput = {
   sizeBytes?: Prisma.SortOrder
   label?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageProvider?: Prisma.SortOrder
+  resourceType?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  etag?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -475,6 +555,10 @@ export type DocumentMaxOrderByAggregateInput = {
   sizeBytes?: Prisma.SortOrder
   label?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageProvider?: Prisma.SortOrder
+  resourceType?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  etag?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -489,6 +573,10 @@ export type DocumentMinOrderByAggregateInput = {
   sizeBytes?: Prisma.SortOrder
   label?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  storageProvider?: Prisma.SortOrder
+  resourceType?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  etag?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -548,6 +636,10 @@ export type DocumentCreateWithoutOwnerInput = {
   sizeBytes: bigint | number
   label?: string | null
   status?: string
+  storageProvider?: string
+  resourceType?: string
+  deliveryType?: string
+  etag?: string | null
   deletedAt?: Date | string | null
   tenantId?: string
   createdAt?: Date | string
@@ -561,6 +653,10 @@ export type DocumentUncheckedCreateWithoutOwnerInput = {
   sizeBytes: bigint | number
   label?: string | null
   status?: string
+  storageProvider?: string
+  resourceType?: string
+  deliveryType?: string
+  etag?: string | null
   deletedAt?: Date | string | null
   tenantId?: string
   createdAt?: Date | string
@@ -604,6 +700,10 @@ export type DocumentScalarWhereInput = {
   sizeBytes?: Prisma.BigIntFilter<"Document"> | bigint | number
   label?: Prisma.StringNullableFilter<"Document"> | string | null
   status?: Prisma.StringFilter<"Document"> | string
+  storageProvider?: Prisma.StringFilter<"Document"> | string
+  resourceType?: Prisma.StringFilter<"Document"> | string
+  deliveryType?: Prisma.StringFilter<"Document"> | string
+  etag?: Prisma.StringNullableFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
   tenantId?: Prisma.UuidFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
@@ -617,6 +717,10 @@ export type DocumentCreateManyOwnerInput = {
   sizeBytes: bigint | number
   label?: string | null
   status?: string
+  storageProvider?: string
+  resourceType?: string
+  deliveryType?: string
+  etag?: string | null
   deletedAt?: Date | string | null
   tenantId?: string
   createdAt?: Date | string
@@ -630,6 +734,10 @@ export type DocumentUpdateWithoutOwnerInput = {
   sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  storageProvider?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
+  etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -643,6 +751,10 @@ export type DocumentUncheckedUpdateWithoutOwnerInput = {
   sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  storageProvider?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
+  etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +768,10 @@ export type DocumentUncheckedUpdateManyWithoutOwnerInput = {
   sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  storageProvider?: Prisma.StringFieldUpdateOperationsInput | string
+  resourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
+  etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -672,6 +788,10 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   sizeBytes?: boolean
   label?: boolean
   status?: boolean
+  storageProvider?: boolean
+  resourceType?: boolean
+  deliveryType?: boolean
+  etag?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   createdAt?: boolean
@@ -687,6 +807,10 @@ export type DocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   sizeBytes?: boolean
   label?: boolean
   status?: boolean
+  storageProvider?: boolean
+  resourceType?: boolean
+  deliveryType?: boolean
+  etag?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   createdAt?: boolean
@@ -702,6 +826,10 @@ export type DocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   sizeBytes?: boolean
   label?: boolean
   status?: boolean
+  storageProvider?: boolean
+  resourceType?: boolean
+  deliveryType?: boolean
+  etag?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   createdAt?: boolean
@@ -717,13 +845,17 @@ export type DocumentSelectScalar = {
   sizeBytes?: boolean
   label?: boolean
   status?: boolean
+  storageProvider?: boolean
+  resourceType?: boolean
+  deliveryType?: boolean
+  etag?: boolean
   deletedAt?: boolean
   tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerUserId" | "objectKey" | "contentType" | "sizeBytes" | "label" | "status" | "deletedAt" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerUserId" | "objectKey" | "contentType" | "sizeBytes" | "label" | "status" | "storageProvider" | "resourceType" | "deliveryType" | "etag" | "deletedAt" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -743,13 +875,14 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     ownerUserId: string
     /**
-     * Storage key (e.g., `kyc/{userId}/{uuid}.pdf`).
+     * Cloudinary `public_id` (e.g. `teneo/documents/{userId}/{uuid}`).
+     * Kept under the historical `object_key` column name so existing
+     * rows and indexes survive the switch from the stub storage layer.
      */
     objectKey: string
     contentType: string
     /**
-     * Byte size hint for the eventual upload. Phase 18 doesn't
-     * verify — Phase 19+ reconciles against the upload event.
+     * Actual byte size reported by Cloudinary after the upload lands.
      */
     sizeBytes: bigint
     /**
@@ -757,10 +890,29 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
      */
     label: string | null
     /**
-     * Lifecycle: ACTIVE | SOFT_DELETED. Phase 18 sets ACTIVE on
-     * upload-url mint; DELETE flips the flag and stamps deletedAt.
+     * Lifecycle: ACTIVE | SOFT_DELETED. DELETE flips the flag, stamps
+     * deletedAt, and destroys the remote asset.
      */
     status: string
+    /**
+     * Storage backend that owns the asset. Recorded per-row so a future
+     * migration to another provider can run incrementally.
+     */
+    storageProvider: string
+    /**
+     * Cloudinary resource_type — `image` or `raw` (PDFs land in `raw`).
+     * Required to address the asset on delivery and destroy.
+     */
+    resourceType: string
+    /**
+     * Cloudinary delivery type. Documents are always `authenticated`
+     * (private); the download route mints a short-lived signed URL.
+     */
+    deliveryType: string
+    /**
+     * Cloudinary content hash, used to detect a re-upload of identical bytes.
+     */
+    etag: string | null
     deletedAt: Date | null
     tenantId: string
     createdAt: Date
@@ -1196,6 +1348,10 @@ export interface DocumentFieldRefs {
   readonly sizeBytes: Prisma.FieldRef<"Document", 'BigInt'>
   readonly label: Prisma.FieldRef<"Document", 'String'>
   readonly status: Prisma.FieldRef<"Document", 'String'>
+  readonly storageProvider: Prisma.FieldRef<"Document", 'String'>
+  readonly resourceType: Prisma.FieldRef<"Document", 'String'>
+  readonly deliveryType: Prisma.FieldRef<"Document", 'String'>
+  readonly etag: Prisma.FieldRef<"Document", 'String'>
   readonly deletedAt: Prisma.FieldRef<"Document", 'DateTime'>
   readonly tenantId: Prisma.FieldRef<"Document", 'String'>
   readonly createdAt: Prisma.FieldRef<"Document", 'DateTime'>

@@ -1,0 +1,3 @@
+$kind: collection
+description: Public liveness / readiness probes (no auth).
+order: 23000

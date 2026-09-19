@@ -1,0 +1,8 @@
+$kind: http-request
+name: Triage Queue (OWNER/ADMIN)
+url: "{{baseUrl}}/api/v1/tickets/queue?status=OPEN&limit=20"
+method: GET
+queryParams:
+  status: OPEN
+  limit: "20"
+order: 4000

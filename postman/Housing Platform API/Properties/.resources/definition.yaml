@@ -1,0 +1,3 @@
+$kind: collection
+description: "Property hierarchy: properties → buildings → flats → rooms. Publish state machine."
+order: 6000

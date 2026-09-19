@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/kyc/submissions/{{kycSubmissionId}}/request-info"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "notes": "Please upload a clearer image of your proof of address."
+    }
+order: 7000

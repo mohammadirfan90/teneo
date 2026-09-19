@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/tickets/me?limit=20"
+method: GET
+queryParams:
+  limit: "20"
+order: 3000

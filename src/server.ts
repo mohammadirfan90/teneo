@@ -10,15 +10,12 @@ import helmet from 'helmet';
 import { prisma } from '@/lib/db';
 import { corsOrigins, env } from '@/lib/env';
 import { ok } from '@/lib/envelope';
-import { ValidationError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
 import { redis } from '@/lib/redis';
-import { zodValidate } from '@/lib/validate';
 import { correlationIdMiddleware } from '@/middleware/correlation-id';
 import { errorHandler } from '@/middleware/error-handler';
 import { notFoundHandler } from '@/middleware/not-found';
 import { anonymousRateLimiter, authenticatedRateLimiter } from '@/middleware/rate-limit';
-import { protectedDemoRouter } from '@/modules/_demo/protected.routes';
 import { adminRouter } from '@/modules/admin/admin.routes';
 import { featureFlagsRouter } from '@/modules/admin/feature-flags.routes';
 import { applicationsRouter } from '@/modules/applications/applications.routes';
@@ -44,7 +41,6 @@ import { searchPublicRouter, searchSavedRouter } from '@/modules/search/search.r
 import { preferencesRouter } from '@/modules/users/preferences.routes';
 import { profilesRouter } from '@/modules/users/profiles.routes';
 import { usersRouter } from '@/modules/users/users.routes';
-import { z } from 'zod';
 
 export function createApp(): express.Express {
   const app = express();
@@ -182,43 +178,11 @@ export function createApp(): express.Express {
     res.status(200).json(ok({ version: '1.0.0', status: 'phase-4-scaffold' }));
   });
 
-  // ── Phase 5: anonymous rate limiter (must be BEFORE the demo routes) ─
-  // Mounted before the demo route handlers so it actually intercepts
-  // their requests. express-rate-limit increments a counter on each
-  // matched request and returns 429 once the per-1s burst (20) is hit.
-  app.use('/api/v1/_demo', anonymousRateLimiter);
-
-  // ── Phase 4 demo: envelope + zodValidate wiring ─────────────────────
-  // GET /api/v1/_demo/ping — smoke test for the standard success envelope.
-  app.get('/api/v1/_demo/ping', (_req, res) => {
-    res.status(200).json(ok({ pong: true }));
-  });
-
-  // POST /api/v1/_demo/echo — exercises zodValidate on the body.
-  // Valid request: { "message": "hello" } → 200 with { pong: true, echoed: "hello" }.
-  // Invalid request: anything missing "message" or with empty string → 400 with errors[].
-  const echoSchema = z.object({
-    message: z.string().min(1, 'must not be empty'),
-  });
-  app.post('/api/v1/_demo/echo', zodValidate({ body: echoSchema }), (req, res) => {
-    const { message } = req.body as z.infer<typeof echoSchema>;
-    res.status(200).json(ok({ pong: true, echoed: message }));
-  });
-
-  // POST /api/v1/_demo/throw-validation — demonstrates ValidationError → envelope.
-  app.post('/api/v1/_demo/throw-validation', (_req, _res, next) => {
-    next(
-      new ValidationError('Validation failed (demo)', [
-        { field: 'demoField', code: 'INVALID', message: 'this is a demo field error' },
-      ])
-    );
-  });
-
-  // ── Phase 5: protected demo routes (auth-gated) ────────────────────
-  // Per-role limiter on the protected prefix; requireAuth + requireRole
-  // live inside the router. Order is: per-role limit → requireAuth →
-  // requireRole → handler.
-  app.use('/api/v1/_demo/protected', authenticatedRateLimiter, protectedDemoRouter());
+  // The Phase 4/5 `/api/v1/_demo/*` scaffolding (ping, echo,
+  // throw-validation, protected) has been removed. It existed to exercise
+  // the envelope and zodValidate helpers before real routes landed; the
+  // /auth and /users routers have covered that since Phases 6 and 8. It
+  // was shipping publicly and served no production purpose.
 
   // ── Phase 6: auth router (signup/login/refresh/logout/…) ───────────
   // Public routes (signup, login, refresh, verify-email) get the
@@ -356,7 +320,14 @@ if (require.main === module) {
   process.on('SIGTERM', () => shutdown('SIGTERM'));
   process.on('SIGINT', () => shutdown('SIGINT'));
   process.on('unhandledRejection', (reason) => {
-    logger.error({ reason }, 'unhandled_rejection');
+    // Log under `err`, not `reason`: pino only applies its error serializer
+    // to the `err` key, and an Error carries no enumerable own properties —
+    // so `{ reason }` rendered every rejection as a useless `{}`.
+    if (reason instanceof Error) {
+      logger.error({ err: reason }, 'unhandled_rejection');
+    } else {
+      logger.error({ reason: String(reason) }, 'unhandled_rejection');
+    }
   });
   process.on('uncaughtException', (err) => {
     logger.fatal({ err }, 'uncaught_exception');

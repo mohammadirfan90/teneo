@@ -173,3 +173,15 @@ export class StripeDisabledError extends ApiError {
     this.name = 'StripeDisabledError';
   }
 }
+
+/** Same contract as StripeDisabledError, for Cloudinary object storage.
+ *  Thrown by upload/download/delete routes when CLOUDINARY_* is unset so
+ *  a credential-free dev environment degrades to a clear 503 instead of
+ *  a 500 from deep inside the SDK.
+ */
+export class StorageDisabledError extends ApiError {
+  constructor(message = 'File storage is not configured on this environment') {
+    super(503, 'STORAGE_DISABLED', message);
+    this.name = 'StorageDisabledError';
+  }
+}

@@ -13,18 +13,13 @@ import {
   Router,
 } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { requireRole } from '@/middleware/role';
 
 import { activateRole, deactivateUser, getMe, getUserById, updateMe } from './users.controller';
 import { activateRoleParamsSchema, updateMeSchema, userIdParamsSchema } from './users.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function usersRouter(): Router {
   const r = Router();

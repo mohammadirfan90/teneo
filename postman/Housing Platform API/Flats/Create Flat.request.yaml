@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/buildings/{{buildingId}}/flats"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "floor": 3,
+      "doorNumber": "3B"
+    }
+order: 1000

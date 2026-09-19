@@ -7,9 +7,10 @@
 //   PATCH  /rooms/:id                              OWNER (own)
 //   POST   /rooms/:id/publish                      OWNER (own) + KYC
 //   POST   /rooms/:id/transition                   OWNER (own) / ADMIN
-//   POST   /rooms/:id/photos                       OWNER (own) — stub
-//   DELETE /rooms/:id/photos/:photo_id             OWNER (own) — 501 stub
-//   POST   /rooms/:id/photos/:photo_id/reorder     OWNER (own) — 501 stub
+//   POST   /rooms/:id/photos                       OWNER (own) — multipart upload
+//   GET    /rooms/:id/photos                       any authenticated caller
+//   DELETE /rooms/:id/photos/:photo_id             OWNER (own) — delete + destroy
+//   POST   /rooms/:id/photos/:photo_id/reorder     OWNER (own) — gallery order
 //
 // Note: POST /flats/:flat_id/rooms is registered here too because
 // it's rooms-shaped (the URL prefix is /rooms for collection-y ops
@@ -17,35 +18,33 @@
 
 import { type RequestHandler, Router } from 'express';
 
+import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { requireRole } from '@/middleware/role';
+import { singlePhotoUpload } from '@/middleware/upload';
 
 import {
   createRoom,
   deletePhoto,
   getRoom,
+  listPhotos,
   patchRoom,
   publishRoom,
   reorderPhoto,
-  requestPhotoUpload,
   transitionRoom,
+  uploadPhoto,
 } from './rooms.controller';
 import {
   flatIdParamsSchema,
   patchRoomSchema,
   photoIdParamsSchema,
-  requestPhotoUploadSchema,
+  reorderPhotoSchema,
   roomIdParamsSchema,
   transitionRoomSchema,
+  uploadPhotoSchema,
 } from './rooms.schemas';
 import { createRoomSchema } from './rooms.schemas';
-
-const asyncHandler = (fn: RequestHandler): RequestHandler => {
-  return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-};
 
 export function roomsRouter(): Router {
   const r = Router();
@@ -94,21 +93,35 @@ export function roomsRouter(): Router {
     asyncHandler(transitionRoom)
   );
 
+  // multer runs before zodValidate: `req.body` does not exist until the
+  // multipart stream is parsed, so validating first would see {} and
+  // reject every well-formed upload.
   r.post(
     '/:id/photos',
     requireAuth,
-    requireRole('OWNER'),
+    requireRole('OWNER', 'ADMIN'),
+    singlePhotoUpload,
     zodValidate({
       params: roomIdParamsSchema,
-      body: requestPhotoUploadSchema,
+      body: uploadPhotoSchema,
     }),
-    asyncHandler(requestPhotoUpload)
+    asyncHandler(uploadPhoto)
+  );
+
+  // Gallery read is open to any authenticated caller — a tenant browsing
+  // a published listing needs the photos, and ownership is not required
+  // to look at a listing that is already public.
+  r.get(
+    '/:id/photos',
+    requireAuth,
+    zodValidate({ params: roomIdParamsSchema }),
+    asyncHandler(listPhotos)
   );
 
   r.delete(
     '/:id/photos/:photoId',
     requireAuth,
-    requireRole('OWNER'),
+    requireRole('OWNER', 'ADMIN'),
     zodValidate({ params: photoIdParamsSchema }),
     asyncHandler(deletePhoto)
   );
@@ -116,8 +129,8 @@ export function roomsRouter(): Router {
   r.post(
     '/:id/photos/:photoId/reorder',
     requireAuth,
-    requireRole('OWNER'),
-    zodValidate({ params: photoIdParamsSchema }),
+    requireRole('OWNER', 'ADMIN'),
+    zodValidate({ params: photoIdParamsSchema, body: reorderPhotoSchema }),
     asyncHandler(reorderPhoto)
   );
 

@@ -1,0 +1,5 @@
+$kind: http-request
+description: Any authenticated caller. Ordered by gallery position (0 = cover image).
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}/photos"
+method: GET
+order: 7000

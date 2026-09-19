@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/applications?limit=20&status=SUBMITTED"
+method: GET
+queryParams:
+  limit: "20"
+  status: SUBMITTED
+order: 2000

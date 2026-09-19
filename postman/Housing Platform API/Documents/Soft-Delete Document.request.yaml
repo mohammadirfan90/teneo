@@ -1,0 +1,7 @@
+$kind: http-request
+description: Flips the row to SOFT_DELETED and destroys the Cloudinary asset.
+url: "{{baseUrl}}/api/v1/documents/{{documentId}}"
+method: DELETE
+headers:
+  Idempotency-Key: "{{$guid}}"
+order: 3000

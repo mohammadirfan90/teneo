@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/rooms/{{roomId}}/publish"
+method: POST
+order: 4000

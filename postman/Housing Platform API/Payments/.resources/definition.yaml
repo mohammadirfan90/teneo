@@ -1,0 +1,3 @@
+$kind: collection
+description: Stripe PaymentIntent, refunds, my-payments list.
+order: 15000

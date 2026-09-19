@@ -8,9 +8,9 @@
 //   PATCH /rooms/:id                  OWNER (own via property)
 //   POST  /rooms/:id/publish          OWNER (own) + KYC_APPROVED — DRAFT→PUBLISHED
 //   POST  /rooms/:id/transition       OWNER (own) / ADMIN — explicit transition
-//   POST  /rooms/:id/photos           OWNER (own) — presigned-URL stub
-//   DELETE /rooms/:id/photos/:photo_id OWNER (own) — 501 stub (Phase 18)
-//   POST  /rooms/:id/photos/:photo_id/reorder OWNER (own) — 501 stub
+//   POST  /rooms/:id/photos           OWNER (own) — multipart → Cloudinary
+//   DELETE /rooms/:id/photos/:photo_id OWNER (own) — soft-delete + destroy
+//   POST  /rooms/:id/photos/:photo_id/reorder OWNER (own) — gallery order
 //
 // Atomicity: every state transition (publish + transition) runs the
 // row update inside a `prisma.$transaction` along with audit_log and
@@ -21,8 +21,10 @@ import { randomUUID } from 'node:crypto';
 import type { Prisma } from '@/generated/prisma/client';
 import type { RoomStatus, RoomType } from '@/generated/prisma/enums';
 
+import { destroyAsset, uploadBuffer } from '@/lib/cloudinary';
 import { prisma } from '@/lib/db';
-import { ApiError, ConflictError, ForbiddenError, NotFoundError } from '@/lib/errors';
+import { ConflictError, ForbiddenError, NotFoundError } from '@/lib/errors';
+import { logger } from '@/lib/logger';
 
 import {
   assertCallerOwnsOrAdmin,
@@ -32,8 +34,8 @@ import {
 import type {
   CreateRoomInput,
   PatchRoomInput,
-  RequestPhotoUploadInput,
   TransitionRoomInput,
+  UploadPhotoInput,
 } from './rooms.schemas';
 import { isValidTransition } from './rooms.state-machine';
 
@@ -567,55 +569,314 @@ export async function transitionRoom(
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// POST /rooms/:id/photos — presigned URL stub (Phase 18 owns the real impl)
+// Room photos — Cloudinary-backed gallery
 // ──────────────────────────────────────────────────────────────────────
+//
+// Delivery type is `upload` (public CDN), not `authenticated`: these are
+// listing images on a PUBLISHED room, meant to be fetched by anonymous
+// browsers. Private assets (KYC scans, leases) live in the documents
+// module and are signed per request.
+//
+// `position` is normalised to a dense 0..n-1 sequence on every mutation so
+// clients can render `ORDER BY position` without reasoning about gaps.
 
-export interface PhotoUploadStub {
+export interface RoomPhotoView {
+  id: string;
+  roomId: string;
   url: string;
-  objectKey: string;
-  expiresAt: string;
+  contentType: string;
+  sizeBytes: string;
+  width: number | null;
+  height: number | null;
+  position: number;
+  alt: string | null;
+  createdAt: string;
 }
 
-export async function requestPhotoUpload(
-  roomId: string,
-  callerUserId: string,
-  callerRoles: readonly string[],
-  body: RequestPhotoUploadInput
-): Promise<PhotoUploadStub> {
-  const ownerId = await resolveOwnerIdForRoom(roomId, { throwIfMissing: true });
-  assertCallerOwnsOrAdmin(ownerId, callerUserId, callerRoles);
+type RoomPhotoRow = {
+  id: string;
+  roomId: string;
+  secureUrl: string;
+  contentType: string;
+  sizeBytes: bigint;
+  width: number | null;
+  height: number | null;
+  position: number;
+  alt: string | null;
+  createdAt: Date;
+};
 
-  const ext = body.ext ?? (body.contentType.split('/')[1] ?? 'jpg').toLowerCase();
-  const objectKey = `rooms/${roomId}/${randomUUID()}.${ext}`;
-  const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 min
-  const url = `https://stub.local/${objectKey}?expires=${expiresAt.getTime()}`;
-
-  // No DB row written — Phase 18 owns the room_photos table.
+function photoRowToView(r: RoomPhotoRow): RoomPhotoView {
   return {
-    url,
-    objectKey,
-    expiresAt: expiresAt.toISOString(),
+    id: r.id,
+    roomId: r.roomId,
+    url: r.secureUrl,
+    contentType: r.contentType,
+    sizeBytes: r.sizeBytes.toString(),
+    width: r.width,
+    height: r.height,
+    position: r.position,
+    alt: r.alt,
+    createdAt: r.createdAt.toISOString(),
   };
 }
 
+const photoSelect = {
+  id: true,
+  roomId: true,
+  secureUrl: true,
+  contentType: true,
+  sizeBytes: true,
+  width: true,
+  height: true,
+  position: true,
+  alt: true,
+  createdAt: true,
+} as const;
+
+/** Hard ceiling per listing — keeps one owner from filling the account. */
+export const MAX_PHOTOS_PER_ROOM = 20;
+
 // ──────────────────────────────────────────────────────────────────────
-// DELETE /rooms/:id/photos/:photo_id — 501 stub
+// POST /rooms/:id/photos
 // ──────────────────────────────────────────────────────────────────────
 
-export function deletePhotoStub(): never {
-  throw new ApiError(
-    501,
-    'NOT_IMPLEMENTED',
-    'Photo upload/delete/reorder ships with Phase 18 (real S3 wiring)'
-  );
+export interface UploadRoomPhotoServiceInput {
+  fields: UploadPhotoInput;
+  file: { buffer: Buffer; mimetype: string; size: number };
 }
 
-export function reorderPhotoStub(): never {
-  throw new ApiError(
-    501,
-    'NOT_IMPLEMENTED',
-    'Photo upload/delete/reorder ships with Phase 18 (real S3 wiring)'
-  );
+/**
+ * Uploads one image to Cloudinary and appends it to the room gallery.
+ *
+ * The per-room cap is checked before the upload so a rejected request
+ * never spends storage. There is a benign race there — two concurrent
+ * uploads at the cap boundary can both pass — which we accept: the cost
+ * is one extra photo, and the alternative (locking the room row for the
+ * duration of a network upload) would serialise a multi-second operation.
+ */
+export async function uploadRoomPhoto(
+  roomId: string,
+  callerUserId: string,
+  callerRoles: readonly string[],
+  input: UploadRoomPhotoServiceInput
+): Promise<RoomPhotoView> {
+  const ownerId = await resolveOwnerIdForRoom(roomId, { throwIfMissing: true });
+  assertCallerOwnsOrAdmin(ownerId, callerUserId, callerRoles);
+
+  const live = await prisma.roomPhoto.count({ where: { roomId, deletedAt: null } });
+  if (live >= MAX_PHOTOS_PER_ROOM) {
+    // ConflictError's top-level code is a closed union; the specific
+    // reason rides in the field-level error so clients can still branch.
+    throw new ConflictError('CONFLICT', `A room may have at most ${MAX_PHOTOS_PER_ROOM} photos`, [
+      {
+        field: 'file',
+        code: 'PHOTO_LIMIT_REACHED',
+        message: `delete a photo before adding another (max ${MAX_PHOTOS_PER_ROOM})`,
+      },
+    ]);
+  }
+
+  const asset = await uploadBuffer(input.file.buffer, {
+    folder: `rooms/${roomId}`,
+    deliveryType: 'upload',
+    resourceType: 'image',
+    publicId: randomUUID(),
+  });
+
+  try {
+    const created = await prisma.$transaction(async (tx) => {
+      // Append by default; an explicit `position` inserts at that slot and
+      // pushes the rest down. Recomputed inside the transaction so two
+      // concurrent uploads cannot both claim the same tail index.
+      const count = await tx.roomPhoto.count({ where: { roomId, deletedAt: null } });
+      const requested = input.fields.position;
+      const position = requested === undefined ? count : Math.min(requested, count);
+
+      if (position < count) {
+        await tx.roomPhoto.updateMany({
+          where: { roomId, deletedAt: null, position: { gte: position } },
+          data: { position: { increment: 1 } },
+        });
+      }
+
+      return await tx.roomPhoto.create({
+        data: {
+          roomId,
+          uploadedByUserId: callerUserId,
+          publicId: asset.publicId,
+          secureUrl: asset.secureUrl,
+          storageProvider: 'cloudinary',
+          resourceType: asset.resourceType,
+          deliveryType: asset.deliveryType,
+          contentType: input.file.mimetype,
+          // Cloudinary's count is authoritative — it may re-encode.
+          sizeBytes: BigInt(asset.bytes),
+          width: asset.width,
+          height: asset.height,
+          etag: asset.etag,
+          position,
+          alt: input.fields.alt ?? null,
+        },
+        select: photoSelect,
+      });
+    });
+
+    return photoRowToView(created as RoomPhotoRow);
+  } catch (err) {
+    // The bytes are in Cloudinary but no row references them. Compensate
+    // so a failed INSERT does not leak a paid-for asset.
+    await destroyAsset({
+      publicId: asset.publicId,
+      resourceType: asset.resourceType,
+      deliveryType: asset.deliveryType,
+    }).catch((cleanupErr) => {
+      logger.error({ err: cleanupErr, publicId: asset.publicId }, 'photo_orphan_cleanup_failed');
+    });
+    throw err;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// GET /rooms/:id/photos
+// ──────────────────────────────────────────────────────────────────────
+
+export async function listRoomPhotos(roomId: string): Promise<RoomPhotoView[]> {
+  await resolveOwnerIdForRoom(roomId, { throwIfMissing: true });
+  const rows = await prisma.roomPhoto.findMany({
+    where: { roomId, deletedAt: null },
+    orderBy: { position: 'asc' },
+    select: photoSelect,
+  });
+  return rows.map((r) => photoRowToView(r as RoomPhotoRow));
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// DELETE /rooms/:id/photos/:photo_id
+// ──────────────────────────────────────────────────────────────────────
+
+/**
+ * Soft-deletes the row, closes the gap it left in the ordering, then
+ * destroys the remote asset.
+ *
+ * The destroy runs after the transaction commits for the same reason as
+ * documents: an orphaned asset costs storage, whereas destroying first
+ * and then rolling back would leave a live row pointing at nothing.
+ */
+export async function deleteRoomPhoto(
+  roomId: string,
+  photoId: string,
+  callerUserId: string,
+  callerRoles: readonly string[]
+): Promise<{ id: string; deleted: true }> {
+  const ownerId = await resolveOwnerIdForRoom(roomId, { throwIfMissing: true });
+  assertCallerOwnsOrAdmin(ownerId, callerUserId, callerRoles);
+
+  const toDestroy = await prisma.$transaction(async (tx) => {
+    const row = await tx.roomPhoto.findFirst({
+      where: { id: photoId, roomId, deletedAt: null },
+      select: {
+        id: true,
+        position: true,
+        publicId: true,
+        resourceType: true,
+        deliveryType: true,
+        storageProvider: true,
+      },
+    });
+    if (!row) throw new NotFoundError('Photo not found');
+
+    await tx.roomPhoto.update({
+      where: { id: photoId },
+      data: { deletedAt: new Date() },
+    });
+
+    // Close the hole so positions stay dense.
+    await tx.roomPhoto.updateMany({
+      where: { roomId, deletedAt: null, position: { gt: row.position } },
+      data: { position: { decrement: 1 } },
+    });
+
+    return row.storageProvider === 'cloudinary'
+      ? {
+          publicId: row.publicId,
+          resourceType: row.resourceType,
+          deliveryType: row.deliveryType,
+        }
+      : null;
+  });
+
+  if (toDestroy) {
+    await destroyAsset(toDestroy).catch((err) => {
+      logger.error({ err, publicId: toDestroy.publicId }, 'photo_asset_destroy_failed');
+    });
+  }
+
+  return { id: photoId, deleted: true };
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// POST /rooms/:id/photos/:photo_id/reorder
+// ──────────────────────────────────────────────────────────────────────
+
+/**
+ * Moves one photo to `position`, shifting the rest to keep 0..n-1 dense.
+ *
+ * The whole reshuffle runs in one transaction, and the moving row is
+ * parked at -1 first so no intermediate state has two rows sharing a
+ * position — which is also why `(room_id, position)` is a plain index and
+ * not a UNIQUE constraint.
+ */
+export async function reorderRoomPhoto(
+  roomId: string,
+  photoId: string,
+  callerUserId: string,
+  callerRoles: readonly string[],
+  target: number
+): Promise<RoomPhotoView[]> {
+  const ownerId = await resolveOwnerIdForRoom(roomId, { throwIfMissing: true });
+  assertCallerOwnsOrAdmin(ownerId, callerUserId, callerRoles);
+
+  return await prisma.$transaction(async (tx) => {
+    const row = await tx.roomPhoto.findFirst({
+      where: { id: photoId, roomId, deletedAt: null },
+      select: { id: true, position: true },
+    });
+    if (!row) throw new NotFoundError('Photo not found');
+
+    const count = await tx.roomPhoto.count({ where: { roomId, deletedAt: null } });
+    // Clamp rather than reject: "move to the end" is a normal request and
+    // the client should not have to know the current photo count.
+    const to = Math.min(Math.max(target, 0), count - 1);
+    const from = row.position;
+
+    if (to !== from) {
+      await tx.roomPhoto.update({ where: { id: photoId }, data: { position: -1 } });
+
+      if (to < from) {
+        // Moving up: everything in [to, from-1] slides down one slot.
+        await tx.roomPhoto.updateMany({
+          where: { roomId, deletedAt: null, position: { gte: to, lt: from } },
+          data: { position: { increment: 1 } },
+        });
+      } else {
+        // Moving down: everything in (from, to] slides up one slot.
+        await tx.roomPhoto.updateMany({
+          where: { roomId, deletedAt: null, position: { gt: from, lte: to } },
+          data: { position: { decrement: 1 } },
+        });
+      }
+
+      await tx.roomPhoto.update({ where: { id: photoId }, data: { position: to } });
+    }
+
+    const rows = await tx.roomPhoto.findMany({
+      where: { roomId, deletedAt: null },
+      orderBy: { position: 'asc' },
+      select: photoSelect,
+    });
+    return rows.map((r) => photoRowToView(r as RoomPhotoRow));
+  });
 }
 
 // `loadOwnedRoom` is intentionally not exported — it's a private helper

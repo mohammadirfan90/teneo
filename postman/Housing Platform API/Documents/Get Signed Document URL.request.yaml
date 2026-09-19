@@ -1,0 +1,5 @@
+$kind: http-request
+description: Owner or ADMIN only. URL stops resolving 15 minutes after it is minted.
+url: "{{baseUrl}}/api/v1/documents/{{documentId}}/url"
+method: GET
+order: 2000

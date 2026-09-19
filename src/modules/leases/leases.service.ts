@@ -887,7 +887,6 @@ export async function terminateLease(
 export async function getLeaseDocument(leaseId: string): Promise<LeaseDocumentView> {
   // No DB lookup here — the caller already passed requireLeaseParty.
   // Phase 18 will read the contract_object_key from leases and call S3.
-  void leaseId;
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
   return {
     url: `mock://signed-url/${leaseId}`,

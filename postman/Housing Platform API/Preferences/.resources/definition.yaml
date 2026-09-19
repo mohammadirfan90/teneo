@@ -1,0 +1,3 @@
+$kind: collection
+description: Tenant matching preferences (budget, cities, lifestyle, interests).
+order: 4000

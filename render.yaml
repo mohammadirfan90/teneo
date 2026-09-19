@@ -1,8 +1,9 @@
 # render.yaml — Render Blueprint for the Housing Platform backend.
 #
-# One-click deploy from the Render dashboard ("New → Blueprint"). The
-# managed Postgres + Redis instances are billed separately; this file
-# only describes the web service and its env wiring.
+# One-click deploy from the Render dashboard ("New → Blueprint"). This file
+# describes the web service, its env wiring, and the managed Key Value
+# (Redis) instance. Postgres is external (Neon), so DATABASE_URL is a
+# hand-set secret rather than a fromService reference.
 #
 # Env groups split secrets across two stores:
 #   - "env:staging"   — non-prod secrets (test Stripe, dev Google OAuth)
@@ -12,10 +13,31 @@
 # env at container start.
 
 services:
+  # ── Managed Redis. Declared here rather than created by hand so that
+  # REDIS_URL is wired automatically (see the fromService entry below) and
+  # the eviction policy is version-controlled instead of a dashboard toggle.
+  - type: keyvalue
+    name: housing-cache
+    plan: starter
+    region: oregon
+    # Empty allow-list = no public endpoint; reachable only from services on
+    # this account's private network.
+    ipAllowList: []
+    # Deliberately NOT allkeys-lru. This instance is not purely a cache: it
+    # also holds access tokens (auth.ts `access:*`), idempotency keys and
+    # webhook replay guards. Under LRU, memory pressure would silently evict
+    # live sessions and log users out at random. Everything written here
+    # already carries a TTL, so the keyspace drains on its own.
+    maxmemoryPolicy: noeviction
+
   - type: web
     name: housing-platform-api
     runtime: docker
     plan: starter
+    # Must match the keyvalue region above. /health/ready PINGs Redis with a
+    # 1s timeout (src/server.ts); a cross-region hop can blow that budget and
+    # get the container restarted for a healthy dependency.
+    region: oregon
     # Render passes $PORT to the container at boot; the bootstrap in
     # src/server.ts reads process.env.PORT.
     envVars:
@@ -30,10 +52,20 @@ services:
       - key: APP_PUBLIC_URL
         value: https://housing-platform-api.onrender.com
       # ── Secrets come from the env group, not this file. ──
+      # Neon pooled endpoint (the `-pooler` host) +
+      # ?sslmode=require&pgbouncer=true&connection_limit=1.
+      # `prisma migrate deploy` needs the DIRECT (non-pooled) endpoint —
+      # PgBouncer in transaction mode cannot hold Prisma's advisory locks.
       - key: DATABASE_URL
         sync: false
+      # Injected from the keyvalue service above as an internal redis:// URL.
+      # Not `sync: false` — there is no secret to paste, and pinning it by
+      # hand would break on a Key Value re-provision.
       - key: REDIS_URL
-        sync: false
+        fromService:
+          type: keyvalue
+          name: housing-cache
+          property: connectionString
       - key: ACCESS_TOKEN_SECRET
         sync: false
       - key: REFRESH_TOKEN_SECRET
@@ -48,6 +80,17 @@ services:
         sync: false
       - key: GOOGLE_CLIENT_SECRET
         sync: false
+      # Cloudinary object storage. Without these the upload routes return
+      # 503 STORAGE_DISABLED rather than failing at boot, so a missing
+      # secret degrades one feature instead of the whole service.
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: teneo-prod
       - fromGroup: env:production
         type: secret
         key: STRIPE_WEBHOOK_SECRET

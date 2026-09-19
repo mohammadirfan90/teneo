@@ -1,0 +1,3 @@
+$kind: collection
+description: "Maintenance ticket lifecycle: open → in-progress → resolved → rated."
+order: 18000
