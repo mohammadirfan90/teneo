@@ -55,6 +55,13 @@ idea-hub.md
 project_requirements.md
 raff.txt
 
+# Postman desktop app's workspace sync. When a Postman workspace is linked
+# to this folder, the app mirrors EVERY collection in that workspace here,
+# including other projects'. Only the curated collection in
+# postman/Housing Platform API/ and its environment file are tracked.
+postman/.postman/
+postman/postman/
+
 # Phases workflow (phases.json is the contract; phases/ folder is tooling)
 phases/
 phases.json
