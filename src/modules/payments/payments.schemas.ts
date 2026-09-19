@@ -122,9 +122,11 @@ export interface PaymentView {
   idempotencyKey: string;
   failureCode: string | null;
   failureReason: string | null;
+  cancellationReason: string | null;
   paidAt: string | null;
   failedAt: string | null;
   refundedAt: string | null;
+  canceledAt: string | null;
   version: number;
   createdAt: string;
   updatedAt: string;

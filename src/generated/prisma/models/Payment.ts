@@ -57,6 +57,8 @@ export type PaymentMinAggregateOutputType = {
   paidAt: Date | null
   failedAt: Date | null
   refundedAt: Date | null
+  canceledAt: Date | null
+  cancellationReason: string | null
   version: number | null
   tenantId: string | null
   createdAt: Date | null
@@ -82,6 +84,8 @@ export type PaymentMaxAggregateOutputType = {
   paidAt: Date | null
   failedAt: Date | null
   refundedAt: Date | null
+  canceledAt: Date | null
+  cancellationReason: string | null
   version: number | null
   tenantId: string | null
   createdAt: Date | null
@@ -107,6 +111,8 @@ export type PaymentCountAggregateOutputType = {
   paidAt: number
   failedAt: number
   refundedAt: number
+  canceledAt: number
+  cancellationReason: number
   version: number
   tenantId: number
   createdAt: number
@@ -146,6 +152,8 @@ export type PaymentMinAggregateInputType = {
   paidAt?: true
   failedAt?: true
   refundedAt?: true
+  canceledAt?: true
+  cancellationReason?: true
   version?: true
   tenantId?: true
   createdAt?: true
@@ -171,6 +179,8 @@ export type PaymentMaxAggregateInputType = {
   paidAt?: true
   failedAt?: true
   refundedAt?: true
+  canceledAt?: true
+  cancellationReason?: true
   version?: true
   tenantId?: true
   createdAt?: true
@@ -196,6 +206,8 @@ export type PaymentCountAggregateInputType = {
   paidAt?: true
   failedAt?: true
   refundedAt?: true
+  canceledAt?: true
+  cancellationReason?: true
   version?: true
   tenantId?: true
   createdAt?: true
@@ -308,6 +320,8 @@ export type PaymentGroupByOutputType = {
   paidAt: Date | null
   failedAt: Date | null
   refundedAt: Date | null
+  canceledAt: Date | null
+  cancellationReason: string | null
   version: number
   tenantId: string
   createdAt: Date
@@ -356,6 +370,8 @@ export type PaymentWhereInput = {
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   failedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  canceledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Payment"> | string | null
   version?: Prisma.IntFilter<"Payment"> | number
   tenantId?: Prisma.UuidFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -384,6 +400,8 @@ export type PaymentOrderByWithRelationInput = {
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   failedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  canceledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -415,6 +433,8 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   failedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  canceledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Payment"> | string | null
   version?: Prisma.IntFilter<"Payment"> | number
   tenantId?: Prisma.UuidFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -443,6 +463,8 @@ export type PaymentOrderByWithAggregationInput = {
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   failedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  canceledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -476,6 +498,8 @@ export type PaymentScalarWhereWithAggregatesInput = {
   paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   failedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  canceledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  cancellationReason?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   version?: Prisma.IntWithAggregatesFilter<"Payment"> | number
   tenantId?: Prisma.UuidWithAggregatesFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
@@ -498,6 +522,8 @@ export type PaymentCreateInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -526,6 +552,8 @@ export type PaymentUncheckedCreateInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -548,6 +576,8 @@ export type PaymentUpdateInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -576,6 +606,8 @@ export type PaymentUncheckedUpdateInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -601,6 +633,8 @@ export type PaymentCreateManyInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -623,6 +657,8 @@ export type PaymentUpdateManyMutationInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -648,6 +684,8 @@ export type PaymentUncheckedUpdateManyInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -683,6 +721,8 @@ export type PaymentCountOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   failedAt?: Prisma.SortOrder
   refundedAt?: Prisma.SortOrder
+  canceledAt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
   version?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -714,6 +754,8 @@ export type PaymentMaxOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   failedAt?: Prisma.SortOrder
   refundedAt?: Prisma.SortOrder
+  canceledAt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
   version?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -739,6 +781,8 @@ export type PaymentMinOrderByAggregateInput = {
   paidAt?: Prisma.SortOrder
   failedAt?: Prisma.SortOrder
   refundedAt?: Prisma.SortOrder
+  canceledAt?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
   version?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -901,6 +945,8 @@ export type PaymentCreateWithoutTenantInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -927,6 +973,8 @@ export type PaymentUncheckedCreateWithoutTenantInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -981,6 +1029,8 @@ export type PaymentScalarWhereInput = {
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   failedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   refundedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  canceledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  cancellationReason?: Prisma.StringNullableFilter<"Payment"> | string | null
   version?: Prisma.IntFilter<"Payment"> | number
   tenantId?: Prisma.UuidFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -1003,6 +1053,8 @@ export type PaymentCreateWithoutLeaseInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -1029,6 +1081,8 @@ export type PaymentUncheckedCreateWithoutLeaseInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -1077,6 +1131,8 @@ export type PaymentCreateWithoutInvoiceInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -1103,6 +1159,8 @@ export type PaymentUncheckedCreateWithoutInvoiceInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -1153,6 +1211,8 @@ export type PaymentCreateManyTenantInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -1175,6 +1235,8 @@ export type PaymentUpdateWithoutTenantInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1201,6 +1263,8 @@ export type PaymentUncheckedUpdateWithoutTenantInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1225,6 +1289,8 @@ export type PaymentUncheckedUpdateManyWithoutTenantInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1249,6 +1315,8 @@ export type PaymentCreateManyLeaseInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -1271,6 +1339,8 @@ export type PaymentUpdateWithoutLeaseInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1297,6 +1367,8 @@ export type PaymentUncheckedUpdateWithoutLeaseInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1321,6 +1393,8 @@ export type PaymentUncheckedUpdateManyWithoutLeaseInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1345,6 +1419,8 @@ export type PaymentCreateManyInvoiceInput = {
   paidAt?: Date | string | null
   failedAt?: Date | string | null
   refundedAt?: Date | string | null
+  canceledAt?: Date | string | null
+  cancellationReason?: string | null
   version?: number
   tenantId?: string
   createdAt?: Date | string
@@ -1367,6 +1443,8 @@ export type PaymentUpdateWithoutInvoiceInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1393,6 +1471,8 @@ export type PaymentUncheckedUpdateWithoutInvoiceInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1417,6 +1497,8 @@ export type PaymentUncheckedUpdateManyWithoutInvoiceInput = {
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1444,6 +1526,8 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   paidAt?: boolean
   failedAt?: boolean
   refundedAt?: boolean
+  canceledAt?: boolean
+  cancellationReason?: boolean
   version?: boolean
   tenantId?: boolean
   createdAt?: boolean
@@ -1472,6 +1556,8 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   paidAt?: boolean
   failedAt?: boolean
   refundedAt?: boolean
+  canceledAt?: boolean
+  cancellationReason?: boolean
   version?: boolean
   tenantId?: boolean
   createdAt?: boolean
@@ -1500,6 +1586,8 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   paidAt?: boolean
   failedAt?: boolean
   refundedAt?: boolean
+  canceledAt?: boolean
+  cancellationReason?: boolean
   version?: boolean
   tenantId?: boolean
   createdAt?: boolean
@@ -1528,13 +1616,15 @@ export type PaymentSelectScalar = {
   paidAt?: boolean
   failedAt?: boolean
   refundedAt?: boolean
+  canceledAt?: boolean
+  cancellationReason?: boolean
   version?: boolean
   tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceId" | "leaseId" | "tenantUserId" | "gateway" | "gatewayPaymentIntentId" | "gatewayChargeId" | "gatewayRefundId" | "amountMinor" | "refundedAmountMinor" | "currency" | "status" | "idempotencyKey" | "failureCode" | "failureReason" | "paidAt" | "failedAt" | "refundedAt" | "version" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceId" | "leaseId" | "tenantUserId" | "gateway" | "gatewayPaymentIntentId" | "gatewayChargeId" | "gatewayRefundId" | "amountMinor" | "refundedAmountMinor" | "currency" | "status" | "idempotencyKey" | "failureCode" | "failureReason" | "paidAt" | "failedAt" | "refundedAt" | "canceledAt" | "cancellationReason" | "version" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoice?: boolean | Prisma.RentInvoiceDefaultArgs<ExtArgs>
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
@@ -1626,6 +1716,12 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     paidAt: Date | null
     failedAt: Date | null
     refundedAt: Date | null
+    canceledAt: Date | null
+    /**
+     * Stripe's `cancellation_reason` (e.g. "abandoned",
+     * "requested_by_customer", "automatic"). Null for any other status.
+     */
+    cancellationReason: string | null
     /**
      * Optimistic-concurrency version. Incremented on every UPDATE so
      * concurrent webhook deliveries + intent races don't clobber.
@@ -2082,6 +2178,8 @@ export interface PaymentFieldRefs {
   readonly paidAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly failedAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly refundedAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly canceledAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly cancellationReason: Prisma.FieldRef<"Payment", 'String'>
   readonly version: Prisma.FieldRef<"Payment", 'Int'>
   readonly tenantId: Prisma.FieldRef<"Payment", 'String'>
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>

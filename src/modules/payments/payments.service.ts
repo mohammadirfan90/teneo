@@ -110,9 +110,11 @@ type PaymentRow = {
   idempotencyKey: string;
   failureCode: string | null;
   failureReason: string | null;
+  cancellationReason: string | null;
   paidAt: Date | null;
   failedAt: Date | null;
   refundedAt: Date | null;
+  canceledAt: Date | null;
   version: number;
   createdAt: Date;
   updatedAt: Date;
@@ -135,9 +137,11 @@ function paymentRowToView(r: PaymentRow): PaymentView {
     idempotencyKey: r.idempotencyKey,
     failureCode: r.failureCode,
     failureReason: r.failureReason,
+    cancellationReason: r.cancellationReason,
     paidAt: r.paidAt?.toISOString() ?? null,
     failedAt: r.failedAt?.toISOString() ?? null,
     refundedAt: r.refundedAt?.toISOString() ?? null,
+    canceledAt: r.canceledAt?.toISOString() ?? null,
     version: r.version,
     createdAt: r.createdAt.toISOString(),
     updatedAt: r.updatedAt.toISOString(),
@@ -849,6 +853,66 @@ export async function handleIntentFailed(event: Stripe.Event): Promise<void> {
 }
 
 // ──────────────────────────────────────────────────────────────────────
+// handleIntentCanceled — payment_intent.canceled
+// ──────────────────────────────────────────────────────────────────────
+
+/**
+ * payment_intent.canceled: the intent was abandoned or cancelled before
+ * any charge was captured — Stripe fires this when the merchant cancels
+ * it, or automatically for an intent left incomplete.
+ *
+ * Deliberately NOT modelled as FAILED: nothing was declined. The invoice
+ * is left untouched (still DUE) so the tenant can start a fresh intent,
+ * which mirrors handleIntentFailed — only a succeeded or refunded
+ * payment moves invoice state.
+ */
+export async function handleIntentCanceled(event: Stripe.Event): Promise<void> {
+  const pi = event.data.object as Stripe.PaymentIntent;
+  const piId = pi.id;
+  const cancellationReason = (pi.cancellation_reason ?? null) as string | null;
+
+  await prisma.$transaction(async (tx) => {
+    const payment = await findPaymentByIntentIdWithRetry(tx, piId);
+    if (!payment) {
+      logger.warn({ eventId: event.id, piId }, 'orphan_payment_intent_canceled');
+      return;
+    }
+    if (payment.status === 'CANCELED') return; // idempotent replay
+    if (!isValidPaymentTransition(payment.status, 'CANCELED')) {
+      // A succeeded or refunded payment must never be walked back by a
+      // late-arriving cancel event.
+      logger.warn(
+        { paymentId: payment.id, from: payment.status, to: 'CANCELED' },
+        'invalid_payment_transition_canceled'
+      );
+      return;
+    }
+
+    await tx.payment.update({
+      where: { id: payment.id },
+      data: {
+        status: 'CANCELED',
+        canceledAt: new Date(event.created * 1000),
+        cancellationReason,
+        version: { increment: 1 },
+      },
+    });
+
+    await tx.auditLog.create({
+      data: {
+        actorUserId: null,
+        actorRole: SYSTEM_ACTOR_ROLE,
+        action: 'payment.canceled',
+        targetEntityType: 'payment',
+        targetEntityId: payment.id,
+        before: { status: payment.status },
+        after: { status: 'CANCELED', cancellationReason } as Prisma.InputJsonValue,
+      },
+    });
+  });
+}
+
+// ──────────────────────────────────────────────────────────────────────
 // handleChargeRefunded — charge.refunded
 // ──────────────────────────────────────────────────────────────────────
 
@@ -1054,9 +1118,11 @@ function fullPaymentSelect() {
     idempotencyKey: true,
     failureCode: true,
     failureReason: true,
+    cancellationReason: true,
     paidAt: true,
     failedAt: true,
     refundedAt: true,
+    canceledAt: true,
     version: true,
     createdAt: true,
     updatedAt: true,

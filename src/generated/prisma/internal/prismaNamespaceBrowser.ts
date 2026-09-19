@@ -482,6 +482,8 @@ export const PaymentScalarFieldEnum = {
   paidAt: 'paidAt',
   failedAt: 'failedAt',
   refundedAt: 'refundedAt',
+  canceledAt: 'canceledAt',
+  cancellationReason: 'cancellationReason',
   version: 'version',
   tenantId: 'tenantId',
   createdAt: 'createdAt',

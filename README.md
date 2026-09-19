@@ -55,7 +55,8 @@ The service is built around a few deliberate constraints: every mutating endpoin
 - Rent invoice generation on a lease schedule
 
 **Money**
-- Stripe PaymentIntent flow with a signature-verified, replay-protected webhook
+- Stripe PaymentIntent flow with a signature-verified, replay-protected webhook handling success, failure, cancellation and refund
+- Cancelled intents are tracked apart from failures, so an abandoned checkout leaves the invoice payable
 - Utility meters, meter readings, and automatic bill splitting across occupants
 
 **Operations**

@@ -24,11 +24,13 @@ const VALID_TRANSITIONS: Record<PaymentStatus, ReadonlySet<PaymentStatus>> = {
   PROCESSING: new Set<PaymentStatus>([
     'SUCCEEDED',
     'FAILED',
+    'CANCELED',
   ]),
   SUCCEEDED: new Set<PaymentStatus>([
     'REFUNDED',
   ]),
   FAILED: new Set<PaymentStatus>([]),
+  CANCELED: new Set<PaymentStatus>([]),
   REFUNDED: new Set<PaymentStatus>([]),
 };
 
@@ -48,5 +50,6 @@ export function nextPaymentStates(from: PaymentStatus): readonly PaymentStatus[]
 /** Terminal payment statuses (no further transitions possible). */
 export const TERMINAL_PAYMENT_STATUSES: ReadonlySet<PaymentStatus> = new Set<PaymentStatus>([
   'FAILED',
+  'CANCELED',
   'REFUNDED',
 ]);

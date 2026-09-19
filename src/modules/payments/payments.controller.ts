@@ -28,6 +28,7 @@ import {
   createPaymentIntent,
   getPayment,
   handleChargeRefunded,
+  handleIntentCanceled,
   handleIntentFailed,
   handleIntentSucceeded,
   listPaymentsForCaller,
@@ -191,6 +192,9 @@ export const stripeWebhookHandler: RequestHandler = async (req, res, next) => {
           break;
         case 'payment_intent.payment_failed':
           await handleIntentFailed(event);
+          break;
+        case 'payment_intent.canceled':
+          await handleIntentCanceled(event);
           break;
         case 'charge.refunded':
           await handleChargeRefunded(event);
