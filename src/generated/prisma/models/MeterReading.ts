@@ -262,6 +262,7 @@ export type MeterReadingOrderByWithRelationInput = {
 
 export type MeterReadingWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  meterId_readingDate?: Prisma.MeterReadingMeterIdReadingDateCompoundUniqueInput
   AND?: Prisma.MeterReadingWhereInput | Prisma.MeterReadingWhereInput[]
   OR?: Prisma.MeterReadingWhereInput[]
   NOT?: Prisma.MeterReadingWhereInput | Prisma.MeterReadingWhereInput[]
@@ -274,7 +275,7 @@ export type MeterReadingWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"MeterReading"> | Date | string
   meter?: Prisma.XOR<Prisma.PropertyMeterScalarRelationFilter, Prisma.PropertyMeterWhereInput>
   submitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "meterId_readingDate">
 
 export type MeterReadingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -389,6 +390,11 @@ export type MeterReadingListRelationFilter = {
 
 export type MeterReadingOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type MeterReadingMeterIdReadingDateCompoundUniqueInput = {
+  meterId: string
+  readingDate: Date | string
 }
 
 export type MeterReadingCountOrderByAggregateInput = {

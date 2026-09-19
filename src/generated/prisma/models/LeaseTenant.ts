@@ -233,7 +233,6 @@ export type LeaseTenantOrderByWithRelationInput = {
 }
 
 export type LeaseTenantWhereUniqueInput = Prisma.AtLeast<{
-  lease_tenants_one_primary_per_lease?: Prisma.LeaseTenantLease_tenants_one_primary_per_leaseCompoundUniqueInput
   leaseId_tenantUserId?: Prisma.LeaseTenantLeaseIdTenantUserIdCompoundUniqueInput
   AND?: Prisma.LeaseTenantWhereInput | Prisma.LeaseTenantWhereInput[]
   OR?: Prisma.LeaseTenantWhereInput[]
@@ -245,7 +244,7 @@ export type LeaseTenantWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"LeaseTenant"> | Date | string
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
   tenant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "leaseId_tenantUserId" | "lease_tenants_one_primary_per_lease">
+}, "leaseId_tenantUserId">
 
 export type LeaseTenantOrderByWithAggregationInput = {
   leaseId?: Prisma.SortOrder
@@ -333,11 +332,6 @@ export type LeaseTenantListRelationFilter = {
 
 export type LeaseTenantOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type LeaseTenantLease_tenants_one_primary_per_leaseCompoundUniqueInput = {
-  leaseId: string
-  isPrimary: boolean
 }
 
 export type LeaseTenantLeaseIdTenantUserIdCompoundUniqueInput = {

@@ -270,6 +270,7 @@ export type BillShareOrderByWithRelationInput = {
 
 export type BillShareWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  billId_tenantUserId?: Prisma.BillShareBillIdTenantUserIdCompoundUniqueInput
   AND?: Prisma.BillShareWhereInput | Prisma.BillShareWhereInput[]
   OR?: Prisma.BillShareWhereInput[]
   NOT?: Prisma.BillShareWhereInput | Prisma.BillShareWhereInput[]
@@ -282,7 +283,7 @@ export type BillShareWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"BillShare"> | Date | string
   bill?: Prisma.XOR<Prisma.UtilityBillScalarRelationFilter, Prisma.UtilityBillWhereInput>
   tenant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "billId_tenantUserId">
 
 export type BillShareOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -397,6 +398,11 @@ export type BillShareListRelationFilter = {
 
 export type BillShareOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type BillShareBillIdTenantUserIdCompoundUniqueInput = {
+  billId: string
+  tenantUserId: string
 }
 
 export type BillShareCountOrderByAggregateInput = {

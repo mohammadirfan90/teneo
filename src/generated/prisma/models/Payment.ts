@@ -413,6 +413,7 @@ export type PaymentOrderByWithRelationInput = {
 
 export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  idempotencyKey?: string
   AND?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
@@ -427,7 +428,6 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   refundedAmountMinor?: Prisma.BigIntFilter<"Payment"> | bigint | number
   currency?: Prisma.StringFilter<"Payment"> | string
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
-  idempotencyKey?: Prisma.StringFilter<"Payment"> | string
   failureCode?: Prisma.StringNullableFilter<"Payment"> | string | null
   failureReason?: Prisma.StringNullableFilter<"Payment"> | string | null
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
@@ -442,7 +442,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   invoice?: Prisma.XOR<Prisma.RentInvoiceScalarRelationFilter, Prisma.RentInvoiceWhereInput>
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
   tenant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+}, "id" | "idempotencyKey">
 
 export type PaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

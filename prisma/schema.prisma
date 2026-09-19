@@ -152,7 +152,7 @@ model User {
   mfaEnabled      Boolean    @default(false) @map("mfa_enabled")
   mfaSecret       String?    @map("mfa_secret")
   gender          Gender?
-  tenantId        String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId        String     @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt       DateTime?  @map("deleted_at") @db.Timestamptz(6)
@@ -165,7 +165,8 @@ model User {
   refreshTokens          RefreshToken[]
   properties             Property[]
   savedSearches          SavedSearch[]
-  applications           Application[]
+  applications           Application[]           @relation("ApplicationTenant")
+  applicationsDecided    Application[]           @relation("ApplicationDecider")
   viewingRequests        ViewingRequest[]
   leaseTenancies         LeaseTenant[]
   leaseSignatures        LeaseSignature[]
@@ -201,11 +202,11 @@ model UserRole {
   userId      String   @map("user_id") @db.Uuid
   role        Role
   activatedAt DateTime @default(now()) @map("activated_at") @db.Timestamptz(6)
-  tenantId    String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId    String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, role], name: "user_roles_user_role_uniq")
+  @@unique([userId, role], name: "user_roles_user_role_uniq", map: "user_roles_user_id_role_uniq")
   @@index([role], name: "user_roles_role_idx")
   @@map("user_roles")
 }
@@ -213,14 +214,14 @@ model UserRole {
 /// 1:1 with User — owner role-profile (04 §4.3.1).
 model OwnerProfile {
   id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId            String    @unique @map("user_id") @db.Uuid
+  userId            String    @unique(map: "owner_profiles_user_id_uniq") @map("user_id") @db.Uuid
   displayName       String    @map("display_name")
   bio               String?
   avatarObjectKey   String?   @map("avatar_object_key")
   kycStatus         KycStatus @default(NONE) @map("kyc_status")
   kycBadgeGrantedAt DateTime? @map("kyc_badge_granted_at") @db.Timestamptz(6)
   reputationScore   Decimal?  @map("reputation_score") @db.Decimal(4, 2)
-  tenantId          String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId          String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -234,14 +235,14 @@ model OwnerProfile {
 /// `preferences_tenant` table per §4.3.3 — to be added in phase 20.
 model TenantProfile {
   id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId            String    @unique @map("user_id") @db.Uuid
+  userId            String    @unique(map: "tenant_profiles_user_id_uniq") @map("user_id") @db.Uuid
   displayName       String    @map("display_name")
   bio               String?
   avatarObjectKey   String?   @map("avatar_object_key")
   kycStatus         KycStatus @default(NONE) @map("kyc_status")
   kycBadgeGrantedAt DateTime? @map("kyc_badge_granted_at") @db.Timestamptz(6)
   reputationScore   Decimal?  @map("reputation_score") @db.Decimal(4, 2)
-  tenantId          String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId          String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -273,7 +274,7 @@ model KycSubmission {
   /// Cross-user docHash collision flag — set when another user already
   /// submitted with the same hash. Surfaces to admins in the queue.
   flaggedForReview   Boolean             @default(false) @map("flagged_for_review")
-  tenantId           String              @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId           String              @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt          DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt          DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -307,7 +308,7 @@ model AuditLog {
   ipAddress        String?  @map("ip_address") @db.Inet
   userAgent        String?  @map("user_agent")
   occurredAt       DateTime @default(now()) @map("occurred_at") @db.Timestamptz(6)
-  tenantId         String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId         String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
   @@index([actorUserId, occurredAt(sort: Desc)], name: "audit_logs_actor_idx")
   @@index([targetEntityType, targetEntityId], name: "audit_logs_target_idx")
@@ -332,7 +333,7 @@ model RefreshToken {
   revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
   userAgent String?   @map("user_agent")
   ip        String?   @db.Inet
-  tenantId  String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -350,7 +351,7 @@ model RefreshToken {
 /// see this sheet for matching.
 model PreferencesTenant {
   id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId          String    @unique @map("user_id") @db.Uuid
+  userId          String    @unique(map: "preferences_tenant_user_id_uniq") @map("user_id") @db.Uuid
   budgetMinMinor  BigInt?   @map("budget_min_minor")
   budgetMaxMinor  BigInt?   @map("budget_max_minor")
   preferredCities String[]  @map("preferred_cities")
@@ -359,13 +360,15 @@ model PreferencesTenant {
   lifestyle       Json?
   interests       String[]
   visibility      String    @default("PRIVATE")
-  tenantId        String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId        String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // GIN(lifestyle) + GIN(preferred_cities) live in the migration SQL
   // because Prisma doesn't yet express GIN indexes natively.
+  @@index([preferredCities], type: Gin, map: "preferences_tenant_cities_gin")
+  @@index([lifestyle], type: Gin, map: "preferences_tenant_lifestyle_gin")
   @@map("preferences_tenant")
 }
 
@@ -398,9 +401,9 @@ model Property {
   publishedAt  DateTime?      @map("published_at") @db.Timestamptz(6)
   /// Optimistic concurrency for property-level state changes (per §5.6).
   version      Int            @default(0)
-  tenantId     String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId     String         @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt    DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   /// Soft-delete; cascades to buildings → flats → rooms by convention
   /// (we never hard-delete these in v1).
   deletedAt    DateTime?      @map("deleted_at") @db.Timestamptz(6)
@@ -413,6 +416,8 @@ model Property {
   // Indexes per §4.3.2 — full SQL (incl. composite city/status/published_at
   // and geo index) lives in the migration since Prisma can't express them
   // exactly as the spec wants.
+  @@index([city, status, publishedAt], map: "properties_city_status_published_idx")
+  @@index([latitude, longitude], map: "properties_geo_idx")
   @@index([ownerUserId], name: "properties_owner_idx")
   @@index([status, deletedAt], name: "properties_status_idx")
   @@map("properties")
@@ -426,9 +431,9 @@ model Building {
   name       String
   floors     Int?
   status     BuildingStatus @default(ACTIVE)
-  tenantId   String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId   String         @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt  DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt  DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt  DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt  DateTime?      @map("deleted_at") @db.Timestamptz(6)
 
   property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
@@ -447,9 +452,9 @@ model Flat {
   floor      Int?
   doorNumber String?    @map("door_number")
   status     FlatStatus @default(ACTIVE)
-  tenantId   String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId   String     @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt  DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt  DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt  DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt  DateTime?  @map("deleted_at") @db.Timestamptz(6)
 
   building Building @relation(fields: [buildingId], references: [id], onDelete: Cascade)
@@ -493,9 +498,9 @@ model Room {
   /// increments this; UPDATE WHERE version=? guards against lost
   /// updates).
   version        Int        @default(0)
-  tenantId       String     @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId       String     @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt      DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt      DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt      DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt      DateTime?  @map("deleted_at") @db.Timestamptz(6)
 
   property        Property            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
@@ -512,6 +517,8 @@ model Room {
   @@index([flatId], name: "rooms_flat_idx")
   @@index([status, deletedAt], name: "rooms_status_idx")
   @@index([currency], name: "rooms_currency_idx")
+  @@index([status, availableFrom], map: "rooms_status_available_idx")
+  @@index([amenities], type: Gin, map: "rooms_amenities_gin")
   @@map("rooms")
 }
 
@@ -528,12 +535,12 @@ model SavedSearch {
   /// Full filter shape — same shape as `searchRoomsQuerySchema`'s parsed
   /// output. Storing as JSONB lets us round-trip it without re-encoding.
   query     Json
-  tenantId  String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([userId], name: "saved_searches_user_idx")
   @@map("saved_searches")
@@ -638,13 +645,17 @@ model Application {
   /// increments this; UPDATE WHERE version=? guards against lost
   /// updates from concurrent owner clicks.
   version         Int               @default(0)
-  tenantId        String            @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId        String            @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt       DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt       DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt       DateTime?         @map("deleted_at") @db.Timestamptz(6)
 
-  room     Room              @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  tenant   User              @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+  room     Room              @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tenant   User              @relation("ApplicationTenant", fields: [tenantUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  /// Admin/owner who decided the application. The FK exists in the database
+  /// (ON DELETE SET NULL); it is declared here so a schema-driven migration
+  /// cannot silently drop it.
+  decidedBy User?            @relation("ApplicationDecider", fields: [decidedByUserId], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "applications_decided_by_user_id_fkey")
   viewings ViewingRequest[]
 
   // Prisma-tracked indexes; the critical partial UNIQUE on active
@@ -672,13 +683,13 @@ model ViewingRequest {
   status        ViewingStatus @default(REQUESTED)
   /// Optional human-readable reason (cancellation, etc.).
   reason        String?
-  tenantId      String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId      String        @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt     DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  application Application? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
-  room        Room         @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  tenant      User         @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+  application Application? @relation(fields: [applicationId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  room        Room         @relation(fields: [roomId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tenant      User         @relation(fields: [tenantUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([roomId, status], name: "viewing_requests_room_status_idx")
   @@index([tenantUserId, status], name: "viewing_requests_tenant_status_idx")
@@ -724,7 +735,7 @@ model Lease {
   endedAt                    DateTime?        @map("ended_at") @db.Timestamptz(6)
   contractObjectKey          String?          @map("contract_object_key")
   createdAt                  DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt                  DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt                  DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   tenants      LeaseTenant[]
   signatures   LeaseSignature[]
@@ -753,11 +764,15 @@ model LeaseTenant {
   liabilityShare Decimal  @map("liability_share") @db.Decimal(5, 2)
   createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  lease  Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
-  tenant User  @relation(fields: [tenantUserId], references: [id], onDelete: Cascade)
+  lease  Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tenant User  @relation(fields: [tenantUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([leaseId, tenantUserId])
-  @@unique([leaseId, isPrimary], name: "lease_tenants_one_primary_per_lease")
+  // "One primary tenant per lease" is enforced by the partial index
+  // lease_tenants_one_primary_per_lease — UNIQUE(lease_id) WHERE is_primary
+  // — created in migration SQL. Prisma cannot express a partial index, and
+  // @@unique([leaseId, isPrimary]) is NOT the same rule: it would also forbid
+  // two non-primary co-tenants on one lease. Do not re-add it.
   @@index([tenantUserId], name: "lease_tenants_tenant_idx")
   @@map("lease_tenants")
 }
@@ -781,10 +796,10 @@ model LeaseSignature {
   ipAddress    String?        @map("ip_address")
   userAgent    String?        @map("user_agent")
 
-  lease  Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
-  signer User  @relation(fields: [signerUserId], references: [id], onDelete: Cascade)
+  lease  Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  signer User  @relation(fields: [signerUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@unique([leaseId, signerUserId], name: "lease_signatures_lease_signer_uq")
+  @@unique([leaseId, signerUserId], name: "lease_signatures_lease_signer_uq", map: "lease_signatures_lease_signer_uq")
   @@index([leaseId], name: "lease_signatures_lease_idx")
   @@map("lease_signatures")
 }
@@ -805,8 +820,8 @@ model LeaseAmendment {
   createdAt        DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
   signedAt         DateTime?            @map("signed_at") @db.Timestamptz(6)
 
-  lease      Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade)
-  proposedBy User  @relation(fields: [proposedByUserId], references: [id], onDelete: Cascade)
+  lease      Lease @relation(fields: [leaseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  proposedBy User  @relation(fields: [proposedByUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([leaseId], name: "lease_amendments_lease_idx")
   @@map("lease_amendments")
@@ -858,19 +873,20 @@ model RentInvoice {
   waiveReason       String?       @map("waive_reason")
   /// Forward-compat: always '00000000-0000-0000-0000-000000000000' in v1.
   /// Not the relational truth for tenancy (lease_tenants is).
-  tenantId          String        @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId          String        @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt         DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt         DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  lease          Lease     @relation(fields: [leaseId], references: [id], onDelete: Restrict)
-  disputedByUser User?     @relation("RentInvoiceDisputedBy", fields: [disputedByUserId], references: [id], onDelete: SetNull)
-  waivedByUser   User?     @relation("RentInvoiceWaivedBy", fields: [waivedByUserId], references: [id], onDelete: SetNull)
+  lease          Lease     @relation(fields: [leaseId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  disputedByUser User?     @relation("RentInvoiceDisputedBy", fields: [disputedByUserId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  waivedByUser   User?     @relation("RentInvoiceWaivedBy", fields: [waivedByUserId], references: [id], onDelete: SetNull, onUpdate: NoAction)
   payments       Payment[]
 
   // The UNIQUE(lease_id, period_start) constraint is added via the
   // custom migration SQL (Prisma could express it via @@unique, but
   // matching the existing hand-edited convention used by lease_tenants
   // / leases_end_date_active_idx keeps the migration readable).
+  @@unique([leaseId, periodStart], map: "rent_invoices_lease_period_uq")
   @@index([leaseId, status], name: "rent_invoices_lease_status_idx")
   @@index([status, dueDate], name: "rent_invoices_status_due_idx")
   @@index([status, generatedAt], name: "rent_invoices_status_generated_idx")
@@ -976,13 +992,13 @@ model Payment {
   version                Int            @default(0)
   /// Forward-compat v2 multi-tenancy scaffold (always
   /// '00000000-0000-0000-0000-000000000000' in v1).
-  tenantId               String         @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId               String         @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt              DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt              DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt              DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  invoice RentInvoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
-  lease   Lease       @relation(fields: [leaseId], references: [id], onDelete: Restrict)
-  tenant  User        @relation("PaymentTenant", fields: [tenantUserId], references: [id], onDelete: Restrict)
+  invoice RentInvoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  lease   Lease       @relation(fields: [leaseId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  tenant  User        @relation("PaymentTenant", fields: [tenantUserId], references: [id], onDelete: Restrict, onUpdate: NoAction)
 
   // UNIQUE constraints (hand-edited in the migration SQL because Prisma
   // doesn't model partial uniques):
@@ -995,6 +1011,7 @@ model Payment {
   //                                            gateway_charge_id WHERE NOT NULL
   //                                            (charge.refunded looks up by
   //                                            charge_id first)
+  @@unique([idempotencyKey], map: "payments_idempotency_key_uq")
   @@index([invoiceId, status], name: "payments_invoice_status_idx")
   @@index([tenantUserId, createdAt(sort: Desc)], name: "payments_tenant_idx")
   @@index([status, createdAt], name: "payments_status_idx")
@@ -1052,11 +1069,11 @@ model PropertyMeter {
   unitLabel        String      @map("unit_label")
   /// Lifecycle: v1 sets once to true; deactivation is Phase 18+.
   isActive         Boolean     @default(true) @map("is_active")
-  tenantId         String      @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId         String      @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt        DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt        DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt        DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  property Property       @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+  property Property       @relation(fields: [propertyId], references: [id], onDelete: Restrict, onUpdate: NoAction)
   readings MeterReading[]
   bills    UtilityBill[]
 
@@ -1085,12 +1102,13 @@ model MeterReading {
   /// User who submitted the reading. OWNER or a tenant on an active
   /// lease for the meter's property.
   submittedByUserId String   @map("submitted_by_user_id") @db.Uuid
-  tenantId          String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId          String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  meter     PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict)
-  submitter User          @relation("MeterReadingSubmitter", fields: [submittedByUserId], references: [id], onDelete: Restrict)
+  meter     PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  submitter User          @relation("MeterReadingSubmitter", fields: [submittedByUserId], references: [id], onDelete: Restrict, onUpdate: NoAction)
 
+  @@unique([meterId, readingDate], map: "meter_readings_meter_date_uq")
   @@index([meterId, readingDate(sort: Desc)], name: "readings_meter_date_idx")
   @@map("meter_readings")
 }
@@ -1126,10 +1144,10 @@ model UtilityBill {
   /// supersedes this one.
   superseded           Boolean   @default(false)
   supersededAt         DateTime? @map("superseded_at") @db.Timestamptz(6)
-  tenantId             String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId             String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
-  lease  Lease         @relation(fields: [leaseId], references: [id], onDelete: Restrict)
-  meter  PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict)
+  lease  Lease         @relation(fields: [leaseId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  meter  PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict, onUpdate: NoAction)
   shares BillShare[]
 
   @@index([leaseId, periodStart], name: "utility_bills_lease_period_idx")
@@ -1152,12 +1170,13 @@ model BillShare {
   shareMinor   BigInt   @map("share_minor")
   splitMode    String   @map("split_mode") @db.VarChar(16)
   weightUsed   Decimal? @map("weight_used") @db.Decimal(5, 2)
-  tenantId     String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId     String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  bill   UtilityBill @relation(fields: [billId], references: [id], onDelete: Cascade)
-  tenant User        @relation("BillShareTenant", fields: [tenantUserId], references: [id], onDelete: Restrict)
+  bill   UtilityBill @relation(fields: [billId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tenant User        @relation("BillShareTenant", fields: [tenantUserId], references: [id], onDelete: Restrict, onUpdate: NoAction)
 
+  @@unique([billId, tenantUserId], map: "bill_shares_bill_tenant_uq")
   @@index([billId], name: "bill_shares_bill_idx")
   @@index([tenantUserId, createdAt(sort: Desc)], name: "bill_shares_tenant_idx")
   @@map("bill_shares")
@@ -1260,15 +1279,15 @@ model MaintenanceTicket {
   ratingSubmittedAt DateTime?           @map("rating_submitted_at") @db.Timestamptz(6)
   /// Forward-compat v2 multi-tenancy placeholder. Always the constant
   /// zero-uuid in v1.
-  tenantId          String              @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId          String              @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt         DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt         DateTime            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  room       Room                @relation(fields: [roomId], references: [id], onDelete: Restrict)
-  lease      Lease               @relation(fields: [leaseId], references: [id], onDelete: Restrict)
-  raisedBy   User                @relation("TicketRaiser", fields: [raisedByUserId], references: [id], onDelete: Restrict)
-  resolvedBy User?               @relation("TicketResolver", fields: [resolvedByUserId], references: [id], onDelete: Restrict)
-  closedBy   User?               @relation("TicketCloser", fields: [closedByUserId], references: [id], onDelete: Restrict)
+  room       Room                @relation(fields: [roomId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  lease      Lease               @relation(fields: [leaseId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  raisedBy   User                @relation("TicketRaiser", fields: [raisedByUserId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  resolvedBy User?               @relation("TicketResolver", fields: [resolvedByUserId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  closedBy   User?               @relation("TicketCloser", fields: [closedByUserId], references: [id], onDelete: Restrict, onUpdate: NoAction)
   updates    MaintenanceUpdate[]
 
   // CHECK (rating BETWEEN 1 AND 5) lives in the migration SQL.
@@ -1289,11 +1308,11 @@ model MaintenanceUpdate {
   authorUserId String             @map("author_user_id") @db.Uuid
   body         String
   statusAfter  MaintenanceStatus? @map("status_after")
-  tenantId     String             @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId     String             @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt    DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  ticket MaintenanceTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
-  author User              @relation("UpdateAuthor", fields: [authorUserId], references: [id], onDelete: Restrict)
+  ticket MaintenanceTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  author User              @relation("UpdateAuthor", fields: [authorUserId], references: [id], onDelete: Restrict, onUpdate: NoAction)
 
   @@index([ticketId, createdAt(sort: Asc)], name: "maintenance_updates_ticket_idx")
   @@map("maintenance_updates")
@@ -1361,11 +1380,11 @@ model Document {
   etag            String? @db.VarChar(64)
 
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
-  tenantId  String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  owner User @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  owner User @relation(fields: [ownerUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([ownerUserId, status], name: "documents_owner_status_idx")
   @@index([objectKey], name: "documents_object_key_idx")
@@ -1403,9 +1422,9 @@ model RoomPhoto {
   /// Accessibility text shown when the image cannot be rendered.
   alt             String?
 
-  tenantId  String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
 
   room       Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
@@ -1441,14 +1460,14 @@ model MatchResult {
   /// applied (e.g., "Hard penalty: gender mismatch"). Multi-line.
   explain         String
   rank            Int      @map("rank")
-  tenantId        String   @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId        String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  caller    User          @relation("MatchCaller", fields: [callerUserId], references: [id], onDelete: Cascade)
-  candidate User          @relation("MatchCandidate", fields: [candidateUserId], references: [id], onDelete: Cascade)
+  caller    User          @relation("MatchCaller", fields: [callerUserId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "match_results_caller_fk")
+  candidate User          @relation("MatchCandidate", fields: [candidateUserId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "match_results_candidate_fk")
   intro     IntroRequest?
 
-  @@unique([callerUserId, candidateUserId], name: "match_results_caller_candidate_uq")
+  @@unique([callerUserId, candidateUserId], name: "match_results_caller_candidate_uq", map: "match_results_caller_candidate_uq")
   @@index([callerUserId, rank(sort: Asc)], name: "match_results_caller_rank_idx")
   @@map("match_results")
 }
@@ -1469,15 +1488,15 @@ model IntroRequest {
   /// is in 'PENDING' and contact info is hidden from both parties.
   revealedAt          DateTime? @map("revealed_at") @db.Timestamptz(6)
   declinedAt          DateTime? @map("declined_at") @db.Timestamptz(6)
-  tenantId            String    @default("00000000-0000-0000-0000-000000000000") @map("tenant_id") @db.Uuid
+  tenantId            String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt           DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  matchResult MatchResult @relation(fields: [matchResultId], references: [id], onDelete: Cascade)
-  caller      User        @relation("IntroCaller", fields: [callerUserId], references: [id], onDelete: Cascade)
-  candidate   User        @relation("IntroCandidate", fields: [candidateUserId], references: [id], onDelete: Cascade)
+  matchResult MatchResult @relation(fields: [matchResultId], references: [id], onDelete: Cascade, map: "intro_requests_match_fk", onUpdate: NoAction)
+  caller      User        @relation("IntroCaller", fields: [callerUserId], references: [id], onDelete: Cascade, map: "intro_requests_caller_fk", onUpdate: NoAction)
+  candidate   User        @relation("IntroCandidate", fields: [candidateUserId], references: [id], onDelete: Cascade, map: "intro_requests_candidate_fk", onUpdate: NoAction)
 
-  @@unique([matchResultId], name: "intro_requests_match_uq")
+  @@unique([matchResultId], name: "intro_requests_match_uq", map: "intro_requests_match_uq")
   @@index([callerUserId, createdAt(sort: Desc)], name: "intro_requests_caller_idx")
   @@index([candidateUserId, createdAt(sort: Desc)], name: "intro_requests_candidate_idx")
   @@map("intro_requests")

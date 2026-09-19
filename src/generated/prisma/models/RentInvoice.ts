@@ -433,6 +433,7 @@ export type RentInvoiceOrderByWithRelationInput = {
 
 export type RentInvoiceWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  leaseId_periodStart?: Prisma.RentInvoiceLeaseIdPeriodStartCompoundUniqueInput
   AND?: Prisma.RentInvoiceWhereInput | Prisma.RentInvoiceWhereInput[]
   OR?: Prisma.RentInvoiceWhereInput[]
   NOT?: Prisma.RentInvoiceWhereInput | Prisma.RentInvoiceWhereInput[]
@@ -462,7 +463,7 @@ export type RentInvoiceWhereUniqueInput = Prisma.AtLeast<{
   disputedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   waivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
-}, "id">
+}, "id" | "leaseId_periodStart">
 
 export type RentInvoiceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -715,6 +716,11 @@ export type RentInvoiceListRelationFilter = {
 
 export type RentInvoiceOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type RentInvoiceLeaseIdPeriodStartCompoundUniqueInput = {
+  leaseId: string
+  periodStart: Date | string
 }
 
 export type RentInvoiceCountOrderByAggregateInput = {

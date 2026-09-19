@@ -281,6 +281,7 @@ export type UserWhereInput = {
   properties?: Prisma.PropertyListRelationFilter
   savedSearches?: Prisma.SavedSearchListRelationFilter
   applications?: Prisma.ApplicationListRelationFilter
+  applicationsDecided?: Prisma.ApplicationListRelationFilter
   viewingRequests?: Prisma.ViewingRequestListRelationFilter
   leaseTenancies?: Prisma.LeaseTenantListRelationFilter
   leaseSignatures?: Prisma.LeaseSignatureListRelationFilter
@@ -328,6 +329,7 @@ export type UserOrderByWithRelationInput = {
   properties?: Prisma.PropertyOrderByRelationAggregateInput
   savedSearches?: Prisma.SavedSearchOrderByRelationAggregateInput
   applications?: Prisma.ApplicationOrderByRelationAggregateInput
+  applicationsDecided?: Prisma.ApplicationOrderByRelationAggregateInput
   viewingRequests?: Prisma.ViewingRequestOrderByRelationAggregateInput
   leaseTenancies?: Prisma.LeaseTenantOrderByRelationAggregateInput
   leaseSignatures?: Prisma.LeaseSignatureOrderByRelationAggregateInput
@@ -378,6 +380,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   properties?: Prisma.PropertyListRelationFilter
   savedSearches?: Prisma.SavedSearchListRelationFilter
   applications?: Prisma.ApplicationListRelationFilter
+  applicationsDecided?: Prisma.ApplicationListRelationFilter
   viewingRequests?: Prisma.ViewingRequestListRelationFilter
   leaseTenancies?: Prisma.LeaseTenantListRelationFilter
   leaseSignatures?: Prisma.LeaseSignatureListRelationFilter
@@ -469,6 +472,7 @@ export type UserCreateInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -516,6 +520,7 @@ export type UserUncheckedCreateInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -563,6 +568,7 @@ export type UserUpdateInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -610,6 +616,7 @@ export type UserUncheckedUpdateInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -901,12 +908,28 @@ export type UserCreateNestedOneWithoutApplicationsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutApplicationsDecidedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutApplicationsDecidedInput, Prisma.UserUncheckedCreateWithoutApplicationsDecidedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApplicationsDecidedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneRequiredWithoutApplicationsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutApplicationsInput, Prisma.UserUncheckedCreateWithoutApplicationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutApplicationsInput
   upsert?: Prisma.UserUpsertWithoutApplicationsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApplicationsInput, Prisma.UserUpdateWithoutApplicationsInput>, Prisma.UserUncheckedUpdateWithoutApplicationsInput>
+}
+
+export type UserUpdateOneWithoutApplicationsDecidedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutApplicationsDecidedInput, Prisma.UserUncheckedCreateWithoutApplicationsDecidedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApplicationsDecidedInput
+  upsert?: Prisma.UserUpsertWithoutApplicationsDecidedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApplicationsDecidedInput, Prisma.UserUpdateWithoutApplicationsDecidedInput>, Prisma.UserUncheckedUpdateWithoutApplicationsDecidedInput>
 }
 
 export type UserCreateNestedOneWithoutViewingRequestsInput = {
@@ -1208,6 +1231,7 @@ export type UserCreateWithoutRolesInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -1254,6 +1278,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -1316,6 +1341,7 @@ export type UserUpdateWithoutRolesInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -1362,6 +1388,7 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -1408,6 +1435,7 @@ export type UserCreateWithoutOwnerProfileInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -1454,6 +1482,7 @@ export type UserUncheckedCreateWithoutOwnerProfileInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -1516,6 +1545,7 @@ export type UserUpdateWithoutOwnerProfileInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -1562,6 +1592,7 @@ export type UserUncheckedUpdateWithoutOwnerProfileInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -1608,6 +1639,7 @@ export type UserCreateWithoutTenantProfileInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -1654,6 +1686,7 @@ export type UserUncheckedCreateWithoutTenantProfileInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -1716,6 +1749,7 @@ export type UserUpdateWithoutTenantProfileInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -1762,6 +1796,7 @@ export type UserUncheckedUpdateWithoutTenantProfileInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -1808,6 +1843,7 @@ export type UserCreateWithoutKycSubmissionsInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -1854,6 +1890,7 @@ export type UserUncheckedCreateWithoutKycSubmissionsInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -1916,6 +1953,7 @@ export type UserUpdateWithoutKycSubmissionsInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -1962,6 +2000,7 @@ export type UserUncheckedUpdateWithoutKycSubmissionsInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -2008,6 +2047,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -2054,6 +2094,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -2116,6 +2157,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -2162,6 +2204,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -2208,6 +2251,7 @@ export type UserCreateWithoutTenantPreferencesInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -2254,6 +2298,7 @@ export type UserUncheckedCreateWithoutTenantPreferencesInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -2316,6 +2361,7 @@ export type UserUpdateWithoutTenantPreferencesInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -2362,6 +2408,7 @@ export type UserUncheckedUpdateWithoutTenantPreferencesInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -2408,6 +2455,7 @@ export type UserCreateWithoutPropertiesInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -2454,6 +2502,7 @@ export type UserUncheckedCreateWithoutPropertiesInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -2516,6 +2565,7 @@ export type UserUpdateWithoutPropertiesInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -2562,6 +2612,7 @@ export type UserUncheckedUpdateWithoutPropertiesInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -2608,6 +2659,7 @@ export type UserCreateWithoutSavedSearchesInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -2654,6 +2706,7 @@ export type UserUncheckedCreateWithoutSavedSearchesInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -2716,6 +2769,7 @@ export type UserUpdateWithoutSavedSearchesInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -2762,6 +2816,7 @@ export type UserUncheckedUpdateWithoutSavedSearchesInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -2808,6 +2863,7 @@ export type UserCreateWithoutApplicationsInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -2854,6 +2910,7 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -2878,6 +2935,105 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
 export type UserCreateOrConnectWithoutApplicationsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutApplicationsInput, Prisma.UserUncheckedCreateWithoutApplicationsInput>
+}
+
+export type UserCreateWithoutApplicationsDecidedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateCreateNestedManyWithoutAuthorInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoCreateNestedManyWithoutUploadedByInput
+  matchResultsCaller?: Prisma.MatchResultCreateNestedManyWithoutCallerInput
+  matchResultsCandidate?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  introsAsCaller?: Prisma.IntroRequestCreateNestedManyWithoutCallerInput
+  introsAsCandidate?: Prisma.IntroRequestCreateNestedManyWithoutCandidateInput
+}
+
+export type UserUncheckedCreateWithoutApplicationsDecidedInput = {
+  id?: string
+  email: string
+  emailVerifiedAt?: Date | string | null
+  phone?: string | null
+  phoneVerifiedAt?: Date | string | null
+  passwordHash?: string | null
+  oauthProvider?: string | null
+  oauthSubject?: string | null
+  status?: $Enums.UserStatus
+  mfaEnabled?: boolean
+  mfaSecret?: string | null
+  gender?: $Enums.Gender | null
+  tenantId?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  roles?: Prisma.UserRoleUncheckedCreateNestedManyWithoutUserInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantProfile?: Prisma.TenantProfileUncheckedCreateNestedOneWithoutUserInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedCreateNestedOneWithoutUserInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
+  savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutDisputedByUserInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedCreateNestedManyWithoutWaivedByUserInput
+  paymentsMade?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  meterReadings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutSubmitterInput
+  billShares?: Prisma.BillShareUncheckedCreateNestedManyWithoutTenantInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutRaisedByInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutResolvedByInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedCreateNestedManyWithoutClosedByInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutAuthorInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOwnerInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedCreateNestedManyWithoutUploadedByInput
+  matchResultsCaller?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCallerInput
+  matchResultsCandidate?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  introsAsCaller?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCallerInput
+  introsAsCandidate?: Prisma.IntroRequestUncheckedCreateNestedManyWithoutCandidateInput
+}
+
+export type UserCreateOrConnectWithoutApplicationsDecidedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutApplicationsDecidedInput, Prisma.UserUncheckedCreateWithoutApplicationsDecidedInput>
 }
 
 export type UserUpsertWithoutApplicationsInput = {
@@ -2916,6 +3072,7 @@ export type UserUpdateWithoutApplicationsInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -2962,6 +3119,112 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
+  viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUncheckedUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUncheckedUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUncheckedUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUncheckedUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUncheckedUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutAuthorNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUncheckedUpdateManyWithoutUploadedByNestedInput
+  matchResultsCaller?: Prisma.MatchResultUncheckedUpdateManyWithoutCallerNestedInput
+  matchResultsCandidate?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  introsAsCaller?: Prisma.IntroRequestUncheckedUpdateManyWithoutCallerNestedInput
+  introsAsCandidate?: Prisma.IntroRequestUncheckedUpdateManyWithoutCandidateNestedInput
+}
+
+export type UserUpsertWithoutApplicationsDecidedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutApplicationsDecidedInput, Prisma.UserUncheckedUpdateWithoutApplicationsDecidedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutApplicationsDecidedInput, Prisma.UserUncheckedCreateWithoutApplicationsDecidedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutApplicationsDecidedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutApplicationsDecidedInput, Prisma.UserUncheckedUpdateWithoutApplicationsDecidedInput>
+}
+
+export type UserUpdateWithoutApplicationsDecidedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
+  leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
+  leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
+  leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
+  rentInvoicesDisputed?: Prisma.RentInvoiceUpdateManyWithoutDisputedByUserNestedInput
+  rentInvoicesWaived?: Prisma.RentInvoiceUpdateManyWithoutWaivedByUserNestedInput
+  paymentsMade?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  meterReadings?: Prisma.MeterReadingUpdateManyWithoutSubmitterNestedInput
+  billShares?: Prisma.BillShareUpdateManyWithoutTenantNestedInput
+  ticketsRaised?: Prisma.MaintenanceTicketUpdateManyWithoutRaisedByNestedInput
+  ticketsResolved?: Prisma.MaintenanceTicketUpdateManyWithoutResolvedByNestedInput
+  ticketsClosed?: Prisma.MaintenanceTicketUpdateManyWithoutClosedByNestedInput
+  ticketUpdates?: Prisma.MaintenanceUpdateUpdateManyWithoutAuthorNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutOwnerNestedInput
+  roomPhotos?: Prisma.RoomPhotoUpdateManyWithoutUploadedByNestedInput
+  matchResultsCaller?: Prisma.MatchResultUpdateManyWithoutCallerNestedInput
+  matchResultsCandidate?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  introsAsCaller?: Prisma.IntroRequestUpdateManyWithoutCallerNestedInput
+  introsAsCandidate?: Prisma.IntroRequestUpdateManyWithoutCandidateNestedInput
+}
+
+export type UserUncheckedUpdateWithoutApplicationsDecidedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  roles?: Prisma.UserRoleUncheckedUpdateManyWithoutUserNestedInput
+  ownerProfile?: Prisma.OwnerProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantProfile?: Prisma.TenantProfileUncheckedUpdateOneWithoutUserNestedInput
+  tenantPreferences?: Prisma.PreferencesTenantUncheckedUpdateOneWithoutUserNestedInput
+  kycSubmissions?: Prisma.KycSubmissionUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
+  savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -3009,6 +3272,7 @@ export type UserCreateWithoutViewingRequestsInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
@@ -3055,6 +3319,7 @@ export type UserUncheckedCreateWithoutViewingRequestsInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
@@ -3117,6 +3382,7 @@ export type UserUpdateWithoutViewingRequestsInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
@@ -3163,6 +3429,7 @@ export type UserUncheckedUpdateWithoutViewingRequestsInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
@@ -3209,6 +3476,7 @@ export type UserCreateWithoutLeaseTenanciesInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
@@ -3255,6 +3523,7 @@ export type UserUncheckedCreateWithoutLeaseTenanciesInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
@@ -3317,6 +3586,7 @@ export type UserUpdateWithoutLeaseTenanciesInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
@@ -3363,6 +3633,7 @@ export type UserUncheckedUpdateWithoutLeaseTenanciesInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
@@ -3409,6 +3680,7 @@ export type UserCreateWithoutLeaseSignaturesInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseAmendments?: Prisma.LeaseAmendmentCreateNestedManyWithoutProposedByInput
@@ -3455,6 +3727,7 @@ export type UserUncheckedCreateWithoutLeaseSignaturesInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedCreateNestedManyWithoutProposedByInput
@@ -3517,6 +3790,7 @@ export type UserUpdateWithoutLeaseSignaturesInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUpdateManyWithoutProposedByNestedInput
@@ -3563,6 +3837,7 @@ export type UserUncheckedUpdateWithoutLeaseSignaturesInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseAmendments?: Prisma.LeaseAmendmentUncheckedUpdateManyWithoutProposedByNestedInput
@@ -3609,6 +3884,7 @@ export type UserCreateWithoutLeaseAmendmentsInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -3655,6 +3931,7 @@ export type UserUncheckedCreateWithoutLeaseAmendmentsInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -3717,6 +3994,7 @@ export type UserUpdateWithoutLeaseAmendmentsInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -3763,6 +4041,7 @@ export type UserUncheckedUpdateWithoutLeaseAmendmentsInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -3809,6 +4088,7 @@ export type UserCreateWithoutRentInvoicesDisputedInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -3855,6 +4135,7 @@ export type UserUncheckedCreateWithoutRentInvoicesDisputedInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -3906,6 +4187,7 @@ export type UserCreateWithoutRentInvoicesWaivedInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -3952,6 +4234,7 @@ export type UserUncheckedCreateWithoutRentInvoicesWaivedInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -4014,6 +4297,7 @@ export type UserUpdateWithoutRentInvoicesDisputedInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -4060,6 +4344,7 @@ export type UserUncheckedUpdateWithoutRentInvoicesDisputedInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -4117,6 +4402,7 @@ export type UserUpdateWithoutRentInvoicesWaivedInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -4163,6 +4449,7 @@ export type UserUncheckedUpdateWithoutRentInvoicesWaivedInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -4209,6 +4496,7 @@ export type UserCreateWithoutPaymentsMadeInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -4255,6 +4543,7 @@ export type UserUncheckedCreateWithoutPaymentsMadeInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -4317,6 +4606,7 @@ export type UserUpdateWithoutPaymentsMadeInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -4363,6 +4653,7 @@ export type UserUncheckedUpdateWithoutPaymentsMadeInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -4409,6 +4700,7 @@ export type UserCreateWithoutMeterReadingsInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -4455,6 +4747,7 @@ export type UserUncheckedCreateWithoutMeterReadingsInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -4517,6 +4810,7 @@ export type UserUpdateWithoutMeterReadingsInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -4563,6 +4857,7 @@ export type UserUncheckedUpdateWithoutMeterReadingsInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -4609,6 +4904,7 @@ export type UserCreateWithoutBillSharesInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -4655,6 +4951,7 @@ export type UserUncheckedCreateWithoutBillSharesInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -4717,6 +5014,7 @@ export type UserUpdateWithoutBillSharesInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -4763,6 +5061,7 @@ export type UserUncheckedUpdateWithoutBillSharesInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -4809,6 +5108,7 @@ export type UserCreateWithoutTicketsRaisedInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -4855,6 +5155,7 @@ export type UserUncheckedCreateWithoutTicketsRaisedInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -4906,6 +5207,7 @@ export type UserCreateWithoutTicketsResolvedInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -4952,6 +5254,7 @@ export type UserUncheckedCreateWithoutTicketsResolvedInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -5003,6 +5306,7 @@ export type UserCreateWithoutTicketsClosedInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -5049,6 +5353,7 @@ export type UserUncheckedCreateWithoutTicketsClosedInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -5111,6 +5416,7 @@ export type UserUpdateWithoutTicketsRaisedInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -5157,6 +5463,7 @@ export type UserUncheckedUpdateWithoutTicketsRaisedInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -5214,6 +5521,7 @@ export type UserUpdateWithoutTicketsResolvedInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -5260,6 +5568,7 @@ export type UserUncheckedUpdateWithoutTicketsResolvedInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -5317,6 +5626,7 @@ export type UserUpdateWithoutTicketsClosedInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -5363,6 +5673,7 @@ export type UserUncheckedUpdateWithoutTicketsClosedInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -5409,6 +5720,7 @@ export type UserCreateWithoutTicketUpdatesInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -5455,6 +5767,7 @@ export type UserUncheckedCreateWithoutTicketUpdatesInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -5517,6 +5830,7 @@ export type UserUpdateWithoutTicketUpdatesInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -5563,6 +5877,7 @@ export type UserUncheckedUpdateWithoutTicketUpdatesInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -5609,6 +5924,7 @@ export type UserCreateWithoutDocumentsInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -5655,6 +5971,7 @@ export type UserUncheckedCreateWithoutDocumentsInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -5717,6 +6034,7 @@ export type UserUpdateWithoutDocumentsInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -5763,6 +6081,7 @@ export type UserUncheckedUpdateWithoutDocumentsInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -5809,6 +6128,7 @@ export type UserCreateWithoutRoomPhotosInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -5855,6 +6175,7 @@ export type UserUncheckedCreateWithoutRoomPhotosInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -5917,6 +6238,7 @@ export type UserUpdateWithoutRoomPhotosInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -5963,6 +6285,7 @@ export type UserUncheckedUpdateWithoutRoomPhotosInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -6009,6 +6332,7 @@ export type UserCreateWithoutMatchResultsCallerInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -6055,6 +6379,7 @@ export type UserUncheckedCreateWithoutMatchResultsCallerInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -6106,6 +6431,7 @@ export type UserCreateWithoutMatchResultsCandidateInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -6152,6 +6478,7 @@ export type UserUncheckedCreateWithoutMatchResultsCandidateInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -6214,6 +6541,7 @@ export type UserUpdateWithoutMatchResultsCallerInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -6260,6 +6588,7 @@ export type UserUncheckedUpdateWithoutMatchResultsCallerInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -6317,6 +6646,7 @@ export type UserUpdateWithoutMatchResultsCandidateInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -6363,6 +6693,7 @@ export type UserUncheckedUpdateWithoutMatchResultsCandidateInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -6409,6 +6740,7 @@ export type UserCreateWithoutIntrosAsCallerInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -6455,6 +6787,7 @@ export type UserUncheckedCreateWithoutIntrosAsCallerInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -6506,6 +6839,7 @@ export type UserCreateWithoutIntrosAsCandidateInput = {
   properties?: Prisma.PropertyCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureCreateNestedManyWithoutSignerInput
@@ -6552,6 +6886,7 @@ export type UserUncheckedCreateWithoutIntrosAsCandidateInput = {
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutOwnerInput
   savedSearches?: Prisma.SavedSearchUncheckedCreateNestedManyWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutTenantInput
+  applicationsDecided?: Prisma.ApplicationUncheckedCreateNestedManyWithoutDecidedByInput
   viewingRequests?: Prisma.ViewingRequestUncheckedCreateNestedManyWithoutTenantInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedCreateNestedManyWithoutTenantInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedCreateNestedManyWithoutSignerInput
@@ -6614,6 +6949,7 @@ export type UserUpdateWithoutIntrosAsCallerInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -6660,6 +6996,7 @@ export type UserUncheckedUpdateWithoutIntrosAsCallerInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -6717,6 +7054,7 @@ export type UserUpdateWithoutIntrosAsCandidateInput = {
   properties?: Prisma.PropertyUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUpdateManyWithoutSignerNestedInput
@@ -6763,6 +7101,7 @@ export type UserUncheckedUpdateWithoutIntrosAsCandidateInput = {
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutOwnerNestedInput
   savedSearches?: Prisma.SavedSearchUncheckedUpdateManyWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutTenantNestedInput
+  applicationsDecided?: Prisma.ApplicationUncheckedUpdateManyWithoutDecidedByNestedInput
   viewingRequests?: Prisma.ViewingRequestUncheckedUpdateManyWithoutTenantNestedInput
   leaseTenancies?: Prisma.LeaseTenantUncheckedUpdateManyWithoutTenantNestedInput
   leaseSignatures?: Prisma.LeaseSignatureUncheckedUpdateManyWithoutSignerNestedInput
@@ -6795,6 +7134,7 @@ export type UserCountOutputType = {
   properties: number
   savedSearches: number
   applications: number
+  applicationsDecided: number
   viewingRequests: number
   leaseTenancies: number
   leaseSignatures: number
@@ -6823,6 +7163,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   properties?: boolean | UserCountOutputTypeCountPropertiesArgs
   savedSearches?: boolean | UserCountOutputTypeCountSavedSearchesArgs
   applications?: boolean | UserCountOutputTypeCountApplicationsArgs
+  applicationsDecided?: boolean | UserCountOutputTypeCountApplicationsDecidedArgs
   viewingRequests?: boolean | UserCountOutputTypeCountViewingRequestsArgs
   leaseTenancies?: boolean | UserCountOutputTypeCountLeaseTenanciesArgs
   leaseSignatures?: boolean | UserCountOutputTypeCountLeaseSignaturesArgs
@@ -6893,6 +7234,13 @@ export type UserCountOutputTypeCountSavedSearchesArgs<ExtArgs extends runtime.Ty
  * UserCountOutputType without action
  */
 export type UserCountOutputTypeCountApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ApplicationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountApplicationsDecidedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ApplicationWhereInput
 }
 
@@ -7056,6 +7404,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   properties?: boolean | Prisma.User$propertiesArgs<ExtArgs>
   savedSearches?: boolean | Prisma.User$savedSearchesArgs<ExtArgs>
   applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
+  applicationsDecided?: boolean | Prisma.User$applicationsDecidedArgs<ExtArgs>
   viewingRequests?: boolean | Prisma.User$viewingRequestsArgs<ExtArgs>
   leaseTenancies?: boolean | Prisma.User$leaseTenanciesArgs<ExtArgs>
   leaseSignatures?: boolean | Prisma.User$leaseSignaturesArgs<ExtArgs>
@@ -7146,6 +7495,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   properties?: boolean | Prisma.User$propertiesArgs<ExtArgs>
   savedSearches?: boolean | Prisma.User$savedSearchesArgs<ExtArgs>
   applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
+  applicationsDecided?: boolean | Prisma.User$applicationsDecidedArgs<ExtArgs>
   viewingRequests?: boolean | Prisma.User$viewingRequestsArgs<ExtArgs>
   leaseTenancies?: boolean | Prisma.User$leaseTenanciesArgs<ExtArgs>
   leaseSignatures?: boolean | Prisma.User$leaseSignaturesArgs<ExtArgs>
@@ -7182,6 +7532,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     properties: Prisma.$PropertyPayload<ExtArgs>[]
     savedSearches: Prisma.$SavedSearchPayload<ExtArgs>[]
     applications: Prisma.$ApplicationPayload<ExtArgs>[]
+    applicationsDecided: Prisma.$ApplicationPayload<ExtArgs>[]
     viewingRequests: Prisma.$ViewingRequestPayload<ExtArgs>[]
     leaseTenancies: Prisma.$LeaseTenantPayload<ExtArgs>[]
     leaseSignatures: Prisma.$LeaseSignaturePayload<ExtArgs>[]
@@ -7622,6 +7973,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   properties<T extends Prisma.User$propertiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$propertiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   savedSearches<T extends Prisma.User$savedSearchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$savedSearchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedSearchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   applications<T extends Prisma.User$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  applicationsDecided<T extends Prisma.User$applicationsDecidedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$applicationsDecidedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   viewingRequests<T extends Prisma.User$viewingRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$viewingRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ViewingRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaseTenancies<T extends Prisma.User$leaseTenanciesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leaseTenanciesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaseTenantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaseSignatures<T extends Prisma.User$leaseSignaturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leaseSignaturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaseSignaturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8259,6 +8611,30 @@ export type User$savedSearchesArgs<ExtArgs extends runtime.Types.Extensions.Inte
  * User.applications
  */
 export type User$applicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Application
+   */
+  select?: Prisma.ApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Application
+   */
+  omit?: Prisma.ApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ApplicationInclude<ExtArgs> | null
+  where?: Prisma.ApplicationWhereInput
+  orderBy?: Prisma.ApplicationOrderByWithRelationInput | Prisma.ApplicationOrderByWithRelationInput[]
+  cursor?: Prisma.ApplicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+}
+
+/**
+ * User.applicationsDecided
+ */
+export type User$applicationsDecidedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Application
    */
