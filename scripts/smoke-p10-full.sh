@@ -65,7 +65,7 @@ RBODY=$(cat <<EOF
 {"label":"Cozy room","roomType":"PRIVATE","sizeSqft":120.50,"maxOccupants":2,"baseRentMinor":150000,"depositMinor":300000,"currency":"USD","billsIncluded":false,"amenities":["wifi","heating"],"availableFrom":"2026-10-01","minLeaseMonths":3,"maxLeaseMonths":12}
 EOF
 )
-code=$(status -X POST "$BASE/api/v1/rooms/flats/$FID/rooms" -H "Content-Type: application/json" \
+code=$(status -X POST "$BASE/api/v1/flats/$FID/rooms" -H "Content-Type: application/json" \
   -H "Authorization: Bearer $O1" -d "$RBODY")
 expect "POST room → 201" 201 "$code"
 RID=$(python -c "import json;print(json.load(open('${BODY_FILE}'))['data']['id'])")

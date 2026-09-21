@@ -53,7 +53,6 @@ export type DocumentMinAggregateOutputType = {
   deliveryType: string | null
   etag: string | null
   deletedAt: Date | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -71,7 +70,6 @@ export type DocumentMaxAggregateOutputType = {
   deliveryType: string | null
   etag: string | null
   deletedAt: Date | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -89,7 +87,6 @@ export type DocumentCountAggregateOutputType = {
   deliveryType: number
   etag: number
   deletedAt: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -117,7 +114,6 @@ export type DocumentMinAggregateInputType = {
   deliveryType?: true
   etag?: true
   deletedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -135,7 +131,6 @@ export type DocumentMaxAggregateInputType = {
   deliveryType?: true
   etag?: true
   deletedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -153,7 +148,6 @@ export type DocumentCountAggregateInputType = {
   deliveryType?: true
   etag?: true
   deletedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -258,7 +252,6 @@ export type DocumentGroupByOutputType = {
   deliveryType: string
   etag: string | null
   deletedAt: Date | null
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: DocumentCountAggregateOutputType | null
@@ -299,7 +292,6 @@ export type DocumentWhereInput = {
   deliveryType?: Prisma.StringFilter<"Document"> | string
   etag?: Prisma.StringNullableFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -318,7 +310,6 @@ export type DocumentOrderByWithRelationInput = {
   deliveryType?: Prisma.SortOrder
   etag?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   owner?: Prisma.UserOrderByWithRelationInput
@@ -340,7 +331,6 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   deliveryType?: Prisma.StringFilter<"Document"> | string
   etag?: Prisma.StringNullableFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -359,7 +349,6 @@ export type DocumentOrderByWithAggregationInput = {
   deliveryType?: Prisma.SortOrder
   etag?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DocumentCountOrderByAggregateInput
@@ -385,7 +374,6 @@ export type DocumentScalarWhereWithAggregatesInput = {
   deliveryType?: Prisma.StringWithAggregatesFilter<"Document"> | string
   etag?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Document"> | Date | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"Document"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Document"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Document"> | Date | string
 }
@@ -402,7 +390,6 @@ export type DocumentCreateInput = {
   deliveryType?: string
   etag?: string | null
   deletedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   owner: Prisma.UserCreateNestedOneWithoutDocumentsInput
@@ -421,7 +408,6 @@ export type DocumentUncheckedCreateInput = {
   deliveryType?: string
   etag?: string | null
   deletedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -438,7 +424,6 @@ export type DocumentUpdateInput = {
   deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.UserUpdateOneRequiredWithoutDocumentsNestedInput
@@ -457,7 +442,6 @@ export type DocumentUncheckedUpdateInput = {
   deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -475,7 +459,6 @@ export type DocumentCreateManyInput = {
   deliveryType?: string
   etag?: string | null
   deletedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -492,7 +475,6 @@ export type DocumentUpdateManyMutationInput = {
   deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -510,7 +492,6 @@ export type DocumentUncheckedUpdateManyInput = {
   deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -538,7 +519,6 @@ export type DocumentCountOrderByAggregateInput = {
   deliveryType?: Prisma.SortOrder
   etag?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -560,7 +540,6 @@ export type DocumentMaxOrderByAggregateInput = {
   deliveryType?: Prisma.SortOrder
   etag?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -578,7 +557,6 @@ export type DocumentMinOrderByAggregateInput = {
   deliveryType?: Prisma.SortOrder
   etag?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -641,7 +619,6 @@ export type DocumentCreateWithoutOwnerInput = {
   deliveryType?: string
   etag?: string | null
   deletedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -658,7 +635,6 @@ export type DocumentUncheckedCreateWithoutOwnerInput = {
   deliveryType?: string
   etag?: string | null
   deletedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -705,7 +681,6 @@ export type DocumentScalarWhereInput = {
   deliveryType?: Prisma.StringFilter<"Document"> | string
   etag?: Prisma.StringNullableFilter<"Document"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Document"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Document"> | Date | string
 }
@@ -722,7 +697,6 @@ export type DocumentCreateManyOwnerInput = {
   deliveryType?: string
   etag?: string | null
   deletedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -739,7 +713,6 @@ export type DocumentUpdateWithoutOwnerInput = {
   deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -756,7 +729,6 @@ export type DocumentUncheckedUpdateWithoutOwnerInput = {
   deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -773,7 +745,6 @@ export type DocumentUncheckedUpdateManyWithoutOwnerInput = {
   deliveryType?: Prisma.StringFieldUpdateOperationsInput | string
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -793,7 +764,6 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   deliveryType?: boolean
   etag?: boolean
   deletedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -812,7 +782,6 @@ export type DocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   deliveryType?: boolean
   etag?: boolean
   deletedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -831,7 +800,6 @@ export type DocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   deliveryType?: boolean
   etag?: boolean
   deletedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -850,12 +818,11 @@ export type DocumentSelectScalar = {
   deliveryType?: boolean
   etag?: boolean
   deletedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerUserId" | "objectKey" | "contentType" | "sizeBytes" | "label" | "status" | "storageProvider" | "resourceType" | "deliveryType" | "etag" | "deletedAt" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ownerUserId" | "objectKey" | "contentType" | "sizeBytes" | "label" | "status" | "storageProvider" | "resourceType" | "deliveryType" | "etag" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -914,7 +881,6 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
      */
     etag: string | null
     deletedAt: Date | null
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["document"]>
@@ -1353,7 +1319,6 @@ export interface DocumentFieldRefs {
   readonly deliveryType: Prisma.FieldRef<"Document", 'String'>
   readonly etag: Prisma.FieldRef<"Document", 'String'>
   readonly deletedAt: Prisma.FieldRef<"Document", 'DateTime'>
-  readonly tenantId: Prisma.FieldRef<"Document", 'String'>
   readonly createdAt: Prisma.FieldRef<"Document", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Document", 'DateTime'>
 }

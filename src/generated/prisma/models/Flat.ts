@@ -42,7 +42,6 @@ export type FlatMinAggregateOutputType = {
   floor: number | null
   doorNumber: string | null
   status: $Enums.FlatStatus | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -54,7 +53,6 @@ export type FlatMaxAggregateOutputType = {
   floor: number | null
   doorNumber: string | null
   status: $Enums.FlatStatus | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -66,7 +64,6 @@ export type FlatCountAggregateOutputType = {
   floor: number
   doorNumber: number
   status: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -88,7 +85,6 @@ export type FlatMinAggregateInputType = {
   floor?: true
   doorNumber?: true
   status?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -100,7 +96,6 @@ export type FlatMaxAggregateInputType = {
   floor?: true
   doorNumber?: true
   status?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -112,7 +107,6 @@ export type FlatCountAggregateInputType = {
   floor?: true
   doorNumber?: true
   status?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -211,7 +205,6 @@ export type FlatGroupByOutputType = {
   floor: number | null
   doorNumber: string | null
   status: $Enums.FlatStatus
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -246,7 +239,6 @@ export type FlatWhereInput = {
   floor?: Prisma.IntNullableFilter<"Flat"> | number | null
   doorNumber?: Prisma.StringNullableFilter<"Flat"> | string | null
   status?: Prisma.EnumFlatStatusFilter<"Flat"> | $Enums.FlatStatus
-  tenantId?: Prisma.UuidFilter<"Flat"> | string
   createdAt?: Prisma.DateTimeFilter<"Flat"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Flat"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Flat"> | Date | string | null
@@ -260,7 +252,6 @@ export type FlatOrderByWithRelationInput = {
   floor?: Prisma.SortOrderInput | Prisma.SortOrder
   doorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -277,7 +268,6 @@ export type FlatWhereUniqueInput = Prisma.AtLeast<{
   floor?: Prisma.IntNullableFilter<"Flat"> | number | null
   doorNumber?: Prisma.StringNullableFilter<"Flat"> | string | null
   status?: Prisma.EnumFlatStatusFilter<"Flat"> | $Enums.FlatStatus
-  tenantId?: Prisma.UuidFilter<"Flat"> | string
   createdAt?: Prisma.DateTimeFilter<"Flat"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Flat"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Flat"> | Date | string | null
@@ -291,7 +281,6 @@ export type FlatOrderByWithAggregationInput = {
   floor?: Prisma.SortOrderInput | Prisma.SortOrder
   doorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -311,7 +300,6 @@ export type FlatScalarWhereWithAggregatesInput = {
   floor?: Prisma.IntNullableWithAggregatesFilter<"Flat"> | number | null
   doorNumber?: Prisma.StringNullableWithAggregatesFilter<"Flat"> | string | null
   status?: Prisma.EnumFlatStatusWithAggregatesFilter<"Flat"> | $Enums.FlatStatus
-  tenantId?: Prisma.UuidWithAggregatesFilter<"Flat"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Flat"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Flat"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Flat"> | Date | string | null
@@ -322,7 +310,6 @@ export type FlatCreateInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -336,7 +323,6 @@ export type FlatUncheckedCreateInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -348,7 +334,6 @@ export type FlatUpdateInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -362,7 +347,6 @@ export type FlatUncheckedUpdateInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -375,7 +359,6 @@ export type FlatCreateManyInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -386,7 +369,6 @@ export type FlatUpdateManyMutationInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -398,7 +380,6 @@ export type FlatUncheckedUpdateManyInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -420,7 +401,6 @@ export type FlatCountOrderByAggregateInput = {
   floor?: Prisma.SortOrder
   doorNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -436,7 +416,6 @@ export type FlatMaxOrderByAggregateInput = {
   floor?: Prisma.SortOrder
   doorNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -448,7 +427,6 @@ export type FlatMinOrderByAggregateInput = {
   floor?: Prisma.SortOrder
   doorNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -530,7 +508,6 @@ export type FlatCreateWithoutBuildingInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -542,7 +519,6 @@ export type FlatUncheckedCreateWithoutBuildingInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -584,7 +560,6 @@ export type FlatScalarWhereInput = {
   floor?: Prisma.IntNullableFilter<"Flat"> | number | null
   doorNumber?: Prisma.StringNullableFilter<"Flat"> | string | null
   status?: Prisma.EnumFlatStatusFilter<"Flat"> | $Enums.FlatStatus
-  tenantId?: Prisma.UuidFilter<"Flat"> | string
   createdAt?: Prisma.DateTimeFilter<"Flat"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Flat"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Flat"> | Date | string | null
@@ -595,7 +570,6 @@ export type FlatCreateWithoutRoomsInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -608,7 +582,6 @@ export type FlatUncheckedCreateWithoutRoomsInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -635,7 +608,6 @@ export type FlatUpdateWithoutRoomsInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -648,7 +620,6 @@ export type FlatUncheckedUpdateWithoutRoomsInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -659,7 +630,6 @@ export type FlatCreateManyBuildingInput = {
   floor?: number | null
   doorNumber?: string | null
   status?: $Enums.FlatStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -670,7 +640,6 @@ export type FlatUpdateWithoutBuildingInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -682,7 +651,6 @@ export type FlatUncheckedUpdateWithoutBuildingInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -694,7 +662,6 @@ export type FlatUncheckedUpdateManyWithoutBuildingInput = {
   floor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   doorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumFlatStatusFieldUpdateOperationsInput | $Enums.FlatStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -737,7 +704,6 @@ export type FlatSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   floor?: boolean
   doorNumber?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -752,7 +718,6 @@ export type FlatSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   floor?: boolean
   doorNumber?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -765,7 +730,6 @@ export type FlatSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   floor?: boolean
   doorNumber?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -778,13 +742,12 @@ export type FlatSelectScalar = {
   floor?: boolean
   doorNumber?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type FlatOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "buildingId" | "floor" | "doorNumber" | "status" | "tenantId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["flat"]>
+export type FlatOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "buildingId" | "floor" | "doorNumber" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["flat"]>
 export type FlatInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   building?: boolean | Prisma.BuildingDefaultArgs<ExtArgs>
   rooms?: boolean | Prisma.Flat$roomsArgs<ExtArgs>
@@ -809,7 +772,6 @@ export type $FlatPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     floor: number | null
     doorNumber: string | null
     status: $Enums.FlatStatus
-    tenantId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1243,7 +1205,6 @@ export interface FlatFieldRefs {
   readonly floor: Prisma.FieldRef<"Flat", 'Int'>
   readonly doorNumber: Prisma.FieldRef<"Flat", 'String'>
   readonly status: Prisma.FieldRef<"Flat", 'FlatStatus'>
-  readonly tenantId: Prisma.FieldRef<"Flat", 'String'>
   readonly createdAt: Prisma.FieldRef<"Flat", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Flat", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Flat", 'DateTime'>

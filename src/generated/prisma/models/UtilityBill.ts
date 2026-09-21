@@ -60,7 +60,6 @@ export type UtilityBillMinAggregateOutputType = {
   generatedAt: Date | null
   superseded: boolean | null
   supersededAt: Date | null
-  tenantId: string | null
 }
 
 export type UtilityBillMaxAggregateOutputType = {
@@ -77,7 +76,6 @@ export type UtilityBillMaxAggregateOutputType = {
   generatedAt: Date | null
   superseded: boolean | null
   supersededAt: Date | null
-  tenantId: string | null
 }
 
 export type UtilityBillCountAggregateOutputType = {
@@ -94,7 +92,6 @@ export type UtilityBillCountAggregateOutputType = {
   generatedAt: number
   superseded: number
   supersededAt: number
-  tenantId: number
   _all: number
 }
 
@@ -127,7 +124,6 @@ export type UtilityBillMinAggregateInputType = {
   generatedAt?: true
   superseded?: true
   supersededAt?: true
-  tenantId?: true
 }
 
 export type UtilityBillMaxAggregateInputType = {
@@ -144,7 +140,6 @@ export type UtilityBillMaxAggregateInputType = {
   generatedAt?: true
   superseded?: true
   supersededAt?: true
-  tenantId?: true
 }
 
 export type UtilityBillCountAggregateInputType = {
@@ -161,7 +156,6 @@ export type UtilityBillCountAggregateInputType = {
   generatedAt?: true
   superseded?: true
   supersededAt?: true
-  tenantId?: true
   _all?: true
 }
 
@@ -265,7 +259,6 @@ export type UtilityBillGroupByOutputType = {
   generatedAt: Date
   superseded: boolean
   supersededAt: Date | null
-  tenantId: string
   _count: UtilityBillCountAggregateOutputType | null
   _avg: UtilityBillAvgAggregateOutputType | null
   _sum: UtilityBillSumAggregateOutputType | null
@@ -305,7 +298,6 @@ export type UtilityBillWhereInput = {
   generatedAt?: Prisma.DateTimeFilter<"UtilityBill"> | Date | string
   superseded?: Prisma.BoolFilter<"UtilityBill"> | boolean
   supersededAt?: Prisma.DateTimeNullableFilter<"UtilityBill"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"UtilityBill"> | string
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
   meter?: Prisma.XOR<Prisma.PropertyMeterScalarRelationFilter, Prisma.PropertyMeterWhereInput>
   shares?: Prisma.BillShareListRelationFilter
@@ -325,7 +317,6 @@ export type UtilityBillOrderByWithRelationInput = {
   generatedAt?: Prisma.SortOrder
   superseded?: Prisma.SortOrder
   supersededAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   lease?: Prisma.LeaseOrderByWithRelationInput
   meter?: Prisma.PropertyMeterOrderByWithRelationInput
   shares?: Prisma.BillShareOrderByRelationAggregateInput
@@ -348,7 +339,6 @@ export type UtilityBillWhereUniqueInput = Prisma.AtLeast<{
   generatedAt?: Prisma.DateTimeFilter<"UtilityBill"> | Date | string
   superseded?: Prisma.BoolFilter<"UtilityBill"> | boolean
   supersededAt?: Prisma.DateTimeNullableFilter<"UtilityBill"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"UtilityBill"> | string
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
   meter?: Prisma.XOR<Prisma.PropertyMeterScalarRelationFilter, Prisma.PropertyMeterWhereInput>
   shares?: Prisma.BillShareListRelationFilter
@@ -368,7 +358,6 @@ export type UtilityBillOrderByWithAggregationInput = {
   generatedAt?: Prisma.SortOrder
   superseded?: Prisma.SortOrder
   supersededAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   _count?: Prisma.UtilityBillCountOrderByAggregateInput
   _avg?: Prisma.UtilityBillAvgOrderByAggregateInput
   _max?: Prisma.UtilityBillMaxOrderByAggregateInput
@@ -393,7 +382,6 @@ export type UtilityBillScalarWhereWithAggregatesInput = {
   generatedAt?: Prisma.DateTimeWithAggregatesFilter<"UtilityBill"> | Date | string
   superseded?: Prisma.BoolWithAggregatesFilter<"UtilityBill"> | boolean
   supersededAt?: Prisma.DateTimeNullableWithAggregatesFilter<"UtilityBill"> | Date | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"UtilityBill"> | string
 }
 
 export type UtilityBillCreateInput = {
@@ -408,7 +396,6 @@ export type UtilityBillCreateInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
   lease: Prisma.LeaseCreateNestedOneWithoutUtilityBillsInput
   meter: Prisma.PropertyMeterCreateNestedOneWithoutBillsInput
   shares?: Prisma.BillShareCreateNestedManyWithoutBillInput
@@ -428,7 +415,6 @@ export type UtilityBillUncheckedCreateInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
   shares?: Prisma.BillShareUncheckedCreateNestedManyWithoutBillInput
 }
 
@@ -444,7 +430,6 @@ export type UtilityBillUpdateInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutUtilityBillsNestedInput
   meter?: Prisma.PropertyMeterUpdateOneRequiredWithoutBillsNestedInput
   shares?: Prisma.BillShareUpdateManyWithoutBillNestedInput
@@ -464,7 +449,6 @@ export type UtilityBillUncheckedUpdateInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   shares?: Prisma.BillShareUncheckedUpdateManyWithoutBillNestedInput
 }
 
@@ -482,7 +466,6 @@ export type UtilityBillCreateManyInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
 }
 
 export type UtilityBillUpdateManyMutationInput = {
@@ -497,7 +480,6 @@ export type UtilityBillUpdateManyMutationInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UtilityBillUncheckedUpdateManyInput = {
@@ -514,7 +496,6 @@ export type UtilityBillUncheckedUpdateManyInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UtilityBillListRelationFilter = {
@@ -541,7 +522,6 @@ export type UtilityBillCountOrderByAggregateInput = {
   generatedAt?: Prisma.SortOrder
   superseded?: Prisma.SortOrder
   supersededAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
 }
 
 export type UtilityBillAvgOrderByAggregateInput = {
@@ -565,7 +545,6 @@ export type UtilityBillMaxOrderByAggregateInput = {
   generatedAt?: Prisma.SortOrder
   superseded?: Prisma.SortOrder
   supersededAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
 }
 
 export type UtilityBillMinOrderByAggregateInput = {
@@ -582,7 +561,6 @@ export type UtilityBillMinOrderByAggregateInput = {
   generatedAt?: Prisma.SortOrder
   superseded?: Prisma.SortOrder
   supersededAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
 }
 
 export type UtilityBillSumOrderByAggregateInput = {
@@ -707,7 +685,6 @@ export type UtilityBillCreateWithoutLeaseInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
   meter: Prisma.PropertyMeterCreateNestedOneWithoutBillsInput
   shares?: Prisma.BillShareCreateNestedManyWithoutBillInput
 }
@@ -725,7 +702,6 @@ export type UtilityBillUncheckedCreateWithoutLeaseInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
   shares?: Prisma.BillShareUncheckedCreateNestedManyWithoutBillInput
 }
 
@@ -772,7 +748,6 @@ export type UtilityBillScalarWhereInput = {
   generatedAt?: Prisma.DateTimeFilter<"UtilityBill"> | Date | string
   superseded?: Prisma.BoolFilter<"UtilityBill"> | boolean
   supersededAt?: Prisma.DateTimeNullableFilter<"UtilityBill"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"UtilityBill"> | string
 }
 
 export type UtilityBillCreateWithoutMeterInput = {
@@ -787,7 +762,6 @@ export type UtilityBillCreateWithoutMeterInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
   lease: Prisma.LeaseCreateNestedOneWithoutUtilityBillsInput
   shares?: Prisma.BillShareCreateNestedManyWithoutBillInput
 }
@@ -805,7 +779,6 @@ export type UtilityBillUncheckedCreateWithoutMeterInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
   shares?: Prisma.BillShareUncheckedCreateNestedManyWithoutBillInput
 }
 
@@ -847,7 +820,6 @@ export type UtilityBillCreateWithoutSharesInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
   lease: Prisma.LeaseCreateNestedOneWithoutUtilityBillsInput
   meter: Prisma.PropertyMeterCreateNestedOneWithoutBillsInput
 }
@@ -866,7 +838,6 @@ export type UtilityBillUncheckedCreateWithoutSharesInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
 }
 
 export type UtilityBillCreateOrConnectWithoutSharesInput = {
@@ -897,7 +868,6 @@ export type UtilityBillUpdateWithoutSharesInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutUtilityBillsNestedInput
   meter?: Prisma.PropertyMeterUpdateOneRequiredWithoutBillsNestedInput
 }
@@ -916,7 +886,6 @@ export type UtilityBillUncheckedUpdateWithoutSharesInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UtilityBillCreateManyLeaseInput = {
@@ -932,7 +901,6 @@ export type UtilityBillCreateManyLeaseInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
 }
 
 export type UtilityBillUpdateWithoutLeaseInput = {
@@ -947,7 +915,6 @@ export type UtilityBillUpdateWithoutLeaseInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   meter?: Prisma.PropertyMeterUpdateOneRequiredWithoutBillsNestedInput
   shares?: Prisma.BillShareUpdateManyWithoutBillNestedInput
 }
@@ -965,7 +932,6 @@ export type UtilityBillUncheckedUpdateWithoutLeaseInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   shares?: Prisma.BillShareUncheckedUpdateManyWithoutBillNestedInput
 }
 
@@ -982,7 +948,6 @@ export type UtilityBillUncheckedUpdateManyWithoutLeaseInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UtilityBillCreateManyMeterInput = {
@@ -998,7 +963,6 @@ export type UtilityBillCreateManyMeterInput = {
   generatedAt?: Date | string
   superseded?: boolean
   supersededAt?: Date | string | null
-  tenantId?: string
 }
 
 export type UtilityBillUpdateWithoutMeterInput = {
@@ -1013,7 +977,6 @@ export type UtilityBillUpdateWithoutMeterInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutUtilityBillsNestedInput
   shares?: Prisma.BillShareUpdateManyWithoutBillNestedInput
 }
@@ -1031,7 +994,6 @@ export type UtilityBillUncheckedUpdateWithoutMeterInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   shares?: Prisma.BillShareUncheckedUpdateManyWithoutBillNestedInput
 }
 
@@ -1048,7 +1010,6 @@ export type UtilityBillUncheckedUpdateManyWithoutMeterInput = {
   generatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   superseded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1096,7 +1057,6 @@ export type UtilityBillSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   generatedAt?: boolean
   superseded?: boolean
   supersededAt?: boolean
-  tenantId?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
   shares?: boolean | Prisma.UtilityBill$sharesArgs<ExtArgs>
@@ -1117,7 +1077,6 @@ export type UtilityBillSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   generatedAt?: boolean
   superseded?: boolean
   supersededAt?: boolean
-  tenantId?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["utilityBill"]>
@@ -1136,7 +1095,6 @@ export type UtilityBillSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   generatedAt?: boolean
   superseded?: boolean
   supersededAt?: boolean
-  tenantId?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["utilityBill"]>
@@ -1155,10 +1113,9 @@ export type UtilityBillSelectScalar = {
   generatedAt?: boolean
   superseded?: boolean
   supersededAt?: boolean
-  tenantId?: boolean
 }
 
-export type UtilityBillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaseId" | "meterId" | "periodStart" | "periodEnd" | "previousReadingValue" | "currentReadingValue" | "consumptionUnits" | "totalAmountMinor" | "currency" | "generatedAt" | "superseded" | "supersededAt" | "tenantId", ExtArgs["result"]["utilityBill"]>
+export type UtilityBillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaseId" | "meterId" | "periodStart" | "periodEnd" | "previousReadingValue" | "currentReadingValue" | "consumptionUnits" | "totalAmountMinor" | "currency" | "generatedAt" | "superseded" | "supersededAt", ExtArgs["result"]["utilityBill"]>
 export type UtilityBillInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
@@ -1217,7 +1174,6 @@ export type $UtilityBillPayload<ExtArgs extends runtime.Types.Extensions.Interna
      */
     superseded: boolean
     supersededAt: Date | null
-    tenantId: string
   }, ExtArgs["result"]["utilityBill"]>
   composites: {}
 }
@@ -1657,7 +1613,6 @@ export interface UtilityBillFieldRefs {
   readonly generatedAt: Prisma.FieldRef<"UtilityBill", 'DateTime'>
   readonly superseded: Prisma.FieldRef<"UtilityBill", 'Boolean'>
   readonly supersededAt: Prisma.FieldRef<"UtilityBill", 'DateTime'>
-  readonly tenantId: Prisma.FieldRef<"UtilityBill", 'String'>
 }
     
 

@@ -12,9 +12,8 @@
 //   DELETE /rooms/:id/photos/:photo_id             OWNER (own) — delete + destroy
 //   POST   /rooms/:id/photos/:photo_id/reorder     OWNER (own) — gallery order
 //
-// Note: POST /flats/:flat_id/rooms is registered here too because
-// it's rooms-shaped (the URL prefix is /rooms for collection-y ops
-// and /flats/:id/rooms for creation under a flat).
+// Note: POST /flats/:flatId/rooms is registered on flatsRouter (see
+// flats.routes.ts); only /rooms/:id/* lives here.
 
 import { type RequestHandler, Router } from 'express';
 
@@ -25,7 +24,6 @@ import { requireRole } from '@/middleware/role';
 import { singlePhotoUpload } from '@/middleware/upload';
 
 import {
-  createRoom,
   deletePhoto,
   getRoom,
   listPhotos,
@@ -36,7 +34,6 @@ import {
   uploadPhoto,
 } from './rooms.controller';
 import {
-  flatIdParamsSchema,
   patchRoomSchema,
   photoIdParamsSchema,
   reorderPhotoSchema,
@@ -44,22 +41,9 @@ import {
   transitionRoomSchema,
   uploadPhotoSchema,
 } from './rooms.schemas';
-import { createRoomSchema } from './rooms.schemas';
 
 export function roomsRouter(): Router {
   const r = Router();
-
-  // POST /flats/:flat_id/rooms — collection-y creation.
-  r.post(
-    '/flats/:flatId/rooms',
-    requireAuth,
-    requireRole('OWNER'),
-    zodValidate({
-      params: flatIdParamsSchema,
-      body: createRoomSchema,
-    }),
-    asyncHandler(createRoom)
-  );
 
   r.get('/:id', requireAuth, zodValidate({ params: roomIdParamsSchema }), asyncHandler(getRoom));
 

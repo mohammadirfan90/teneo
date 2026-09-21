@@ -46,7 +46,6 @@ export type MatchResultMinAggregateOutputType = {
   score: number | null
   explain: string | null
   rank: number | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -57,7 +56,6 @@ export type MatchResultMaxAggregateOutputType = {
   score: number | null
   explain: string | null
   rank: number | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -69,7 +67,6 @@ export type MatchResultCountAggregateOutputType = {
   breakdown: number
   explain: number
   rank: number
-  tenantId: number
   createdAt: number
   _all: number
 }
@@ -92,7 +89,6 @@ export type MatchResultMinAggregateInputType = {
   score?: true
   explain?: true
   rank?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -103,7 +99,6 @@ export type MatchResultMaxAggregateInputType = {
   score?: true
   explain?: true
   rank?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -115,7 +110,6 @@ export type MatchResultCountAggregateInputType = {
   breakdown?: true
   explain?: true
   rank?: true
-  tenantId?: true
   createdAt?: true
   _all?: true
 }
@@ -214,7 +208,6 @@ export type MatchResultGroupByOutputType = {
   breakdown: runtime.JsonValue
   explain: string
   rank: number
-  tenantId: string
   createdAt: Date
   _count: MatchResultCountAggregateOutputType | null
   _avg: MatchResultAvgAggregateOutputType | null
@@ -249,7 +242,6 @@ export type MatchResultWhereInput = {
   breakdown?: Prisma.JsonFilter<"MatchResult">
   explain?: Prisma.StringFilter<"MatchResult"> | string
   rank?: Prisma.IntFilter<"MatchResult"> | number
-  tenantId?: Prisma.UuidFilter<"MatchResult"> | string
   createdAt?: Prisma.DateTimeFilter<"MatchResult"> | Date | string
   caller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   candidate?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -264,7 +256,6 @@ export type MatchResultOrderByWithRelationInput = {
   breakdown?: Prisma.SortOrder
   explain?: Prisma.SortOrder
   rank?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   caller?: Prisma.UserOrderByWithRelationInput
   candidate?: Prisma.UserOrderByWithRelationInput
@@ -283,7 +274,6 @@ export type MatchResultWhereUniqueInput = Prisma.AtLeast<{
   breakdown?: Prisma.JsonFilter<"MatchResult">
   explain?: Prisma.StringFilter<"MatchResult"> | string
   rank?: Prisma.IntFilter<"MatchResult"> | number
-  tenantId?: Prisma.UuidFilter<"MatchResult"> | string
   createdAt?: Prisma.DateTimeFilter<"MatchResult"> | Date | string
   caller?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   candidate?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -298,7 +288,6 @@ export type MatchResultOrderByWithAggregationInput = {
   breakdown?: Prisma.SortOrder
   explain?: Prisma.SortOrder
   rank?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.MatchResultCountOrderByAggregateInput
   _avg?: Prisma.MatchResultAvgOrderByAggregateInput
@@ -318,7 +307,6 @@ export type MatchResultScalarWhereWithAggregatesInput = {
   breakdown?: Prisma.JsonWithAggregatesFilter<"MatchResult">
   explain?: Prisma.StringWithAggregatesFilter<"MatchResult"> | string
   rank?: Prisma.IntWithAggregatesFilter<"MatchResult"> | number
-  tenantId?: Prisma.UuidWithAggregatesFilter<"MatchResult"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MatchResult"> | Date | string
 }
 
@@ -328,7 +316,6 @@ export type MatchResultCreateInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
   caller: Prisma.UserCreateNestedOneWithoutMatchResultsCallerInput
   candidate: Prisma.UserCreateNestedOneWithoutMatchResultsCandidateInput
@@ -343,7 +330,6 @@ export type MatchResultUncheckedCreateInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
   intro?: Prisma.IntroRequestUncheckedCreateNestedOneWithoutMatchResultInput
 }
@@ -354,7 +340,6 @@ export type MatchResultUpdateInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caller?: Prisma.UserUpdateOneRequiredWithoutMatchResultsCallerNestedInput
   candidate?: Prisma.UserUpdateOneRequiredWithoutMatchResultsCandidateNestedInput
@@ -369,7 +354,6 @@ export type MatchResultUncheckedUpdateInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   intro?: Prisma.IntroRequestUncheckedUpdateOneWithoutMatchResultNestedInput
 }
@@ -382,7 +366,6 @@ export type MatchResultCreateManyInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -392,7 +375,6 @@ export type MatchResultUpdateManyMutationInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -404,7 +386,6 @@ export type MatchResultUncheckedUpdateManyInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -431,7 +412,6 @@ export type MatchResultCountOrderByAggregateInput = {
   breakdown?: Prisma.SortOrder
   explain?: Prisma.SortOrder
   rank?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -447,7 +427,6 @@ export type MatchResultMaxOrderByAggregateInput = {
   score?: Prisma.SortOrder
   explain?: Prisma.SortOrder
   rank?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -458,7 +437,6 @@ export type MatchResultMinOrderByAggregateInput = {
   score?: Prisma.SortOrder
   explain?: Prisma.SortOrder
   rank?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -576,7 +554,6 @@ export type MatchResultCreateWithoutCallerInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
   candidate: Prisma.UserCreateNestedOneWithoutMatchResultsCandidateInput
   intro?: Prisma.IntroRequestCreateNestedOneWithoutMatchResultInput
@@ -589,7 +566,6 @@ export type MatchResultUncheckedCreateWithoutCallerInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
   intro?: Prisma.IntroRequestUncheckedCreateNestedOneWithoutMatchResultInput
 }
@@ -610,7 +586,6 @@ export type MatchResultCreateWithoutCandidateInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
   caller: Prisma.UserCreateNestedOneWithoutMatchResultsCallerInput
   intro?: Prisma.IntroRequestCreateNestedOneWithoutMatchResultInput
@@ -623,7 +598,6 @@ export type MatchResultUncheckedCreateWithoutCandidateInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
   intro?: Prisma.IntroRequestUncheckedCreateNestedOneWithoutMatchResultInput
 }
@@ -665,7 +639,6 @@ export type MatchResultScalarWhereInput = {
   breakdown?: Prisma.JsonFilter<"MatchResult">
   explain?: Prisma.StringFilter<"MatchResult"> | string
   rank?: Prisma.IntFilter<"MatchResult"> | number
-  tenantId?: Prisma.UuidFilter<"MatchResult"> | string
   createdAt?: Prisma.DateTimeFilter<"MatchResult"> | Date | string
 }
 
@@ -691,7 +664,6 @@ export type MatchResultCreateWithoutIntroInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
   caller: Prisma.UserCreateNestedOneWithoutMatchResultsCallerInput
   candidate: Prisma.UserCreateNestedOneWithoutMatchResultsCandidateInput
@@ -705,7 +677,6 @@ export type MatchResultUncheckedCreateWithoutIntroInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -731,7 +702,6 @@ export type MatchResultUpdateWithoutIntroInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caller?: Prisma.UserUpdateOneRequiredWithoutMatchResultsCallerNestedInput
   candidate?: Prisma.UserUpdateOneRequiredWithoutMatchResultsCandidateNestedInput
@@ -745,7 +715,6 @@ export type MatchResultUncheckedUpdateWithoutIntroInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -756,7 +725,6 @@ export type MatchResultCreateManyCallerInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -767,7 +735,6 @@ export type MatchResultCreateManyCandidateInput = {
   breakdown: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain: string
   rank: number
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -777,7 +744,6 @@ export type MatchResultUpdateWithoutCallerInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   candidate?: Prisma.UserUpdateOneRequiredWithoutMatchResultsCandidateNestedInput
   intro?: Prisma.IntroRequestUpdateOneWithoutMatchResultNestedInput
@@ -790,7 +756,6 @@ export type MatchResultUncheckedUpdateWithoutCallerInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   intro?: Prisma.IntroRequestUncheckedUpdateOneWithoutMatchResultNestedInput
 }
@@ -802,7 +767,6 @@ export type MatchResultUncheckedUpdateManyWithoutCallerInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -812,7 +776,6 @@ export type MatchResultUpdateWithoutCandidateInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caller?: Prisma.UserUpdateOneRequiredWithoutMatchResultsCallerNestedInput
   intro?: Prisma.IntroRequestUpdateOneWithoutMatchResultNestedInput
@@ -825,7 +788,6 @@ export type MatchResultUncheckedUpdateWithoutCandidateInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   intro?: Prisma.IntroRequestUncheckedUpdateOneWithoutMatchResultNestedInput
 }
@@ -837,7 +799,6 @@ export type MatchResultUncheckedUpdateManyWithoutCandidateInput = {
   breakdown?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   explain?: Prisma.StringFieldUpdateOperationsInput | string
   rank?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -851,7 +812,6 @@ export type MatchResultSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   breakdown?: boolean
   explain?: boolean
   rank?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   caller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   candidate?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -866,7 +826,6 @@ export type MatchResultSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   breakdown?: boolean
   explain?: boolean
   rank?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   caller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   candidate?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -880,7 +839,6 @@ export type MatchResultSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   breakdown?: boolean
   explain?: boolean
   rank?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   caller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   candidate?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -894,11 +852,10 @@ export type MatchResultSelectScalar = {
   breakdown?: boolean
   explain?: boolean
   rank?: boolean
-  tenantId?: boolean
   createdAt?: boolean
 }
 
-export type MatchResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "callerUserId" | "candidateUserId" | "score" | "breakdown" | "explain" | "rank" | "tenantId" | "createdAt", ExtArgs["result"]["matchResult"]>
+export type MatchResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "callerUserId" | "candidateUserId" | "score" | "breakdown" | "explain" | "rank" | "createdAt", ExtArgs["result"]["matchResult"]>
 export type MatchResultInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   caller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   candidate?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -946,7 +903,6 @@ export type $MatchResultPayload<ExtArgs extends runtime.Types.Extensions.Interna
      */
     explain: string
     rank: number
-    tenantId: string
     createdAt: Date
   }, ExtArgs["result"]["matchResult"]>
   composites: {}
@@ -1381,7 +1337,6 @@ export interface MatchResultFieldRefs {
   readonly breakdown: Prisma.FieldRef<"MatchResult", 'Json'>
   readonly explain: Prisma.FieldRef<"MatchResult", 'String'>
   readonly rank: Prisma.FieldRef<"MatchResult", 'Int'>
-  readonly tenantId: Prisma.FieldRef<"MatchResult", 'String'>
   readonly createdAt: Prisma.FieldRef<"MatchResult", 'DateTime'>
 }
     

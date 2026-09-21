@@ -212,7 +212,7 @@ Per-IP for anonymous traffic, per-user for authenticated traffic, tiered by role
 | `/tickets`, `/rooms/:id/tickets` | Maintenance lifecycle and rating |
 | `/documents` | Private document upload and signed URLs |
 | `/match` | Roommate matching and intro requests |
-| `/admin` | Moderation and audit log |
+| `/admin` | Moderation, user lookup and deactivation, audit log |
 
 A runnable reference lives in [`postman/`](./postman/) — import the environment file first (it auto-populates `accessToken` on login), then the collection, and walk the folders in order. [`docs/SMOKE_TEST.md`](./docs/SMOKE_TEST.md) is the same path as a narrated walkthrough.
 
@@ -233,7 +233,6 @@ Uploads are validated three times before anything is stored: multer caps size mi
 |---|---|
 | `GET /health/live` | Process is up |
 | `GET /health/ready` | Postgres and Redis reachable, each with a 1s budget — this is the deploy healthcheck |
-| `GET /health/startup` | Startup probe |
 
 ## Architecture
 

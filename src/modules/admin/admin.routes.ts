@@ -4,9 +4,10 @@
 // All routes require ADMIN role.
 //
 //   GET   /users/search
+//   GET   /users/:id                       (moved from /users/:id)
+//   POST  /users/:id/deactivate            (moved from /users/:id/deactivate)
 //   POST  /listings/:id/takedown
 //   POST  /listings/:id/reinstate
-//   GET   /health
 //   GET   /audit-logs                (sub-router — see below)
 //
 // The audit-logs sub-router is mounted INSIDE this file (rather than a
@@ -20,9 +21,10 @@ import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';
 import { requireRole } from '@/middleware/role';
+import { deactivateUser, getUserById } from '@/modules/users/users.controller';
+import { userIdParamsSchema } from '@/modules/users/users.schemas';
 
 import {
-  getAdminHealthHandler,
   reinstateListingHandler,
   searchUsersHandler,
   takedownListingHandler,
@@ -59,6 +61,24 @@ export function adminRouter(): Router {
     asyncHandler(searchUsersHandler)
   );
 
+  // GET /users/:id (ADMIN)
+  r.get(
+    '/users/:id',
+    requireAuth,
+    requireRole('ADMIN'),
+    zodValidate({ params: userIdParamsSchema }),
+    asyncHandler(getUserById)
+  );
+
+  // POST /users/:id/deactivate (ADMIN)
+  r.post(
+    '/users/:id/deactivate',
+    requireAuth,
+    requireRole('ADMIN'),
+    zodValidate({ params: userIdParamsSchema }),
+    asyncHandler(deactivateUser)
+  );
+
   // POST /listings/:id/takedown
   r.post(
     '/listings/:id/takedown',
@@ -79,9 +99,6 @@ export function adminRouter(): Router {
     withIdempotency,
     asyncHandler(reinstateListingHandler)
   );
-
-  // GET /health
-  r.get('/health', requireAuth, requireRole('ADMIN'), asyncHandler(getAdminHealthHandler));
 
   return r;
 }

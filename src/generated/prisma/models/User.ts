@@ -31,15 +31,11 @@ export type UserMinAggregateOutputType = {
   email: string | null
   emailVerifiedAt: Date | null
   phone: string | null
-  phoneVerifiedAt: Date | null
   passwordHash: string | null
   oauthProvider: string | null
   oauthSubject: string | null
   status: $Enums.UserStatus | null
-  mfaEnabled: boolean | null
-  mfaSecret: string | null
   gender: $Enums.Gender | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -50,15 +46,11 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   emailVerifiedAt: Date | null
   phone: string | null
-  phoneVerifiedAt: Date | null
   passwordHash: string | null
   oauthProvider: string | null
   oauthSubject: string | null
   status: $Enums.UserStatus | null
-  mfaEnabled: boolean | null
-  mfaSecret: string | null
   gender: $Enums.Gender | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -69,15 +61,11 @@ export type UserCountAggregateOutputType = {
   email: number
   emailVerifiedAt: number
   phone: number
-  phoneVerifiedAt: number
   passwordHash: number
   oauthProvider: number
   oauthSubject: number
   status: number
-  mfaEnabled: number
-  mfaSecret: number
   gender: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -90,15 +78,11 @@ export type UserMinAggregateInputType = {
   email?: true
   emailVerifiedAt?: true
   phone?: true
-  phoneVerifiedAt?: true
   passwordHash?: true
   oauthProvider?: true
   oauthSubject?: true
   status?: true
-  mfaEnabled?: true
-  mfaSecret?: true
   gender?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -109,15 +93,11 @@ export type UserMaxAggregateInputType = {
   email?: true
   emailVerifiedAt?: true
   phone?: true
-  phoneVerifiedAt?: true
   passwordHash?: true
   oauthProvider?: true
   oauthSubject?: true
   status?: true
-  mfaEnabled?: true
-  mfaSecret?: true
   gender?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -128,15 +108,11 @@ export type UserCountAggregateInputType = {
   email?: true
   emailVerifiedAt?: true
   phone?: true
-  phoneVerifiedAt?: true
   passwordHash?: true
   oauthProvider?: true
   oauthSubject?: true
   status?: true
-  mfaEnabled?: true
-  mfaSecret?: true
   gender?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -220,15 +196,11 @@ export type UserGroupByOutputType = {
   email: string
   emailVerifiedAt: Date | null
   phone: string | null
-  phoneVerifiedAt: Date | null
   passwordHash: string | null
   oauthProvider: string | null
   oauthSubject: string | null
   status: $Enums.UserStatus
-  mfaEnabled: boolean
-  mfaSecret: string | null
   gender: $Enums.Gender | null
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -260,15 +232,11 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
-  phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   oauthProvider?: Prisma.StringNullableFilter<"User"> | string | null
   oauthSubject?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFilter<"User"> | boolean
-  mfaSecret?: Prisma.StringNullableFilter<"User"> | string | null
   gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null
-  tenantId?: Prisma.UuidFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -308,15 +276,11 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   oauthProvider?: Prisma.SortOrderInput | Prisma.SortOrder
   oauthSubject?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  mfaEnabled?: Prisma.SortOrder
-  mfaSecret?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -359,15 +323,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"User"> | string
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
-  phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
   oauthProvider?: Prisma.StringNullableFilter<"User"> | string | null
   oauthSubject?: Prisma.StringNullableFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFilter<"User"> | boolean
-  mfaSecret?: Prisma.StringNullableFilter<"User"> | string | null
   gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null
-  tenantId?: Prisma.UuidFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -407,15 +367,11 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   oauthProvider?: Prisma.SortOrderInput | Prisma.SortOrder
   oauthSubject?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  mfaEnabled?: Prisma.SortOrder
-  mfaSecret?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -432,15 +388,11 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  phoneVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   oauthProvider?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   oauthSubject?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  mfaSecret?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"User"> | $Enums.Gender | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -451,15 +403,11 @@ export type UserCreateInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -499,15 +447,11 @@ export type UserUncheckedCreateInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -547,15 +491,11 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -595,15 +535,11 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -643,15 +579,11 @@ export type UserCreateManyInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -662,15 +594,11 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -681,15 +609,11 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -700,15 +624,11 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   oauthProvider?: Prisma.SortOrder
   oauthSubject?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  mfaEnabled?: Prisma.SortOrder
-  mfaSecret?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -719,15 +639,11 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   oauthProvider?: Prisma.SortOrder
   oauthSubject?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  mfaEnabled?: Prisma.SortOrder
-  mfaSecret?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -738,15 +654,11 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  phoneVerifiedAt?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   oauthProvider?: Prisma.SortOrder
   oauthSubject?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  mfaEnabled?: Prisma.SortOrder
-  mfaSecret?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -776,10 +688,6 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
 }
 
 export type NullableEnumGenderFieldUpdateOperationsInput = {
@@ -1211,15 +1119,11 @@ export type UserCreateWithoutRolesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1258,15 +1162,11 @@ export type UserUncheckedCreateWithoutRolesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1321,15 +1221,11 @@ export type UserUpdateWithoutRolesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1368,15 +1264,11 @@ export type UserUncheckedUpdateWithoutRolesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1415,15 +1307,11 @@ export type UserCreateWithoutOwnerProfileInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1462,15 +1350,11 @@ export type UserUncheckedCreateWithoutOwnerProfileInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1525,15 +1409,11 @@ export type UserUpdateWithoutOwnerProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1572,15 +1452,11 @@ export type UserUncheckedUpdateWithoutOwnerProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1619,15 +1495,11 @@ export type UserCreateWithoutTenantProfileInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1666,15 +1538,11 @@ export type UserUncheckedCreateWithoutTenantProfileInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1729,15 +1597,11 @@ export type UserUpdateWithoutTenantProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1776,15 +1640,11 @@ export type UserUncheckedUpdateWithoutTenantProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1823,15 +1683,11 @@ export type UserCreateWithoutKycSubmissionsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1870,15 +1726,11 @@ export type UserUncheckedCreateWithoutKycSubmissionsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1933,15 +1785,11 @@ export type UserUpdateWithoutKycSubmissionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1980,15 +1828,11 @@ export type UserUncheckedUpdateWithoutKycSubmissionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2027,15 +1871,11 @@ export type UserCreateWithoutRefreshTokensInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2074,15 +1914,11 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2137,15 +1973,11 @@ export type UserUpdateWithoutRefreshTokensInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2184,15 +2016,11 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2231,15 +2059,11 @@ export type UserCreateWithoutTenantPreferencesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2278,15 +2102,11 @@ export type UserUncheckedCreateWithoutTenantPreferencesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2341,15 +2161,11 @@ export type UserUpdateWithoutTenantPreferencesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2388,15 +2204,11 @@ export type UserUncheckedUpdateWithoutTenantPreferencesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2435,15 +2247,11 @@ export type UserCreateWithoutPropertiesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2482,15 +2290,11 @@ export type UserUncheckedCreateWithoutPropertiesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2545,15 +2349,11 @@ export type UserUpdateWithoutPropertiesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2592,15 +2392,11 @@ export type UserUncheckedUpdateWithoutPropertiesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2639,15 +2435,11 @@ export type UserCreateWithoutSavedSearchesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2686,15 +2478,11 @@ export type UserUncheckedCreateWithoutSavedSearchesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2749,15 +2537,11 @@ export type UserUpdateWithoutSavedSearchesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2796,15 +2580,11 @@ export type UserUncheckedUpdateWithoutSavedSearchesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2843,15 +2623,11 @@ export type UserCreateWithoutApplicationsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2890,15 +2666,11 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2942,15 +2714,11 @@ export type UserCreateWithoutApplicationsDecidedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -2989,15 +2757,11 @@ export type UserUncheckedCreateWithoutApplicationsDecidedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3052,15 +2816,11 @@ export type UserUpdateWithoutApplicationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3099,15 +2859,11 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3157,15 +2913,11 @@ export type UserUpdateWithoutApplicationsDecidedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3204,15 +2956,11 @@ export type UserUncheckedUpdateWithoutApplicationsDecidedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3251,15 +2999,11 @@ export type UserCreateWithoutViewingRequestsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3298,15 +3042,11 @@ export type UserUncheckedCreateWithoutViewingRequestsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3361,15 +3101,11 @@ export type UserUpdateWithoutViewingRequestsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3408,15 +3144,11 @@ export type UserUncheckedUpdateWithoutViewingRequestsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3455,15 +3187,11 @@ export type UserCreateWithoutLeaseTenanciesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3502,15 +3230,11 @@ export type UserUncheckedCreateWithoutLeaseTenanciesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3565,15 +3289,11 @@ export type UserUpdateWithoutLeaseTenanciesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3612,15 +3332,11 @@ export type UserUncheckedUpdateWithoutLeaseTenanciesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3659,15 +3375,11 @@ export type UserCreateWithoutLeaseSignaturesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3706,15 +3418,11 @@ export type UserUncheckedCreateWithoutLeaseSignaturesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3769,15 +3477,11 @@ export type UserUpdateWithoutLeaseSignaturesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3816,15 +3520,11 @@ export type UserUncheckedUpdateWithoutLeaseSignaturesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3863,15 +3563,11 @@ export type UserCreateWithoutLeaseAmendmentsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3910,15 +3606,11 @@ export type UserUncheckedCreateWithoutLeaseAmendmentsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -3973,15 +3665,11 @@ export type UserUpdateWithoutLeaseAmendmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4020,15 +3708,11 @@ export type UserUncheckedUpdateWithoutLeaseAmendmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4067,15 +3751,11 @@ export type UserCreateWithoutRentInvoicesDisputedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4114,15 +3794,11 @@ export type UserUncheckedCreateWithoutRentInvoicesDisputedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4166,15 +3842,11 @@ export type UserCreateWithoutRentInvoicesWaivedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4213,15 +3885,11 @@ export type UserUncheckedCreateWithoutRentInvoicesWaivedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4276,15 +3944,11 @@ export type UserUpdateWithoutRentInvoicesDisputedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4323,15 +3987,11 @@ export type UserUncheckedUpdateWithoutRentInvoicesDisputedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4381,15 +4041,11 @@ export type UserUpdateWithoutRentInvoicesWaivedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4428,15 +4084,11 @@ export type UserUncheckedUpdateWithoutRentInvoicesWaivedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4475,15 +4127,11 @@ export type UserCreateWithoutPaymentsMadeInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4522,15 +4170,11 @@ export type UserUncheckedCreateWithoutPaymentsMadeInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4585,15 +4229,11 @@ export type UserUpdateWithoutPaymentsMadeInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4632,15 +4272,11 @@ export type UserUncheckedUpdateWithoutPaymentsMadeInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4679,15 +4315,11 @@ export type UserCreateWithoutMeterReadingsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4726,15 +4358,11 @@ export type UserUncheckedCreateWithoutMeterReadingsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4789,15 +4417,11 @@ export type UserUpdateWithoutMeterReadingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4836,15 +4460,11 @@ export type UserUncheckedUpdateWithoutMeterReadingsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4883,15 +4503,11 @@ export type UserCreateWithoutBillSharesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4930,15 +4546,11 @@ export type UserUncheckedCreateWithoutBillSharesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -4993,15 +4605,11 @@ export type UserUpdateWithoutBillSharesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5040,15 +4648,11 @@ export type UserUncheckedUpdateWithoutBillSharesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5087,15 +4691,11 @@ export type UserCreateWithoutTicketsRaisedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5134,15 +4734,11 @@ export type UserUncheckedCreateWithoutTicketsRaisedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5186,15 +4782,11 @@ export type UserCreateWithoutTicketsResolvedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5233,15 +4825,11 @@ export type UserUncheckedCreateWithoutTicketsResolvedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5285,15 +4873,11 @@ export type UserCreateWithoutTicketsClosedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5332,15 +4916,11 @@ export type UserUncheckedCreateWithoutTicketsClosedInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5395,15 +4975,11 @@ export type UserUpdateWithoutTicketsRaisedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5442,15 +5018,11 @@ export type UserUncheckedUpdateWithoutTicketsRaisedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5500,15 +5072,11 @@ export type UserUpdateWithoutTicketsResolvedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5547,15 +5115,11 @@ export type UserUncheckedUpdateWithoutTicketsResolvedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5605,15 +5169,11 @@ export type UserUpdateWithoutTicketsClosedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5652,15 +5212,11 @@ export type UserUncheckedUpdateWithoutTicketsClosedInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5699,15 +5255,11 @@ export type UserCreateWithoutTicketUpdatesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5746,15 +5298,11 @@ export type UserUncheckedCreateWithoutTicketUpdatesInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5809,15 +5357,11 @@ export type UserUpdateWithoutTicketUpdatesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5856,15 +5400,11 @@ export type UserUncheckedUpdateWithoutTicketUpdatesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5903,15 +5443,11 @@ export type UserCreateWithoutDocumentsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -5950,15 +5486,11 @@ export type UserUncheckedCreateWithoutDocumentsInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6013,15 +5545,11 @@ export type UserUpdateWithoutDocumentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6060,15 +5588,11 @@ export type UserUncheckedUpdateWithoutDocumentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6107,15 +5631,11 @@ export type UserCreateWithoutRoomPhotosInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6154,15 +5674,11 @@ export type UserUncheckedCreateWithoutRoomPhotosInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6217,15 +5733,11 @@ export type UserUpdateWithoutRoomPhotosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6264,15 +5776,11 @@ export type UserUncheckedUpdateWithoutRoomPhotosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6311,15 +5819,11 @@ export type UserCreateWithoutMatchResultsCallerInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6358,15 +5862,11 @@ export type UserUncheckedCreateWithoutMatchResultsCallerInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6410,15 +5910,11 @@ export type UserCreateWithoutMatchResultsCandidateInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6457,15 +5953,11 @@ export type UserUncheckedCreateWithoutMatchResultsCandidateInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6520,15 +6012,11 @@ export type UserUpdateWithoutMatchResultsCallerInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6567,15 +6055,11 @@ export type UserUncheckedUpdateWithoutMatchResultsCallerInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6625,15 +6109,11 @@ export type UserUpdateWithoutMatchResultsCandidateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6672,15 +6152,11 @@ export type UserUncheckedUpdateWithoutMatchResultsCandidateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6719,15 +6195,11 @@ export type UserCreateWithoutIntrosAsCallerInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6766,15 +6238,11 @@ export type UserUncheckedCreateWithoutIntrosAsCallerInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6818,15 +6286,11 @@ export type UserCreateWithoutIntrosAsCandidateInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6865,15 +6329,11 @@ export type UserUncheckedCreateWithoutIntrosAsCandidateInput = {
   email: string
   emailVerifiedAt?: Date | string | null
   phone?: string | null
-  phoneVerifiedAt?: Date | string | null
   passwordHash?: string | null
   oauthProvider?: string | null
   oauthSubject?: string | null
   status?: $Enums.UserStatus
-  mfaEnabled?: boolean
-  mfaSecret?: string | null
   gender?: $Enums.Gender | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -6928,15 +6388,11 @@ export type UserUpdateWithoutIntrosAsCallerInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6975,15 +6431,11 @@ export type UserUncheckedUpdateWithoutIntrosAsCallerInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7033,15 +6485,11 @@ export type UserUpdateWithoutIntrosAsCandidateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7080,15 +6528,11 @@ export type UserUncheckedUpdateWithoutIntrosAsCandidateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthProvider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   oauthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  mfaEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  mfaSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7383,15 +6827,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   emailVerifiedAt?: boolean
   phone?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   oauthProvider?: boolean
   oauthSubject?: boolean
   status?: boolean
-  mfaEnabled?: boolean
-  mfaSecret?: boolean
   gender?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -7432,15 +6872,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   emailVerifiedAt?: boolean
   phone?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   oauthProvider?: boolean
   oauthSubject?: boolean
   status?: boolean
-  mfaEnabled?: boolean
-  mfaSecret?: boolean
   gender?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -7451,15 +6887,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   emailVerifiedAt?: boolean
   phone?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   oauthProvider?: boolean
   oauthSubject?: boolean
   status?: boolean
-  mfaEnabled?: boolean
-  mfaSecret?: boolean
   gender?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -7470,21 +6902,17 @@ export type UserSelectScalar = {
   email?: boolean
   emailVerifiedAt?: boolean
   phone?: boolean
-  phoneVerifiedAt?: boolean
   passwordHash?: boolean
   oauthProvider?: boolean
   oauthSubject?: boolean
   status?: boolean
-  mfaEnabled?: boolean
-  mfaSecret?: boolean
   gender?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "emailVerifiedAt" | "phone" | "phoneVerifiedAt" | "passwordHash" | "oauthProvider" | "oauthSubject" | "status" | "mfaEnabled" | "mfaSecret" | "gender" | "tenantId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "emailVerifiedAt" | "phone" | "passwordHash" | "oauthProvider" | "oauthSubject" | "status" | "gender" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   roles?: boolean | Prisma.User$rolesArgs<ExtArgs>
   ownerProfile?: boolean | Prisma.User$ownerProfileArgs<ExtArgs>
@@ -7558,15 +6986,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     emailVerifiedAt: Date | null
     phone: string | null
-    phoneVerifiedAt: Date | null
     passwordHash: string | null
     oauthProvider: string | null
     oauthSubject: string | null
     status: $Enums.UserStatus
-    mfaEnabled: boolean
-    mfaSecret: string | null
     gender: $Enums.Gender | null
-    tenantId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -8026,15 +7450,11 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
-  readonly phoneVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
   readonly oauthProvider: Prisma.FieldRef<"User", 'String'>
   readonly oauthSubject: Prisma.FieldRef<"User", 'String'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
-  readonly mfaEnabled: Prisma.FieldRef<"User", 'Boolean'>
-  readonly mfaSecret: Prisma.FieldRef<"User", 'String'>
   readonly gender: Prisma.FieldRef<"User", 'Gender'>
-  readonly tenantId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>

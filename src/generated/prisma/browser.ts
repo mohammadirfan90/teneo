@@ -134,10 +134,6 @@ export type ViewingRequest = Prisma.ViewingRequestModel
  * inside the APPROVED application's `$transaction` and exposes the
  * full multi-party signing / activation / termination lifecycle.
  * 
- * Tenancy (multi-tenant scoping) lives on `LeaseTenant` rows +
- * co-tenant rows; the relational truth never depended on a `Lease`
- * `tenantId` placeholder. Phase 14 drops that placeholder column.
- * 
  * Rent invoices (`rent_invoices`) hang off a lease; `utilityShareMinor`
  * is populated by Phase 16's meter + bill-split pipeline.
  */
@@ -175,11 +171,6 @@ export type LeaseAmendment = Prisma.LeaseAmendmentModel
  * 
  * Phase 14 stores `utilityShareMinor = 0` always; Phase 16 will fill
  * it from meter readings + bill-splitter.
- * 
- * `tenantId` is forward-compat scaffolding — Phase 14 writes a single
- * constant for v1 single-tenancy (matches the convention used on every
- * other table). It is NOT the relational truth for tenancy (that lives
- * in `lease_tenants`); it is purely a v2 multi-tenancy placeholder.
  * 
  * The dispute flag is inlined (disputed_at / disputed_by_user_id /
  * dispute_reason) rather than split into a separate table because the

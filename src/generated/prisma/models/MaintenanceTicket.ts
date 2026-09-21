@@ -53,7 +53,6 @@ export type MaintenanceTicketMinAggregateOutputType = {
   rating: number | null
   ratingComment: string | null
   ratingSubmittedAt: Date | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -77,7 +76,6 @@ export type MaintenanceTicketMaxAggregateOutputType = {
   rating: number | null
   ratingComment: string | null
   ratingSubmittedAt: Date | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -101,7 +99,6 @@ export type MaintenanceTicketCountAggregateOutputType = {
   rating: number
   ratingComment: number
   ratingSubmittedAt: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -135,7 +132,6 @@ export type MaintenanceTicketMinAggregateInputType = {
   rating?: true
   ratingComment?: true
   ratingSubmittedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -159,7 +155,6 @@ export type MaintenanceTicketMaxAggregateInputType = {
   rating?: true
   ratingComment?: true
   ratingSubmittedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -183,7 +178,6 @@ export type MaintenanceTicketCountAggregateInputType = {
   rating?: true
   ratingComment?: true
   ratingSubmittedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -294,7 +288,6 @@ export type MaintenanceTicketGroupByOutputType = {
   rating: number | null
   ratingComment: string | null
   ratingSubmittedAt: Date | null
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: MaintenanceTicketCountAggregateOutputType | null
@@ -341,7 +334,6 @@ export type MaintenanceTicketWhereInput = {
   rating?: Prisma.IntNullableFilter<"MaintenanceTicket"> | number | null
   ratingComment?: Prisma.StringNullableFilter<"MaintenanceTicket"> | string | null
   ratingSubmittedAt?: Prisma.DateTimeNullableFilter<"MaintenanceTicket"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"MaintenanceTicket"> | string
   createdAt?: Prisma.DateTimeFilter<"MaintenanceTicket"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MaintenanceTicket"> | Date | string
   room?: Prisma.XOR<Prisma.RoomScalarRelationFilter, Prisma.RoomWhereInput>
@@ -371,7 +363,6 @@ export type MaintenanceTicketOrderByWithRelationInput = {
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
   ratingComment?: Prisma.SortOrderInput | Prisma.SortOrder
   ratingSubmittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   room?: Prisma.RoomOrderByWithRelationInput
@@ -404,7 +395,6 @@ export type MaintenanceTicketWhereUniqueInput = Prisma.AtLeast<{
   rating?: Prisma.IntNullableFilter<"MaintenanceTicket"> | number | null
   ratingComment?: Prisma.StringNullableFilter<"MaintenanceTicket"> | string | null
   ratingSubmittedAt?: Prisma.DateTimeNullableFilter<"MaintenanceTicket"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"MaintenanceTicket"> | string
   createdAt?: Prisma.DateTimeFilter<"MaintenanceTicket"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MaintenanceTicket"> | Date | string
   room?: Prisma.XOR<Prisma.RoomScalarRelationFilter, Prisma.RoomWhereInput>
@@ -434,7 +424,6 @@ export type MaintenanceTicketOrderByWithAggregationInput = {
   rating?: Prisma.SortOrderInput | Prisma.SortOrder
   ratingComment?: Prisma.SortOrderInput | Prisma.SortOrder
   ratingSubmittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MaintenanceTicketCountOrderByAggregateInput
@@ -466,7 +455,6 @@ export type MaintenanceTicketScalarWhereWithAggregatesInput = {
   rating?: Prisma.IntNullableWithAggregatesFilter<"MaintenanceTicket"> | number | null
   ratingComment?: Prisma.StringNullableWithAggregatesFilter<"MaintenanceTicket"> | string | null
   ratingSubmittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MaintenanceTicket"> | Date | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"MaintenanceTicket"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaintenanceTicket"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MaintenanceTicket"> | Date | string
 }
@@ -485,7 +473,6 @@ export type MaintenanceTicketCreateInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   room: Prisma.RoomCreateNestedOneWithoutTicketsInput
@@ -515,7 +502,6 @@ export type MaintenanceTicketUncheckedCreateInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutTicketInput
@@ -535,7 +521,6 @@ export type MaintenanceTicketUpdateInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room?: Prisma.RoomUpdateOneRequiredWithoutTicketsNestedInput
@@ -565,7 +550,6 @@ export type MaintenanceTicketUncheckedUpdateInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutTicketNestedInput
@@ -590,7 +574,6 @@ export type MaintenanceTicketCreateManyInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -609,7 +592,6 @@ export type MaintenanceTicketUpdateManyMutationInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -633,7 +615,6 @@ export type MaintenanceTicketUncheckedUpdateManyInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -667,7 +648,6 @@ export type MaintenanceTicketCountOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   ratingComment?: Prisma.SortOrder
   ratingSubmittedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -695,7 +675,6 @@ export type MaintenanceTicketMaxOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   ratingComment?: Prisma.SortOrder
   ratingSubmittedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -719,7 +698,6 @@ export type MaintenanceTicketMinOrderByAggregateInput = {
   rating?: Prisma.SortOrder
   ratingComment?: Prisma.SortOrder
   ratingSubmittedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -983,7 +961,6 @@ export type MaintenanceTicketCreateWithoutRaisedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   room: Prisma.RoomCreateNestedOneWithoutTicketsInput
@@ -1011,7 +988,6 @@ export type MaintenanceTicketUncheckedCreateWithoutRaisedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutTicketInput
@@ -1041,7 +1017,6 @@ export type MaintenanceTicketCreateWithoutResolvedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   room: Prisma.RoomCreateNestedOneWithoutTicketsInput
@@ -1069,7 +1044,6 @@ export type MaintenanceTicketUncheckedCreateWithoutResolvedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutTicketInput
@@ -1099,7 +1073,6 @@ export type MaintenanceTicketCreateWithoutClosedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   room: Prisma.RoomCreateNestedOneWithoutTicketsInput
@@ -1127,7 +1100,6 @@ export type MaintenanceTicketUncheckedCreateWithoutClosedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutTicketInput
@@ -1181,7 +1153,6 @@ export type MaintenanceTicketScalarWhereInput = {
   rating?: Prisma.IntNullableFilter<"MaintenanceTicket"> | number | null
   ratingComment?: Prisma.StringNullableFilter<"MaintenanceTicket"> | string | null
   ratingSubmittedAt?: Prisma.DateTimeNullableFilter<"MaintenanceTicket"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"MaintenanceTicket"> | string
   createdAt?: Prisma.DateTimeFilter<"MaintenanceTicket"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MaintenanceTicket"> | Date | string
 }
@@ -1232,7 +1203,6 @@ export type MaintenanceTicketCreateWithoutRoomInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutTicketsInput
@@ -1260,7 +1230,6 @@ export type MaintenanceTicketUncheckedCreateWithoutRoomInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutTicketInput
@@ -1306,7 +1275,6 @@ export type MaintenanceTicketCreateWithoutLeaseInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   room: Prisma.RoomCreateNestedOneWithoutTicketsInput
@@ -1334,7 +1302,6 @@ export type MaintenanceTicketUncheckedCreateWithoutLeaseInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedCreateNestedManyWithoutTicketInput
@@ -1380,7 +1347,6 @@ export type MaintenanceTicketCreateWithoutUpdatesInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   room: Prisma.RoomCreateNestedOneWithoutTicketsInput
@@ -1409,7 +1375,6 @@ export type MaintenanceTicketUncheckedCreateWithoutUpdatesInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1444,7 +1409,6 @@ export type MaintenanceTicketUpdateWithoutUpdatesInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room?: Prisma.RoomUpdateOneRequiredWithoutTicketsNestedInput
@@ -1473,7 +1437,6 @@ export type MaintenanceTicketUncheckedUpdateWithoutUpdatesInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1496,7 +1459,6 @@ export type MaintenanceTicketCreateManyRaisedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1519,7 +1481,6 @@ export type MaintenanceTicketCreateManyResolvedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1542,7 +1503,6 @@ export type MaintenanceTicketCreateManyClosedByInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1561,7 +1521,6 @@ export type MaintenanceTicketUpdateWithoutRaisedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room?: Prisma.RoomUpdateOneRequiredWithoutTicketsNestedInput
@@ -1589,7 +1548,6 @@ export type MaintenanceTicketUncheckedUpdateWithoutRaisedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutTicketNestedInput
@@ -1613,7 +1571,6 @@ export type MaintenanceTicketUncheckedUpdateManyWithoutRaisedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1632,7 +1589,6 @@ export type MaintenanceTicketUpdateWithoutResolvedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room?: Prisma.RoomUpdateOneRequiredWithoutTicketsNestedInput
@@ -1660,7 +1616,6 @@ export type MaintenanceTicketUncheckedUpdateWithoutResolvedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutTicketNestedInput
@@ -1684,7 +1639,6 @@ export type MaintenanceTicketUncheckedUpdateManyWithoutResolvedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1703,7 +1657,6 @@ export type MaintenanceTicketUpdateWithoutClosedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room?: Prisma.RoomUpdateOneRequiredWithoutTicketsNestedInput
@@ -1731,7 +1684,6 @@ export type MaintenanceTicketUncheckedUpdateWithoutClosedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutTicketNestedInput
@@ -1755,7 +1707,6 @@ export type MaintenanceTicketUncheckedUpdateManyWithoutClosedByInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1778,7 +1729,6 @@ export type MaintenanceTicketCreateManyRoomInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1797,7 +1747,6 @@ export type MaintenanceTicketUpdateWithoutRoomInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutTicketsNestedInput
@@ -1825,7 +1774,6 @@ export type MaintenanceTicketUncheckedUpdateWithoutRoomInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutTicketNestedInput
@@ -1849,7 +1797,6 @@ export type MaintenanceTicketUncheckedUpdateManyWithoutRoomInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1872,7 +1819,6 @@ export type MaintenanceTicketCreateManyLeaseInput = {
   rating?: number | null
   ratingComment?: string | null
   ratingSubmittedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1891,7 +1837,6 @@ export type MaintenanceTicketUpdateWithoutLeaseInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   room?: Prisma.RoomUpdateOneRequiredWithoutTicketsNestedInput
@@ -1919,7 +1864,6 @@ export type MaintenanceTicketUncheckedUpdateWithoutLeaseInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updates?: Prisma.MaintenanceUpdateUncheckedUpdateManyWithoutTicketNestedInput
@@ -1943,7 +1887,6 @@ export type MaintenanceTicketUncheckedUpdateManyWithoutLeaseInput = {
   rating?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ratingComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ratingSubmittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1998,7 +1941,6 @@ export type MaintenanceTicketSelect<ExtArgs extends runtime.Types.Extensions.Int
   rating?: boolean
   ratingComment?: boolean
   ratingSubmittedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
@@ -2029,7 +1971,6 @@ export type MaintenanceTicketSelectCreateManyAndReturn<ExtArgs extends runtime.T
   rating?: boolean
   ratingComment?: boolean
   ratingSubmittedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
@@ -2058,7 +1999,6 @@ export type MaintenanceTicketSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   rating?: boolean
   ratingComment?: boolean
   ratingSubmittedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
@@ -2087,12 +2027,11 @@ export type MaintenanceTicketSelectScalar = {
   rating?: boolean
   ratingComment?: boolean
   ratingSubmittedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MaintenanceTicketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "leaseId" | "raisedByUserId" | "title" | "description" | "category" | "priority" | "status" | "slaTargetAt" | "slaBreachedAt" | "resolvedAt" | "resolvedByUserId" | "closedAt" | "closedByUserId" | "rating" | "ratingComment" | "ratingSubmittedAt" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["maintenanceTicket"]>
+export type MaintenanceTicketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "leaseId" | "raisedByUserId" | "title" | "description" | "category" | "priority" | "status" | "slaTargetAt" | "slaBreachedAt" | "resolvedAt" | "resolvedByUserId" | "closedAt" | "closedByUserId" | "rating" | "ratingComment" | "ratingSubmittedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["maintenanceTicket"]>
 export type MaintenanceTicketInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
@@ -2171,7 +2110,6 @@ export type $MaintenanceTicketPayload<ExtArgs extends runtime.Types.Extensions.I
      * Forward-compat v2 multi-tenancy placeholder. Always the constant
      * zero-uuid in v1.
      */
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["maintenanceTicket"]>
@@ -2621,7 +2559,6 @@ export interface MaintenanceTicketFieldRefs {
   readonly rating: Prisma.FieldRef<"MaintenanceTicket", 'Int'>
   readonly ratingComment: Prisma.FieldRef<"MaintenanceTicket", 'String'>
   readonly ratingSubmittedAt: Prisma.FieldRef<"MaintenanceTicket", 'DateTime'>
-  readonly tenantId: Prisma.FieldRef<"MaintenanceTicket", 'String'>
   readonly createdAt: Prisma.FieldRef<"MaintenanceTicket", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"MaintenanceTicket", 'DateTime'>
 }

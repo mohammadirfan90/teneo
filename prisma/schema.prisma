@@ -144,15 +144,11 @@ model User {
   email           String     @db.Citext
   emailVerifiedAt DateTime?  @map("email_verified_at") @db.Timestamptz(6)
   phone           String?
-  phoneVerifiedAt DateTime?  @map("phone_verified_at") @db.Timestamptz(6)
   passwordHash    String?    @map("password_hash")
   oauthProvider   String?    @map("oauth_provider")
   oauthSubject    String?    @map("oauth_subject")
   status          UserStatus @default(ACTIVE)
-  mfaEnabled      Boolean    @default(false) @map("mfa_enabled")
-  mfaSecret       String?    @map("mfa_secret")
   gender          Gender?
-  tenantId        String     @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt       DateTime?  @map("deleted_at") @db.Timestamptz(6)
@@ -202,7 +198,6 @@ model UserRole {
   userId      String   @map("user_id") @db.Uuid
   role        Role
   activatedAt DateTime @default(now()) @map("activated_at") @db.Timestamptz(6)
-  tenantId    String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -221,7 +216,6 @@ model OwnerProfile {
   kycStatus         KycStatus @default(NONE) @map("kyc_status")
   kycBadgeGrantedAt DateTime? @map("kyc_badge_granted_at") @db.Timestamptz(6)
   reputationScore   Decimal?  @map("reputation_score") @db.Decimal(4, 2)
-  tenantId          String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -242,7 +236,6 @@ model TenantProfile {
   kycStatus         KycStatus @default(NONE) @map("kyc_status")
   kycBadgeGrantedAt DateTime? @map("kyc_badge_granted_at") @db.Timestamptz(6)
   reputationScore   Decimal?  @map("reputation_score") @db.Decimal(4, 2)
-  tenantId          String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -274,7 +267,6 @@ model KycSubmission {
   /// Cross-user docHash collision flag — set when another user already
   /// submitted with the same hash. Surfaces to admins in the queue.
   flaggedForReview   Boolean             @default(false) @map("flagged_for_review")
-  tenantId           String              @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt          DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt          DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -308,7 +300,6 @@ model AuditLog {
   ipAddress        String?  @map("ip_address") @db.Inet
   userAgent        String?  @map("user_agent")
   occurredAt       DateTime @default(now()) @map("occurred_at") @db.Timestamptz(6)
-  tenantId         String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
   @@index([actorUserId, occurredAt(sort: Desc)], name: "audit_logs_actor_idx")
   @@index([targetEntityType, targetEntityId], name: "audit_logs_target_idx")
@@ -333,7 +324,6 @@ model RefreshToken {
   revokedAt DateTime? @map("revoked_at") @db.Timestamptz(6)
   userAgent String?   @map("user_agent")
   ip        String?   @db.Inet
-  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -360,7 +350,6 @@ model PreferencesTenant {
   lifestyle       Json?
   interests       String[]
   visibility      String    @default("PRIVATE")
-  tenantId        String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -401,7 +390,6 @@ model Property {
   publishedAt  DateTime?      @map("published_at") @db.Timestamptz(6)
   /// Optimistic concurrency for property-level state changes (per §5.6).
   version      Int            @default(0)
-  tenantId     String         @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   /// Soft-delete; cascades to buildings → flats → rooms by convention
@@ -431,7 +419,6 @@ model Building {
   name       String
   floors     Int?
   status     BuildingStatus @default(ACTIVE)
-  tenantId   String         @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt  DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt  DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt  DateTime?      @map("deleted_at") @db.Timestamptz(6)
@@ -452,7 +439,6 @@ model Flat {
   floor      Int?
   doorNumber String?    @map("door_number")
   status     FlatStatus @default(ACTIVE)
-  tenantId   String     @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt  DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt  DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt  DateTime?  @map("deleted_at") @db.Timestamptz(6)
@@ -498,7 +484,6 @@ model Room {
   /// increments this; UPDATE WHERE version=? guards against lost
   /// updates).
   version        Int        @default(0)
-  tenantId       String     @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt      DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt      DateTime   @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt      DateTime?  @map("deleted_at") @db.Timestamptz(6)
@@ -535,7 +520,6 @@ model SavedSearch {
   /// Full filter shape — same shape as `searchRoomsQuerySchema`'s parsed
   /// output. Storing as JSONB lets us round-trip it without re-encoding.
   query     Json
-  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
@@ -645,7 +629,6 @@ model Application {
   /// increments this; UPDATE WHERE version=? guards against lost
   /// updates from concurrent owner clicks.
   version         Int               @default(0)
-  tenantId        String            @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt       DateTime?         @map("deleted_at") @db.Timestamptz(6)
@@ -683,7 +666,6 @@ model ViewingRequest {
   status        ViewingStatus @default(REQUESTED)
   /// Optional human-readable reason (cancellation, etc.).
   reason        String?
-  tenantId      String        @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -705,10 +687,6 @@ model ViewingRequest {
 /// Phase 12 shipped the schema stub; Phase 13 inserts the DRAFT row
 /// inside the APPROVED application's `$transaction` and exposes the
 /// full multi-party signing / activation / termination lifecycle.
-///
-/// Tenancy (multi-tenant scoping) lives on `LeaseTenant` rows +
-/// co-tenant rows; the relational truth never depended on a `Lease`
-/// `tenantId` placeholder. Phase 14 drops that placeholder column.
 ///
 /// Rent invoices (`rent_invoices`) hang off a lease; `utilityShareMinor`
 /// is populated by Phase 16's meter + bill-split pipeline.
@@ -840,11 +818,6 @@ model LeaseAmendment {
 /// Phase 14 stores `utilityShareMinor = 0` always; Phase 16 will fill
 /// it from meter readings + bill-splitter.
 ///
-/// `tenantId` is forward-compat scaffolding — Phase 14 writes a single
-/// constant for v1 single-tenancy (matches the convention used on every
-/// other table). It is NOT the relational truth for tenancy (that lives
-/// in `lease_tenants`); it is purely a v2 multi-tenancy placeholder.
-///
 /// The dispute flag is inlined (disputed_at / disputed_by_user_id /
 /// dispute_reason) rather than split into a separate table because the
 /// state machine holds at most one open dispute per invoice.
@@ -873,7 +846,6 @@ model RentInvoice {
   waiveReason       String?       @map("waive_reason")
   /// Forward-compat: always '00000000-0000-0000-0000-000000000000' in v1.
   /// Not the relational truth for tenancy (lease_tenants is).
-  tenantId          String        @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -992,7 +964,6 @@ model Payment {
   version                Int            @default(0)
   /// Forward-compat v2 multi-tenancy scaffold (always
   /// '00000000-0000-0000-0000-000000000000' in v1).
-  tenantId               String         @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt              DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt              DateTime       @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -1069,7 +1040,6 @@ model PropertyMeter {
   unitLabel        String      @map("unit_label")
   /// Lifecycle: v1 sets once to true; deactivation is Phase 18+.
   isActive         Boolean     @default(true) @map("is_active")
-  tenantId         String      @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt        DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -1102,7 +1072,6 @@ model MeterReading {
   /// User who submitted the reading. OWNER or a tenant on an active
   /// lease for the meter's property.
   submittedByUserId String   @map("submitted_by_user_id") @db.Uuid
-  tenantId          String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   meter     PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict, onUpdate: NoAction)
@@ -1144,7 +1113,6 @@ model UtilityBill {
   /// supersedes this one.
   superseded           Boolean   @default(false)
   supersededAt         DateTime? @map("superseded_at") @db.Timestamptz(6)
-  tenantId             String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
 
   lease  Lease         @relation(fields: [leaseId], references: [id], onDelete: Restrict, onUpdate: NoAction)
   meter  PropertyMeter @relation(fields: [meterId], references: [id], onDelete: Restrict, onUpdate: NoAction)
@@ -1170,7 +1138,6 @@ model BillShare {
   shareMinor   BigInt   @map("share_minor")
   splitMode    String   @map("split_mode") @db.VarChar(16)
   weightUsed   Decimal? @map("weight_used") @db.Decimal(5, 2)
-  tenantId     String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   bill   UtilityBill @relation(fields: [billId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -1279,7 +1246,6 @@ model MaintenanceTicket {
   ratingSubmittedAt DateTime?           @map("rating_submitted_at") @db.Timestamptz(6)
   /// Forward-compat v2 multi-tenancy placeholder. Always the constant
   /// zero-uuid in v1.
-  tenantId          String              @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime            @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -1308,7 +1274,6 @@ model MaintenanceUpdate {
   authorUserId String             @map("author_user_id") @db.Uuid
   body         String
   statusAfter  MaintenanceStatus? @map("status_after")
-  tenantId     String             @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt    DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
 
   ticket MaintenanceTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -1380,7 +1345,6 @@ model Document {
   etag            String? @db.VarChar(64)
 
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
-  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
@@ -1422,7 +1386,6 @@ model RoomPhoto {
   /// Accessibility text shown when the image cannot be rendered.
   alt             String?
 
-  tenantId  String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
@@ -1460,7 +1423,6 @@ model MatchResult {
   /// applied (e.g., "Hard penalty: gender mismatch"). Multi-line.
   explain         String
   rank            Int      @map("rank")
-  tenantId        String   @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   caller    User          @relation("MatchCaller", fields: [callerUserId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "match_results_caller_fk")
@@ -1488,7 +1450,6 @@ model IntroRequest {
   /// is in 'PENDING' and contact info is hidden from both parties.
   revealedAt          DateTime? @map("revealed_at") @db.Timestamptz(6)
   declinedAt          DateTime? @map("declined_at") @db.Timestamptz(6)
-  tenantId            String    @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("tenant_id") @db.Uuid
   createdAt           DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 

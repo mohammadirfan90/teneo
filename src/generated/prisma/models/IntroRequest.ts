@@ -37,7 +37,6 @@ export type IntroRequestMinAggregateOutputType = {
   candidateAcceptedAt: Date | null
   revealedAt: Date | null
   declinedAt: Date | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,7 +50,6 @@ export type IntroRequestMaxAggregateOutputType = {
   candidateAcceptedAt: Date | null
   revealedAt: Date | null
   declinedAt: Date | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,7 +63,6 @@ export type IntroRequestCountAggregateOutputType = {
   candidateAcceptedAt: number
   revealedAt: number
   declinedAt: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -81,7 +78,6 @@ export type IntroRequestMinAggregateInputType = {
   candidateAcceptedAt?: true
   revealedAt?: true
   declinedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,7 +91,6 @@ export type IntroRequestMaxAggregateInputType = {
   candidateAcceptedAt?: true
   revealedAt?: true
   declinedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -109,7 +104,6 @@ export type IntroRequestCountAggregateInputType = {
   candidateAcceptedAt?: true
   revealedAt?: true
   declinedAt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -196,7 +190,6 @@ export type IntroRequestGroupByOutputType = {
   candidateAcceptedAt: Date | null
   revealedAt: Date | null
   declinedAt: Date | null
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: IntroRequestCountAggregateOutputType | null
@@ -231,7 +224,6 @@ export type IntroRequestWhereInput = {
   candidateAcceptedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
   revealedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
   declinedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"IntroRequest"> | string
   createdAt?: Prisma.DateTimeFilter<"IntroRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IntroRequest"> | Date | string
   matchResult?: Prisma.XOR<Prisma.MatchResultScalarRelationFilter, Prisma.MatchResultWhereInput>
@@ -248,7 +240,6 @@ export type IntroRequestOrderByWithRelationInput = {
   candidateAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   revealedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   declinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   matchResult?: Prisma.MatchResultOrderByWithRelationInput
@@ -268,7 +259,6 @@ export type IntroRequestWhereUniqueInput = Prisma.AtLeast<{
   candidateAcceptedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
   revealedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
   declinedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"IntroRequest"> | string
   createdAt?: Prisma.DateTimeFilter<"IntroRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IntroRequest"> | Date | string
   matchResult?: Prisma.XOR<Prisma.MatchResultScalarRelationFilter, Prisma.MatchResultWhereInput>
@@ -285,7 +275,6 @@ export type IntroRequestOrderByWithAggregationInput = {
   candidateAcceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   revealedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   declinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.IntroRequestCountOrderByAggregateInput
@@ -305,7 +294,6 @@ export type IntroRequestScalarWhereWithAggregatesInput = {
   candidateAcceptedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"IntroRequest"> | Date | string | null
   revealedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"IntroRequest"> | Date | string | null
   declinedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"IntroRequest"> | Date | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"IntroRequest"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"IntroRequest"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"IntroRequest"> | Date | string
 }
@@ -316,7 +304,6 @@ export type IntroRequestCreateInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   matchResult: Prisma.MatchResultCreateNestedOneWithoutIntroInput
@@ -333,7 +320,6 @@ export type IntroRequestUncheckedCreateInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -344,7 +330,6 @@ export type IntroRequestUpdateInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchResult?: Prisma.MatchResultUpdateOneRequiredWithoutIntroNestedInput
@@ -361,7 +346,6 @@ export type IntroRequestUncheckedUpdateInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -375,7 +359,6 @@ export type IntroRequestCreateManyInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -386,7 +369,6 @@ export type IntroRequestUpdateManyMutationInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -400,7 +382,6 @@ export type IntroRequestUncheckedUpdateManyInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -429,7 +410,6 @@ export type IntroRequestCountOrderByAggregateInput = {
   candidateAcceptedAt?: Prisma.SortOrder
   revealedAt?: Prisma.SortOrder
   declinedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -443,7 +423,6 @@ export type IntroRequestMaxOrderByAggregateInput = {
   candidateAcceptedAt?: Prisma.SortOrder
   revealedAt?: Prisma.SortOrder
   declinedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -457,7 +436,6 @@ export type IntroRequestMinOrderByAggregateInput = {
   candidateAcceptedAt?: Prisma.SortOrder
   revealedAt?: Prisma.SortOrder
   declinedAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -584,7 +562,6 @@ export type IntroRequestCreateWithoutCallerInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   matchResult: Prisma.MatchResultCreateNestedOneWithoutIntroInput
@@ -599,7 +576,6 @@ export type IntroRequestUncheckedCreateWithoutCallerInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -620,7 +596,6 @@ export type IntroRequestCreateWithoutCandidateInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   matchResult: Prisma.MatchResultCreateNestedOneWithoutIntroInput
@@ -635,7 +610,6 @@ export type IntroRequestUncheckedCreateWithoutCandidateInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -678,7 +652,6 @@ export type IntroRequestScalarWhereInput = {
   candidateAcceptedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
   revealedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
   declinedAt?: Prisma.DateTimeNullableFilter<"IntroRequest"> | Date | string | null
-  tenantId?: Prisma.UuidFilter<"IntroRequest"> | string
   createdAt?: Prisma.DateTimeFilter<"IntroRequest"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IntroRequest"> | Date | string
 }
@@ -705,7 +678,6 @@ export type IntroRequestCreateWithoutMatchResultInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   caller: Prisma.UserCreateNestedOneWithoutIntrosAsCallerInput
@@ -720,7 +692,6 @@ export type IntroRequestUncheckedCreateWithoutMatchResultInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -747,7 +718,6 @@ export type IntroRequestUpdateWithoutMatchResultInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caller?: Prisma.UserUpdateOneRequiredWithoutIntrosAsCallerNestedInput
@@ -762,7 +732,6 @@ export type IntroRequestUncheckedUpdateWithoutMatchResultInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -775,7 +744,6 @@ export type IntroRequestCreateManyCallerInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -788,7 +756,6 @@ export type IntroRequestCreateManyCandidateInput = {
   candidateAcceptedAt?: Date | string | null
   revealedAt?: Date | string | null
   declinedAt?: Date | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -799,7 +766,6 @@ export type IntroRequestUpdateWithoutCallerInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchResult?: Prisma.MatchResultUpdateOneRequiredWithoutIntroNestedInput
@@ -814,7 +780,6 @@ export type IntroRequestUncheckedUpdateWithoutCallerInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -827,7 +792,6 @@ export type IntroRequestUncheckedUpdateManyWithoutCallerInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -838,7 +802,6 @@ export type IntroRequestUpdateWithoutCandidateInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   matchResult?: Prisma.MatchResultUpdateOneRequiredWithoutIntroNestedInput
@@ -853,7 +816,6 @@ export type IntroRequestUncheckedUpdateWithoutCandidateInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -866,7 +828,6 @@ export type IntroRequestUncheckedUpdateManyWithoutCandidateInput = {
   candidateAcceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   revealedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   declinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -882,7 +843,6 @@ export type IntroRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   candidateAcceptedAt?: boolean
   revealedAt?: boolean
   declinedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   matchResult?: boolean | Prisma.MatchResultDefaultArgs<ExtArgs>
@@ -899,7 +859,6 @@ export type IntroRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   candidateAcceptedAt?: boolean
   revealedAt?: boolean
   declinedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   matchResult?: boolean | Prisma.MatchResultDefaultArgs<ExtArgs>
@@ -916,7 +875,6 @@ export type IntroRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   candidateAcceptedAt?: boolean
   revealedAt?: boolean
   declinedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   matchResult?: boolean | Prisma.MatchResultDefaultArgs<ExtArgs>
@@ -933,12 +891,11 @@ export type IntroRequestSelectScalar = {
   candidateAcceptedAt?: boolean
   revealedAt?: boolean
   declinedAt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type IntroRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchResultId" | "callerUserId" | "candidateUserId" | "callerAcceptedAt" | "candidateAcceptedAt" | "revealedAt" | "declinedAt" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["introRequest"]>
+export type IntroRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "matchResultId" | "callerUserId" | "candidateUserId" | "callerAcceptedAt" | "candidateAcceptedAt" | "revealedAt" | "declinedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["introRequest"]>
 export type IntroRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   matchResult?: boolean | Prisma.MatchResultDefaultArgs<ExtArgs>
   caller?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -975,7 +932,6 @@ export type $IntroRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
      */
     revealedAt: Date | null
     declinedAt: Date | null
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["introRequest"]>
@@ -1412,7 +1368,6 @@ export interface IntroRequestFieldRefs {
   readonly candidateAcceptedAt: Prisma.FieldRef<"IntroRequest", 'DateTime'>
   readonly revealedAt: Prisma.FieldRef<"IntroRequest", 'DateTime'>
   readonly declinedAt: Prisma.FieldRef<"IntroRequest", 'DateTime'>
-  readonly tenantId: Prisma.FieldRef<"IntroRequest", 'String'>
   readonly createdAt: Prisma.FieldRef<"IntroRequest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"IntroRequest", 'DateTime'>
 }

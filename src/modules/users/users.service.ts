@@ -12,7 +12,7 @@
 import type { Prisma } from '@/generated/prisma/client';
 
 import { prisma } from '@/lib/db';
-import { ConflictError, ForbiddenError, NotFoundError, SemanticError } from '@/lib/errors';
+import { NotFoundError, SemanticError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
 
 import type { UpdateMeInput } from './users.schemas';
@@ -90,67 +90,6 @@ export async function updateMe(userId: string, patch: UpdateMeInput): Promise<Me
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// /users/me/roles/:role/activate
-// ──────────────────────────────────────────────────────────────────────
-
-/**
- * Promote USER → TENANT / OWNER.
- *
- * Pre-conditions:
- *   1. User does NOT already hold this role (UNIQUE(userId, role)
- *      makes duplicates impossible anyway; we surface a friendly 409
- *      before the DB).
- *   2. The matching role-profile exists (404 if not — the user must
- *      PATCH /profiles/<role> first). Documented in the plan.
- *   3. The role-profile's kycStatus === 'APPROVED'. Otherwise 403
- *      KYC_REQUIRED. Phase 9 wires the actual submission/approval flow.
- *
- * `ADMIN` is rejected up-front (not allowed to self-activate; only
- * out-of-band provisioning grants ADMIN).
- */
-export async function activateRole(userId: string, role: 'TENANT' | 'OWNER'): Promise<MeView> {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      roles: { select: { role: true } },
-    },
-  });
-  if (!user) throw new NotFoundError('User not found');
-
-  const existing = new Set(user.roles.map((r) => r.role));
-  if (existing.has(role)) {
-    throw new ConflictError('CONFLICT', `Role ${role} is already active for this user`);
-  }
-
-  // Look up the matching role-profile.
-  const profile = await (role === 'OWNER'
-    ? prisma.ownerProfile.findUnique({ where: { userId }, select: { kycStatus: true } })
-    : prisma.tenantProfile.findUnique({ where: { userId }, select: { kycStatus: true } }));
-
-  if (!profile) {
-    throw new NotFoundError(`Profile not set up; PATCH /profiles/${role.toLowerCase()} first`);
-  }
-  if (profile.kycStatus !== 'APPROVED') {
-    // Use the ForbiddenError KYC_REQUIRED variant so the envelope's
-    // top-level `errors[].code` is KYC_REQUIRED.
-    throw new ForbiddenError(
-      'KYC_REQUIRED',
-      `${role} role requires KYC approval before this action`
-    );
-  }
-
-  // UNIQUE(user_id, role) on user_roles — duplicate insert throws P2002.
-  try {
-    await prisma.userRole.create({ data: { userId, role } });
-  } catch (err) {
-    throwConflictIfP2002(err, 'Role already activated');
-    throw err;
-  }
-
-  return getMe(userId);
-}
-
-// ──────────────────────────────────────────────────────────────────────
 // /users/:id — ADMIN
 // ──────────────────────────────────────────────────────────────────────
 
@@ -213,8 +152,6 @@ export async function deactivateUser(
         oauthProvider: null,
         oauthSubject: null,
         emailVerifiedAt: null,
-        phoneVerifiedAt: null,
-        mfaSecret: null,
       },
     });
 
@@ -274,10 +211,6 @@ function toMeView(user: {
 
 function throwNotFoundIfP2025(err: unknown): void {
   if (isPrismaCode(err, 'P2025')) throw new NotFoundError('User not found');
-}
-
-function throwConflictIfP2002(err: unknown, message: string): void {
-  if (isPrismaCode(err, 'P2002')) throw new ConflictError('CONFLICT', message);
 }
 
 function isPrismaCode(err: unknown, code: string): boolean {

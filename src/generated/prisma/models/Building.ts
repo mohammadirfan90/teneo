@@ -41,7 +41,6 @@ export type BuildingMinAggregateOutputType = {
   name: string | null
   floors: number | null
   status: $Enums.BuildingStatus | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -53,7 +52,6 @@ export type BuildingMaxAggregateOutputType = {
   name: string | null
   floors: number | null
   status: $Enums.BuildingStatus | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -65,7 +63,6 @@ export type BuildingCountAggregateOutputType = {
   name: number
   floors: number
   status: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -87,7 +84,6 @@ export type BuildingMinAggregateInputType = {
   name?: true
   floors?: true
   status?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -99,7 +95,6 @@ export type BuildingMaxAggregateInputType = {
   name?: true
   floors?: true
   status?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -111,7 +106,6 @@ export type BuildingCountAggregateInputType = {
   name?: true
   floors?: true
   status?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -210,7 +204,6 @@ export type BuildingGroupByOutputType = {
   name: string
   floors: number | null
   status: $Enums.BuildingStatus
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -245,7 +238,6 @@ export type BuildingWhereInput = {
   name?: Prisma.StringFilter<"Building"> | string
   floors?: Prisma.IntNullableFilter<"Building"> | number | null
   status?: Prisma.EnumBuildingStatusFilter<"Building"> | $Enums.BuildingStatus
-  tenantId?: Prisma.UuidFilter<"Building"> | string
   createdAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Building"> | Date | string | null
@@ -259,7 +251,6 @@ export type BuildingOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   floors?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -276,7 +267,6 @@ export type BuildingWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Building"> | string
   floors?: Prisma.IntNullableFilter<"Building"> | number | null
   status?: Prisma.EnumBuildingStatusFilter<"Building"> | $Enums.BuildingStatus
-  tenantId?: Prisma.UuidFilter<"Building"> | string
   createdAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Building"> | Date | string | null
@@ -290,7 +280,6 @@ export type BuildingOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   floors?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -310,7 +299,6 @@ export type BuildingScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Building"> | string
   floors?: Prisma.IntNullableWithAggregatesFilter<"Building"> | number | null
   status?: Prisma.EnumBuildingStatusWithAggregatesFilter<"Building"> | $Enums.BuildingStatus
-  tenantId?: Prisma.UuidWithAggregatesFilter<"Building"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Building"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Building"> | Date | string | null
@@ -321,7 +309,6 @@ export type BuildingCreateInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -335,7 +322,6 @@ export type BuildingUncheckedCreateInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -347,7 +333,6 @@ export type BuildingUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -361,7 +346,6 @@ export type BuildingUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -374,7 +358,6 @@ export type BuildingCreateManyInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -385,7 +368,6 @@ export type BuildingUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -397,7 +379,6 @@ export type BuildingUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -419,7 +400,6 @@ export type BuildingCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   floors?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -435,7 +415,6 @@ export type BuildingMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   floors?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -447,7 +426,6 @@ export type BuildingMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   floors?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -535,7 +513,6 @@ export type BuildingCreateWithoutPropertyInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -547,7 +524,6 @@ export type BuildingUncheckedCreateWithoutPropertyInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -589,7 +565,6 @@ export type BuildingScalarWhereInput = {
   name?: Prisma.StringFilter<"Building"> | string
   floors?: Prisma.IntNullableFilter<"Building"> | number | null
   status?: Prisma.EnumBuildingStatusFilter<"Building"> | $Enums.BuildingStatus
-  tenantId?: Prisma.UuidFilter<"Building"> | string
   createdAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Building"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Building"> | Date | string | null
@@ -600,7 +575,6 @@ export type BuildingCreateWithoutFlatsInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -613,7 +587,6 @@ export type BuildingUncheckedCreateWithoutFlatsInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -640,7 +613,6 @@ export type BuildingUpdateWithoutFlatsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -653,7 +625,6 @@ export type BuildingUncheckedUpdateWithoutFlatsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -664,7 +635,6 @@ export type BuildingCreateManyPropertyInput = {
   name: string
   floors?: number | null
   status?: $Enums.BuildingStatus
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -675,7 +645,6 @@ export type BuildingUpdateWithoutPropertyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -687,7 +656,6 @@ export type BuildingUncheckedUpdateWithoutPropertyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -699,7 +667,6 @@ export type BuildingUncheckedUpdateManyWithoutPropertyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   floors?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumBuildingStatusFieldUpdateOperationsInput | $Enums.BuildingStatus
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -742,7 +709,6 @@ export type BuildingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name?: boolean
   floors?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -757,7 +723,6 @@ export type BuildingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   floors?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -770,7 +735,6 @@ export type BuildingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   floors?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -783,13 +747,12 @@ export type BuildingSelectScalar = {
   name?: boolean
   floors?: boolean
   status?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type BuildingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "name" | "floors" | "status" | "tenantId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["building"]>
+export type BuildingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "name" | "floors" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["building"]>
 export type BuildingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   flats?: boolean | Prisma.Building$flatsArgs<ExtArgs>
@@ -814,7 +777,6 @@ export type $BuildingPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     name: string
     floors: number | null
     status: $Enums.BuildingStatus
-    tenantId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1248,7 +1210,6 @@ export interface BuildingFieldRefs {
   readonly name: Prisma.FieldRef<"Building", 'String'>
   readonly floors: Prisma.FieldRef<"Building", 'Int'>
   readonly status: Prisma.FieldRef<"Building", 'BuildingStatus'>
-  readonly tenantId: Prisma.FieldRef<"Building", 'String'>
   readonly createdAt: Prisma.FieldRef<"Building", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Building", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Building", 'DateTime'>

@@ -22,11 +22,6 @@ import type * as Prisma from "../internal/prismaNamespace"
  * Phase 14 stores `utilityShareMinor = 0` always; Phase 16 will fill
  * it from meter readings + bill-splitter.
  * 
- * `tenantId` is forward-compat scaffolding — Phase 14 writes a single
- * constant for v1 single-tenancy (matches the convention used on every
- * other table). It is NOT the relational truth for tenancy (that lives
- * in `lease_tenants`); it is purely a v2 multi-tenancy placeholder.
- * 
  * The dispute flag is inlined (disputed_at / disputed_by_user_id /
  * dispute_reason) rather than split into a separate table because the
  * state machine holds at most one open dispute per invoice.
@@ -80,7 +75,6 @@ export type RentInvoiceMinAggregateOutputType = {
   waivedAt: Date | null
   waivedByUserId: string | null
   waiveReason: string | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -106,7 +100,6 @@ export type RentInvoiceMaxAggregateOutputType = {
   waivedAt: Date | null
   waivedByUserId: string | null
   waiveReason: string | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -132,7 +125,6 @@ export type RentInvoiceCountAggregateOutputType = {
   waivedAt: number
   waivedByUserId: number
   waiveReason: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -178,7 +170,6 @@ export type RentInvoiceMinAggregateInputType = {
   waivedAt?: true
   waivedByUserId?: true
   waiveReason?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -204,7 +195,6 @@ export type RentInvoiceMaxAggregateInputType = {
   waivedAt?: true
   waivedByUserId?: true
   waiveReason?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -230,7 +220,6 @@ export type RentInvoiceCountAggregateInputType = {
   waivedAt?: true
   waivedByUserId?: true
   waiveReason?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -343,7 +332,6 @@ export type RentInvoiceGroupByOutputType = {
   waivedAt: Date | null
   waivedByUserId: string | null
   waiveReason: string | null
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: RentInvoiceCountAggregateOutputType | null
@@ -392,7 +380,6 @@ export type RentInvoiceWhereInput = {
   waivedAt?: Prisma.DateTimeNullableFilter<"RentInvoice"> | Date | string | null
   waivedByUserId?: Prisma.UuidNullableFilter<"RentInvoice"> | string | null
   waiveReason?: Prisma.StringNullableFilter<"RentInvoice"> | string | null
-  tenantId?: Prisma.UuidFilter<"RentInvoice"> | string
   createdAt?: Prisma.DateTimeFilter<"RentInvoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RentInvoice"> | Date | string
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
@@ -422,7 +409,6 @@ export type RentInvoiceOrderByWithRelationInput = {
   waivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   waivedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   waiveReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   lease?: Prisma.LeaseOrderByWithRelationInput
@@ -456,7 +442,6 @@ export type RentInvoiceWhereUniqueInput = Prisma.AtLeast<{
   waivedAt?: Prisma.DateTimeNullableFilter<"RentInvoice"> | Date | string | null
   waivedByUserId?: Prisma.UuidNullableFilter<"RentInvoice"> | string | null
   waiveReason?: Prisma.StringNullableFilter<"RentInvoice"> | string | null
-  tenantId?: Prisma.UuidFilter<"RentInvoice"> | string
   createdAt?: Prisma.DateTimeFilter<"RentInvoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RentInvoice"> | Date | string
   lease?: Prisma.XOR<Prisma.LeaseScalarRelationFilter, Prisma.LeaseWhereInput>
@@ -486,7 +471,6 @@ export type RentInvoiceOrderByWithAggregationInput = {
   waivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   waivedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   waiveReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RentInvoiceCountOrderByAggregateInput
@@ -520,7 +504,6 @@ export type RentInvoiceScalarWhereWithAggregatesInput = {
   waivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"RentInvoice"> | Date | string | null
   waivedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"RentInvoice"> | string | null
   waiveReason?: Prisma.StringNullableWithAggregatesFilter<"RentInvoice"> | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"RentInvoice"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RentInvoice"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"RentInvoice"> | Date | string
 }
@@ -543,7 +526,6 @@ export type RentInvoiceCreateInput = {
   disputeReason?: string | null
   waivedAt?: Date | string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
@@ -573,7 +555,6 @@ export type RentInvoiceUncheckedCreateInput = {
   waivedAt?: Date | string | null
   waivedByUserId?: string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
@@ -597,7 +578,6 @@ export type RentInvoiceUpdateInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
@@ -627,7 +607,6 @@ export type RentInvoiceUncheckedUpdateInput = {
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -654,7 +633,6 @@ export type RentInvoiceCreateManyInput = {
   waivedAt?: Date | string | null
   waivedByUserId?: string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -677,7 +655,6 @@ export type RentInvoiceUpdateManyMutationInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -703,7 +680,6 @@ export type RentInvoiceUncheckedUpdateManyInput = {
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -744,7 +720,6 @@ export type RentInvoiceCountOrderByAggregateInput = {
   waivedAt?: Prisma.SortOrder
   waivedByUserId?: Prisma.SortOrder
   waiveReason?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -779,7 +754,6 @@ export type RentInvoiceMaxOrderByAggregateInput = {
   waivedAt?: Prisma.SortOrder
   waivedByUserId?: Prisma.SortOrder
   waiveReason?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -805,7 +779,6 @@ export type RentInvoiceMinOrderByAggregateInput = {
   waivedAt?: Prisma.SortOrder
   waivedByUserId?: Prisma.SortOrder
   waiveReason?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -986,7 +959,6 @@ export type RentInvoiceCreateWithoutDisputedByUserInput = {
   disputeReason?: string | null
   waivedAt?: Date | string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
@@ -1014,7 +986,6 @@ export type RentInvoiceUncheckedCreateWithoutDisputedByUserInput = {
   waivedAt?: Date | string | null
   waivedByUserId?: string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1048,7 +1019,6 @@ export type RentInvoiceCreateWithoutWaivedByUserInput = {
   disputeReason?: string | null
   waivedAt?: Date | string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
@@ -1076,7 +1046,6 @@ export type RentInvoiceUncheckedCreateWithoutWaivedByUserInput = {
   disputeReason?: string | null
   waivedAt?: Date | string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1132,7 +1101,6 @@ export type RentInvoiceScalarWhereInput = {
   waivedAt?: Prisma.DateTimeNullableFilter<"RentInvoice"> | Date | string | null
   waivedByUserId?: Prisma.UuidNullableFilter<"RentInvoice"> | string | null
   waiveReason?: Prisma.StringNullableFilter<"RentInvoice"> | string | null
-  tenantId?: Prisma.UuidFilter<"RentInvoice"> | string
   createdAt?: Prisma.DateTimeFilter<"RentInvoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RentInvoice"> | Date | string
 }
@@ -1171,7 +1139,6 @@ export type RentInvoiceCreateWithoutLeaseInput = {
   disputeReason?: string | null
   waivedAt?: Date | string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   disputedByUser?: Prisma.UserCreateNestedOneWithoutRentInvoicesDisputedInput
@@ -1199,7 +1166,6 @@ export type RentInvoiceUncheckedCreateWithoutLeaseInput = {
   waivedAt?: Date | string | null
   waivedByUserId?: string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1249,7 +1215,6 @@ export type RentInvoiceCreateWithoutPaymentsInput = {
   disputeReason?: string | null
   waivedAt?: Date | string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutRentInvoicesInput
@@ -1278,7 +1243,6 @@ export type RentInvoiceUncheckedCreateWithoutPaymentsInput = {
   waivedAt?: Date | string | null
   waivedByUserId?: string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1317,7 +1281,6 @@ export type RentInvoiceUpdateWithoutPaymentsInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
@@ -1346,7 +1309,6 @@ export type RentInvoiceUncheckedUpdateWithoutPaymentsInput = {
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1371,7 +1333,6 @@ export type RentInvoiceCreateManyDisputedByUserInput = {
   waivedAt?: Date | string | null
   waivedByUserId?: string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1396,7 +1357,6 @@ export type RentInvoiceCreateManyWaivedByUserInput = {
   disputeReason?: string | null
   waivedAt?: Date | string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1419,7 +1379,6 @@ export type RentInvoiceUpdateWithoutDisputedByUserInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
@@ -1447,7 +1406,6 @@ export type RentInvoiceUncheckedUpdateWithoutDisputedByUserInput = {
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -1473,7 +1431,6 @@ export type RentInvoiceUncheckedUpdateManyWithoutDisputedByUserInput = {
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1496,7 +1453,6 @@ export type RentInvoiceUpdateWithoutWaivedByUserInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutRentInvoicesNestedInput
@@ -1524,7 +1480,6 @@ export type RentInvoiceUncheckedUpdateWithoutWaivedByUserInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -1550,7 +1505,6 @@ export type RentInvoiceUncheckedUpdateManyWithoutWaivedByUserInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1575,7 +1529,6 @@ export type RentInvoiceCreateManyLeaseInput = {
   waivedAt?: Date | string | null
   waivedByUserId?: string | null
   waiveReason?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1598,7 +1551,6 @@ export type RentInvoiceUpdateWithoutLeaseInput = {
   disputeReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputedByUser?: Prisma.UserUpdateOneWithoutRentInvoicesDisputedNestedInput
@@ -1626,7 +1578,6 @@ export type RentInvoiceUncheckedUpdateWithoutLeaseInput = {
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -1652,7 +1603,6 @@ export type RentInvoiceUncheckedUpdateManyWithoutLeaseInput = {
   waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1709,7 +1659,6 @@ export type RentInvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   waivedAt?: boolean
   waivedByUserId?: boolean
   waiveReason?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
@@ -1740,7 +1689,6 @@ export type RentInvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   waivedAt?: boolean
   waivedByUserId?: boolean
   waiveReason?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
@@ -1769,7 +1717,6 @@ export type RentInvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   waivedAt?: boolean
   waivedByUserId?: boolean
   waiveReason?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
@@ -1798,12 +1745,11 @@ export type RentInvoiceSelectScalar = {
   waivedAt?: boolean
   waivedByUserId?: boolean
   waiveReason?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RentInvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaseId" | "periodStart" | "periodEnd" | "baseRentMinor" | "utilityShareMinor" | "lateFeeMinor" | "totalMinor" | "amountPaidMinor" | "currency" | "status" | "dueDate" | "version" | "generatedAt" | "disputedAt" | "disputedByUserId" | "disputeReason" | "waivedAt" | "waivedByUserId" | "waiveReason" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["rentInvoice"]>
+export type RentInvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "leaseId" | "periodStart" | "periodEnd" | "baseRentMinor" | "utilityShareMinor" | "lateFeeMinor" | "totalMinor" | "amountPaidMinor" | "currency" | "status" | "dueDate" | "version" | "generatedAt" | "disputedAt" | "disputedByUserId" | "disputeReason" | "waivedAt" | "waivedByUserId" | "waiveReason" | "createdAt" | "updatedAt", ExtArgs["result"]["rentInvoice"]>
 export type RentInvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
   disputedByUser?: boolean | Prisma.RentInvoice$disputedByUserArgs<ExtArgs>
@@ -1861,7 +1807,6 @@ export type $RentInvoicePayload<ExtArgs extends runtime.Types.Extensions.Interna
      * Forward-compat: always '00000000-0000-0000-0000-000000000000' in v1.
      * Not the relational truth for tenancy (lease_tenants is).
      */
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["rentInvoice"]>
@@ -2311,7 +2256,6 @@ export interface RentInvoiceFieldRefs {
   readonly waivedAt: Prisma.FieldRef<"RentInvoice", 'DateTime'>
   readonly waivedByUserId: Prisma.FieldRef<"RentInvoice", 'String'>
   readonly waiveReason: Prisma.FieldRef<"RentInvoice", 'String'>
-  readonly tenantId: Prisma.FieldRef<"RentInvoice", 'String'>
   readonly createdAt: Prisma.FieldRef<"RentInvoice", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"RentInvoice", 'DateTime'>
 }

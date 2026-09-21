@@ -63,7 +63,6 @@ export type RoomPhotoMinAggregateOutputType = {
   etag: string | null
   position: number | null
   alt: string | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -85,7 +84,6 @@ export type RoomPhotoMaxAggregateOutputType = {
   etag: string | null
   position: number | null
   alt: string | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -107,7 +105,6 @@ export type RoomPhotoCountAggregateOutputType = {
   etag: number
   position: number
   alt: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -145,7 +142,6 @@ export type RoomPhotoMinAggregateInputType = {
   etag?: true
   position?: true
   alt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -167,7 +163,6 @@ export type RoomPhotoMaxAggregateInputType = {
   etag?: true
   position?: true
   alt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -189,7 +184,6 @@ export type RoomPhotoCountAggregateInputType = {
   etag?: true
   position?: true
   alt?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -298,7 +292,6 @@ export type RoomPhotoGroupByOutputType = {
   etag: string | null
   position: number
   alt: string | null
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -343,7 +336,6 @@ export type RoomPhotoWhereInput = {
   etag?: Prisma.StringNullableFilter<"RoomPhoto"> | string | null
   position?: Prisma.IntFilter<"RoomPhoto"> | number
   alt?: Prisma.StringNullableFilter<"RoomPhoto"> | string | null
-  tenantId?: Prisma.UuidFilter<"RoomPhoto"> | string
   createdAt?: Prisma.DateTimeFilter<"RoomPhoto"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RoomPhoto"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"RoomPhoto"> | Date | string | null
@@ -367,7 +359,6 @@ export type RoomPhotoOrderByWithRelationInput = {
   etag?: Prisma.SortOrderInput | Prisma.SortOrder
   position?: Prisma.SortOrder
   alt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -394,7 +385,6 @@ export type RoomPhotoWhereUniqueInput = Prisma.AtLeast<{
   etag?: Prisma.StringNullableFilter<"RoomPhoto"> | string | null
   position?: Prisma.IntFilter<"RoomPhoto"> | number
   alt?: Prisma.StringNullableFilter<"RoomPhoto"> | string | null
-  tenantId?: Prisma.UuidFilter<"RoomPhoto"> | string
   createdAt?: Prisma.DateTimeFilter<"RoomPhoto"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RoomPhoto"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"RoomPhoto"> | Date | string | null
@@ -418,7 +408,6 @@ export type RoomPhotoOrderByWithAggregationInput = {
   etag?: Prisma.SortOrderInput | Prisma.SortOrder
   position?: Prisma.SortOrder
   alt?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -448,7 +437,6 @@ export type RoomPhotoScalarWhereWithAggregatesInput = {
   etag?: Prisma.StringNullableWithAggregatesFilter<"RoomPhoto"> | string | null
   position?: Prisma.IntWithAggregatesFilter<"RoomPhoto"> | number
   alt?: Prisma.StringNullableWithAggregatesFilter<"RoomPhoto"> | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"RoomPhoto"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RoomPhoto"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"RoomPhoto"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"RoomPhoto"> | Date | string | null
@@ -468,7 +456,6 @@ export type RoomPhotoCreateInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -492,7 +479,6 @@ export type RoomPhotoUncheckedCreateInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -512,7 +498,6 @@ export type RoomPhotoUpdateInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -536,7 +521,6 @@ export type RoomPhotoUncheckedUpdateInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -558,7 +542,6 @@ export type RoomPhotoCreateManyInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -578,7 +561,6 @@ export type RoomPhotoUpdateManyMutationInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -600,7 +582,6 @@ export type RoomPhotoUncheckedUpdateManyInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -632,7 +613,6 @@ export type RoomPhotoCountOrderByAggregateInput = {
   etag?: Prisma.SortOrder
   position?: Prisma.SortOrder
   alt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -661,7 +641,6 @@ export type RoomPhotoMaxOrderByAggregateInput = {
   etag?: Prisma.SortOrder
   position?: Prisma.SortOrder
   alt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -683,7 +662,6 @@ export type RoomPhotoMinOrderByAggregateInput = {
   etag?: Prisma.SortOrder
   position?: Prisma.SortOrder
   alt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -794,7 +772,6 @@ export type RoomPhotoCreateWithoutUploadedByInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -816,7 +793,6 @@ export type RoomPhotoUncheckedCreateWithoutUploadedByInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -867,7 +843,6 @@ export type RoomPhotoScalarWhereInput = {
   etag?: Prisma.StringNullableFilter<"RoomPhoto"> | string | null
   position?: Prisma.IntFilter<"RoomPhoto"> | number
   alt?: Prisma.StringNullableFilter<"RoomPhoto"> | string | null
-  tenantId?: Prisma.UuidFilter<"RoomPhoto"> | string
   createdAt?: Prisma.DateTimeFilter<"RoomPhoto"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RoomPhoto"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"RoomPhoto"> | Date | string | null
@@ -887,7 +862,6 @@ export type RoomPhotoCreateWithoutRoomInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -909,7 +883,6 @@ export type RoomPhotoUncheckedCreateWithoutRoomInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -956,7 +929,6 @@ export type RoomPhotoCreateManyUploadedByInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -976,7 +948,6 @@ export type RoomPhotoUpdateWithoutUploadedByInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -998,7 +969,6 @@ export type RoomPhotoUncheckedUpdateWithoutUploadedByInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1019,7 +989,6 @@ export type RoomPhotoUncheckedUpdateManyWithoutUploadedByInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1040,7 +1009,6 @@ export type RoomPhotoCreateManyRoomInput = {
   etag?: string | null
   position?: number
   alt?: string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1060,7 +1028,6 @@ export type RoomPhotoUpdateWithoutRoomInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1082,7 +1049,6 @@ export type RoomPhotoUncheckedUpdateWithoutRoomInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1103,7 +1069,6 @@ export type RoomPhotoUncheckedUpdateManyWithoutRoomInput = {
   etag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   alt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1127,7 +1092,6 @@ export type RoomPhotoSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   etag?: boolean
   position?: boolean
   alt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1151,7 +1115,6 @@ export type RoomPhotoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   etag?: boolean
   position?: boolean
   alt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1175,7 +1138,6 @@ export type RoomPhotoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   etag?: boolean
   position?: boolean
   alt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1199,13 +1161,12 @@ export type RoomPhotoSelectScalar = {
   etag?: boolean
   position?: boolean
   alt?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type RoomPhotoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "uploadedByUserId" | "publicId" | "secureUrl" | "storageProvider" | "resourceType" | "deliveryType" | "contentType" | "sizeBytes" | "width" | "height" | "etag" | "position" | "alt" | "tenantId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["roomPhoto"]>
+export type RoomPhotoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "uploadedByUserId" | "publicId" | "secureUrl" | "storageProvider" | "resourceType" | "deliveryType" | "contentType" | "sizeBytes" | "width" | "height" | "etag" | "position" | "alt" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["roomPhoto"]>
 export type RoomPhotoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1254,7 +1215,6 @@ export type $RoomPhotoPayload<ExtArgs extends runtime.Types.Extensions.InternalA
      * Accessibility text shown when the image cannot be rendered.
      */
     alt: string | null
-    tenantId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1698,7 +1658,6 @@ export interface RoomPhotoFieldRefs {
   readonly etag: Prisma.FieldRef<"RoomPhoto", 'String'>
   readonly position: Prisma.FieldRef<"RoomPhoto", 'Int'>
   readonly alt: Prisma.FieldRef<"RoomPhoto", 'String'>
-  readonly tenantId: Prisma.FieldRef<"RoomPhoto", 'String'>
   readonly createdAt: Prisma.FieldRef<"RoomPhoto", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"RoomPhoto", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"RoomPhoto", 'DateTime'>

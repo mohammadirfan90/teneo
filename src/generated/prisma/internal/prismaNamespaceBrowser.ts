@@ -105,15 +105,11 @@ export const UserScalarFieldEnum = {
   email: 'email',
   emailVerifiedAt: 'emailVerifiedAt',
   phone: 'phone',
-  phoneVerifiedAt: 'phoneVerifiedAt',
   passwordHash: 'passwordHash',
   oauthProvider: 'oauthProvider',
   oauthSubject: 'oauthSubject',
   status: 'status',
-  mfaEnabled: 'mfaEnabled',
-  mfaSecret: 'mfaSecret',
   gender: 'gender',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -126,8 +122,7 @@ export const UserRoleScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   role: 'role',
-  activatedAt: 'activatedAt',
-  tenantId: 'tenantId'
+  activatedAt: 'activatedAt'
 } as const
 
 export type UserRoleScalarFieldEnum = (typeof UserRoleScalarFieldEnum)[keyof typeof UserRoleScalarFieldEnum]
@@ -142,7 +137,6 @@ export const OwnerProfileScalarFieldEnum = {
   kycStatus: 'kycStatus',
   kycBadgeGrantedAt: 'kycBadgeGrantedAt',
   reputationScore: 'reputationScore',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -159,7 +153,6 @@ export const TenantProfileScalarFieldEnum = {
   kycStatus: 'kycStatus',
   kycBadgeGrantedAt: 'kycBadgeGrantedAt',
   reputationScore: 'reputationScore',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -179,7 +172,6 @@ export const KycSubmissionScalarFieldEnum = {
   expiresAt: 'expiresAt',
   docHash: 'docHash',
   flaggedForReview: 'flaggedForReview',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -198,8 +190,7 @@ export const AuditLogScalarFieldEnum = {
   after: 'after',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
-  occurredAt: 'occurredAt',
-  tenantId: 'tenantId'
+  occurredAt: 'occurredAt'
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
@@ -213,8 +204,7 @@ export const RefreshTokenScalarFieldEnum = {
   expiresAt: 'expiresAt',
   revokedAt: 'revokedAt',
   userAgent: 'userAgent',
-  ip: 'ip',
-  tenantId: 'tenantId'
+  ip: 'ip'
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
@@ -231,7 +221,6 @@ export const PreferencesTenantScalarFieldEnum = {
   lifestyle: 'lifestyle',
   interests: 'interests',
   visibility: 'visibility',
-  tenantId: 'tenantId',
   updatedAt: 'updatedAt'
 } as const
 
@@ -255,7 +244,6 @@ export const PropertyScalarFieldEnum = {
   status: 'status',
   publishedAt: 'publishedAt',
   version: 'version',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -270,7 +258,6 @@ export const BuildingScalarFieldEnum = {
   name: 'name',
   floors: 'floors',
   status: 'status',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -285,7 +272,6 @@ export const FlatScalarFieldEnum = {
   floor: 'floor',
   doorNumber: 'doorNumber',
   status: 'status',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -313,7 +299,6 @@ export const RoomScalarFieldEnum = {
   maxLeaseMonths: 'maxLeaseMonths',
   rules: 'rules',
   version: 'version',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -327,7 +312,6 @@ export const SavedSearchScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   query: 'query',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -346,7 +330,6 @@ export const ApplicationScalarFieldEnum = {
   decidedAt: 'decidedAt',
   decidedByUserId: 'decidedByUserId',
   version: 'version',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -364,7 +347,6 @@ export const ViewingRequestScalarFieldEnum = {
   confirmedSlot: 'confirmedSlot',
   status: 'status',
   reason: 'reason',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -455,7 +437,6 @@ export const RentInvoiceScalarFieldEnum = {
   waivedAt: 'waivedAt',
   waivedByUserId: 'waivedByUserId',
   waiveReason: 'waiveReason',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -485,7 +466,6 @@ export const PaymentScalarFieldEnum = {
   canceledAt: 'canceledAt',
   cancellationReason: 'cancellationReason',
   version: 'version',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -502,7 +482,6 @@ export const PropertyMeterScalarFieldEnum = {
   currency: 'currency',
   unitLabel: 'unitLabel',
   isActive: 'isActive',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -517,7 +496,6 @@ export const MeterReadingScalarFieldEnum = {
   readingValue: 'readingValue',
   notes: 'notes',
   submittedByUserId: 'submittedByUserId',
-  tenantId: 'tenantId',
   createdAt: 'createdAt'
 } as const
 
@@ -537,8 +515,7 @@ export const UtilityBillScalarFieldEnum = {
   currency: 'currency',
   generatedAt: 'generatedAt',
   superseded: 'superseded',
-  supersededAt: 'supersededAt',
-  tenantId: 'tenantId'
+  supersededAt: 'supersededAt'
 } as const
 
 export type UtilityBillScalarFieldEnum = (typeof UtilityBillScalarFieldEnum)[keyof typeof UtilityBillScalarFieldEnum]
@@ -551,7 +528,6 @@ export const BillShareScalarFieldEnum = {
   shareMinor: 'shareMinor',
   splitMode: 'splitMode',
   weightUsed: 'weightUsed',
-  tenantId: 'tenantId',
   createdAt: 'createdAt'
 } as const
 
@@ -577,7 +553,6 @@ export const MaintenanceTicketScalarFieldEnum = {
   rating: 'rating',
   ratingComment: 'ratingComment',
   ratingSubmittedAt: 'ratingSubmittedAt',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -591,7 +566,6 @@ export const MaintenanceUpdateScalarFieldEnum = {
   authorUserId: 'authorUserId',
   body: 'body',
   statusAfter: 'statusAfter',
-  tenantId: 'tenantId',
   createdAt: 'createdAt'
 } as const
 
@@ -611,7 +585,6 @@ export const DocumentScalarFieldEnum = {
   deliveryType: 'deliveryType',
   etag: 'etag',
   deletedAt: 'deletedAt',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -635,7 +608,6 @@ export const RoomPhotoScalarFieldEnum = {
   etag: 'etag',
   position: 'position',
   alt: 'alt',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -652,7 +624,6 @@ export const MatchResultScalarFieldEnum = {
   breakdown: 'breakdown',
   explain: 'explain',
   rank: 'rank',
-  tenantId: 'tenantId',
   createdAt: 'createdAt'
 } as const
 
@@ -668,7 +639,6 @@ export const IntroRequestScalarFieldEnum = {
   candidateAcceptedAt: 'candidateAcceptedAt',
   revealedAt: 'revealedAt',
   declinedAt: 'declinedAt',
-  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

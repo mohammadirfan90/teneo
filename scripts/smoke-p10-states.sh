@@ -33,7 +33,7 @@ BID=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])"
 status -X POST "$BASE/api/v1/buildings/$BID/flats" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{}' >/dev/null
 FID=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 RBODY='{"label":"R","roomType":"PRIVATE","baseRentMinor":100,"depositMinor":200,"currency":"USD"}'
-status -X POST "$BASE/api/v1/rooms/flats/$FID/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$RBODY" >/dev/null
+status -X POST "$BASE/api/v1/flats/$FID/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$RBODY" >/dev/null
 RID=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 
 # A) Invalid transition DRAFT → OCCUPIED → 409

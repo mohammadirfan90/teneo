@@ -34,7 +34,6 @@ export type MaintenanceUpdateMinAggregateOutputType = {
   authorUserId: string | null
   body: string | null
   statusAfter: $Enums.MaintenanceStatus | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -44,7 +43,6 @@ export type MaintenanceUpdateMaxAggregateOutputType = {
   authorUserId: string | null
   body: string | null
   statusAfter: $Enums.MaintenanceStatus | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -54,7 +52,6 @@ export type MaintenanceUpdateCountAggregateOutputType = {
   authorUserId: number
   body: number
   statusAfter: number
-  tenantId: number
   createdAt: number
   _all: number
 }
@@ -66,7 +63,6 @@ export type MaintenanceUpdateMinAggregateInputType = {
   authorUserId?: true
   body?: true
   statusAfter?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -76,7 +72,6 @@ export type MaintenanceUpdateMaxAggregateInputType = {
   authorUserId?: true
   body?: true
   statusAfter?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -86,7 +81,6 @@ export type MaintenanceUpdateCountAggregateInputType = {
   authorUserId?: true
   body?: true
   statusAfter?: true
-  tenantId?: true
   createdAt?: true
   _all?: true
 }
@@ -169,7 +163,6 @@ export type MaintenanceUpdateGroupByOutputType = {
   authorUserId: string
   body: string
   statusAfter: $Enums.MaintenanceStatus | null
-  tenantId: string
   createdAt: Date
   _count: MaintenanceUpdateCountAggregateOutputType | null
   _min: MaintenanceUpdateMinAggregateOutputType | null
@@ -200,7 +193,6 @@ export type MaintenanceUpdateWhereInput = {
   authorUserId?: Prisma.UuidFilter<"MaintenanceUpdate"> | string
   body?: Prisma.StringFilter<"MaintenanceUpdate"> | string
   statusAfter?: Prisma.EnumMaintenanceStatusNullableFilter<"MaintenanceUpdate"> | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.UuidFilter<"MaintenanceUpdate"> | string
   createdAt?: Prisma.DateTimeFilter<"MaintenanceUpdate"> | Date | string
   ticket?: Prisma.XOR<Prisma.MaintenanceTicketScalarRelationFilter, Prisma.MaintenanceTicketWhereInput>
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -212,7 +204,6 @@ export type MaintenanceUpdateOrderByWithRelationInput = {
   authorUserId?: Prisma.SortOrder
   body?: Prisma.SortOrder
   statusAfter?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   ticket?: Prisma.MaintenanceTicketOrderByWithRelationInput
   author?: Prisma.UserOrderByWithRelationInput
@@ -227,7 +218,6 @@ export type MaintenanceUpdateWhereUniqueInput = Prisma.AtLeast<{
   authorUserId?: Prisma.UuidFilter<"MaintenanceUpdate"> | string
   body?: Prisma.StringFilter<"MaintenanceUpdate"> | string
   statusAfter?: Prisma.EnumMaintenanceStatusNullableFilter<"MaintenanceUpdate"> | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.UuidFilter<"MaintenanceUpdate"> | string
   createdAt?: Prisma.DateTimeFilter<"MaintenanceUpdate"> | Date | string
   ticket?: Prisma.XOR<Prisma.MaintenanceTicketScalarRelationFilter, Prisma.MaintenanceTicketWhereInput>
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -239,7 +229,6 @@ export type MaintenanceUpdateOrderByWithAggregationInput = {
   authorUserId?: Prisma.SortOrder
   body?: Prisma.SortOrder
   statusAfter?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.MaintenanceUpdateCountOrderByAggregateInput
   _max?: Prisma.MaintenanceUpdateMaxOrderByAggregateInput
@@ -255,7 +244,6 @@ export type MaintenanceUpdateScalarWhereWithAggregatesInput = {
   authorUserId?: Prisma.UuidWithAggregatesFilter<"MaintenanceUpdate"> | string
   body?: Prisma.StringWithAggregatesFilter<"MaintenanceUpdate"> | string
   statusAfter?: Prisma.EnumMaintenanceStatusNullableWithAggregatesFilter<"MaintenanceUpdate"> | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"MaintenanceUpdate"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MaintenanceUpdate"> | Date | string
 }
 
@@ -263,7 +251,6 @@ export type MaintenanceUpdateCreateInput = {
   id?: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
   ticket: Prisma.MaintenanceTicketCreateNestedOneWithoutUpdatesInput
   author: Prisma.UserCreateNestedOneWithoutTicketUpdatesInput
@@ -275,7 +262,6 @@ export type MaintenanceUpdateUncheckedCreateInput = {
   authorUserId: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -283,7 +269,6 @@ export type MaintenanceUpdateUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticket?: Prisma.MaintenanceTicketUpdateOneRequiredWithoutUpdatesNestedInput
   author?: Prisma.UserUpdateOneRequiredWithoutTicketUpdatesNestedInput
@@ -295,7 +280,6 @@ export type MaintenanceUpdateUncheckedUpdateInput = {
   authorUserId?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -305,7 +289,6 @@ export type MaintenanceUpdateCreateManyInput = {
   authorUserId: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -313,7 +296,6 @@ export type MaintenanceUpdateUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -323,7 +305,6 @@ export type MaintenanceUpdateUncheckedUpdateManyInput = {
   authorUserId?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -343,7 +324,6 @@ export type MaintenanceUpdateCountOrderByAggregateInput = {
   authorUserId?: Prisma.SortOrder
   body?: Prisma.SortOrder
   statusAfter?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -353,7 +333,6 @@ export type MaintenanceUpdateMaxOrderByAggregateInput = {
   authorUserId?: Prisma.SortOrder
   body?: Prisma.SortOrder
   statusAfter?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -363,7 +342,6 @@ export type MaintenanceUpdateMinOrderByAggregateInput = {
   authorUserId?: Prisma.SortOrder
   body?: Prisma.SortOrder
   statusAfter?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -459,7 +437,6 @@ export type MaintenanceUpdateCreateWithoutAuthorInput = {
   id?: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
   ticket: Prisma.MaintenanceTicketCreateNestedOneWithoutUpdatesInput
 }
@@ -469,7 +446,6 @@ export type MaintenanceUpdateUncheckedCreateWithoutAuthorInput = {
   ticketId: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -508,7 +484,6 @@ export type MaintenanceUpdateScalarWhereInput = {
   authorUserId?: Prisma.UuidFilter<"MaintenanceUpdate"> | string
   body?: Prisma.StringFilter<"MaintenanceUpdate"> | string
   statusAfter?: Prisma.EnumMaintenanceStatusNullableFilter<"MaintenanceUpdate"> | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.UuidFilter<"MaintenanceUpdate"> | string
   createdAt?: Prisma.DateTimeFilter<"MaintenanceUpdate"> | Date | string
 }
 
@@ -516,7 +491,6 @@ export type MaintenanceUpdateCreateWithoutTicketInput = {
   id?: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutTicketUpdatesInput
 }
@@ -526,7 +500,6 @@ export type MaintenanceUpdateUncheckedCreateWithoutTicketInput = {
   authorUserId: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -561,7 +534,6 @@ export type MaintenanceUpdateCreateManyAuthorInput = {
   ticketId: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -569,7 +541,6 @@ export type MaintenanceUpdateUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticket?: Prisma.MaintenanceTicketUpdateOneRequiredWithoutUpdatesNestedInput
 }
@@ -579,7 +550,6 @@ export type MaintenanceUpdateUncheckedUpdateWithoutAuthorInput = {
   ticketId?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -588,7 +558,6 @@ export type MaintenanceUpdateUncheckedUpdateManyWithoutAuthorInput = {
   ticketId?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -597,7 +566,6 @@ export type MaintenanceUpdateCreateManyTicketInput = {
   authorUserId: string
   body: string
   statusAfter?: $Enums.MaintenanceStatus | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -605,7 +573,6 @@ export type MaintenanceUpdateUpdateWithoutTicketInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutTicketUpdatesNestedInput
 }
@@ -615,7 +582,6 @@ export type MaintenanceUpdateUncheckedUpdateWithoutTicketInput = {
   authorUserId?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -624,7 +590,6 @@ export type MaintenanceUpdateUncheckedUpdateManyWithoutTicketInput = {
   authorUserId?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   statusAfter?: Prisma.NullableEnumMaintenanceStatusFieldUpdateOperationsInput | $Enums.MaintenanceStatus | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -636,7 +601,6 @@ export type MaintenanceUpdateSelect<ExtArgs extends runtime.Types.Extensions.Int
   authorUserId?: boolean
   body?: boolean
   statusAfter?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   ticket?: boolean | Prisma.MaintenanceTicketDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -648,7 +612,6 @@ export type MaintenanceUpdateSelectCreateManyAndReturn<ExtArgs extends runtime.T
   authorUserId?: boolean
   body?: boolean
   statusAfter?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   ticket?: boolean | Prisma.MaintenanceTicketDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -660,7 +623,6 @@ export type MaintenanceUpdateSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   authorUserId?: boolean
   body?: boolean
   statusAfter?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   ticket?: boolean | Prisma.MaintenanceTicketDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -672,11 +634,10 @@ export type MaintenanceUpdateSelectScalar = {
   authorUserId?: boolean
   body?: boolean
   statusAfter?: boolean
-  tenantId?: boolean
   createdAt?: boolean
 }
 
-export type MaintenanceUpdateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ticketId" | "authorUserId" | "body" | "statusAfter" | "tenantId" | "createdAt", ExtArgs["result"]["maintenanceUpdate"]>
+export type MaintenanceUpdateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "ticketId" | "authorUserId" | "body" | "statusAfter" | "createdAt", ExtArgs["result"]["maintenanceUpdate"]>
 export type MaintenanceUpdateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ticket?: boolean | Prisma.MaintenanceTicketDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -702,7 +663,6 @@ export type $MaintenanceUpdatePayload<ExtArgs extends runtime.Types.Extensions.I
     authorUserId: string
     body: string
     statusAfter: $Enums.MaintenanceStatus | null
-    tenantId: string
     createdAt: Date
   }, ExtArgs["result"]["maintenanceUpdate"]>
   composites: {}
@@ -1134,7 +1094,6 @@ export interface MaintenanceUpdateFieldRefs {
   readonly authorUserId: Prisma.FieldRef<"MaintenanceUpdate", 'String'>
   readonly body: Prisma.FieldRef<"MaintenanceUpdate", 'String'>
   readonly statusAfter: Prisma.FieldRef<"MaintenanceUpdate", 'MaintenanceStatus'>
-  readonly tenantId: Prisma.FieldRef<"MaintenanceUpdate", 'String'>
   readonly createdAt: Prisma.FieldRef<"MaintenanceUpdate", 'DateTime'>
 }
     

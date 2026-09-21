@@ -60,7 +60,6 @@ export type PaymentMinAggregateOutputType = {
   canceledAt: Date | null
   cancellationReason: string | null
   version: number | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -87,7 +86,6 @@ export type PaymentMaxAggregateOutputType = {
   canceledAt: Date | null
   cancellationReason: string | null
   version: number | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -114,7 +112,6 @@ export type PaymentCountAggregateOutputType = {
   canceledAt: number
   cancellationReason: number
   version: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -155,7 +152,6 @@ export type PaymentMinAggregateInputType = {
   canceledAt?: true
   cancellationReason?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -182,7 +178,6 @@ export type PaymentMaxAggregateInputType = {
   canceledAt?: true
   cancellationReason?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -209,7 +204,6 @@ export type PaymentCountAggregateInputType = {
   canceledAt?: true
   cancellationReason?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -323,7 +317,6 @@ export type PaymentGroupByOutputType = {
   canceledAt: Date | null
   cancellationReason: string | null
   version: number
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: PaymentCountAggregateOutputType | null
@@ -373,7 +366,6 @@ export type PaymentWhereInput = {
   canceledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   cancellationReason?: Prisma.StringNullableFilter<"Payment"> | string | null
   version?: Prisma.IntFilter<"Payment"> | number
-  tenantId?: Prisma.UuidFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   invoice?: Prisma.XOR<Prisma.RentInvoiceScalarRelationFilter, Prisma.RentInvoiceWhereInput>
@@ -403,7 +395,6 @@ export type PaymentOrderByWithRelationInput = {
   canceledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   invoice?: Prisma.RentInvoiceOrderByWithRelationInput
@@ -436,7 +427,6 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   canceledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   cancellationReason?: Prisma.StringNullableFilter<"Payment"> | string | null
   version?: Prisma.IntFilter<"Payment"> | number
-  tenantId?: Prisma.UuidFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   invoice?: Prisma.XOR<Prisma.RentInvoiceScalarRelationFilter, Prisma.RentInvoiceWhereInput>
@@ -466,7 +456,6 @@ export type PaymentOrderByWithAggregationInput = {
   canceledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PaymentCountOrderByAggregateInput
@@ -501,7 +490,6 @@ export type PaymentScalarWhereWithAggregatesInput = {
   canceledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   cancellationReason?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   version?: Prisma.IntWithAggregatesFilter<"Payment"> | number
-  tenantId?: Prisma.UuidWithAggregatesFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
 }
@@ -525,7 +513,6 @@ export type PaymentCreateInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   invoice: Prisma.RentInvoiceCreateNestedOneWithoutPaymentsInput
@@ -555,7 +542,6 @@ export type PaymentUncheckedCreateInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -579,7 +565,6 @@ export type PaymentUpdateInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoice?: Prisma.RentInvoiceUpdateOneRequiredWithoutPaymentsNestedInput
@@ -609,7 +594,6 @@ export type PaymentUncheckedUpdateInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -636,7 +620,6 @@ export type PaymentCreateManyInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -660,7 +643,6 @@ export type PaymentUpdateManyMutationInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -687,7 +669,6 @@ export type PaymentUncheckedUpdateManyInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -724,7 +705,6 @@ export type PaymentCountOrderByAggregateInput = {
   canceledAt?: Prisma.SortOrder
   cancellationReason?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -757,7 +737,6 @@ export type PaymentMaxOrderByAggregateInput = {
   canceledAt?: Prisma.SortOrder
   cancellationReason?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -784,7 +763,6 @@ export type PaymentMinOrderByAggregateInput = {
   canceledAt?: Prisma.SortOrder
   cancellationReason?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -948,7 +926,6 @@ export type PaymentCreateWithoutTenantInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   invoice: Prisma.RentInvoiceCreateNestedOneWithoutPaymentsInput
@@ -976,7 +953,6 @@ export type PaymentUncheckedCreateWithoutTenantInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1032,7 +1008,6 @@ export type PaymentScalarWhereInput = {
   canceledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   cancellationReason?: Prisma.StringNullableFilter<"Payment"> | string | null
   version?: Prisma.IntFilter<"Payment"> | number
-  tenantId?: Prisma.UuidFilter<"Payment"> | string
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
 }
@@ -1056,7 +1031,6 @@ export type PaymentCreateWithoutLeaseInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   invoice: Prisma.RentInvoiceCreateNestedOneWithoutPaymentsInput
@@ -1084,7 +1058,6 @@ export type PaymentUncheckedCreateWithoutLeaseInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1134,7 +1107,6 @@ export type PaymentCreateWithoutInvoiceInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lease: Prisma.LeaseCreateNestedOneWithoutPaymentsInput
@@ -1162,7 +1134,6 @@ export type PaymentUncheckedCreateWithoutInvoiceInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1214,7 +1185,6 @@ export type PaymentCreateManyTenantInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1238,7 +1208,6 @@ export type PaymentUpdateWithoutTenantInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoice?: Prisma.RentInvoiceUpdateOneRequiredWithoutPaymentsNestedInput
@@ -1266,7 +1235,6 @@ export type PaymentUncheckedUpdateWithoutTenantInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1292,7 +1260,6 @@ export type PaymentUncheckedUpdateManyWithoutTenantInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1318,7 +1285,6 @@ export type PaymentCreateManyLeaseInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1342,7 +1308,6 @@ export type PaymentUpdateWithoutLeaseInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoice?: Prisma.RentInvoiceUpdateOneRequiredWithoutPaymentsNestedInput
@@ -1370,7 +1335,6 @@ export type PaymentUncheckedUpdateWithoutLeaseInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1396,7 +1360,6 @@ export type PaymentUncheckedUpdateManyWithoutLeaseInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1422,7 +1385,6 @@ export type PaymentCreateManyInvoiceInput = {
   canceledAt?: Date | string | null
   cancellationReason?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1446,7 +1408,6 @@ export type PaymentUpdateWithoutInvoiceInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lease?: Prisma.LeaseUpdateOneRequiredWithoutPaymentsNestedInput
@@ -1474,7 +1435,6 @@ export type PaymentUncheckedUpdateWithoutInvoiceInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1500,7 +1460,6 @@ export type PaymentUncheckedUpdateManyWithoutInvoiceInput = {
   canceledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1529,7 +1488,6 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   canceledAt?: boolean
   cancellationReason?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   invoice?: boolean | Prisma.RentInvoiceDefaultArgs<ExtArgs>
@@ -1559,7 +1517,6 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   canceledAt?: boolean
   cancellationReason?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   invoice?: boolean | Prisma.RentInvoiceDefaultArgs<ExtArgs>
@@ -1589,7 +1546,6 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   canceledAt?: boolean
   cancellationReason?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   invoice?: boolean | Prisma.RentInvoiceDefaultArgs<ExtArgs>
@@ -1619,12 +1575,11 @@ export type PaymentSelectScalar = {
   canceledAt?: boolean
   cancellationReason?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceId" | "leaseId" | "tenantUserId" | "gateway" | "gatewayPaymentIntentId" | "gatewayChargeId" | "gatewayRefundId" | "amountMinor" | "refundedAmountMinor" | "currency" | "status" | "idempotencyKey" | "failureCode" | "failureReason" | "paidAt" | "failedAt" | "refundedAt" | "canceledAt" | "cancellationReason" | "version" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceId" | "leaseId" | "tenantUserId" | "gateway" | "gatewayPaymentIntentId" | "gatewayChargeId" | "gatewayRefundId" | "amountMinor" | "refundedAmountMinor" | "currency" | "status" | "idempotencyKey" | "failureCode" | "failureReason" | "paidAt" | "failedAt" | "refundedAt" | "canceledAt" | "cancellationReason" | "version" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoice?: boolean | Prisma.RentInvoiceDefaultArgs<ExtArgs>
   lease?: boolean | Prisma.LeaseDefaultArgs<ExtArgs>
@@ -1731,7 +1686,6 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
      * Forward-compat v2 multi-tenancy scaffold (always
      * '00000000-0000-0000-0000-000000000000' in v1).
      */
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["payment"]>
@@ -2181,7 +2135,6 @@ export interface PaymentFieldRefs {
   readonly canceledAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly cancellationReason: Prisma.FieldRef<"Payment", 'String'>
   readonly version: Prisma.FieldRef<"Payment", 'Int'>
-  readonly tenantId: Prisma.FieldRef<"Payment", 'String'>
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Payment", 'DateTime'>
 }

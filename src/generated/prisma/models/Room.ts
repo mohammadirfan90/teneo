@@ -69,7 +69,6 @@ export type RoomMinAggregateOutputType = {
   maxLeaseMonths: number | null
   rules: string | null
   version: number | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -93,7 +92,6 @@ export type RoomMaxAggregateOutputType = {
   maxLeaseMonths: number | null
   rules: string | null
   version: number | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -118,7 +116,6 @@ export type RoomCountAggregateOutputType = {
   maxLeaseMonths: number
   rules: number
   version: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -164,7 +161,6 @@ export type RoomMinAggregateInputType = {
   maxLeaseMonths?: true
   rules?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -188,7 +184,6 @@ export type RoomMaxAggregateInputType = {
   maxLeaseMonths?: true
   rules?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -213,7 +208,6 @@ export type RoomCountAggregateInputType = {
   maxLeaseMonths?: true
   rules?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -325,7 +319,6 @@ export type RoomGroupByOutputType = {
   maxLeaseMonths: number | null
   rules: string | null
   version: number
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -373,7 +366,6 @@ export type RoomWhereInput = {
   maxLeaseMonths?: Prisma.IntNullableFilter<"Room"> | number | null
   rules?: Prisma.StringNullableFilter<"Room"> | string | null
   version?: Prisma.IntFilter<"Room"> | number
-  tenantId?: Prisma.UuidFilter<"Room"> | string
   createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
@@ -404,7 +396,6 @@ export type RoomOrderByWithRelationInput = {
   maxLeaseMonths?: Prisma.SortOrderInput | Prisma.SortOrder
   rules?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -438,7 +429,6 @@ export type RoomWhereUniqueInput = Prisma.AtLeast<{
   maxLeaseMonths?: Prisma.IntNullableFilter<"Room"> | number | null
   rules?: Prisma.StringNullableFilter<"Room"> | string | null
   version?: Prisma.IntFilter<"Room"> | number
-  tenantId?: Prisma.UuidFilter<"Room"> | string
   createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
@@ -469,7 +459,6 @@ export type RoomOrderByWithAggregationInput = {
   maxLeaseMonths?: Prisma.SortOrderInput | Prisma.SortOrder
   rules?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -502,7 +491,6 @@ export type RoomScalarWhereWithAggregatesInput = {
   maxLeaseMonths?: Prisma.IntNullableWithAggregatesFilter<"Room"> | number | null
   rules?: Prisma.StringNullableWithAggregatesFilter<"Room"> | string | null
   version?: Prisma.IntWithAggregatesFilter<"Room"> | number
-  tenantId?: Prisma.UuidWithAggregatesFilter<"Room"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Room"> | Date | string | null
@@ -525,7 +513,6 @@ export type RoomCreateInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -556,7 +543,6 @@ export type RoomUncheckedCreateInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -583,7 +569,6 @@ export type RoomUpdateInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -614,7 +599,6 @@ export type RoomUncheckedUpdateInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -643,7 +627,6 @@ export type RoomCreateManyInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -666,7 +649,6 @@ export type RoomUpdateManyMutationInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -691,7 +673,6 @@ export type RoomUncheckedUpdateManyInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -726,7 +707,6 @@ export type RoomCountOrderByAggregateInput = {
   maxLeaseMonths?: Prisma.SortOrder
   rules?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -760,7 +740,6 @@ export type RoomMaxOrderByAggregateInput = {
   maxLeaseMonths?: Prisma.SortOrder
   rules?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -784,7 +763,6 @@ export type RoomMinOrderByAggregateInput = {
   maxLeaseMonths?: Prisma.SortOrder
   rules?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -987,7 +965,6 @@ export type RoomCreateWithoutPropertyInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1016,7 +993,6 @@ export type RoomUncheckedCreateWithoutPropertyInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1074,7 +1050,6 @@ export type RoomScalarWhereInput = {
   maxLeaseMonths?: Prisma.IntNullableFilter<"Room"> | number | null
   rules?: Prisma.StringNullableFilter<"Room"> | string | null
   version?: Prisma.IntFilter<"Room"> | number
-  tenantId?: Prisma.UuidFilter<"Room"> | string
   createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Room"> | Date | string | null
@@ -1097,7 +1072,6 @@ export type RoomCreateWithoutFlatInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1126,7 +1100,6 @@ export type RoomUncheckedCreateWithoutFlatInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1179,7 +1152,6 @@ export type RoomCreateWithoutApplicationsInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1209,7 +1181,6 @@ export type RoomUncheckedCreateWithoutApplicationsInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1251,7 +1222,6 @@ export type RoomUpdateWithoutApplicationsInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1281,7 +1251,6 @@ export type RoomUncheckedUpdateWithoutApplicationsInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1307,7 +1276,6 @@ export type RoomCreateWithoutViewingRequestsInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1337,7 +1305,6 @@ export type RoomUncheckedCreateWithoutViewingRequestsInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1379,7 +1346,6 @@ export type RoomUpdateWithoutViewingRequestsInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1409,7 +1375,6 @@ export type RoomUncheckedUpdateWithoutViewingRequestsInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1435,7 +1400,6 @@ export type RoomCreateWithoutTicketsInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1465,7 +1429,6 @@ export type RoomUncheckedCreateWithoutTicketsInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1507,7 +1470,6 @@ export type RoomUpdateWithoutTicketsInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1537,7 +1499,6 @@ export type RoomUncheckedUpdateWithoutTicketsInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1563,7 +1524,6 @@ export type RoomCreateWithoutPhotosInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1593,7 +1553,6 @@ export type RoomUncheckedCreateWithoutPhotosInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1635,7 +1594,6 @@ export type RoomUpdateWithoutPhotosInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1665,7 +1623,6 @@ export type RoomUncheckedUpdateWithoutPhotosInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1692,7 +1649,6 @@ export type RoomCreateManyPropertyInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1715,7 +1671,6 @@ export type RoomUpdateWithoutPropertyInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1744,7 +1699,6 @@ export type RoomUncheckedUpdateWithoutPropertyInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1772,7 +1726,6 @@ export type RoomUncheckedUpdateManyWithoutPropertyInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1796,7 +1749,6 @@ export type RoomCreateManyFlatInput = {
   maxLeaseMonths?: number | null
   rules?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1819,7 +1771,6 @@ export type RoomUpdateWithoutFlatInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1848,7 +1799,6 @@ export type RoomUncheckedUpdateWithoutFlatInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1876,7 +1826,6 @@ export type RoomUncheckedUpdateManyWithoutFlatInput = {
   maxLeaseMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   rules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1959,7 +1908,6 @@ export type RoomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   maxLeaseMonths?: boolean
   rules?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1991,7 +1939,6 @@ export type RoomSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   maxLeaseMonths?: boolean
   rules?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -2018,7 +1965,6 @@ export type RoomSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   maxLeaseMonths?: boolean
   rules?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -2045,13 +1991,12 @@ export type RoomSelectScalar = {
   maxLeaseMonths?: boolean
   rules?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type RoomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "flatId" | "label" | "roomType" | "sizeSqft" | "maxOccupants" | "baseRentMinor" | "depositMinor" | "currency" | "billsIncluded" | "amenities" | "status" | "availableFrom" | "minLeaseMonths" | "maxLeaseMonths" | "rules" | "version" | "tenantId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["room"]>
+export type RoomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "flatId" | "label" | "roomType" | "sizeSqft" | "maxOccupants" | "baseRentMinor" | "depositMinor" | "currency" | "billsIncluded" | "amenities" | "status" | "availableFrom" | "minLeaseMonths" | "maxLeaseMonths" | "rules" | "version" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["room"]>
 export type RoomInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   flat?: boolean | Prisma.Room$flatArgs<ExtArgs>
@@ -2120,7 +2065,6 @@ export type $RoomPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
      * updates).
      */
     version: number
-    tenantId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -2571,7 +2515,6 @@ export interface RoomFieldRefs {
   readonly maxLeaseMonths: Prisma.FieldRef<"Room", 'Int'>
   readonly rules: Prisma.FieldRef<"Room", 'String'>
   readonly version: Prisma.FieldRef<"Room", 'Int'>
-  readonly tenantId: Prisma.FieldRef<"Room", 'String'>
   readonly createdAt: Prisma.FieldRef<"Room", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Room", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Room", 'DateTime'>

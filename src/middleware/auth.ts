@@ -9,13 +9,12 @@
 //        miss → 401 UNAUTHENTICATED (client should POST /auth/refresh).
 //   3. Hit → load user + roles from PG once per request, via Prisma.
 //        Soft-deleted (`deleted_at != null`) or non-ACTIVE user → 401.
-//   4. Attach `{ id, email, status, roles, mfaEnabled }` to `req.user`.
+//   4. Attach `{ id, email, status, roles }` to `req.user`.
 //
 // Notes:
 //   - Tokens are opaque (32 random bytes, base64url). We don't validate
 //     any signature here; the Redis key is the source of truth.
-//   - MFA enforcement is NOT done here — Phase 5 only *exposes*
-//     `mfaEnabled` on req.user. Sensitive routes can check it in Phase 6+.
+//   - There is no MFA flow in v1; do not reintroduce one.
 
 import { createHash } from 'node:crypto';
 import type { RequestHandler } from 'express';
@@ -33,7 +32,6 @@ export interface AuthenticatedUser {
   email: string;
   status: AppUserStatus;
   roles: AppRole[];
-  mfaEnabled: boolean;
 }
 
 declare global {
@@ -86,7 +84,6 @@ export const requireAuth: RequestHandler = async (req, _res, next) => {
         email: true,
         status: true,
         deletedAt: true,
-        mfaEnabled: true,
         roles: { select: { role: true } },
       },
     });
@@ -107,7 +104,6 @@ export const requireAuth: RequestHandler = async (req, _res, next) => {
       email: user.email,
       status: user.status,
       roles: user.roles.map((r) => r.role),
-      mfaEnabled: user.mfaEnabled,
     } satisfies AuthenticatedUser;
 
     next();

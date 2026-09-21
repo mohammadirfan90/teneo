@@ -32,6 +32,7 @@ import { matchRouter } from '@/modules/match/match.routes';
 import { stripeWebhookHandler } from '@/modules/payments/payments.controller';
 import { paymentsRouter } from '@/modules/payments/payments.routes';
 import { buildingsRouter } from '@/modules/properties/buildings.routes';
+import { flatsRouter } from '@/modules/properties/flats.routes';
 import { propertiesRouter } from '@/modules/properties/properties.routes';
 import { roomsRouter } from '@/modules/properties/rooms.routes';
 import { searchPublicRouter, searchSavedRouter } from '@/modules/search/search.routes';
@@ -160,15 +161,6 @@ export function createApp(): express.Express {
     });
   });
 
-  // /health/startup: startup probe — same as live for now.
-  app.get('/health/startup', (_req, res) => {
-    res.status(200).json({
-      success: true,
-      message: 'starting',
-      data: { status: 'ok' },
-    });
-  });
-
   // ── API v1 root ──────────────────────────────────────────────────────
   // Phase 1 placeholder; feature routers mount here in later phases.
   app.get('/api/v1', (_req, res) => {
@@ -203,6 +195,7 @@ export function createApp(): express.Express {
   // live behind `requireRole` in each router).
   app.use('/api/v1/properties', authenticatedRateLimiter, propertiesRouter());
   app.use('/api/v1/buildings', authenticatedRateLimiter, buildingsRouter());
+  app.use('/api/v1/flats', authenticatedRateLimiter, flatsRouter());
   app.use('/api/v1/rooms', authenticatedRateLimiter, roomsRouter());
 
   // ── Phase 11: room search (PG fallback) + saved searches ─────────

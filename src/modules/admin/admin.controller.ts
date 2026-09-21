@@ -4,7 +4,6 @@
 //   GET   /users/search
 //   POST  /listings/:id/takedown
 //   POST  /listings/:id/reinstate
-//   GET   /health
 //
 // Schemas live in this file (rather than a separate *.schemas.ts) per
 // the Phase 19 plan — keeps the file count to exactly the 7 files in
@@ -16,7 +15,7 @@ import { z } from 'zod';
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';
 
-import { getAdminHealth, reinstateListing, searchUsers, takedownListing } from './admin.service';
+import { reinstateListing, searchUsers, takedownListing } from './admin.service';
 
 // ──────────────────────────────────────────────────────────────────────
 // Zod schemas (inline)
@@ -121,13 +120,4 @@ export const reinstateListingHandler: RequestHandler = asyncHandler(async (req, 
     userAgent,
   });
   res.status(200).json(ok(data, 'Listing reinstated'));
-});
-
-// ──────────────────────────────────────────────────────────────────────
-// GET /health
-// ──────────────────────────────────────────────────────────────────────
-
-export const getAdminHealthHandler: RequestHandler = asyncHandler(async (_req, res) => {
-  const data = await getAdminHealth();
-  res.status(200).json(ok(data, 'Admin health retrieved'));
 });

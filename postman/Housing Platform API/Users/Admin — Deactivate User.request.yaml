@@ -1,4 +1,0 @@
-$kind: http-request
-url: "{{baseUrl}}/api/v1/users/{{userId}}/deactivate"
-method: POST
-order: 6000

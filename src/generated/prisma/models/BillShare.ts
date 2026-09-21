@@ -50,7 +50,6 @@ export type BillShareMinAggregateOutputType = {
   shareMinor: bigint | null
   splitMode: string | null
   weightUsed: runtime.Decimal | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -61,7 +60,6 @@ export type BillShareMaxAggregateOutputType = {
   shareMinor: bigint | null
   splitMode: string | null
   weightUsed: runtime.Decimal | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -72,7 +70,6 @@ export type BillShareCountAggregateOutputType = {
   shareMinor: number
   splitMode: number
   weightUsed: number
-  tenantId: number
   createdAt: number
   _all: number
 }
@@ -95,7 +92,6 @@ export type BillShareMinAggregateInputType = {
   shareMinor?: true
   splitMode?: true
   weightUsed?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -106,7 +102,6 @@ export type BillShareMaxAggregateInputType = {
   shareMinor?: true
   splitMode?: true
   weightUsed?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -117,7 +112,6 @@ export type BillShareCountAggregateInputType = {
   shareMinor?: true
   splitMode?: true
   weightUsed?: true
-  tenantId?: true
   createdAt?: true
   _all?: true
 }
@@ -215,7 +209,6 @@ export type BillShareGroupByOutputType = {
   shareMinor: bigint
   splitMode: string
   weightUsed: runtime.Decimal | null
-  tenantId: string
   createdAt: Date
   _count: BillShareCountAggregateOutputType | null
   _avg: BillShareAvgAggregateOutputType | null
@@ -249,7 +242,6 @@ export type BillShareWhereInput = {
   shareMinor?: Prisma.BigIntFilter<"BillShare"> | bigint | number
   splitMode?: Prisma.StringFilter<"BillShare"> | string
   weightUsed?: Prisma.DecimalNullableFilter<"BillShare"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.UuidFilter<"BillShare"> | string
   createdAt?: Prisma.DateTimeFilter<"BillShare"> | Date | string
   bill?: Prisma.XOR<Prisma.UtilityBillScalarRelationFilter, Prisma.UtilityBillWhereInput>
   tenant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -262,7 +254,6 @@ export type BillShareOrderByWithRelationInput = {
   shareMinor?: Prisma.SortOrder
   splitMode?: Prisma.SortOrder
   weightUsed?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   bill?: Prisma.UtilityBillOrderByWithRelationInput
   tenant?: Prisma.UserOrderByWithRelationInput
@@ -279,7 +270,6 @@ export type BillShareWhereUniqueInput = Prisma.AtLeast<{
   shareMinor?: Prisma.BigIntFilter<"BillShare"> | bigint | number
   splitMode?: Prisma.StringFilter<"BillShare"> | string
   weightUsed?: Prisma.DecimalNullableFilter<"BillShare"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.UuidFilter<"BillShare"> | string
   createdAt?: Prisma.DateTimeFilter<"BillShare"> | Date | string
   bill?: Prisma.XOR<Prisma.UtilityBillScalarRelationFilter, Prisma.UtilityBillWhereInput>
   tenant?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -292,7 +282,6 @@ export type BillShareOrderByWithAggregationInput = {
   shareMinor?: Prisma.SortOrder
   splitMode?: Prisma.SortOrder
   weightUsed?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.BillShareCountOrderByAggregateInput
   _avg?: Prisma.BillShareAvgOrderByAggregateInput
@@ -311,7 +300,6 @@ export type BillShareScalarWhereWithAggregatesInput = {
   shareMinor?: Prisma.BigIntWithAggregatesFilter<"BillShare"> | bigint | number
   splitMode?: Prisma.StringWithAggregatesFilter<"BillShare"> | string
   weightUsed?: Prisma.DecimalNullableWithAggregatesFilter<"BillShare"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"BillShare"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BillShare"> | Date | string
 }
 
@@ -320,7 +308,6 @@ export type BillShareCreateInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   bill: Prisma.UtilityBillCreateNestedOneWithoutSharesInput
   tenant: Prisma.UserCreateNestedOneWithoutBillSharesInput
@@ -333,7 +320,6 @@ export type BillShareUncheckedCreateInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -342,7 +328,6 @@ export type BillShareUpdateInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bill?: Prisma.UtilityBillUpdateOneRequiredWithoutSharesNestedInput
   tenant?: Prisma.UserUpdateOneRequiredWithoutBillSharesNestedInput
@@ -355,7 +340,6 @@ export type BillShareUncheckedUpdateInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -366,7 +350,6 @@ export type BillShareCreateManyInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -375,7 +358,6 @@ export type BillShareUpdateManyMutationInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -386,7 +368,6 @@ export type BillShareUncheckedUpdateManyInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -412,7 +393,6 @@ export type BillShareCountOrderByAggregateInput = {
   shareMinor?: Prisma.SortOrder
   splitMode?: Prisma.SortOrder
   weightUsed?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -428,7 +408,6 @@ export type BillShareMaxOrderByAggregateInput = {
   shareMinor?: Prisma.SortOrder
   splitMode?: Prisma.SortOrder
   weightUsed?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -439,7 +418,6 @@ export type BillShareMinOrderByAggregateInput = {
   shareMinor?: Prisma.SortOrder
   splitMode?: Prisma.SortOrder
   weightUsed?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -537,7 +515,6 @@ export type BillShareCreateWithoutTenantInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   bill: Prisma.UtilityBillCreateNestedOneWithoutSharesInput
 }
@@ -548,7 +525,6 @@ export type BillShareUncheckedCreateWithoutTenantInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -588,7 +564,6 @@ export type BillShareScalarWhereInput = {
   shareMinor?: Prisma.BigIntFilter<"BillShare"> | bigint | number
   splitMode?: Prisma.StringFilter<"BillShare"> | string
   weightUsed?: Prisma.DecimalNullableFilter<"BillShare"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.UuidFilter<"BillShare"> | string
   createdAt?: Prisma.DateTimeFilter<"BillShare"> | Date | string
 }
 
@@ -597,7 +572,6 @@ export type BillShareCreateWithoutBillInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   tenant: Prisma.UserCreateNestedOneWithoutBillSharesInput
 }
@@ -608,7 +582,6 @@ export type BillShareUncheckedCreateWithoutBillInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -644,7 +617,6 @@ export type BillShareCreateManyTenantInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -653,7 +625,6 @@ export type BillShareUpdateWithoutTenantInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bill?: Prisma.UtilityBillUpdateOneRequiredWithoutSharesNestedInput
 }
@@ -664,7 +635,6 @@ export type BillShareUncheckedUpdateWithoutTenantInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -674,7 +644,6 @@ export type BillShareUncheckedUpdateManyWithoutTenantInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -684,7 +653,6 @@ export type BillShareCreateManyBillInput = {
   shareMinor: bigint | number
   splitMode: string
   weightUsed?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -693,7 +661,6 @@ export type BillShareUpdateWithoutBillInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tenant?: Prisma.UserUpdateOneRequiredWithoutBillSharesNestedInput
 }
@@ -704,7 +671,6 @@ export type BillShareUncheckedUpdateWithoutBillInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -714,7 +680,6 @@ export type BillShareUncheckedUpdateManyWithoutBillInput = {
   shareMinor?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   splitMode?: Prisma.StringFieldUpdateOperationsInput | string
   weightUsed?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -727,7 +692,6 @@ export type BillShareSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   shareMinor?: boolean
   splitMode?: boolean
   weightUsed?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   bill?: boolean | Prisma.UtilityBillDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -740,7 +704,6 @@ export type BillShareSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   shareMinor?: boolean
   splitMode?: boolean
   weightUsed?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   bill?: boolean | Prisma.UtilityBillDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -753,7 +716,6 @@ export type BillShareSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   shareMinor?: boolean
   splitMode?: boolean
   weightUsed?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   bill?: boolean | Prisma.UtilityBillDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -766,11 +728,10 @@ export type BillShareSelectScalar = {
   shareMinor?: boolean
   splitMode?: boolean
   weightUsed?: boolean
-  tenantId?: boolean
   createdAt?: boolean
 }
 
-export type BillShareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "billId" | "tenantUserId" | "shareMinor" | "splitMode" | "weightUsed" | "tenantId" | "createdAt", ExtArgs["result"]["billShare"]>
+export type BillShareOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "billId" | "tenantUserId" | "shareMinor" | "splitMode" | "weightUsed" | "createdAt", ExtArgs["result"]["billShare"]>
 export type BillShareInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bill?: boolean | Prisma.UtilityBillDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -797,7 +758,6 @@ export type $BillSharePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     shareMinor: bigint
     splitMode: string
     weightUsed: runtime.Decimal | null
-    tenantId: string
     createdAt: Date
   }, ExtArgs["result"]["billShare"]>
   composites: {}
@@ -1230,7 +1190,6 @@ export interface BillShareFieldRefs {
   readonly shareMinor: Prisma.FieldRef<"BillShare", 'BigInt'>
   readonly splitMode: Prisma.FieldRef<"BillShare", 'String'>
   readonly weightUsed: Prisma.FieldRef<"BillShare", 'Decimal'>
-  readonly tenantId: Prisma.FieldRef<"BillShare", 'String'>
   readonly createdAt: Prisma.FieldRef<"BillShare", 'DateTime'>
 }
     

@@ -39,10 +39,10 @@ status -X POST "$BASE/api/v1/buildings/$B1/flats" -H "Content-Type: application/
 F2=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 
 R1='{"label":"Sunny loft","roomType":"PRIVATE","maxOccupants":1,"baseRentMinor":180000,"depositMinor":360000,"currency":"USD","amenities":["wifi","heating"],"availableFrom":"2026-10-01","minLeaseMonths":3,"maxLeaseMonths":12}'
-status -X POST "$BASE/api/v1/rooms/flats/$F1/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R1" >/dev/null
+status -X POST "$BASE/api/v1/flats/$F1/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R1" >/dev/null
 RID1=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 R2='{"label":"Quiet room","roomType":"PRIVATE","maxOccupants":2,"baseRentMinor":250000,"depositMinor":500000,"currency":"USD","amenities":["wifi","heating","ac"],"availableFrom":"2026-11-01","minLeaseMonths":6,"maxLeaseMonths":12}'
-status -X POST "$BASE/api/v1/rooms/flats/$F2/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R2" >/dev/null
+status -X POST "$BASE/api/v1/flats/$F2/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R2" >/dev/null
 RID2=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 
 # Second property (Manhattan) for geo-distinct data
@@ -54,7 +54,7 @@ B2=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 status -X POST "$BASE/api/v1/buildings/$B2/flats" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"floor":5,"doorNumber":"5A"}' >/dev/null
 F3=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 R3='{"label":"Compact studio","roomType":"STUDIO","maxOccupants":1,"baseRentMinor":320000,"depositMinor":640000,"currency":"USD","amenities":["wifi","ac"],"availableFrom":"2026-10-15","minLeaseMonths":6,"maxLeaseMonths":24}'
-status -X POST "$BASE/api/v1/rooms/flats/$F3/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R3" >/dev/null
+status -X POST "$BASE/api/v1/flats/$F3/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R3" >/dev/null
 RID3=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 
 # Publish all three rooms
@@ -139,7 +139,7 @@ status -X POST "$BASE/api/v1/properties/$P3/buildings" -H "Content-Type: applica
 B3=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 status -X POST "$BASE/api/v1/buildings/$B3/flats" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{}' >/dev/null
 F4=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
-status -X POST "$BASE/api/v1/rooms/flats/$F4/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"label":"DRAFT only","roomType":"PRIVATE","baseRentMinor":100000,"depositMinor":200000,"currency":"USD"}' >/dev/null
+status -X POST "$BASE/api/v1/flats/$F4/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"label":"DRAFT only","roomType":"PRIVATE","baseRentMinor":100000,"depositMinor":200000,"currency":"USD"}' >/dev/null
 HIDDEN_ID=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 
 code=$(status "$BASE/api/v1/search/rooms?limit=50")

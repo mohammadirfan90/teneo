@@ -44,7 +44,6 @@ export type MeterReadingMinAggregateOutputType = {
   readingValue: runtime.Decimal | null
   notes: string | null
   submittedByUserId: string | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -55,7 +54,6 @@ export type MeterReadingMaxAggregateOutputType = {
   readingValue: runtime.Decimal | null
   notes: string | null
   submittedByUserId: string | null
-  tenantId: string | null
   createdAt: Date | null
 }
 
@@ -66,7 +64,6 @@ export type MeterReadingCountAggregateOutputType = {
   readingValue: number
   notes: number
   submittedByUserId: number
-  tenantId: number
   createdAt: number
   _all: number
 }
@@ -87,7 +84,6 @@ export type MeterReadingMinAggregateInputType = {
   readingValue?: true
   notes?: true
   submittedByUserId?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -98,7 +94,6 @@ export type MeterReadingMaxAggregateInputType = {
   readingValue?: true
   notes?: true
   submittedByUserId?: true
-  tenantId?: true
   createdAt?: true
 }
 
@@ -109,7 +104,6 @@ export type MeterReadingCountAggregateInputType = {
   readingValue?: true
   notes?: true
   submittedByUserId?: true
-  tenantId?: true
   createdAt?: true
   _all?: true
 }
@@ -207,7 +201,6 @@ export type MeterReadingGroupByOutputType = {
   readingValue: runtime.Decimal
   notes: string | null
   submittedByUserId: string
-  tenantId: string
   createdAt: Date
   _count: MeterReadingCountAggregateOutputType | null
   _avg: MeterReadingAvgAggregateOutputType | null
@@ -241,7 +234,6 @@ export type MeterReadingWhereInput = {
   readingValue?: Prisma.DecimalFilter<"MeterReading"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"MeterReading"> | string | null
   submittedByUserId?: Prisma.UuidFilter<"MeterReading"> | string
-  tenantId?: Prisma.UuidFilter<"MeterReading"> | string
   createdAt?: Prisma.DateTimeFilter<"MeterReading"> | Date | string
   meter?: Prisma.XOR<Prisma.PropertyMeterScalarRelationFilter, Prisma.PropertyMeterWhereInput>
   submitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -254,7 +246,6 @@ export type MeterReadingOrderByWithRelationInput = {
   readingValue?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   submittedByUserId?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   meter?: Prisma.PropertyMeterOrderByWithRelationInput
   submitter?: Prisma.UserOrderByWithRelationInput
@@ -271,7 +262,6 @@ export type MeterReadingWhereUniqueInput = Prisma.AtLeast<{
   readingValue?: Prisma.DecimalFilter<"MeterReading"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"MeterReading"> | string | null
   submittedByUserId?: Prisma.UuidFilter<"MeterReading"> | string
-  tenantId?: Prisma.UuidFilter<"MeterReading"> | string
   createdAt?: Prisma.DateTimeFilter<"MeterReading"> | Date | string
   meter?: Prisma.XOR<Prisma.PropertyMeterScalarRelationFilter, Prisma.PropertyMeterWhereInput>
   submitter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -284,7 +274,6 @@ export type MeterReadingOrderByWithAggregationInput = {
   readingValue?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   submittedByUserId?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.MeterReadingCountOrderByAggregateInput
   _avg?: Prisma.MeterReadingAvgOrderByAggregateInput
@@ -303,7 +292,6 @@ export type MeterReadingScalarWhereWithAggregatesInput = {
   readingValue?: Prisma.DecimalWithAggregatesFilter<"MeterReading"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"MeterReading"> | string | null
   submittedByUserId?: Prisma.UuidWithAggregatesFilter<"MeterReading"> | string
-  tenantId?: Prisma.UuidWithAggregatesFilter<"MeterReading"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MeterReading"> | Date | string
 }
 
@@ -312,7 +300,6 @@ export type MeterReadingCreateInput = {
   readingDate: Date | string
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
-  tenantId?: string
   createdAt?: Date | string
   meter: Prisma.PropertyMeterCreateNestedOneWithoutReadingsInput
   submitter: Prisma.UserCreateNestedOneWithoutMeterReadingsInput
@@ -325,7 +312,6 @@ export type MeterReadingUncheckedCreateInput = {
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   submittedByUserId: string
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -334,7 +320,6 @@ export type MeterReadingUpdateInput = {
   readingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meter?: Prisma.PropertyMeterUpdateOneRequiredWithoutReadingsNestedInput
   submitter?: Prisma.UserUpdateOneRequiredWithoutMeterReadingsNestedInput
@@ -347,7 +332,6 @@ export type MeterReadingUncheckedUpdateInput = {
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -358,7 +342,6 @@ export type MeterReadingCreateManyInput = {
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   submittedByUserId: string
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -367,7 +350,6 @@ export type MeterReadingUpdateManyMutationInput = {
   readingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -378,7 +360,6 @@ export type MeterReadingUncheckedUpdateManyInput = {
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -404,7 +385,6 @@ export type MeterReadingCountOrderByAggregateInput = {
   readingValue?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   submittedByUserId?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -419,7 +399,6 @@ export type MeterReadingMaxOrderByAggregateInput = {
   readingValue?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   submittedByUserId?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -430,7 +409,6 @@ export type MeterReadingMinOrderByAggregateInput = {
   readingValue?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   submittedByUserId?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -527,7 +505,6 @@ export type MeterReadingCreateWithoutSubmitterInput = {
   readingDate: Date | string
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
-  tenantId?: string
   createdAt?: Date | string
   meter: Prisma.PropertyMeterCreateNestedOneWithoutReadingsInput
 }
@@ -538,7 +515,6 @@ export type MeterReadingUncheckedCreateWithoutSubmitterInput = {
   readingDate: Date | string
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -578,7 +554,6 @@ export type MeterReadingScalarWhereInput = {
   readingValue?: Prisma.DecimalFilter<"MeterReading"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.StringNullableFilter<"MeterReading"> | string | null
   submittedByUserId?: Prisma.UuidFilter<"MeterReading"> | string
-  tenantId?: Prisma.UuidFilter<"MeterReading"> | string
   createdAt?: Prisma.DateTimeFilter<"MeterReading"> | Date | string
 }
 
@@ -587,7 +562,6 @@ export type MeterReadingCreateWithoutMeterInput = {
   readingDate: Date | string
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
-  tenantId?: string
   createdAt?: Date | string
   submitter: Prisma.UserCreateNestedOneWithoutMeterReadingsInput
 }
@@ -598,7 +572,6 @@ export type MeterReadingUncheckedCreateWithoutMeterInput = {
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   submittedByUserId: string
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -634,7 +607,6 @@ export type MeterReadingCreateManySubmitterInput = {
   readingDate: Date | string
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -643,7 +615,6 @@ export type MeterReadingUpdateWithoutSubmitterInput = {
   readingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   meter?: Prisma.PropertyMeterUpdateOneRequiredWithoutReadingsNestedInput
 }
@@ -654,7 +625,6 @@ export type MeterReadingUncheckedUpdateWithoutSubmitterInput = {
   readingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -664,7 +634,6 @@ export type MeterReadingUncheckedUpdateManyWithoutSubmitterInput = {
   readingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -674,7 +643,6 @@ export type MeterReadingCreateManyMeterInput = {
   readingValue: runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: string | null
   submittedByUserId: string
-  tenantId?: string
   createdAt?: Date | string
 }
 
@@ -683,7 +651,6 @@ export type MeterReadingUpdateWithoutMeterInput = {
   readingDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submitter?: Prisma.UserUpdateOneRequiredWithoutMeterReadingsNestedInput
 }
@@ -694,7 +661,6 @@ export type MeterReadingUncheckedUpdateWithoutMeterInput = {
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -704,7 +670,6 @@ export type MeterReadingUncheckedUpdateManyWithoutMeterInput = {
   readingValue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -717,7 +682,6 @@ export type MeterReadingSelect<ExtArgs extends runtime.Types.Extensions.Internal
   readingValue?: boolean
   notes?: boolean
   submittedByUserId?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -730,7 +694,6 @@ export type MeterReadingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   readingValue?: boolean
   notes?: boolean
   submittedByUserId?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -743,7 +706,6 @@ export type MeterReadingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   readingValue?: boolean
   notes?: boolean
   submittedByUserId?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -756,11 +718,10 @@ export type MeterReadingSelectScalar = {
   readingValue?: boolean
   notes?: boolean
   submittedByUserId?: boolean
-  tenantId?: boolean
   createdAt?: boolean
 }
 
-export type MeterReadingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "meterId" | "readingDate" | "readingValue" | "notes" | "submittedByUserId" | "tenantId" | "createdAt", ExtArgs["result"]["meterReading"]>
+export type MeterReadingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "meterId" | "readingDate" | "readingValue" | "notes" | "submittedByUserId" | "createdAt", ExtArgs["result"]["meterReading"]>
 export type MeterReadingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   meter?: boolean | Prisma.PropertyMeterDefaultArgs<ExtArgs>
   submitter?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -801,7 +762,6 @@ export type $MeterReadingPayload<ExtArgs extends runtime.Types.Extensions.Intern
      * lease for the meter's property.
      */
     submittedByUserId: string
-    tenantId: string
     createdAt: Date
   }, ExtArgs["result"]["meterReading"]>
   composites: {}
@@ -1234,7 +1194,6 @@ export interface MeterReadingFieldRefs {
   readonly readingValue: Prisma.FieldRef<"MeterReading", 'Decimal'>
   readonly notes: Prisma.FieldRef<"MeterReading", 'String'>
   readonly submittedByUserId: Prisma.FieldRef<"MeterReading", 'String'>
-  readonly tenantId: Prisma.FieldRef<"MeterReading", 'String'>
   readonly createdAt: Prisma.FieldRef<"MeterReading", 'DateTime'>
 }
     

@@ -39,7 +39,6 @@ export type KycSubmissionMinAggregateOutputType = {
   expiresAt: Date | null
   docHash: string | null
   flaggedForReview: boolean | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,7 +54,6 @@ export type KycSubmissionMaxAggregateOutputType = {
   expiresAt: Date | null
   docHash: string | null
   flaggedForReview: boolean | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,7 +70,6 @@ export type KycSubmissionCountAggregateOutputType = {
   expiresAt: number
   docHash: number
   flaggedForReview: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -90,7 +87,6 @@ export type KycSubmissionMinAggregateInputType = {
   expiresAt?: true
   docHash?: true
   flaggedForReview?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,7 +102,6 @@ export type KycSubmissionMaxAggregateInputType = {
   expiresAt?: true
   docHash?: true
   flaggedForReview?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -123,7 +118,6 @@ export type KycSubmissionCountAggregateInputType = {
   expiresAt?: true
   docHash?: true
   flaggedForReview?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -213,7 +207,6 @@ export type KycSubmissionGroupByOutputType = {
   expiresAt: Date | null
   docHash: string | null
   flaggedForReview: boolean
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: KycSubmissionCountAggregateOutputType | null
@@ -251,7 +244,6 @@ export type KycSubmissionWhereInput = {
   expiresAt?: Prisma.DateTimeNullableFilter<"KycSubmission"> | Date | string | null
   docHash?: Prisma.StringNullableFilter<"KycSubmission"> | string | null
   flaggedForReview?: Prisma.BoolFilter<"KycSubmission"> | boolean
-  tenantId?: Prisma.UuidFilter<"KycSubmission"> | string
   createdAt?: Prisma.DateTimeFilter<"KycSubmission"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"KycSubmission"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -269,7 +261,6 @@ export type KycSubmissionOrderByWithRelationInput = {
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   docHash?: Prisma.SortOrderInput | Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -290,7 +281,6 @@ export type KycSubmissionWhereUniqueInput = Prisma.AtLeast<{
   expiresAt?: Prisma.DateTimeNullableFilter<"KycSubmission"> | Date | string | null
   docHash?: Prisma.StringNullableFilter<"KycSubmission"> | string | null
   flaggedForReview?: Prisma.BoolFilter<"KycSubmission"> | boolean
-  tenantId?: Prisma.UuidFilter<"KycSubmission"> | string
   createdAt?: Prisma.DateTimeFilter<"KycSubmission"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"KycSubmission"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -308,7 +298,6 @@ export type KycSubmissionOrderByWithAggregationInput = {
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   docHash?: Prisma.SortOrderInput | Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.KycSubmissionCountOrderByAggregateInput
@@ -331,7 +320,6 @@ export type KycSubmissionScalarWhereWithAggregatesInput = {
   expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"KycSubmission"> | Date | string | null
   docHash?: Prisma.StringNullableWithAggregatesFilter<"KycSubmission"> | string | null
   flaggedForReview?: Prisma.BoolWithAggregatesFilter<"KycSubmission"> | boolean
-  tenantId?: Prisma.UuidWithAggregatesFilter<"KycSubmission"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"KycSubmission"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"KycSubmission"> | Date | string
 }
@@ -347,7 +335,6 @@ export type KycSubmissionCreateInput = {
   expiresAt?: Date | string | null
   docHash?: string | null
   flaggedForReview?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutKycSubmissionsInput
@@ -365,7 +352,6 @@ export type KycSubmissionUncheckedCreateInput = {
   expiresAt?: Date | string | null
   docHash?: string | null
   flaggedForReview?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -381,7 +367,6 @@ export type KycSubmissionUpdateInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   docHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutKycSubmissionsNestedInput
@@ -399,7 +384,6 @@ export type KycSubmissionUncheckedUpdateInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   docHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -416,7 +400,6 @@ export type KycSubmissionCreateManyInput = {
   expiresAt?: Date | string | null
   docHash?: string | null
   flaggedForReview?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -432,7 +415,6 @@ export type KycSubmissionUpdateManyMutationInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   docHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -449,7 +431,6 @@ export type KycSubmissionUncheckedUpdateManyInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   docHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -484,7 +465,6 @@ export type KycSubmissionCountOrderByAggregateInput = {
   expiresAt?: Prisma.SortOrder
   docHash?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -500,7 +480,6 @@ export type KycSubmissionMaxOrderByAggregateInput = {
   expiresAt?: Prisma.SortOrder
   docHash?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -516,7 +495,6 @@ export type KycSubmissionMinOrderByAggregateInput = {
   expiresAt?: Prisma.SortOrder
   docHash?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -576,6 +554,10 @@ export type KycSubmissionUpdatedocumentObjectKeysInput = {
   push?: string | string[]
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type KycSubmissionCreateWithoutUserInput = {
   id?: string
   role: $Enums.Role
@@ -587,7 +569,6 @@ export type KycSubmissionCreateWithoutUserInput = {
   expiresAt?: Date | string | null
   docHash?: string | null
   flaggedForReview?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -603,7 +584,6 @@ export type KycSubmissionUncheckedCreateWithoutUserInput = {
   expiresAt?: Date | string | null
   docHash?: string | null
   flaggedForReview?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -649,7 +629,6 @@ export type KycSubmissionScalarWhereInput = {
   expiresAt?: Prisma.DateTimeNullableFilter<"KycSubmission"> | Date | string | null
   docHash?: Prisma.StringNullableFilter<"KycSubmission"> | string | null
   flaggedForReview?: Prisma.BoolFilter<"KycSubmission"> | boolean
-  tenantId?: Prisma.UuidFilter<"KycSubmission"> | string
   createdAt?: Prisma.DateTimeFilter<"KycSubmission"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"KycSubmission"> | Date | string
 }
@@ -665,7 +644,6 @@ export type KycSubmissionCreateManyUserInput = {
   expiresAt?: Date | string | null
   docHash?: string | null
   flaggedForReview?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -681,7 +659,6 @@ export type KycSubmissionUpdateWithoutUserInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   docHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -697,7 +674,6 @@ export type KycSubmissionUncheckedUpdateWithoutUserInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   docHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -713,7 +689,6 @@ export type KycSubmissionUncheckedUpdateManyWithoutUserInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   docHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -732,7 +707,6 @@ export type KycSubmissionSelect<ExtArgs extends runtime.Types.Extensions.Interna
   expiresAt?: boolean
   docHash?: boolean
   flaggedForReview?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -750,7 +724,6 @@ export type KycSubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   expiresAt?: boolean
   docHash?: boolean
   flaggedForReview?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -768,7 +741,6 @@ export type KycSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   expiresAt?: boolean
   docHash?: boolean
   flaggedForReview?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -786,12 +758,11 @@ export type KycSubmissionSelectScalar = {
   expiresAt?: boolean
   docHash?: boolean
   flaggedForReview?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type KycSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "role" | "status" | "documentObjectKeys" | "reviewNotes" | "reviewerUserId" | "decidedAt" | "expiresAt" | "docHash" | "flaggedForReview" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["kycSubmission"]>
+export type KycSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "role" | "status" | "documentObjectKeys" | "reviewNotes" | "reviewerUserId" | "decidedAt" | "expiresAt" | "docHash" | "flaggedForReview" | "createdAt" | "updatedAt", ExtArgs["result"]["kycSubmission"]>
 export type KycSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -823,7 +794,6 @@ export type $KycSubmissionPayload<ExtArgs extends runtime.Types.Extensions.Inter
      * submitted with the same hash. Surfaces to admins in the queue.
      */
     flaggedForReview: boolean
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["kycSubmission"]>
@@ -1261,7 +1231,6 @@ export interface KycSubmissionFieldRefs {
   readonly expiresAt: Prisma.FieldRef<"KycSubmission", 'DateTime'>
   readonly docHash: Prisma.FieldRef<"KycSubmission", 'String'>
   readonly flaggedForReview: Prisma.FieldRef<"KycSubmission", 'Boolean'>
-  readonly tenantId: Prisma.FieldRef<"KycSubmission", 'String'>
   readonly createdAt: Prisma.FieldRef<"KycSubmission", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"KycSubmission", 'DateTime'>
 }

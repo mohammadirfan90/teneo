@@ -2,8 +2,8 @@
 //
 // Routes for /users/* — mounted under /api/v1/users in server.ts.
 //
-// Order matters: `/me` and `/me/roles/:role/activate` must register
-// before `/:id` so Express doesn't capture `me` as a user id.
+// Self-service only. ADMIN-only lookups (`GET /users/:id`,
+// `POST /users/:id/deactivate`) live on adminRouter at /admin/users/:id.
 
 import {
   type NextFunction,
@@ -16,10 +16,9 @@ import {
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
 import { requireAuth } from '@/middleware/auth';
-import { requireRole } from '@/middleware/role';
 
-import { activateRole, deactivateUser, getMe, getUserById, updateMe } from './users.controller';
-import { activateRoleParamsSchema, updateMeSchema, userIdParamsSchema } from './users.schemas';
+import { getMe, updateMe } from './users.controller';
+import { updateMeSchema } from './users.schemas';
 
 export function usersRouter(): Router {
   const r = Router();
@@ -27,30 +26,6 @@ export function usersRouter(): Router {
   r.get('/me', requireAuth, asyncHandler(getMe));
 
   r.patch('/me', requireAuth, zodValidate({ body: updateMeSchema }), asyncHandler(updateMe));
-
-  r.post(
-    '/me/roles/:role/activate',
-    requireAuth,
-    zodValidate({ params: activateRoleParamsSchema }),
-    asyncHandler(activateRole)
-  );
-
-  // ADMIN-only lookups.
-  r.get(
-    '/:id',
-    requireAuth,
-    requireRole('ADMIN'),
-    zodValidate({ params: userIdParamsSchema }),
-    asyncHandler(getUserById)
-  );
-
-  r.post(
-    '/:id/deactivate',
-    requireAuth,
-    requireRole('ADMIN'),
-    zodValidate({ params: userIdParamsSchema }),
-    asyncHandler(deactivateUser)
-  );
 
   return r;
 }

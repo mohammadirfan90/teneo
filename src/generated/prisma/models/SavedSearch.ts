@@ -31,7 +31,6 @@ export type SavedSearchMinAggregateOutputType = {
   id: string | null
   userId: string | null
   name: string | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -41,7 +40,6 @@ export type SavedSearchMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   name: string | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -52,7 +50,6 @@ export type SavedSearchCountAggregateOutputType = {
   userId: number
   name: number
   query: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -64,7 +61,6 @@ export type SavedSearchMinAggregateInputType = {
   id?: true
   userId?: true
   name?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -74,7 +70,6 @@ export type SavedSearchMaxAggregateInputType = {
   id?: true
   userId?: true
   name?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -85,7 +80,6 @@ export type SavedSearchCountAggregateInputType = {
   userId?: true
   name?: true
   query?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -169,7 +163,6 @@ export type SavedSearchGroupByOutputType = {
   userId: string
   name: string
   query: runtime.JsonValue
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -201,7 +194,6 @@ export type SavedSearchWhereInput = {
   userId?: Prisma.UuidFilter<"SavedSearch"> | string
   name?: Prisma.StringFilter<"SavedSearch"> | string
   query?: Prisma.JsonFilter<"SavedSearch">
-  tenantId?: Prisma.UuidFilter<"SavedSearch"> | string
   createdAt?: Prisma.DateTimeFilter<"SavedSearch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedSearch"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"SavedSearch"> | Date | string | null
@@ -213,7 +205,6 @@ export type SavedSearchOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -228,7 +219,6 @@ export type SavedSearchWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.UuidFilter<"SavedSearch"> | string
   name?: Prisma.StringFilter<"SavedSearch"> | string
   query?: Prisma.JsonFilter<"SavedSearch">
-  tenantId?: Prisma.UuidFilter<"SavedSearch"> | string
   createdAt?: Prisma.DateTimeFilter<"SavedSearch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedSearch"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"SavedSearch"> | Date | string | null
@@ -240,7 +230,6 @@ export type SavedSearchOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -257,7 +246,6 @@ export type SavedSearchScalarWhereWithAggregatesInput = {
   userId?: Prisma.UuidWithAggregatesFilter<"SavedSearch"> | string
   name?: Prisma.StringWithAggregatesFilter<"SavedSearch"> | string
   query?: Prisma.JsonWithAggregatesFilter<"SavedSearch">
-  tenantId?: Prisma.UuidWithAggregatesFilter<"SavedSearch"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SavedSearch"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SavedSearch"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SavedSearch"> | Date | string | null
@@ -267,7 +255,6 @@ export type SavedSearchCreateInput = {
   id?: string
   name: string
   query: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -279,7 +266,6 @@ export type SavedSearchUncheckedCreateInput = {
   userId: string
   name: string
   query: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -289,7 +275,6 @@ export type SavedSearchUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -301,7 +286,6 @@ export type SavedSearchUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -312,7 +296,6 @@ export type SavedSearchCreateManyInput = {
   userId: string
   name: string
   query: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -322,7 +305,6 @@ export type SavedSearchUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -333,7 +315,6 @@ export type SavedSearchUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -354,7 +335,6 @@ export type SavedSearchCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   query?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -364,7 +344,6 @@ export type SavedSearchMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -374,7 +353,6 @@ export type SavedSearchMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -426,7 +404,6 @@ export type SavedSearchCreateWithoutUserInput = {
   id?: string
   name: string
   query: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -436,7 +413,6 @@ export type SavedSearchUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
   query: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -476,7 +452,6 @@ export type SavedSearchScalarWhereInput = {
   userId?: Prisma.UuidFilter<"SavedSearch"> | string
   name?: Prisma.StringFilter<"SavedSearch"> | string
   query?: Prisma.JsonFilter<"SavedSearch">
-  tenantId?: Prisma.UuidFilter<"SavedSearch"> | string
   createdAt?: Prisma.DateTimeFilter<"SavedSearch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SavedSearch"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"SavedSearch"> | Date | string | null
@@ -486,7 +461,6 @@ export type SavedSearchCreateManyUserInput = {
   id?: string
   name: string
   query: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -496,7 +470,6 @@ export type SavedSearchUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -506,7 +479,6 @@ export type SavedSearchUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -516,7 +488,6 @@ export type SavedSearchUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   query?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -529,7 +500,6 @@ export type SavedSearchSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   userId?: boolean
   name?: boolean
   query?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -541,7 +511,6 @@ export type SavedSearchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   name?: boolean
   query?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -553,7 +522,6 @@ export type SavedSearchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   name?: boolean
   query?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -565,13 +533,12 @@ export type SavedSearchSelectScalar = {
   userId?: boolean
   name?: boolean
   query?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type SavedSearchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "query" | "tenantId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["savedSearch"]>
+export type SavedSearchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "query" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["savedSearch"]>
 export type SavedSearchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -600,7 +567,6 @@ export type $SavedSearchPayload<ExtArgs extends runtime.Types.Extensions.Interna
      * output. Storing as JSONB lets us round-trip it without re-encoding.
      */
     query: runtime.JsonValue
-    tenantId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1032,7 +998,6 @@ export interface SavedSearchFieldRefs {
   readonly userId: Prisma.FieldRef<"SavedSearch", 'String'>
   readonly name: Prisma.FieldRef<"SavedSearch", 'String'>
   readonly query: Prisma.FieldRef<"SavedSearch", 'Json'>
-  readonly tenantId: Prisma.FieldRef<"SavedSearch", 'String'>
   readonly createdAt: Prisma.FieldRef<"SavedSearch", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SavedSearch", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"SavedSearch", 'DateTime'>

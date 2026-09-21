@@ -45,7 +45,6 @@ export type TenantProfileMinAggregateOutputType = {
   kycStatus: $Enums.KycStatus | null
   kycBadgeGrantedAt: Date | null
   reputationScore: runtime.Decimal | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,7 +58,6 @@ export type TenantProfileMaxAggregateOutputType = {
   kycStatus: $Enums.KycStatus | null
   kycBadgeGrantedAt: Date | null
   reputationScore: runtime.Decimal | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -73,7 +71,6 @@ export type TenantProfileCountAggregateOutputType = {
   kycStatus: number
   kycBadgeGrantedAt: number
   reputationScore: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -97,7 +94,6 @@ export type TenantProfileMinAggregateInputType = {
   kycStatus?: true
   kycBadgeGrantedAt?: true
   reputationScore?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,7 +107,6 @@ export type TenantProfileMaxAggregateInputType = {
   kycStatus?: true
   kycBadgeGrantedAt?: true
   reputationScore?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -125,7 +120,6 @@ export type TenantProfileCountAggregateInputType = {
   kycStatus?: true
   kycBadgeGrantedAt?: true
   reputationScore?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -226,7 +220,6 @@ export type TenantProfileGroupByOutputType = {
   kycStatus: $Enums.KycStatus
   kycBadgeGrantedAt: Date | null
   reputationScore: runtime.Decimal | null
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: TenantProfileCountAggregateOutputType | null
@@ -263,7 +256,6 @@ export type TenantProfileWhereInput = {
   kycStatus?: Prisma.EnumKycStatusFilter<"TenantProfile"> | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.DateTimeNullableFilter<"TenantProfile"> | Date | string | null
   reputationScore?: Prisma.DecimalNullableFilter<"TenantProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.UuidFilter<"TenantProfile"> | string
   createdAt?: Prisma.DateTimeFilter<"TenantProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TenantProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -278,7 +270,6 @@ export type TenantProfileOrderByWithRelationInput = {
   kycStatus?: Prisma.SortOrder
   kycBadgeGrantedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reputationScore?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -296,7 +287,6 @@ export type TenantProfileWhereUniqueInput = Prisma.AtLeast<{
   kycStatus?: Prisma.EnumKycStatusFilter<"TenantProfile"> | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.DateTimeNullableFilter<"TenantProfile"> | Date | string | null
   reputationScore?: Prisma.DecimalNullableFilter<"TenantProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.UuidFilter<"TenantProfile"> | string
   createdAt?: Prisma.DateTimeFilter<"TenantProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TenantProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -311,7 +301,6 @@ export type TenantProfileOrderByWithAggregationInput = {
   kycStatus?: Prisma.SortOrder
   kycBadgeGrantedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   reputationScore?: Prisma.SortOrderInput | Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TenantProfileCountOrderByAggregateInput
@@ -333,7 +322,6 @@ export type TenantProfileScalarWhereWithAggregatesInput = {
   kycStatus?: Prisma.EnumKycStatusWithAggregatesFilter<"TenantProfile"> | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TenantProfile"> | Date | string | null
   reputationScore?: Prisma.DecimalNullableWithAggregatesFilter<"TenantProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.UuidWithAggregatesFilter<"TenantProfile"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TenantProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TenantProfile"> | Date | string
 }
@@ -346,7 +334,6 @@ export type TenantProfileCreateInput = {
   kycStatus?: $Enums.KycStatus
   kycBadgeGrantedAt?: Date | string | null
   reputationScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTenantProfileInput
@@ -361,7 +348,6 @@ export type TenantProfileUncheckedCreateInput = {
   kycStatus?: $Enums.KycStatus
   kycBadgeGrantedAt?: Date | string | null
   reputationScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -374,7 +360,6 @@ export type TenantProfileUpdateInput = {
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reputationScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTenantProfileNestedInput
@@ -389,7 +374,6 @@ export type TenantProfileUncheckedUpdateInput = {
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reputationScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -403,7 +387,6 @@ export type TenantProfileCreateManyInput = {
   kycStatus?: $Enums.KycStatus
   kycBadgeGrantedAt?: Date | string | null
   reputationScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -416,7 +399,6 @@ export type TenantProfileUpdateManyMutationInput = {
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reputationScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -430,7 +412,6 @@ export type TenantProfileUncheckedUpdateManyInput = {
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reputationScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -449,7 +430,6 @@ export type TenantProfileCountOrderByAggregateInput = {
   kycStatus?: Prisma.SortOrder
   kycBadgeGrantedAt?: Prisma.SortOrder
   reputationScore?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -467,7 +447,6 @@ export type TenantProfileMaxOrderByAggregateInput = {
   kycStatus?: Prisma.SortOrder
   kycBadgeGrantedAt?: Prisma.SortOrder
   reputationScore?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -481,7 +460,6 @@ export type TenantProfileMinOrderByAggregateInput = {
   kycStatus?: Prisma.SortOrder
   kycBadgeGrantedAt?: Prisma.SortOrder
   reputationScore?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -530,7 +508,6 @@ export type TenantProfileCreateWithoutUserInput = {
   kycStatus?: $Enums.KycStatus
   kycBadgeGrantedAt?: Date | string | null
   reputationScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -543,7 +520,6 @@ export type TenantProfileUncheckedCreateWithoutUserInput = {
   kycStatus?: $Enums.KycStatus
   kycBadgeGrantedAt?: Date | string | null
   reputationScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -572,7 +548,6 @@ export type TenantProfileUpdateWithoutUserInput = {
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reputationScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -585,7 +560,6 @@ export type TenantProfileUncheckedUpdateWithoutUserInput = {
   kycStatus?: Prisma.EnumKycStatusFieldUpdateOperationsInput | $Enums.KycStatus
   kycBadgeGrantedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   reputationScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -601,7 +575,6 @@ export type TenantProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   kycStatus?: boolean
   kycBadgeGrantedAt?: boolean
   reputationScore?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -616,7 +589,6 @@ export type TenantProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   kycStatus?: boolean
   kycBadgeGrantedAt?: boolean
   reputationScore?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -631,7 +603,6 @@ export type TenantProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   kycStatus?: boolean
   kycBadgeGrantedAt?: boolean
   reputationScore?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -646,12 +617,11 @@ export type TenantProfileSelectScalar = {
   kycStatus?: boolean
   kycBadgeGrantedAt?: boolean
   reputationScore?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TenantProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "displayName" | "bio" | "avatarObjectKey" | "kycStatus" | "kycBadgeGrantedAt" | "reputationScore" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["tenantProfile"]>
+export type TenantProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "displayName" | "bio" | "avatarObjectKey" | "kycStatus" | "kycBadgeGrantedAt" | "reputationScore" | "createdAt" | "updatedAt", ExtArgs["result"]["tenantProfile"]>
 export type TenantProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -676,7 +646,6 @@ export type $TenantProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     kycStatus: $Enums.KycStatus
     kycBadgeGrantedAt: Date | null
     reputationScore: runtime.Decimal | null
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["tenantProfile"]>
@@ -1111,7 +1080,6 @@ export interface TenantProfileFieldRefs {
   readonly kycStatus: Prisma.FieldRef<"TenantProfile", 'KycStatus'>
   readonly kycBadgeGrantedAt: Prisma.FieldRef<"TenantProfile", 'DateTime'>
   readonly reputationScore: Prisma.FieldRef<"TenantProfile", 'Decimal'>
-  readonly tenantId: Prisma.FieldRef<"TenantProfile", 'String'>
   readonly createdAt: Prisma.FieldRef<"TenantProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TenantProfile", 'DateTime'>
 }

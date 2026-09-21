@@ -59,7 +59,7 @@ B=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 status -X POST "$BASE/api/v1/buildings/$B/flats" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"floor":1,"doorNumber":"1A"}' >/dev/null
 F=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 R='{"label":"Phase 12 room","roomType":"PRIVATE","maxOccupants":1,"baseRentMinor":150000,"depositMinor":300000,"currency":"USD","amenities":["wifi"],"availableFrom":"2026-10-01","minLeaseMonths":3,"maxLeaseMonths":12}'
-status -X POST "$BASE/api/v1/rooms/flats/$F/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R" >/dev/null
+status -X POST "$BASE/api/v1/flats/$F/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d "$R" >/dev/null
 RID=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 status -X POST "$BASE/api/v1/rooms/$RID/publish" -H "Authorization: Bearer $O1" >/dev/null
 status -X POST "$BASE/api/v1/properties/$P/publish" -H "Authorization: Bearer $O1" >/dev/null
@@ -146,7 +146,7 @@ status -X POST "$BASE/api/v1/properties/$P3/buildings" -H "Content-Type: applica
 B3=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 status -X POST "$BASE/api/v1/buildings/$B3/flats" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"floor":1}' >/dev/null
 F3=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
-status -X POST "$BASE/api/v1/rooms/flats/$F3/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"label":"V room","roomType":"PRIVATE","baseRentMinor":100000,"depositMinor":200000,"currency":"USD"}' >/dev/null
+status -X POST "$BASE/api/v1/flats/$F3/rooms" -H "Content-Type: application/json" -H "Authorization: Bearer $O1" -d '{"label":"V room","roomType":"PRIVATE","baseRentMinor":100000,"depositMinor":200000,"currency":"USD"}' >/dev/null
 RID3=$(python -c "import json;print(json.load(open('$BODY_FILE'))['data']['id'])")
 status -X POST "$BASE/api/v1/rooms/$RID3/publish" -H "Authorization: Bearer $O1" >/dev/null
 status -X POST "$BASE/api/v1/properties/$P3/publish" -H "Authorization: Bearer $O1" >/dev/null

@@ -45,7 +45,6 @@ export type PropertyMeterMinAggregateOutputType = {
   currency: string | null
   unitLabel: string | null
   isActive: boolean | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,7 +58,6 @@ export type PropertyMeterMaxAggregateOutputType = {
   currency: string | null
   unitLabel: string | null
   isActive: boolean | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -73,7 +71,6 @@ export type PropertyMeterCountAggregateOutputType = {
   currency: number
   unitLabel: number
   isActive: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -97,7 +94,6 @@ export type PropertyMeterMinAggregateInputType = {
   currency?: true
   unitLabel?: true
   isActive?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,7 +107,6 @@ export type PropertyMeterMaxAggregateInputType = {
   currency?: true
   unitLabel?: true
   isActive?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -125,7 +120,6 @@ export type PropertyMeterCountAggregateInputType = {
   currency?: true
   unitLabel?: true
   isActive?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -226,7 +220,6 @@ export type PropertyMeterGroupByOutputType = {
   currency: string
   unitLabel: string
   isActive: boolean
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: PropertyMeterCountAggregateOutputType | null
@@ -263,7 +256,6 @@ export type PropertyMeterWhereInput = {
   currency?: Prisma.StringFilter<"PropertyMeter"> | string
   unitLabel?: Prisma.StringFilter<"PropertyMeter"> | string
   isActive?: Prisma.BoolFilter<"PropertyMeter"> | boolean
-  tenantId?: Prisma.UuidFilter<"PropertyMeter"> | string
   createdAt?: Prisma.DateTimeFilter<"PropertyMeter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PropertyMeter"> | Date | string
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
@@ -280,7 +272,6 @@ export type PropertyMeterOrderByWithRelationInput = {
   currency?: Prisma.SortOrder
   unitLabel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   property?: Prisma.PropertyOrderByWithRelationInput
@@ -300,7 +291,6 @@ export type PropertyMeterWhereUniqueInput = Prisma.AtLeast<{
   currency?: Prisma.StringFilter<"PropertyMeter"> | string
   unitLabel?: Prisma.StringFilter<"PropertyMeter"> | string
   isActive?: Prisma.BoolFilter<"PropertyMeter"> | boolean
-  tenantId?: Prisma.UuidFilter<"PropertyMeter"> | string
   createdAt?: Prisma.DateTimeFilter<"PropertyMeter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PropertyMeter"> | Date | string
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
@@ -317,7 +307,6 @@ export type PropertyMeterOrderByWithAggregationInput = {
   currency?: Prisma.SortOrder
   unitLabel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PropertyMeterCountOrderByAggregateInput
@@ -339,7 +328,6 @@ export type PropertyMeterScalarWhereWithAggregatesInput = {
   currency?: Prisma.StringWithAggregatesFilter<"PropertyMeter"> | string
   unitLabel?: Prisma.StringWithAggregatesFilter<"PropertyMeter"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"PropertyMeter"> | boolean
-  tenantId?: Prisma.UuidWithAggregatesFilter<"PropertyMeter"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PropertyMeter"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PropertyMeter"> | Date | string
 }
@@ -352,7 +340,6 @@ export type PropertyMeterCreateInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   property: Prisma.PropertyCreateNestedOneWithoutMetersInput
@@ -369,7 +356,6 @@ export type PropertyMeterUncheckedCreateInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   readings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutMeterInput
@@ -384,7 +370,6 @@ export type PropertyMeterUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   property?: Prisma.PropertyUpdateOneRequiredWithoutMetersNestedInput
@@ -401,7 +386,6 @@ export type PropertyMeterUncheckedUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readings?: Prisma.MeterReadingUncheckedUpdateManyWithoutMeterNestedInput
@@ -417,7 +401,6 @@ export type PropertyMeterCreateManyInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -430,7 +413,6 @@ export type PropertyMeterUpdateManyMutationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -444,7 +426,6 @@ export type PropertyMeterUncheckedUpdateManyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -468,7 +449,6 @@ export type PropertyMeterCountOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   unitLabel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -486,7 +466,6 @@ export type PropertyMeterMaxOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   unitLabel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -500,7 +479,6 @@ export type PropertyMeterMinOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   unitLabel?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -596,7 +574,6 @@ export type PropertyMeterCreateWithoutPropertyInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   readings?: Prisma.MeterReadingCreateNestedManyWithoutMeterInput
@@ -611,7 +588,6 @@ export type PropertyMeterUncheckedCreateWithoutPropertyInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   readings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutMeterInput
@@ -656,7 +632,6 @@ export type PropertyMeterScalarWhereInput = {
   currency?: Prisma.StringFilter<"PropertyMeter"> | string
   unitLabel?: Prisma.StringFilter<"PropertyMeter"> | string
   isActive?: Prisma.BoolFilter<"PropertyMeter"> | boolean
-  tenantId?: Prisma.UuidFilter<"PropertyMeter"> | string
   createdAt?: Prisma.DateTimeFilter<"PropertyMeter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PropertyMeter"> | Date | string
 }
@@ -669,7 +644,6 @@ export type PropertyMeterCreateWithoutReadingsInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   property: Prisma.PropertyCreateNestedOneWithoutMetersInput
@@ -685,7 +659,6 @@ export type PropertyMeterUncheckedCreateWithoutReadingsInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   bills?: Prisma.UtilityBillUncheckedCreateNestedManyWithoutMeterInput
@@ -715,7 +688,6 @@ export type PropertyMeterUpdateWithoutReadingsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   property?: Prisma.PropertyUpdateOneRequiredWithoutMetersNestedInput
@@ -731,7 +703,6 @@ export type PropertyMeterUncheckedUpdateWithoutReadingsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bills?: Prisma.UtilityBillUncheckedUpdateManyWithoutMeterNestedInput
@@ -745,7 +716,6 @@ export type PropertyMeterCreateWithoutBillsInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   property: Prisma.PropertyCreateNestedOneWithoutMetersInput
@@ -761,7 +731,6 @@ export type PropertyMeterUncheckedCreateWithoutBillsInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   readings?: Prisma.MeterReadingUncheckedCreateNestedManyWithoutMeterInput
@@ -791,7 +760,6 @@ export type PropertyMeterUpdateWithoutBillsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   property?: Prisma.PropertyUpdateOneRequiredWithoutMetersNestedInput
@@ -807,7 +775,6 @@ export type PropertyMeterUncheckedUpdateWithoutBillsInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readings?: Prisma.MeterReadingUncheckedUpdateManyWithoutMeterNestedInput
@@ -821,7 +788,6 @@ export type PropertyMeterCreateManyPropertyInput = {
   currency: string
   unitLabel: string
   isActive?: boolean
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -834,7 +800,6 @@ export type PropertyMeterUpdateWithoutPropertyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readings?: Prisma.MeterReadingUpdateManyWithoutMeterNestedInput
@@ -849,7 +814,6 @@ export type PropertyMeterUncheckedUpdateWithoutPropertyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   readings?: Prisma.MeterReadingUncheckedUpdateManyWithoutMeterNestedInput
@@ -864,7 +828,6 @@ export type PropertyMeterUncheckedUpdateManyWithoutPropertyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   unitLabel?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -918,7 +881,6 @@ export type PropertyMeterSelect<ExtArgs extends runtime.Types.Extensions.Interna
   currency?: boolean
   unitLabel?: boolean
   isActive?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
@@ -936,7 +898,6 @@ export type PropertyMeterSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   currency?: boolean
   unitLabel?: boolean
   isActive?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
@@ -951,7 +912,6 @@ export type PropertyMeterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   currency?: boolean
   unitLabel?: boolean
   isActive?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
@@ -966,12 +926,11 @@ export type PropertyMeterSelectScalar = {
   currency?: boolean
   unitLabel?: boolean
   isActive?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PropertyMeterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "utilityType" | "label" | "ratePerUnitMinor" | "currency" | "unitLabel" | "isActive" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["propertyMeter"]>
+export type PropertyMeterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "utilityType" | "label" | "ratePerUnitMinor" | "currency" | "unitLabel" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["propertyMeter"]>
 export type PropertyMeterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   readings?: boolean | Prisma.PropertyMeter$readingsArgs<ExtArgs>
@@ -1015,7 +974,6 @@ export type $PropertyMeterPayload<ExtArgs extends runtime.Types.Extensions.Inter
      * Lifecycle: v1 sets once to true; deactivation is Phase 18+.
      */
     isActive: boolean
-    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["propertyMeter"]>
@@ -1452,7 +1410,6 @@ export interface PropertyMeterFieldRefs {
   readonly currency: Prisma.FieldRef<"PropertyMeter", 'String'>
   readonly unitLabel: Prisma.FieldRef<"PropertyMeter", 'String'>
   readonly isActive: Prisma.FieldRef<"PropertyMeter", 'Boolean'>
-  readonly tenantId: Prisma.FieldRef<"PropertyMeter", 'String'>
   readonly createdAt: Prisma.FieldRef<"PropertyMeter", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PropertyMeter", 'DateTime'>
 }

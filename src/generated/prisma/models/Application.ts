@@ -48,7 +48,6 @@ export type ApplicationMinAggregateOutputType = {
   decidedAt: Date | null
   decidedByUserId: string | null
   version: number | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -64,7 +63,6 @@ export type ApplicationMaxAggregateOutputType = {
   decidedAt: Date | null
   decidedByUserId: string | null
   version: number | null
-  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -80,7 +78,6 @@ export type ApplicationCountAggregateOutputType = {
   decidedAt: number
   decidedByUserId: number
   version: number
-  tenantId: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -106,7 +103,6 @@ export type ApplicationMinAggregateInputType = {
   decidedAt?: true
   decidedByUserId?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -122,7 +118,6 @@ export type ApplicationMaxAggregateInputType = {
   decidedAt?: true
   decidedByUserId?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -138,7 +133,6 @@ export type ApplicationCountAggregateInputType = {
   decidedAt?: true
   decidedByUserId?: true
   version?: true
-  tenantId?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -241,7 +235,6 @@ export type ApplicationGroupByOutputType = {
   decidedAt: Date | null
   decidedByUserId: string | null
   version: number
-  tenantId: string
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -280,7 +273,6 @@ export type ApplicationWhereInput = {
   decidedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   decidedByUserId?: Prisma.UuidNullableFilter<"Application"> | string | null
   version?: Prisma.IntFilter<"Application"> | number
-  tenantId?: Prisma.UuidFilter<"Application"> | string
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -300,7 +292,6 @@ export type ApplicationOrderByWithRelationInput = {
   decidedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   decidedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -323,7 +314,6 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   decidedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   decidedByUserId?: Prisma.UuidNullableFilter<"Application"> | string | null
   version?: Prisma.IntFilter<"Application"> | number
-  tenantId?: Prisma.UuidFilter<"Application"> | string
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -343,7 +333,6 @@ export type ApplicationOrderByWithAggregationInput = {
   decidedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   decidedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -367,7 +356,6 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   decidedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
   decidedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Application"> | string | null
   version?: Prisma.IntWithAggregatesFilter<"Application"> | number
-  tenantId?: Prisma.UuidWithAggregatesFilter<"Application"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
@@ -380,7 +368,6 @@ export type ApplicationCreateInput = {
   submittedAt?: Date | string
   decidedAt?: Date | string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -400,7 +387,6 @@ export type ApplicationUncheckedCreateInput = {
   decidedAt?: Date | string | null
   decidedByUserId?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -414,7 +400,6 @@ export type ApplicationUpdateInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -434,7 +419,6 @@ export type ApplicationUncheckedUpdateInput = {
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -451,7 +435,6 @@ export type ApplicationCreateManyInput = {
   decidedAt?: Date | string | null
   decidedByUserId?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -464,7 +447,6 @@ export type ApplicationUpdateManyMutationInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -480,7 +462,6 @@ export type ApplicationUncheckedUpdateManyInput = {
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -506,7 +487,6 @@ export type ApplicationCountOrderByAggregateInput = {
   decidedAt?: Prisma.SortOrder
   decidedByUserId?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -526,7 +506,6 @@ export type ApplicationMaxOrderByAggregateInput = {
   decidedAt?: Prisma.SortOrder
   decidedByUserId?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -542,7 +521,6 @@ export type ApplicationMinOrderByAggregateInput = {
   decidedAt?: Prisma.SortOrder
   decidedByUserId?: Prisma.SortOrder
   version?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -710,7 +688,6 @@ export type ApplicationCreateWithoutTenantInput = {
   submittedAt?: Date | string
   decidedAt?: Date | string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -728,7 +705,6 @@ export type ApplicationUncheckedCreateWithoutTenantInput = {
   decidedAt?: Date | string | null
   decidedByUserId?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -752,7 +728,6 @@ export type ApplicationCreateWithoutDecidedByInput = {
   submittedAt?: Date | string
   decidedAt?: Date | string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -770,7 +745,6 @@ export type ApplicationUncheckedCreateWithoutDecidedByInput = {
   submittedAt?: Date | string
   decidedAt?: Date | string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -816,7 +790,6 @@ export type ApplicationScalarWhereInput = {
   decidedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
   decidedByUserId?: Prisma.UuidNullableFilter<"Application"> | string | null
   version?: Prisma.IntFilter<"Application"> | number
-  tenantId?: Prisma.UuidFilter<"Application"> | string
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Application"> | Date | string | null
@@ -845,7 +818,6 @@ export type ApplicationCreateWithoutRoomInput = {
   submittedAt?: Date | string
   decidedAt?: Date | string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -863,7 +835,6 @@ export type ApplicationUncheckedCreateWithoutRoomInput = {
   decidedAt?: Date | string | null
   decidedByUserId?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -903,7 +874,6 @@ export type ApplicationCreateWithoutViewingsInput = {
   submittedAt?: Date | string
   decidedAt?: Date | string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -922,7 +892,6 @@ export type ApplicationUncheckedCreateWithoutViewingsInput = {
   decidedAt?: Date | string | null
   decidedByUserId?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -951,7 +920,6 @@ export type ApplicationUpdateWithoutViewingsInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -970,7 +938,6 @@ export type ApplicationUncheckedUpdateWithoutViewingsInput = {
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -985,7 +952,6 @@ export type ApplicationCreateManyTenantInput = {
   decidedAt?: Date | string | null
   decidedByUserId?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1000,7 +966,6 @@ export type ApplicationCreateManyDecidedByInput = {
   submittedAt?: Date | string
   decidedAt?: Date | string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1013,7 +978,6 @@ export type ApplicationUpdateWithoutTenantInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1031,7 +995,6 @@ export type ApplicationUncheckedUpdateWithoutTenantInput = {
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1047,7 +1010,6 @@ export type ApplicationUncheckedUpdateManyWithoutTenantInput = {
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1060,7 +1022,6 @@ export type ApplicationUpdateWithoutDecidedByInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1078,7 +1039,6 @@ export type ApplicationUncheckedUpdateWithoutDecidedByInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1094,7 +1054,6 @@ export type ApplicationUncheckedUpdateManyWithoutDecidedByInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1109,7 +1068,6 @@ export type ApplicationCreateManyRoomInput = {
   decidedAt?: Date | string | null
   decidedByUserId?: string | null
   version?: number
-  tenantId?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -1122,7 +1080,6 @@ export type ApplicationUpdateWithoutRoomInput = {
   submittedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1140,7 +1097,6 @@ export type ApplicationUncheckedUpdateWithoutRoomInput = {
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1156,7 +1112,6 @@ export type ApplicationUncheckedUpdateManyWithoutRoomInput = {
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   decidedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   version?: Prisma.IntFieldUpdateOperationsInput | number
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1203,7 +1158,6 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   decidedAt?: boolean
   decidedByUserId?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1224,7 +1178,6 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   decidedAt?: boolean
   decidedByUserId?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1243,7 +1196,6 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   decidedAt?: boolean
   decidedByUserId?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1262,13 +1214,12 @@ export type ApplicationSelectScalar = {
   decidedAt?: boolean
   decidedByUserId?: boolean
   version?: boolean
-  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "tenantUserId" | "message" | "status" | "submittedAt" | "decidedAt" | "decidedByUserId" | "version" | "tenantId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomId" | "tenantUserId" | "message" | "status" | "submittedAt" | "decidedAt" | "decidedByUserId" | "version" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   room?: boolean | Prisma.RoomDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1315,7 +1266,6 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
      * updates from concurrent owner clicks.
      */
     version: number
-    tenantId: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1755,7 +1705,6 @@ export interface ApplicationFieldRefs {
   readonly decidedAt: Prisma.FieldRef<"Application", 'DateTime'>
   readonly decidedByUserId: Prisma.FieldRef<"Application", 'String'>
   readonly version: Prisma.FieldRef<"Application", 'Int'>
-  readonly tenantId: Prisma.FieldRef<"Application", 'String'>
   readonly createdAt: Prisma.FieldRef<"Application", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Application", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"Application", 'DateTime'>

@@ -36,7 +36,6 @@ export type AuditLogMinAggregateOutputType = {
   ipAddress: string | null
   userAgent: string | null
   occurredAt: Date | null
-  tenantId: string | null
 }
 
 export type AuditLogMaxAggregateOutputType = {
@@ -49,7 +48,6 @@ export type AuditLogMaxAggregateOutputType = {
   ipAddress: string | null
   userAgent: string | null
   occurredAt: Date | null
-  tenantId: string | null
 }
 
 export type AuditLogCountAggregateOutputType = {
@@ -64,7 +62,6 @@ export type AuditLogCountAggregateOutputType = {
   ipAddress: number
   userAgent: number
   occurredAt: number
-  tenantId: number
   _all: number
 }
 
@@ -79,7 +76,6 @@ export type AuditLogMinAggregateInputType = {
   ipAddress?: true
   userAgent?: true
   occurredAt?: true
-  tenantId?: true
 }
 
 export type AuditLogMaxAggregateInputType = {
@@ -92,7 +88,6 @@ export type AuditLogMaxAggregateInputType = {
   ipAddress?: true
   userAgent?: true
   occurredAt?: true
-  tenantId?: true
 }
 
 export type AuditLogCountAggregateInputType = {
@@ -107,7 +102,6 @@ export type AuditLogCountAggregateInputType = {
   ipAddress?: true
   userAgent?: true
   occurredAt?: true
-  tenantId?: true
   _all?: true
 }
 
@@ -195,7 +189,6 @@ export type AuditLogGroupByOutputType = {
   ipAddress: string | null
   userAgent: string | null
   occurredAt: Date
-  tenantId: string
   _count: AuditLogCountAggregateOutputType | null
   _min: AuditLogMinAggregateOutputType | null
   _max: AuditLogMaxAggregateOutputType | null
@@ -231,7 +224,6 @@ export type AuditLogWhereInput = {
   ipAddress?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   occurredAt?: Prisma.DateTimeFilter<"AuditLog"> | Date | string
-  tenantId?: Prisma.UuidFilter<"AuditLog"> | string
 }
 
 export type AuditLogOrderByWithRelationInput = {
@@ -246,7 +238,6 @@ export type AuditLogOrderByWithRelationInput = {
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
 }
 
 export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
@@ -264,7 +255,6 @@ export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
   ipAddress?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   userAgent?: Prisma.StringNullableFilter<"AuditLog"> | string | null
   occurredAt?: Prisma.DateTimeFilter<"AuditLog"> | Date | string
-  tenantId?: Prisma.UuidFilter<"AuditLog"> | string
 }, "id">
 
 export type AuditLogOrderByWithAggregationInput = {
@@ -279,7 +269,6 @@ export type AuditLogOrderByWithAggregationInput = {
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   _count?: Prisma.AuditLogCountOrderByAggregateInput
   _max?: Prisma.AuditLogMaxOrderByAggregateInput
   _min?: Prisma.AuditLogMinOrderByAggregateInput
@@ -300,7 +289,6 @@ export type AuditLogScalarWhereWithAggregatesInput = {
   ipAddress?: Prisma.StringNullableWithAggregatesFilter<"AuditLog"> | string | null
   userAgent?: Prisma.StringNullableWithAggregatesFilter<"AuditLog"> | string | null
   occurredAt?: Prisma.DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
-  tenantId?: Prisma.UuidWithAggregatesFilter<"AuditLog"> | string
 }
 
 export type AuditLogCreateInput = {
@@ -315,7 +303,6 @@ export type AuditLogCreateInput = {
   ipAddress?: string | null
   userAgent?: string | null
   occurredAt?: Date | string
-  tenantId?: string
 }
 
 export type AuditLogUncheckedCreateInput = {
@@ -330,7 +317,6 @@ export type AuditLogUncheckedCreateInput = {
   ipAddress?: string | null
   userAgent?: string | null
   occurredAt?: Date | string
-  tenantId?: string
 }
 
 export type AuditLogUpdateInput = {
@@ -345,7 +331,6 @@ export type AuditLogUpdateInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AuditLogUncheckedUpdateInput = {
@@ -360,7 +345,6 @@ export type AuditLogUncheckedUpdateInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AuditLogCreateManyInput = {
@@ -375,7 +359,6 @@ export type AuditLogCreateManyInput = {
   ipAddress?: string | null
   userAgent?: string | null
   occurredAt?: Date | string
-  tenantId?: string
 }
 
 export type AuditLogUpdateManyMutationInput = {
@@ -390,7 +373,6 @@ export type AuditLogUpdateManyMutationInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AuditLogUncheckedUpdateManyInput = {
@@ -405,7 +387,6 @@ export type AuditLogUncheckedUpdateManyInput = {
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type AuditLogCountOrderByAggregateInput = {
@@ -420,7 +401,6 @@ export type AuditLogCountOrderByAggregateInput = {
   ipAddress?: Prisma.SortOrder
   userAgent?: Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
 }
 
 export type AuditLogMaxOrderByAggregateInput = {
@@ -433,7 +413,6 @@ export type AuditLogMaxOrderByAggregateInput = {
   ipAddress?: Prisma.SortOrder
   userAgent?: Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
 }
 
 export type AuditLogMinOrderByAggregateInput = {
@@ -446,7 +425,6 @@ export type AuditLogMinOrderByAggregateInput = {
   ipAddress?: Prisma.SortOrder
   userAgent?: Prisma.SortOrder
   occurredAt?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
 }
 
 
@@ -463,7 +441,6 @@ export type AuditLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   ipAddress?: boolean
   userAgent?: boolean
   occurredAt?: boolean
-  tenantId?: boolean
 }, ExtArgs["result"]["auditLog"]>
 
 export type AuditLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -478,7 +455,6 @@ export type AuditLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   ipAddress?: boolean
   userAgent?: boolean
   occurredAt?: boolean
-  tenantId?: boolean
 }, ExtArgs["result"]["auditLog"]>
 
 export type AuditLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -493,7 +469,6 @@ export type AuditLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   ipAddress?: boolean
   userAgent?: boolean
   occurredAt?: boolean
-  tenantId?: boolean
 }, ExtArgs["result"]["auditLog"]>
 
 export type AuditLogSelectScalar = {
@@ -508,10 +483,9 @@ export type AuditLogSelectScalar = {
   ipAddress?: boolean
   userAgent?: boolean
   occurredAt?: boolean
-  tenantId?: boolean
 }
 
-export type AuditLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "actorUserId" | "actorRole" | "action" | "targetEntityType" | "targetEntityId" | "before" | "after" | "ipAddress" | "userAgent" | "occurredAt" | "tenantId", ExtArgs["result"]["auditLog"]>
+export type AuditLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "actorUserId" | "actorRole" | "action" | "targetEntityType" | "targetEntityId" | "before" | "after" | "ipAddress" | "userAgent" | "occurredAt", ExtArgs["result"]["auditLog"]>
 
 export type $AuditLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AuditLog"
@@ -528,7 +502,6 @@ export type $AuditLogPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     ipAddress: string | null
     userAgent: string | null
     occurredAt: Date
-    tenantId: string
   }, ExtArgs["result"]["auditLog"]>
   composites: {}
 }
@@ -963,7 +936,6 @@ export interface AuditLogFieldRefs {
   readonly ipAddress: Prisma.FieldRef<"AuditLog", 'String'>
   readonly userAgent: Prisma.FieldRef<"AuditLog", 'String'>
   readonly occurredAt: Prisma.FieldRef<"AuditLog", 'DateTime'>
-  readonly tenantId: Prisma.FieldRef<"AuditLog", 'String'>
 }
     
 

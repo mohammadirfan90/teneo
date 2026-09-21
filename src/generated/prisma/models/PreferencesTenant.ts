@@ -46,7 +46,6 @@ export type PreferencesTenantMinAggregateOutputType = {
   moveInFrom: Date | null
   moveInTo: Date | null
   visibility: string | null
-  tenantId: string | null
   updatedAt: Date | null
 }
 
@@ -58,7 +57,6 @@ export type PreferencesTenantMaxAggregateOutputType = {
   moveInFrom: Date | null
   moveInTo: Date | null
   visibility: string | null
-  tenantId: string | null
   updatedAt: Date | null
 }
 
@@ -73,7 +71,6 @@ export type PreferencesTenantCountAggregateOutputType = {
   lifestyle: number
   interests: number
   visibility: number
-  tenantId: number
   updatedAt: number
   _all: number
 }
@@ -97,7 +94,6 @@ export type PreferencesTenantMinAggregateInputType = {
   moveInFrom?: true
   moveInTo?: true
   visibility?: true
-  tenantId?: true
   updatedAt?: true
 }
 
@@ -109,7 +105,6 @@ export type PreferencesTenantMaxAggregateInputType = {
   moveInFrom?: true
   moveInTo?: true
   visibility?: true
-  tenantId?: true
   updatedAt?: true
 }
 
@@ -124,7 +119,6 @@ export type PreferencesTenantCountAggregateInputType = {
   lifestyle?: true
   interests?: true
   visibility?: true
-  tenantId?: true
   updatedAt?: true
   _all?: true
 }
@@ -226,7 +220,6 @@ export type PreferencesTenantGroupByOutputType = {
   lifestyle: runtime.JsonValue | null
   interests: string[]
   visibility: string
-  tenantId: string
   updatedAt: Date
   _count: PreferencesTenantCountAggregateOutputType | null
   _avg: PreferencesTenantAvgAggregateOutputType | null
@@ -264,7 +257,6 @@ export type PreferencesTenantWhereInput = {
   lifestyle?: Prisma.JsonNullableFilter<"PreferencesTenant">
   interests?: Prisma.StringNullableListFilter<"PreferencesTenant">
   visibility?: Prisma.StringFilter<"PreferencesTenant"> | string
-  tenantId?: Prisma.UuidFilter<"PreferencesTenant"> | string
   updatedAt?: Prisma.DateTimeFilter<"PreferencesTenant"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -280,7 +272,6 @@ export type PreferencesTenantOrderByWithRelationInput = {
   lifestyle?: Prisma.SortOrderInput | Prisma.SortOrder
   interests?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -299,7 +290,6 @@ export type PreferencesTenantWhereUniqueInput = Prisma.AtLeast<{
   lifestyle?: Prisma.JsonNullableFilter<"PreferencesTenant">
   interests?: Prisma.StringNullableListFilter<"PreferencesTenant">
   visibility?: Prisma.StringFilter<"PreferencesTenant"> | string
-  tenantId?: Prisma.UuidFilter<"PreferencesTenant"> | string
   updatedAt?: Prisma.DateTimeFilter<"PreferencesTenant"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
@@ -315,7 +305,6 @@ export type PreferencesTenantOrderByWithAggregationInput = {
   lifestyle?: Prisma.SortOrderInput | Prisma.SortOrder
   interests?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PreferencesTenantCountOrderByAggregateInput
   _avg?: Prisma.PreferencesTenantAvgOrderByAggregateInput
@@ -338,7 +327,6 @@ export type PreferencesTenantScalarWhereWithAggregatesInput = {
   lifestyle?: Prisma.JsonNullableWithAggregatesFilter<"PreferencesTenant">
   interests?: Prisma.StringNullableListFilter<"PreferencesTenant">
   visibility?: Prisma.StringWithAggregatesFilter<"PreferencesTenant"> | string
-  tenantId?: Prisma.UuidWithAggregatesFilter<"PreferencesTenant"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PreferencesTenant"> | Date | string
 }
 
@@ -352,7 +340,6 @@ export type PreferencesTenantCreateInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantCreateinterestsInput | string[]
   visibility?: string
-  tenantId?: string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTenantPreferencesInput
 }
@@ -368,7 +355,6 @@ export type PreferencesTenantUncheckedCreateInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantCreateinterestsInput | string[]
   visibility?: string
-  tenantId?: string
   updatedAt?: Date | string
 }
 
@@ -382,7 +368,6 @@ export type PreferencesTenantUpdateInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantUpdateinterestsInput | string[]
   visibility?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTenantPreferencesNestedInput
 }
@@ -398,7 +383,6 @@ export type PreferencesTenantUncheckedUpdateInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantUpdateinterestsInput | string[]
   visibility?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -413,7 +397,6 @@ export type PreferencesTenantCreateManyInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantCreateinterestsInput | string[]
   visibility?: string
-  tenantId?: string
   updatedAt?: Date | string
 }
 
@@ -427,7 +410,6 @@ export type PreferencesTenantUpdateManyMutationInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantUpdateinterestsInput | string[]
   visibility?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -442,7 +424,6 @@ export type PreferencesTenantUncheckedUpdateManyInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantUpdateinterestsInput | string[]
   visibility?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -462,7 +443,6 @@ export type PreferencesTenantCountOrderByAggregateInput = {
   lifestyle?: Prisma.SortOrder
   interests?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -479,7 +459,6 @@ export type PreferencesTenantMaxOrderByAggregateInput = {
   moveInFrom?: Prisma.SortOrder
   moveInTo?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -491,7 +470,6 @@ export type PreferencesTenantMinOrderByAggregateInput = {
   moveInFrom?: Prisma.SortOrder
   moveInTo?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
-  tenantId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -568,7 +546,6 @@ export type PreferencesTenantCreateWithoutUserInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantCreateinterestsInput | string[]
   visibility?: string
-  tenantId?: string
   updatedAt?: Date | string
 }
 
@@ -582,7 +559,6 @@ export type PreferencesTenantUncheckedCreateWithoutUserInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantCreateinterestsInput | string[]
   visibility?: string
-  tenantId?: string
   updatedAt?: Date | string
 }
 
@@ -612,7 +588,6 @@ export type PreferencesTenantUpdateWithoutUserInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantUpdateinterestsInput | string[]
   visibility?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -626,7 +601,6 @@ export type PreferencesTenantUncheckedUpdateWithoutUserInput = {
   lifestyle?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   interests?: Prisma.PreferencesTenantUpdateinterestsInput | string[]
   visibility?: Prisma.StringFieldUpdateOperationsInput | string
-  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -643,7 +617,6 @@ export type PreferencesTenantSelect<ExtArgs extends runtime.Types.Extensions.Int
   lifestyle?: boolean
   interests?: boolean
   visibility?: boolean
-  tenantId?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["preferencesTenant"]>
@@ -659,7 +632,6 @@ export type PreferencesTenantSelectCreateManyAndReturn<ExtArgs extends runtime.T
   lifestyle?: boolean
   interests?: boolean
   visibility?: boolean
-  tenantId?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["preferencesTenant"]>
@@ -675,7 +647,6 @@ export type PreferencesTenantSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   lifestyle?: boolean
   interests?: boolean
   visibility?: boolean
-  tenantId?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["preferencesTenant"]>
@@ -691,11 +662,10 @@ export type PreferencesTenantSelectScalar = {
   lifestyle?: boolean
   interests?: boolean
   visibility?: boolean
-  tenantId?: boolean
   updatedAt?: boolean
 }
 
-export type PreferencesTenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "budgetMinMinor" | "budgetMaxMinor" | "preferredCities" | "moveInFrom" | "moveInTo" | "lifestyle" | "interests" | "visibility" | "tenantId" | "updatedAt", ExtArgs["result"]["preferencesTenant"]>
+export type PreferencesTenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "budgetMinMinor" | "budgetMaxMinor" | "preferredCities" | "moveInFrom" | "moveInTo" | "lifestyle" | "interests" | "visibility" | "updatedAt", ExtArgs["result"]["preferencesTenant"]>
 export type PreferencesTenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -722,7 +692,6 @@ export type $PreferencesTenantPayload<ExtArgs extends runtime.Types.Extensions.I
     lifestyle: runtime.JsonValue | null
     interests: string[]
     visibility: string
-    tenantId: string
     updatedAt: Date
   }, ExtArgs["result"]["preferencesTenant"]>
   composites: {}
@@ -1158,7 +1127,6 @@ export interface PreferencesTenantFieldRefs {
   readonly lifestyle: Prisma.FieldRef<"PreferencesTenant", 'Json'>
   readonly interests: Prisma.FieldRef<"PreferencesTenant", 'String[]'>
   readonly visibility: Prisma.FieldRef<"PreferencesTenant", 'String'>
-  readonly tenantId: Prisma.FieldRef<"PreferencesTenant", 'String'>
   readonly updatedAt: Prisma.FieldRef<"PreferencesTenant", 'DateTime'>
 }
     

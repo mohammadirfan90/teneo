@@ -10,7 +10,7 @@
 import type { RequestHandler } from 'express';
 
 import { ok } from '@/lib/envelope';
-import type { ActivateRoleParams, UpdateMeInput, UserIdParams } from './users.schemas';
+import type { UpdateMeInput, UserIdParams } from './users.schemas';
 import * as svc from './users.service';
 
 export const getMe: RequestHandler = async (req, res) => {
@@ -24,13 +24,6 @@ export const updateMe: RequestHandler = async (req, res) => {
   const body = req.body as UpdateMeInput;
   const data = await svc.updateMe(userId, body);
   res.status(200).json(ok(data, 'User profile updated'));
-};
-
-export const activateRole: RequestHandler = async (req, res) => {
-  const userId = req.user!.id;
-  const { role } = req.params as unknown as ActivateRoleParams;
-  const data = await svc.activateRole(userId, role);
-  res.status(200).json(ok(data, `Role ${role} activated`));
 };
 
 export const getUserById: RequestHandler = async (req, res) => {

@@ -32,16 +32,6 @@ export const updateMeSchema = z.object({
 export type UpdateMeInput = z.infer<typeof updateMeSchema>;
 
 // ──────────────────────────────────────────────────────────────────────
-// /users/me/roles/:role/activate
-// ──────────────────────────────────────────────────────────────────────
-
-export const activateRoleParamsSchema = z.object({
-  role: z.enum(['TENANT', 'OWNER']),
-});
-
-export type ActivateRoleParams = z.infer<typeof activateRoleParamsSchema>;
-
-// ──────────────────────────────────────────────────────────────────────
 // /users/:id
 // ──────────────────────────────────────────────────────────────────────
 

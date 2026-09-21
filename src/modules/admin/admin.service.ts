@@ -14,7 +14,6 @@ import { Prisma, type Prisma as PrismaTypes } from '@/generated/prisma/client';
 import { prisma } from '@/lib/db';
 import { ConflictError, NotFoundError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
-import { redis } from '@/lib/redis';
 
 // ──────────────────────────────────────────────────────────────────────
 // Audit-log writer (shared helper)
@@ -360,48 +359,6 @@ export async function reinstateListing(
 
     return { id: updated.id, status: updated.status };
   });
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// getAdminHealth — GET /admin/health
-// ──────────────────────────────────────────────────────────────────────
-
-export interface AdminHealthView {
-  db: 'ok' | 'down';
-  redis: 'ok' | 'down';
-  recentErrors: number;
-  uptime: number;
-}
-
-/**
- * Light subsystem check for the admin dashboard. DB and Redis are
- * probed with the cheapest valid call (`SELECT 1` / `PING`).
- * `recentErrors` always returns 0 in Phase 19 — wiring a real scrape
- * off the Pino transport is Phase 20+ scope.
- */
-export async function getAdminHealth(): Promise<AdminHealthView> {
-  let db: 'ok' | 'down' = 'down';
-  try {
-    await prisma.$queryRaw`SELECT 1`;
-    db = 'ok';
-  } catch {
-    db = 'down';
-  }
-
-  let redisStatus: 'ok' | 'down' = 'down';
-  try {
-    const reply = await redis.ping();
-    redisStatus = reply === 'PONG' ? 'ok' : 'down';
-  } catch {
-    redisStatus = 'down';
-  }
-
-  return {
-    db,
-    redis: redisStatus,
-    recentErrors: 0,
-    uptime: Math.round(process.uptime()),
-  };
 }
 
 // ──────────────────────────────────────────────────────────────────────

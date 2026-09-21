@@ -176,10 +176,8 @@ async function main() {
     body: flatRes.status !== 201 ? flatRes.body : undefined,
   });
 
-  // NOTE: rooms router is mounted under /api/v1/rooms, and the route
-  // POST /flats/:flatId/rooms is registered there → effective path is
-  // /api/v1/rooms/flats/:flatId/rooms.
-  const roomRes = await call('POST', `/rooms/flats/${flatId}/rooms`, {
+  // POST /flats/:flatId/rooms — mounted on flatsRouter under /api/v1/flats.
+  const roomRes = await call('POST', `/flats/${flatId}/rooms`, {
     token: owner.token,
     body: {
       label: 'Smoke Room A',
@@ -199,7 +197,7 @@ async function main() {
   const room = pickData(roomRes.body);
   const roomId = room?.id;
   record({
-    step: '1.5', module: 'Rooms', endpoint: `POST /rooms/flats/{flatId}/rooms`,
+    step: '1.5', module: 'Rooms', endpoint: `POST /flats/{flatId}/rooms`,
     role: 'owner', status: roomRes.status, pass: roomRes.status === 201 && !!roomId,
     note: roomId ? `roomId=${roomId}` : 'no id returned',
     body: roomRes.status !== 201 ? roomRes.body : undefined,
