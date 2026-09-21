@@ -6,8 +6,6 @@
 // Emits the standard error envelope per spec §13.1.
 
 import type { RequestHandler } from 'express';
-
-import { fail } from '@/lib/envelope';
 import { NotFoundError } from '@/lib/errors';
 
 export const notFoundHandler: RequestHandler = (req, _res, next) => {

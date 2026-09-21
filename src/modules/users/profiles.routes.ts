@@ -1,6 +1,6 @@
 // src/modules/users/profiles.routes.ts
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

@@ -14,7 +14,7 @@
 // the `/saved` prefix under `authenticatedRateLimiter` (which itself
 // expects `req.user`).
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

@@ -120,7 +120,7 @@ type RoomRow = {
   id: string;
   propertyId: string;
   flatId: string | null;
-  /** Populated only by `loadOwnedRoom` and `getRoom` (ownership checks). */
+  /** Populated only by `getRoom` (ownership checks). */
   flat?: {
     building: { property: { ownerUserId: string; deletedAt: Date | null } };
   } | null;
@@ -228,52 +228,6 @@ function buildPatchData(input: PatchRoomInput): Prisma.RoomUpdateInput {
   if (input.maxLeaseMonths !== undefined) data.maxLeaseMonths = input.maxLeaseMonths;
   if (input.rules !== undefined) data.rules = input.rules;
   return data;
-}
-
-/**
- * Load a room + resolve its property-owner for ABAC checks. Throws
- * NotFoundError if the room (or its parent chain) is missing/soft-
- * deleted.
- */
-async function loadOwnedRoom(
-  roomId: string,
-  callerUserId: string,
-  callerRoles: readonly string[]
-): Promise<RoomRow> {
-  const row = await prisma.room.findFirst({
-    where: { id: roomId, deletedAt: null },
-    select: {
-      ...roomSelect,
-      flat: {
-        select: {
-          building: {
-            select: {
-              property: { select: { ownerUserId: true, deletedAt: true } },
-            },
-          },
-        },
-      },
-    },
-  });
-  if (!row) throw new NotFoundError('Room not found');
-  const isAdmin = callerRoles.includes('ADMIN');
-  if (!isAdmin) {
-    // For non-admin callers, the room must belong to one of their
-    // (non-deleted) properties.
-    const ownerUserId = row.flat?.building.property.ownerUserId ?? null;
-    if (ownerUserId === null || row.flat?.building.property.deletedAt !== null) {
-      throw new NotFoundError('Room not found');
-    }
-    if (ownerUserId !== callerUserId) {
-      throw new ForbiddenError('NOT_OWNER', 'Caller does not own this room');
-    }
-  } else {
-    // ADMIN: ensure parent chain isn't soft-deleted.
-    if (row.flat?.building.property.deletedAt !== null) {
-      throw new NotFoundError('Room not found');
-    }
-  }
-  return row as RoomRow;
 }
 
 // ──────────────────────────────────────────────────────────────────────
@@ -867,6 +821,5 @@ export async function reorderRoomPhoto(
   });
 }
 
-// `loadOwnedRoom` is intentionally not exported — it's a private helper
-// for internal callers within this file. Use `resolveOwnerIdForRoom`
-// from `properties.service.ts` for ownership checks elsewhere.
+// For ownership checks outside this file, use `resolveOwnerIdForRoom`
+// from `properties.service.ts`.

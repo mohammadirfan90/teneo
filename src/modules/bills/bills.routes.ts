@@ -5,7 +5,7 @@
 // Phase 14: POST /generate (OWNER)
 // Phase 16: + GET /me (any role) + GET /:id (party-or-admin)
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';

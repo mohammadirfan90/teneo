@@ -6,7 +6,6 @@
 //   POST /buildings/:building_id/flats   OWNER (own via building→property)
 
 import { prisma } from '@/lib/db';
-import { NotFoundError } from '@/lib/errors';
 
 import type { CreateFlatInput } from './flats.schemas';
 import { assertCallerOwnsOrAdmin, resolveOwnerIdForBuilding } from './properties.service';

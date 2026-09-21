@@ -34,8 +34,6 @@
 
 import { createHash } from 'node:crypto';
 import type { Request, RequestHandler, Response } from 'express';
-
-import { fail, ok } from '@/lib/envelope';
 import { SemanticError } from '@/lib/errors';
 import { redis } from '@/lib/redis';
 

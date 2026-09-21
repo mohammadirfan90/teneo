@@ -10,7 +10,7 @@
 //   - POST /submissions/:id/decision  requireAuth + requireRole('ADMIN')
 //   - POST /submissions/:id/request-info  requireAuth + requireRole('ADMIN')
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

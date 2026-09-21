@@ -14,7 +14,7 @@
 // an empty object and reject every well-formed request. withIdempotency
 // runs last because it hashes the parsed body.
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

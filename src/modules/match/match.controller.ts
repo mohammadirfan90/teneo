@@ -8,7 +8,7 @@
 //   POST  /intro-requests/:id/accept   acceptIntro
 //   POST  /intro-requests/:id/decline  declineIntro
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';

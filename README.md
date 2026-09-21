@@ -276,14 +276,16 @@ One choice worth calling out: `citext` for case-insensitive email uniqueness, wh
 
 ## Testing and verification
 
-`scripts/` holds executable acceptance checks rather than a unit-test suite:
+`scripts/` holds executable checks rather than a unit-test framework.
 
-- `verify-db-shape.ts` — asserts the live schema matches the design
-- `verify-p14-calc.ts`, `verify-p16-splitter.ts` — money and bill-split arithmetic
-- `verify-p15-state-machines.ts` — every lease, application, and ticket transition, including the illegal ones
-- `smoke-*.sh`, `smoke-e2e.mjs` — end-to-end flows against a running server
+**Pure logic** — no database or server needed; run with `npx tsx scripts/<name>.ts`:
 
-Run them with `npx tsx scripts/<name>.ts` against a migrated, seeded database.
+- `verify-p14-calc.ts` — rent proration and invoice arithmetic
+- `verify-p15-state-machines.ts` — every lease, application, invoice, payment and ticket transition, including the illegal ones
+- `verify-p16-splitter.ts` — utility bill splitting across occupants
+- `verify-db-shape.ts` — when a `DATABASE_URL` needs TLS (loopback hosts don't; managed hosts do)
+
+**End to end** — `node scripts/smoke-e2e.mjs` drives 37 steps across every module against a running server with a migrated, seeded database, and writes a report to `temp_reports/`. It exits non-zero on any failure.
 
 ## Deployment
 

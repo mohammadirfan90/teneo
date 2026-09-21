@@ -8,14 +8,12 @@
 // rate limiter and BEFORE the body-parser's normal JSON parse (the
 // handler reads req.rawBody directly).
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';
 import { ConflictError, ForbiddenError, NotFoundError, UnauthorizedError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
-
-import type { AppRole } from '@/middleware/auth';
 import type Stripe from 'stripe';
 
 import type {
@@ -115,7 +113,6 @@ export const getPaymentHandler: RequestHandler = asyncHandler(async (req, res) =
 
 export const refundPaymentHandler: RequestHandler = asyncHandler(async (req, res) => {
   const userId = req.user!.id;
-  const _roles = req.user!.roles as AppRole[];
   const { id } = req.params as unknown as PaymentIdParams;
   const body = req.body as RefundPaymentInput;
   const result = await refundPayment(userId, id, body);

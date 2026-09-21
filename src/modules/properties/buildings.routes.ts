@@ -9,7 +9,7 @@
 // Note: POST /properties/:property_id/buildings is registered in
 // properties.routes.ts because the URL is properties-prefixed.
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

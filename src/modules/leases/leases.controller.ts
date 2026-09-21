@@ -5,7 +5,7 @@
 // controller file, route file mounts with the standard `requireAuth +
 // requireRole + zodValidate + requireLeaseParty` stack.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';

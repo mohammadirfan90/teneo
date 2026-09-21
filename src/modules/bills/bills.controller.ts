@@ -12,7 +12,7 @@
 // leak + 403-NOT_OWNER). Mirrors `requireInvoiceParty` /
 // `requirePaymentParty` patterns.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';

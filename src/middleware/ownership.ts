@@ -28,7 +28,7 @@
 
 import type { Request, RequestHandler } from 'express';
 
-import { ForbiddenError, NotFoundError, NotOwnerError, UnauthorizedError } from '@/lib/errors';
+import { NotFoundError, NotOwnerError, UnauthorizedError } from '@/lib/errors';
 
 export type OwnerIdResolver = (req: Request) => Promise<string | null> | string | null;
 

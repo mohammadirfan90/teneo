@@ -8,10 +8,6 @@
 // errors to `next(err)` so the global error-handler formats them.
 
 import {
-  type NextFunction,
-  type Request,
-  type RequestHandler,
-  type Response,
   Router,
 } from 'express';
 

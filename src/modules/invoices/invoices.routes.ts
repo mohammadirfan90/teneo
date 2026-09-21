@@ -9,7 +9,7 @@
 //   POST   /:id/waive                       ADMIN only
 //   POST   /:id/dispute                     TENANT | OWNER party
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { withIdempotency } from '@/middleware/idempotency';
 import { requireAuth } from '@/middleware/auth';

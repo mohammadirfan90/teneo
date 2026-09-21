@@ -6,7 +6,7 @@
 // Pattern mirrors `invoices.controller.ts` / `readings.controller.ts`
 // (Phase 14/16): 404 no-leak + 403 NOT_OWNER, ADMIN bypass.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';
@@ -19,7 +19,6 @@ import {
   getTicket,
   listMyTickets,
   listQueue,
-  listTicketsForCaller,
   listTicketsForRoom,
   rateTicket,
   resolvePartiesForRoom,
@@ -36,13 +35,7 @@ import type {
   TicketIdParams,
 } from './tickets.schemas';
 import {
-  addUpdateSchema,
-  createTicketSchema,
   listTicketsQuerySchema,
-  patchTicketSchema,
-  rateTicketSchema,
-  roomIdParamsSchema,
-  ticketIdParamsSchema,
   toAddUpdateServiceInput,
   toCreateTicketServiceInput,
   toPatchTicketServiceInput,

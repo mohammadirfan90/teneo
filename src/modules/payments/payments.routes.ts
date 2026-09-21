@@ -13,7 +13,7 @@
 // top-level in server.ts — NOT inside this router — so it bypasses
 // the per-role rate limiter and requireAuth.
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';

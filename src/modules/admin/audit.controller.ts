@@ -12,7 +12,7 @@
 // Schemas live in this file (rather than a separate *.schemas.ts) per
 // the Phase 19 plan.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, Response } from 'express';
 import { z } from 'zod';
 
 import { asyncHandler } from '@/lib/async-handler';

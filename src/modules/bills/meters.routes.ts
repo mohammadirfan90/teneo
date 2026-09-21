@@ -8,7 +8,7 @@
 //   POST /:propertyId/meters    OWNER | ADMIN    requirePropertyOwner
 //   GET  /:propertyId/meters    OWNER | ADMIN    requirePropertyOwner
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';

@@ -15,7 +15,7 @@
 // Note: POST /flats/:flatId/rooms is registered on flatsRouter (see
 // flats.routes.ts); only /rooms/:id/* lives here.
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

@@ -7,7 +7,7 @@
 // under different prefixes (/applications vs /viewings) without
 // crossing imports.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';

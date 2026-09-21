@@ -10,7 +10,7 @@
 //   ticketsRouter()     — mounted under /api/v1/tickets for /me,
 //                         /queue, /:id, /:id/updates, /:id/rate.
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';

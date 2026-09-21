@@ -31,7 +31,7 @@
 //
 // Both limiters emit the standard 429 envelope via their `handler`.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import rateLimit, { type Options, type RateLimitRequestHandler } from 'express-rate-limit';
 import type { SendCommandFn } from 'rate-limit-redis';
 import { RedisStore } from 'rate-limit-redis';

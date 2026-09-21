@@ -8,7 +8,6 @@
 import {
   type NextFunction,
   type Request,
-  type RequestHandler,
   type Response,
   Router,
 } from 'express';

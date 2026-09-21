@@ -6,17 +6,15 @@
 // Prisma 7 specifics (see phase 2):
 //   - generator provider is "prisma-client" (not "prisma-client-js")
 //   - `output` is REQUIRED — clients no longer land in node_modules
-//   - `previewFeatures = ["driverAdapters"]` is required to use
-//     @prisma/adapter-pg (or any non-Rust driver)
+//   - driver adapters (@prisma/adapter-pg) are GA — no previewFeatures flag
 //   - The datasource `url` field is NO LONGER supported in schema.prisma.
 //     Connection URL is read from prisma.config.ts (datasource.url) and the
 //     PrismaClient constructor receives an `adapter` (which @prisma/adapter-pg
 //     is, backed by the `pg` driver).
 
 generator client {
-  provider        = "prisma-client"
-  output          = "../src/generated/prisma"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {

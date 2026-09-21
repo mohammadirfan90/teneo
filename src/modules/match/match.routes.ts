@@ -8,7 +8,7 @@
 //   POST  /intro-requests/:id/accept   requireAuth → requireRole(TENANT)
 //   POST  /intro-requests/:id/decline  requireAuth → requireRole(TENANT)
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

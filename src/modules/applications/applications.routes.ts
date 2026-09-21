@@ -13,7 +13,7 @@
 //
 // Viewing confirm/cancel live under /api/v1/viewings (viewings.routes.ts).
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

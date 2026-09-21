@@ -6,7 +6,7 @@
 //   POST /:meterId/readings      OWNER | TENANT | ADMIN    requireMeterParty
 //   GET  /:meterId/readings      OWNER | TENANT | ADMIN    requireMeterParty
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { requireAuth } from '@/middleware/auth';
 import { withIdempotency } from '@/middleware/idempotency';

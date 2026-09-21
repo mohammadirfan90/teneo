@@ -16,7 +16,7 @@
 // All transition routes layer `requireLeaseParty` on top of role gates
 // so an ADMIN can read but cannot sign/terminate/confirm.
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
@@ -43,15 +43,6 @@ import {
   signLeaseHandler,
   terminateLeaseHandler,
 } from './leases.controller';
-
-// Express 5 widens req.params values to `string | string[]`. For our
-// single-segment paths the value is always a string; coerce defensively
-// (mirrors applications.routes.ts pattern).
-function paramId(req: import('express').Request, key: string): string {
-  const v = req.params[key];
-  if (typeof v === 'string') return v;
-  return Array.isArray(v) && v.length > 0 && typeof v[0] === 'string' ? (v[0] as string) : '';
-}
 
 export function leasesRouter(): Router {
   const r = Router();

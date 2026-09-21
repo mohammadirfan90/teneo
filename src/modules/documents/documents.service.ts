@@ -24,17 +24,15 @@
 // and Phase 16 meter pattern.
 
 import { randomUUID } from 'node:crypto';
-import type { Prisma } from '@/generated/prisma/client';
 import type { Prisma as PrismaTypes } from '@/generated/prisma/client';
 
 import {
-  SIGNED_URL_TTL_SECONDS,
   destroyAsset,
   signedDeliveryUrl,
   uploadBuffer,
 } from '@/lib/cloudinary';
 import { prisma } from '@/lib/db';
-import { ApiError, ForbiddenError, NotFoundError, ServerError } from '@/lib/errors';
+import { ApiError, ForbiddenError, NotFoundError, } from '@/lib/errors';
 import { logger } from '@/lib/logger';
 
 // ──────────────────────────────────────────────────────────────────────
@@ -46,9 +44,6 @@ export const DocumentStatus = {
   SOFT_DELETED: 'SOFT_DELETED',
 } as const;
 export type DocumentStatus = (typeof DocumentStatus)[keyof typeof DocumentStatus];
-
-/** Signed download URLs expire after 15 minutes. */
-const URL_TTL_MS = SIGNED_URL_TTL_SECONDS * 1000;
 
 // ──────────────────────────────────────────────────────────────────────
 // Views

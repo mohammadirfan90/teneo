@@ -3,7 +3,7 @@
 // Thin handlers + `requireInvoiceParty` middleware for
 // /api/v1/invoices/*. Pattern mirrors leases.controller.ts.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { ok } from '@/lib/envelope';

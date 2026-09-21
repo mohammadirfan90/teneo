@@ -3,7 +3,7 @@
 // Thin handlers for /api/v1/documents/*. Storage is Cloudinary; the
 // multipart body is parsed upstream by singleDocumentUpload (multer).
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { RequestHandler, } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { isStorageEnabled } from '@/lib/cloudinary';

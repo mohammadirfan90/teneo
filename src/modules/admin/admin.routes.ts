@@ -14,7 +14,7 @@
 // separate admin/audit.routes.ts) so we honor phases.json files_allowed
 // exactly. The audit.controller.ts handler is invoked directly.
 
-import { type RequestHandler, Router } from 'express';
+import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';

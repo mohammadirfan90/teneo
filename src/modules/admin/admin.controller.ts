@@ -9,7 +9,7 @@
 // the Phase 19 plan — keeps the file count to exactly the 7 files in
 // phases.json's files_allowed.
 
-import type { NextFunction, Request, RequestHandler, Response } from 'express';
+import type { Request, RequestHandler, } from 'express';
 import { z } from 'zod';
 
 import { asyncHandler } from '@/lib/async-handler';

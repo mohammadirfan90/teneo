@@ -16,7 +16,6 @@ import { z } from 'zod';
 
 import type {
   ApplicationStatus as ApplicationStatusEnum,
-  ViewingStatus as ViewingStatusEnum,
 } from '@/generated/prisma/enums';
 
 // ──────────────────────────────────────────────────────────────────────
@@ -33,13 +32,6 @@ const applicationStatusValues = [
   'WITHDRAWN',
   'CANCELLED',
 ] as const satisfies readonly ApplicationStatusEnum[];
-
-const viewingStatusValues = [
-  'REQUESTED',
-  'CONFIRMED',
-  'COMPLETED',
-  'CANCELLED',
-] as const satisfies readonly ViewingStatusEnum[];
 
 // ──────────────────────────────────────────────────────────────────────
 // Body schemas

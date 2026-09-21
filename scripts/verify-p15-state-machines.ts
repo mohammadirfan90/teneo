@@ -38,12 +38,20 @@ assertEq('SUCCEEDED → FAILED', isValidPaymentTransition('SUCCEEDED', 'FAILED')
 assertEq('FAILED → SUCCEEDED', isValidPaymentTransition('FAILED', 'SUCCEEDED'), false);
 assertEq('FAILED → REFUNDED', isValidPaymentTransition('FAILED', 'REFUNDED'), false);
 assertEq('REFUNDED → SUCCEEDED', isValidPaymentTransition('REFUNDED', 'SUCCEEDED'), false);
-assertArrayEq('next from PROCESSING', nextPaymentStates('PROCESSING'), ['SUCCEEDED', 'FAILED']);
+// CANCELED: an abandoned intent. Reachable only from PROCESSING, and terminal —
+// a late cancel event must never walk back a payment that already settled.
+assertEq('PROCESSING → CANCELED', isValidPaymentTransition('PROCESSING', 'CANCELED'), true);
+assertEq('SUCCEEDED → CANCELED', isValidPaymentTransition('SUCCEEDED', 'CANCELED'), false);
+assertEq('REFUNDED → CANCELED', isValidPaymentTransition('REFUNDED', 'CANCELED'), false);
+assertEq('CANCELED → SUCCEEDED', isValidPaymentTransition('CANCELED', 'SUCCEEDED'), false);
+assertArrayEq('next from PROCESSING', nextPaymentStates('PROCESSING'), ['SUCCEEDED', 'FAILED', 'CANCELED']);
 assertArrayEq('next from SUCCEEDED', nextPaymentStates('SUCCEEDED'), ['REFUNDED']);
 assertArrayEq('next from FAILED', nextPaymentStates('FAILED'), []);
 assertArrayEq('next from REFUNDED', nextPaymentStates('REFUNDED'), []);
+assertArrayEq('next from CANCELED', nextPaymentStates('CANCELED'), []);
 assertEq('FAILED is terminal', TERMINAL_PAYMENT_STATUSES.has('FAILED'), true);
 assertEq('REFUNDED is terminal', TERMINAL_PAYMENT_STATUSES.has('REFUNDED'), true);
+assertEq('CANCELED is terminal', TERMINAL_PAYMENT_STATUSES.has('CANCELED'), true);
 assertEq('PROCESSING not terminal', TERMINAL_PAYMENT_STATUSES.has('PROCESSING'), false);
 assertEq('SUCCEEDED not terminal', TERMINAL_PAYMENT_STATUSES.has('SUCCEEDED'), false);
 
