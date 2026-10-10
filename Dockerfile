@@ -1,7 +1,9 @@
 # syntax=docker/dockerfile:1.7
 # Housing Platform backend — multi-stage Dockerfile for Render.
 #
-# Stage 1 ("build") compiles TypeScript with `tsc`. The build context
+# Stage 1 ("build") compiles TypeScript with `tsc`, then `tsc-alias`
+# rewrites the `@/…` path aliases to relative requires — Node cannot
+# resolve tsconfig `paths` at runtime. The build context
 # includes the Prisma schema + generated client (committed to repo)
 # so we don't need network access at build time.
 #

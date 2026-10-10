@@ -5,9 +5,8 @@
 # (Redis) instance. Postgres is external (Neon), so DATABASE_URL is a
 # hand-set secret rather than a fromService reference.
 #
-# Env groups split secrets across two stores:
-#   - "env:staging"   — non-prod secrets (test Stripe, dev Google OAuth)
-#   - "env:production" — prod secrets (rotate Stripe live keys, real OAuth)
+# Secrets are declared `sync: false` below: Render prompts for them on the
+# first Blueprint sync and never reads them from this file.
 #
 # We do NOT bake secrets into the Docker image. The Dockerfile reads
 # env at container start.
@@ -91,24 +90,14 @@ services:
         sync: false
       - key: CLOUDINARY_FOLDER
         value: teneo-prod
-      - fromGroup: env:production
-        type: secret
-        key: STRIPE_WEBHOOK_SECRET
-      - fromGroup: env:production
-        type: secret
-        key: ACCESS_TOKEN_SECRET
-      - fromGroup: env:production
-        type: secret
-        key: REFRESH_TOKEN_SECRET
     healthCheckPath: /health/ready
     autoDeploy: true
-    docker:
-      # Render uses the repo-root Dockerfile by default. Explicit here
-      # so a future move of the file doesn't silently break deploys.
-      dockerfilePath: ./Dockerfile
-      # Keep the context at the repo root (so docker-compose.yml and
-      # prisma/ are available if needed).
-      context: .
+    # Render uses the repo-root Dockerfile by default. Explicit here
+    # so a future move of the file doesn't silently break deploys.
+    dockerfilePath: ./Dockerfile
+    # Keep the context at the repo root (so docker-compose.yml and
+    # prisma/ are available if needed).
+    dockerContext: .
     # Render's free tier sleeps after 15min of inactivity. Starter plan
     # keeps the container warm for the demo video.
     numInstances: 1
