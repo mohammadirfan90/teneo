@@ -15,6 +15,8 @@ import { z } from 'zod';
 export const signupSchema = z.object({
   email: z.string().email().max(254),
   password: z.string().min(12).max(256),
+  // Self-serve roles only; ADMIN is provisioned out-of-band.
+  role: z.enum(['TENANT', 'OWNER']).optional(),
 });
 
 export type SignupInput = z.infer<typeof signupSchema>;

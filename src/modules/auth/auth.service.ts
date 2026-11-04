@@ -101,10 +101,10 @@ export async function signupUser(
       data: {
         email: input.email.toLowerCase(),
         passwordHash,
-        // §6.2: a brand-new user is USER-only (no tenant/owner role rows).
-        // KYC promotes them later via /users/kyc (Phase 8).
+        // §6.2: role chosen at signup (TENANT/OWNER); omitted → USER-only.
+        // Features stay KYC-gated, so the role alone grants no publish/apply rights.
         roles: {
-          create: [],
+          create: input.role ? [{ role: input.role }] : [],
         },
       },
       select: {
