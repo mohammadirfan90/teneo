@@ -17,7 +17,7 @@ import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
-import { requireAuth } from '@/middleware/auth';
+import { optionalAuth, requireAuth } from '@/middleware/auth';
 import { requireRole } from '@/middleware/role';
 
 import { createBuilding } from './buildings.controller';
@@ -58,7 +58,7 @@ export function propertiesRouter(): Router {
 
   r.get(
     '/:id',
-    requireAuth,
+    optionalAuth,
     zodValidate({ params: propertyIdParamsSchema }),
     asyncHandler(getProperty)
   );

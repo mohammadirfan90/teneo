@@ -5,6 +5,7 @@
 import type { RequestHandler } from 'express';
 
 import { ok } from '@/lib/envelope';
+import { NotFoundError } from '@/lib/errors';
 
 import {
   type CreatePropertyInput,
@@ -23,10 +24,10 @@ export const createProperty: RequestHandler = async (req, res) => {
 };
 
 export const getProperty: RequestHandler = async (req, res) => {
-  const userId = req.user!.id;
-  const roles = req.user!.roles;
   const { id } = req.params as unknown as PropertyIdParams;
-  const data = await svc.getProperty(id, userId, roles);
+  const data = await svc.getProperty(id, req.user?.id ?? '', req.user?.roles ?? []);
+  // Anonymous callers only see live listings.
+  if (!req.user && data.status !== 'PUBLISHED') throw new NotFoundError('Property not found');
   res.status(200).json(ok(data, 'Property retrieved'));
 };
 

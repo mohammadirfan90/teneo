@@ -19,6 +19,7 @@ import type {
   TransitionRoomInput,
   UploadPhotoInput,
 } from './rooms.schemas';
+import { assertPubliclyListedRoom } from './properties.service';
 import * as svc from './rooms.service';
 
 export const createRoom: RequestHandler = async (req, res) => {
@@ -31,10 +32,10 @@ export const createRoom: RequestHandler = async (req, res) => {
 };
 
 export const getRoom: RequestHandler = async (req, res) => {
-  const userId = req.user!.id;
-  const roles = req.user!.roles;
   const { id } = req.params as unknown as RoomIdParams;
-  const data = await svc.getRoom(id, userId, roles);
+  // Anonymous callers only see live listings, always as the public view.
+  if (!req.user) await assertPubliclyListedRoom(id);
+  const data = await svc.getRoom(id, req.user?.id ?? '', req.user?.roles ?? []);
   res.status(200).json(ok(data, 'Room retrieved'));
 };
 
@@ -92,6 +93,7 @@ export const uploadPhoto: RequestHandler = async (req, res) => {
 
 export const listPhotos: RequestHandler = async (req, res) => {
   const { id } = req.params as unknown as RoomIdParams;
+  if (!req.user) await assertPubliclyListedRoom(id);
   const data = await svc.listRoomPhotos(id);
   res.status(200).json(ok(data, 'Photos retrieved'));
 };

@@ -19,7 +19,7 @@ import { Router } from 'express';
 
 import { asyncHandler } from '@/lib/async-handler';
 import { zodValidate } from '@/lib/validate';
-import { requireAuth } from '@/middleware/auth';
+import { optionalAuth, requireAuth } from '@/middleware/auth';
 import { requireRole } from '@/middleware/role';
 import { singlePhotoUpload } from '@/middleware/upload';
 
@@ -45,7 +45,7 @@ import {
 export function roomsRouter(): Router {
   const r = Router();
 
-  r.get('/:id', requireAuth, zodValidate({ params: roomIdParamsSchema }), asyncHandler(getRoom));
+  r.get('/:id', optionalAuth, zodValidate({ params: roomIdParamsSchema }), asyncHandler(getRoom));
 
   r.patch(
     '/:id',
@@ -97,7 +97,7 @@ export function roomsRouter(): Router {
   // to look at a listing that is already public.
   r.get(
     '/:id/photos',
-    requireAuth,
+    optionalAuth,
     zodValidate({ params: roomIdParamsSchema }),
     asyncHandler(listPhotos)
   );

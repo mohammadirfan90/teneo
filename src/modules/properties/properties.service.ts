@@ -545,6 +545,23 @@ export async function resolveOwnerIdForRoom(
   return room.property.ownerUserId;
 }
 
+/**
+ * Gate for anonymous room reads: the room and its property must both be
+ * PUBLISHED and not deleted. Anything else is a 404 (no existence leak).
+ */
+export async function assertPubliclyListedRoom(roomId: string): Promise<void> {
+  const room = await prisma.room.findFirst({
+    where: {
+      id: roomId,
+      deletedAt: null,
+      status: 'PUBLISHED',
+      property: { status: 'PUBLISHED', deletedAt: null },
+    },
+    select: { id: true },
+  });
+  if (!room) throw new NotFoundError('Room not found');
+}
+
 export async function resolveOwnerIdForBuilding(
   buildingId: string,
   opts: { throwIfMissing: true }

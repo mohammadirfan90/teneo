@@ -111,3 +111,14 @@ export const requireAuth: RequestHandler = async (req, _res, next) => {
     next(err);
   }
 };
+
+/**
+ * Like requireAuth, but lets requests without a Bearer token through
+ * anonymously (req.user stays undefined). A token that is present but
+ * invalid is still rejected with 401 so clients know to refresh.
+ * Used by the public listing reads (published rooms/properties only).
+ */
+export const optionalAuth: RequestHandler = (req, res, next) => {
+  if (!extractBearer(req.header('authorization'))) return next();
+  return requireAuth(req, res, next);
+};
