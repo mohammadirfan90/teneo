@@ -286,13 +286,15 @@ One choice worth calling out: `citext` for case-insensitive email uniqueness, wh
 
 ## Deployment
 
-Deploys to [Render](https://render.com) from [`render.yaml`](./render.yaml) as a native Node web service (`runtime: node`, no Docker) plus a managed Key Value (Redis) instance. Postgres is external; the blueprint expects a [Neon](https://neon.tech) connection string.
+Deploys to [Render](https://render.com) from [`render.yaml`](./render.yaml) as a native Node web service (`runtime: node`, no Docker) plus a managed Key Value (Redis) instance. Postgres is external; the blueprint expects a [Neon](https://neon.tech) connection string. The frontend is a separate app on [Vercel](https://vercel.com).
 
 1. Push to GitHub, then in Render choose **New → Blueprint** and select the repo.
-2. Set the secrets marked `sync: false` in `render.yaml` (`DATABASE_URL`, token secrets, Stripe, Google, Cloudinary). `REDIS_URL` is wired automatically from the Key Value service.
+2. Set the secrets marked `sync: false` in `render.yaml` (`DATABASE_URL`, `CORS_ORIGINS`, token secrets, Stripe, Google, Cloudinary). `REDIS_URL` is wired automatically from the Key Value service.
 3. Render builds with `npm run render-build` (install incl. dev deps → `prisma generate` → `tsc` + `tsc-alias`) and starts with `npm start` (`node dist/server.js`).
 4. Run migrations once against the database (see Neon note below), optionally `npm run prisma:seed`.
 5. Deploy. The healthcheck hits `/health/ready` and goes green once both Postgres and Redis answer.
+
+**CORS.** `CORS_ORIGINS` is a comma-separated list of exact origins — the `Origin` header is compared by string equality, so wildcards don't work and there is no trailing-slash tolerance. Give it the Vercel origin (`https://<your-app>.vercel.app`). An empty value allows every origin, which is convenient before the frontend has a fixed domain but should be pinned down before going live. Vercel preview deploys get random subdomains, so list those explicitly if you need them to work.
 
 **Neon.** Use the pooled endpoint (the `-pooler` host) with `?sslmode=require&pgbouncer=true&connection_limit=1` for `DATABASE_URL`. Migrations need the **direct**, non-pooled endpoint, because PgBouncer in transaction mode cannot hold the advisory locks Prisma takes:
 

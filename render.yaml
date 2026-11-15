@@ -17,7 +17,7 @@ services:
   # REDIS_URL is wired automatically (see the fromService entry below) and
   # the eviction policy is version-controlled instead of a dashboard toggle.
   - type: keyvalue
-    name: housing-cache
+    name: teneo-cache
     plan: starter
     region: oregon
     # Empty allow-list = no public endpoint; reachable only from services on
@@ -31,7 +31,7 @@ services:
     maxmemoryPolicy: noeviction
 
   - type: web
-    name: housing-platform-api
+    name: teneo-api
     runtime: node
     plan: starter
     # Must match the keyvalue region above. /health/ready PINGs Redis with a
@@ -49,10 +49,15 @@ services:
         value: "3000"
       - key: LOG_LEVEL
         value: info
+      # CORS allowlist — comma-separated exact origins (server.ts:58
+      # compares the Origin header by exact string match, so no wildcards).
+      # The frontend is on Vercel: give the real *.vercel.app origin here.
+      # Left as a prompted secret so the Blueprint doesn't pin a domain
+      # that changes per environment.
       - key: CORS_ORIGINS
-        value: https://housing-platform-web.onrender.com
+        sync: false
       - key: APP_PUBLIC_URL
-        value: https://housing-platform-api.onrender.com
+        value: https://teneo-api.onrender.com
       # ── Secrets come from the env group, not this file. ──
       # Neon pooled endpoint (the `-pooler` host) +
       # ?sslmode=require&pgbouncer=true&connection_limit=1.
@@ -66,7 +71,7 @@ services:
       - key: REDIS_URL
         fromService:
           type: keyvalue
-          name: housing-cache
+          name: teneo-cache
           property: connectionString
       - key: ACCESS_TOKEN_SECRET
         sync: false
