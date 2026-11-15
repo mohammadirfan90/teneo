@@ -35,6 +35,9 @@ Thumbs.db
 # Smoke test artifacts
 temp_reports/
 
+# Local working artifacts (audit reports, one-off scripts — local only)
+temp/
+
 # Test artifacts
 .jest-cache/
 
@@ -66,3 +69,7 @@ postman/postman/
 phases/
 phases.json
 phases.schema.json
+
+# Generated docs (reverse-engineering artifacts — local only)
+CODEBASE_GUIDE.md
+VIDEO_SCRIPT.md

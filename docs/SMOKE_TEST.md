@@ -6,7 +6,7 @@
 
 Each step is also a one-click Postman request — import `postman/Housing-Platform.postman_collection.json` and the matching environment file, then walk down the folder tree in order.
 
-> **Pre-flight:** `docker compose up -d`, `npm install`, `npm run prisma:migrate`, `npm run prisma:seed`, `npm run dev`. API at `http://localhost:3000/api/v1`.
+> **Pre-flight:** local Postgres + Redis running, `npm install`, `npm run prisma:migrate`, `npm run prisma:seed`, `npm run dev`. API at `http://localhost:3000/api/v1`.
 
 ---
 
@@ -175,6 +175,6 @@ These should each return the indicated error code, not crash:
 ## Cleanup
 
 ```bash
-docker compose down          # keep volumes
-docker compose down -v       # wipe Postgres + Redis (full reset)
+npx prisma migrate reset     # wipe + re-migrate + re-seed Postgres
+redis-cli FLUSHDB            # clear Redis (tokens, caches, idempotency keys)
 ```

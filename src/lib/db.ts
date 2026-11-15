@@ -10,7 +10,7 @@
 //   - Disconnect on SIGTERM/SIGINT (server.ts already wires those).
 //
 // Deployment compatibility:
-//   - Local docker-compose (no TLS, trust auth in dev)
+//   - Local Postgres (no TLS, trust auth in dev)
 //   - Neon: full TLS, requires sslmode=require
 //   - Supabase direct + pooler (pgbouncer=true)
 //   - Render managed Postgres

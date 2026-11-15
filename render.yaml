@@ -8,8 +8,9 @@
 # Secrets are declared `sync: false` below: Render prompts for them on the
 # first Blueprint sync and never reads them from this file.
 #
-# We do NOT bake secrets into the Docker image. The Dockerfile reads
-# env at container start.
+# The API runs as a native Node service (no Docker): Render installs deps,
+# generates the Prisma client and compiles TypeScript, then runs
+# `node dist/server.js`.
 
 services:
   # ── Managed Redis. Declared here rather than created by hand so that
@@ -31,15 +32,17 @@ services:
 
   - type: web
     name: housing-platform-api
-    runtime: docker
+    runtime: node
     plan: starter
     # Must match the keyvalue region above. /health/ready PINGs Redis with a
     # 1s timeout (src/server.ts); a cross-region hop can blow that budget and
-    # get the container restarted for a healthy dependency.
+    # get the instance restarted for a healthy dependency.
     region: oregon
-    # Render passes $PORT to the container at boot; the bootstrap in
-    # src/server.ts reads process.env.PORT.
+    buildCommand: npm run render-build
+    startCommand: npm start
     envVars:
+      - key: NODE_VERSION
+        value: "22"
       - key: NODE_ENV
         value: production
       - key: PORT
@@ -92,12 +95,6 @@ services:
         value: teneo-prod
     healthCheckPath: /health/ready
     autoDeploy: true
-    # Render uses the repo-root Dockerfile by default. Explicit here
-    # so a future move of the file doesn't silently break deploys.
-    dockerfilePath: ./Dockerfile
-    # Keep the context at the repo root (so docker-compose.yml and
-    # prisma/ are available if needed).
-    dockerContext: .
     # Render's free tier sleeps after 15min of inactivity. Starter plan
-    # keeps the container warm for the demo video.
+    # keeps the instance warm for the demo video.
     numInstances: 1

@@ -85,7 +85,7 @@ The service is built around a few deliberate constraints: every mutating endpoin
 ### Prerequisites
 
 - Node.js ≥ 22
-- Docker, for local Postgres and Redis
+- PostgreSQL 16 and Redis 7 running locally (or reachable remote instances)
 
 ### Setup
 
@@ -95,17 +95,14 @@ git clone https://github.com/mohammadirfan90/teneo.git
 cd teneo
 npm install
 
-# 2. Start local infrastructure — Postgres on host port 55432, Redis on 6379
-docker compose up -d
+# 2. Configure — point DATABASE_URL and REDIS_URL at your Postgres and Redis
+cp .env.example .env
 
-# 3. Configure
-cp .env.example .env        # defaults work for local dev
-
-# 4. Migrate and seed
+# 3. Migrate and seed
 npm run prisma:migrate
 npm run prisma:seed
 
-# 5. Run
+# 4. Run
 npm run dev
 ```
 
@@ -289,11 +286,13 @@ One choice worth calling out: `citext` for case-insensitive email uniqueness, wh
 
 ## Deployment
 
-Deploys to [Render](https://render.com) from [`render.yaml`](./render.yaml) as a Docker web service plus a managed Key Value (Redis) instance. Postgres is external; the blueprint expects a [Neon](https://neon.tech) connection string.
+Deploys to [Render](https://render.com) from [`render.yaml`](./render.yaml) as a native Node web service (`runtime: node`, no Docker) plus a managed Key Value (Redis) instance. Postgres is external; the blueprint expects a [Neon](https://neon.tech) connection string.
 
 1. Push to GitHub, then in Render choose **New → Blueprint** and select the repo.
 2. Set the secrets marked `sync: false` in `render.yaml` (`DATABASE_URL`, token secrets, Stripe, Google, Cloudinary). `REDIS_URL` is wired automatically from the Key Value service.
-3. Deploy. The healthcheck hits `/health/ready` and goes green once both Postgres and Redis answer.
+3. Render builds with `npm run render-build` (install incl. dev deps → `prisma generate` → `tsc` + `tsc-alias`) and starts with `npm start` (`node dist/server.js`).
+4. Run migrations once against the database (see Neon note below), optionally `npm run prisma:seed`.
+5. Deploy. The healthcheck hits `/health/ready` and goes green once both Postgres and Redis answer.
 
 **Neon.** Use the pooled endpoint (the `-pooler` host) with `?sslmode=require&pgbouncer=true&connection_limit=1` for `DATABASE_URL`. Migrations need the **direct**, non-pooled endpoint, because PgBouncer in transaction mode cannot hold the advisory locks Prisma takes:
 
@@ -303,7 +302,7 @@ DATABASE_URL="$DIRECT_DATABASE_URL" npx prisma migrate deploy
 
 **Redis.** The Key Value instance uses `maxmemoryPolicy: noeviction` deliberately. It stores live access tokens and idempotency keys, not just cache — under an LRU policy, memory pressure would silently evict sessions and log users out. Every key written carries a TTL, so the keyspace drains on its own.
 
-The [`Dockerfile`](./Dockerfile) is multi-stage: a Node 22 stage compiles TypeScript, and the runtime stage runs as a non-root user with a `HEALTHCHECK` on `/health/ready`.
+**Manual setup (without the Blueprint).** Create a *Web Service* → Runtime **Node**, Build Command `npm run render-build`, Start Command `npm start`, Health Check Path `/health/ready`, and add the same environment variables (`NODE_VERSION=22`).
 
 ## Security
 
@@ -333,8 +332,6 @@ The [`Dockerfile`](./Dockerfile) is multi-stage: a Node 22 stage compiles TypeSc
 ├── scripts/              # verification and smoke scripts
 ├── postman/              # collection + environment
 ├── docs/SMOKE_TEST.md    # narrated end-to-end walkthrough
-├── docker-compose.yml    # local Postgres 16 + Redis 7
-├── Dockerfile            # multi-stage, non-root
 ├── render.yaml           # Render blueprint
 └── prisma.config.ts      # Prisma 7 config: schema path, migrations, seed
 ```

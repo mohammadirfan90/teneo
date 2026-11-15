@@ -35,7 +35,7 @@ const g = globalThis as GlobalWithRedis;
 
 function buildClient(): Redis {
   const client = new Redis(env.REDIS_URL, {
-    // Dev: fail fast, so a forgotten `docker compose up` is loud rather
+    // Dev: fail fast, so a stopped local Redis is loud rather
     // than a request hanging on a queue that will never drain.
     // Prod: buffer instead. Managed Redis drops idle connections, and with
     // the queue off every command issued mid-reconnect rejects instantly.

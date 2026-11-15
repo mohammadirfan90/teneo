@@ -110,8 +110,8 @@ export function createApp(): express.Express {
   });
 
   // /health/ready: readiness — full subsystem check (Phase 22).
-  // Pings the database and Redis so Render's platform probe (and the
-  // container HEALTHCHECK in the Dockerfile) only get a 200 when both
+  // Pings the database and Redis so Render's platform health check
+  // only gets a 200 when both
   // dependencies are reachable. Each subsystem times out at 1s so a
   // wedged dep doesn't keep the probe hanging.
   app.get('/health/ready', async (_req, res) => {
