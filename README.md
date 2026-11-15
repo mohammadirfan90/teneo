@@ -2,6 +2,11 @@
 
 **A production-shaped REST API for a two-sided rental marketplace.** Verified owners publish properties; verified tenants discover them, apply, sign leases, pay rent, split utility bills, and raise maintenance tickets — with the money handling, state machines, and audit trail a real tenancy needs.
 
+- **Live API:** https://teneo-api.onrender.com/api/v1 (health: [`/health/ready`](https://teneo-api.onrender.com/health/ready))
+- **Repository:** https://github.com/mohammadirfan90/teneo
+- **Postman:** import the collection in [`postman/Housing Platform API`](./postman/) with the *Production* environment (`postman/Housing Platform — Production.environment.yaml`)
+- **Demo logins** (password `Demo123!@#`): admin `demo@admin.local` · owner `owner1@demo.local` · tenant `tenant1@demo.local`
+
 > *Teneo* — Latin, "I hold": the root of **tenant** and **tenure**, and the verb at the centre of every lease this API issues.
 
 ## Contents
@@ -51,7 +56,7 @@ The service is built around a few deliberate constraints: every mutating endpoin
 
 **Tenancy**
 - Applications with viewing-request scheduling
-- Multi-tenant leases with counterparty signing, signature tracking, and amendments
+- Leases with multiple co-tenants, counterparty signing, signature tracking, and amendments
 - Rent invoice generation on a lease schedule
 
 **Money**
@@ -107,8 +112,6 @@ npm run dev
 ```
 
 The API is then on `http://localhost:3000/api/v1`, with `GET /health/ready` reporting Postgres and Redis reachability.
-
-> Postgres is published on host port **55432**, not 5432, so it does not collide with a native Postgres install.
 
 ### Scripts
 
@@ -282,19 +285,20 @@ One choice worth calling out: `citext` for case-insensitive email uniqueness, wh
 - `verify-p16-splitter.ts` — utility bill splitting across occupants
 - `verify-db-shape.ts` — when a `DATABASE_URL` needs TLS (loopback hosts don't; managed hosts do)
 
-**End to end** — `node scripts/smoke-e2e.mjs` drives 37 steps across every module against a running server with a migrated, seeded database, and writes a report to `temp_reports/`. It exits non-zero on any failure.
+**End to end** — `node scripts/smoke-e2e.mjs` drives 37 steps across every module against a running server (`API_ORIGIN=https://teneo-api.onrender.com node scripts/smoke-e2e.mjs` targets the live deployment; default is `http://localhost:3000`) with a migrated, seeded database, and writes a report to `temp_reports/`. It exits non-zero on any failure.
 
 ## Deployment
 
-Deploys to [Render](https://render.com) from [`render.yaml`](./render.yaml) as a native Node web service (`runtime: node`, no Docker) plus a managed Key Value (Redis) instance. Postgres is external; the blueprint expects a [Neon](https://neon.tech) connection string. The frontend is a separate app on [Vercel](https://vercel.com).
+Deploys to [Render](https://render.com) from [`render.yaml`](./render.yaml) as a native Node web service (`runtime: node`, no Docker) plus a managed Key Value (Redis) instance. Postgres is external; the blueprint expects a [Neon](https://neon.tech) connection string.
 
 1. Push to GitHub, then in Render choose **New → Blueprint** and select the repo.
 2. Set the secrets marked `sync: false` in `render.yaml` (`DATABASE_URL`, `CORS_ORIGINS`, token secrets, Stripe, Google, Cloudinary). `REDIS_URL` is wired automatically from the Key Value service.
 3. Render builds with `npm run render-build` (install incl. dev deps → `prisma generate` → `tsc` + `tsc-alias`) and starts with `npm start` (`node dist/server.js`).
 4. Run migrations once against the database (see Neon note below), optionally `npm run prisma:seed`.
-5. Deploy. The healthcheck hits `/health/ready` and goes green once both Postgres and Redis answer.
+5. In the Stripe dashboard (Workbench → Webhooks) add `https://<service>.onrender.com/api/v1/payments/stripe/webhook` for `payment_intent.succeeded`, `payment_intent.payment_failed`, `payment_intent.canceled` and `charge.refunded`, and set its `whsec_…` signing secret as `STRIPE_WEBHOOK_SECRET`.
+6. Deploy. The healthcheck hits `/health/ready` and goes green once both Postgres and Redis answer.
 
-**CORS.** `CORS_ORIGINS` is a comma-separated list of exact origins — the `Origin` header is compared by string equality, so wildcards don't work and there is no trailing-slash tolerance. Give it the Vercel origin (`https://<your-app>.vercel.app`). An empty value allows every origin, which is convenient before the frontend has a fixed domain but should be pinned down before going live. Vercel preview deploys get random subdomains, so list those explicitly if you need them to work.
+**CORS.** `CORS_ORIGINS` is a comma-separated list of exact origins — the `Origin` header is compared by string equality, so wildcards don't work and there is no trailing-slash tolerance. An empty value allows every origin; set it to the exact origins of any browser client that calls the API. API tools such as Postman send no `Origin` header and are unaffected.
 
 **Neon.** Use the pooled endpoint (the `-pooler` host) with `?sslmode=require&pgbouncer=true&connection_limit=1` for `DATABASE_URL`. Migrations need the **direct**, non-pooled endpoint, because PgBouncer in transaction mode cannot hold the advisory locks Prisma takes:
 

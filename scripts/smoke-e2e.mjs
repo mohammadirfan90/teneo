@@ -1,10 +1,11 @@
-// End-to-end automated smoke test against http://localhost:3000/api/v1
+// End-to-end automated smoke test against ${API_ORIGIN:-http://localhost:3000}/api/v1
 // Runs all phases sequentially and prints a markdown summary table.
 
 import fs from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 
-const BASE = 'http://localhost:3000/api/v1';
+const ORIGIN = (process.env.API_ORIGIN || 'http://localhost:3000').replace(/\/$/, '');
+const BASE = ORIGIN + '/api/v1';
 const PASSWORD = 'Demo123!@#';
 
 const results = [];
@@ -75,7 +76,7 @@ async function main() {
   let healthOk = false;
   let healthBody;
   try {
-    const r = await fetch('http://localhost:3000/health/ready');
+    const r = await fetch(ORIGIN + '/health/ready');
     healthBody = await r.json();
     healthOk = r.status === 200 && healthBody?.data?.status === 'ok';
   } catch (e) {
